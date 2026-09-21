@@ -1,20 +1,13 @@
 "use client";
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { FacebookIcon, LinkedInIcon, MailIcon, PhoneIcon } from "../components/icons";
 import { plans, type Plan } from "../data/plans";
+import { products } from "../data/products";
 import { AREA_CODE, FACEBOOK_URL, LINKEDIN_URL, MANAGER_NAME, MANAGER_TITLE, emailLink, landlineLink } from "../lib/contact";
 import { cleanPhone } from "../lib/phone";
-
-const products = [
-  { name: "Life Insurance", short: "Long-term safety aur family protection ke liye ideal coverage.", badge: "LI" },
-  { name: "Health", short: "Medical emergencies aur hospital expenses ka trusted backup.", badge: "HE" },
-  { name: "Takaful", short: "Sharia-compliant protection options jahan faith aur security dono.", badge: "TA" },
-  { name: "Family Protection", short: "Aapki family ka future secure karne ke liye balanced plan.", badge: "FP" },
-  { name: "Retirement", short: "Aaj ki savings se future peace aur stability banao.", badge: "RT" },
-  { name: "Child Education", short: "Bachon ki education aur future goals ke liye smart planning.", badge: "CE" },
-];
 
 const services = [
   "Premium Payment Guide",
@@ -85,6 +78,7 @@ const initialContactForm = {
   phone: "",
   email: "",
   message: "",
+  category: "",
   consent: false,
   website: "",
 };
@@ -117,11 +111,67 @@ export default function Home() {
   const [contactStatus, setContactStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [planStatus, setPlanStatus] = useState<"idle" | "sending" | "error">("idle");
   const [managerImageFailed, setManagerImageFailed] = useState(false);
+  const [productIndex, setProductIndex] = useState(0);
+  const [productPaused, setProductPaused] = useState(false);
+  const [productVisibleCount, setProductVisibleCount] = useState(1);
+  const [failedProductImages, setFailedProductImages] = useState<string[]>([]);
   const productsMenuRef = useRef<HTMLDivElement>(null);
+  const productCarouselRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   const plansForCategory = selectedCategory
     ? plans.filter((item: Plan) => item.type === selectedCategory)
     : [];
+
+  useEffect(() => {
+    const updateVisibleCount = () => {
+      setProductVisibleCount(window.innerWidth >= 1024 ? 4 : window.innerWidth >= 768 ? 2 : 1);
+    };
+
+    updateVisibleCount();
+    window.addEventListener("resize", updateVisibleCount);
+    return () => window.removeEventListener("resize", updateVisibleCount);
+  }, []);
+
+  const scrollToProduct = (index: number) => {
+    const nextIndex = (index + products.length) % products.length;
+    const carousel = productCarouselRef.current;
+    const card = carousel?.children[nextIndex] as HTMLElement | undefined;
+    setProductIndex(nextIndex);
+    if (card) carousel?.scrollTo({ left: card.offsetLeft, behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    const carousel = productCarouselRef.current;
+    if (!carousel) return;
+
+    const updateIndexFromScroll = () => {
+      const cards = Array.from(carousel.children) as HTMLElement[];
+      const nearestIndex = cards.reduce((closest, card, index) => {
+        const closestDistance = Math.abs(cards[closest].offsetLeft - carousel.scrollLeft);
+        const distance = Math.abs(card.offsetLeft - carousel.scrollLeft);
+        return distance < closestDistance ? index : closest;
+      }, 0);
+      setProductIndex(nearestIndex);
+    };
+
+    carousel.addEventListener("scroll", updateIndexFromScroll, { passive: true });
+    return () => carousel.removeEventListener("scroll", updateIndexFromScroll);
+  }, [productVisibleCount]);
+
+  useEffect(() => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion || productPaused) return;
+
+    const timer = window.setInterval(() => scrollToProduct(productIndex + 1), 4000);
+    return () => window.clearInterval(timer);
+  }, [productIndex, productPaused]);
+
+  useEffect(() => {
+    const handleVisibility = () => setProductPaused(document.hidden);
+    document.addEventListener("visibilitychange", handleVisibility);
+    return () => document.removeEventListener("visibilitychange", handleVisibility);
+  }, []);
 
   useEffect(() => {
     if (!selectedCategory) return;
@@ -188,6 +238,25 @@ export default function Home() {
     setFormData({ ...initialForm, selectedPlan: category });
   };
 
+  const handleProductOpen = (product: (typeof products)[number]) => {
+    if (product.action === "health") {
+      router.push("/health-insurance");
+      return;
+    }
+
+    if (product.action === "corporate") {
+      setContactData((current) => ({ ...current, category: "Corporate" }));
+      document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+      return;
+    }
+
+    if (product.action === "digital") {
+      window.open("https://www.statelife.com.pk/en", "_blank", "noopener,noreferrer");
+      return;
+    }
+    openProductCategory(product.title);
+  };
+
   const handleInputChange = (field: keyof typeof initialForm, value: string | boolean) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
     setErrors((prev) => ({ ...prev, [field]: "" }));
@@ -243,7 +312,7 @@ export default function Home() {
     }
     setContactPhoneError("");
     setContactStatus("sending");
-    void submitLead({ type: "contact", ...contactData }).then((success) => {
+    void submitLead({ type: "contact", ...contactData, plan: contactData.category }).then((success) => {
       setContactStatus(success ? "success" : "error");
       if (success) setContactData(initialContactForm);
     });
@@ -443,47 +512,67 @@ export default function Home() {
           <h2 className="mt-3 text-3xl font-bold text-white sm:text-4xl">Coverage options designed for every need</h2>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {products.map((product) => (
-            <div
-              key={product.name}
-              onClick={() => {
-                setSelectedCategory(product.name);
-                setShowForm(false);
-                setIsSubmitted(false);
-                setErrors({});
-                setFormData({ ...initialForm, selectedPlan: product.name });
-              }}
-              onKeyDown={(event) => {
-                if (event.key === "Enter" || event.key === " ") {
-                  event.preventDefault();
-                  setSelectedCategory(product.name);
-                  setShowForm(false);
-                  setIsSubmitted(false);
-                  setErrors({});
-                  setFormData({ ...initialForm, selectedPlan: product.name });
-                }
-              }}
-              role="button"
-              tabIndex={0}
-              className="glass group rounded-[28px] p-6 text-left text-white"
-            >
-              <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl border border-white/20 bg-white/15 text-sm font-bold text-white">
-                {product.badge}
-              </div>
-              <h3 className="text-xl font-bold text-white">{product.name}</h3>
-              <p className="mt-3 text-base leading-7 text-blue-100">{product.short}</p>
-              {product.name === "Health" && (
-                <a
-                  href="/health-insurance"
-                  onClick={(event) => event.stopPropagation()}
-                  className="mt-4 inline-flex min-h-11 items-center text-sm font-semibold text-[var(--brand-blue-700)] underline decoration-transparent underline-offset-4 transition hover:decoration-current"
-                >
-                  Health Insurance page dekhein
-                </a>
-              )}
-            </div>
-          ))}
+        <div
+          className="relative"
+          role="region"
+          aria-roledescription="carousel"
+          aria-label="Products"
+          onMouseEnter={() => setProductPaused(true)}
+          onMouseLeave={() => setProductPaused(false)}
+          onFocusCapture={() => setProductPaused(true)}
+          onBlurCapture={(event) => {
+            if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setProductPaused(false);
+          }}
+          onTouchStart={() => setProductPaused(true)}
+          onTouchEnd={() => setProductPaused(false)}
+          onKeyDown={(event) => {
+            if (event.key === "ArrowLeft") {
+              event.preventDefault();
+              scrollToProduct(productIndex - 1);
+            }
+            if (event.key === "ArrowRight") {
+              event.preventDefault();
+              scrollToProduct(productIndex + 1);
+            }
+          }}
+        >
+          <button type="button" aria-label="Pichla product" onClick={() => scrollToProduct(productIndex - 1)} className="absolute left-0 top-1/2 z-10 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-white text-3xl leading-none text-[var(--brand-blue-700)] shadow-lg transition hover:bg-[var(--brand-blue-100)] lg:-translate-x-1/2">
+            ‹
+          </button>
+          <button type="button" aria-label="Agla product" onClick={() => scrollToProduct(productIndex + 1)} className="absolute right-0 top-1/2 z-10 flex h-12 w-12 translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-white text-3xl leading-none text-[var(--brand-blue-700)] shadow-lg transition hover:bg-[var(--brand-blue-100)]">
+            ›
+          </button>
+
+          <div ref={productCarouselRef} className="flex snap-x snap-mandatory gap-6 overflow-x-auto overscroll-x-contain px-4 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {products.map((product) => (
+              <article
+                key={product.slug}
+                onClick={() => handleProductOpen(product)}
+                className="group relative flex min-w-0 flex-[0_0_85%] snap-start flex-col overflow-hidden rounded-bl-[64px] rounded-br-xl rounded-tl-xl rounded-tr-[64px] border border-slate-200 bg-[#F5F5F5] p-4 text-left text-[#0b2240] shadow-sm transition hover:-translate-y-1 hover:shadow-xl sm:flex-[0_0_45%] lg:flex-[0_0_calc((100%_-_4.5rem)/4)]"
+              >
+                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-gradient-to-br from-blue-100 to-sky-200">
+                  {!failedProductImages.includes(product.image) && <Image src={product.image} alt={product.alt} fill sizes="(max-width: 768px) 85vw, (max-width: 1024px) 45vw, 25vw" className="object-cover" onError={() => setFailedProductImages((current) => [...current, product.image])} />}
+                </div>
+                <div className="flex flex-1 flex-col p-3 pb-16">
+                  <h3 className="text-xl font-bold">{product.title}</h3>
+                  <p className="mt-3 line-clamp-3 text-base leading-7 text-slate-600">{product.description}</p>
+                  {product.action === "digital" && <span className="mt-3 text-sm font-semibold text-[var(--brand-blue-700)]">Official website</span>}
+                </div>
+                {product.action === "digital" ? (
+                  <a href="https://www.statelife.com.pk/en" target="_blank" rel="noopener noreferrer" aria-label={`${product.title} kholein`} onClick={(event) => event.stopPropagation()} className="absolute bottom-0 right-0 flex h-12 w-14 items-center justify-center rounded-tl-3xl bg-[#0A4DB3] text-3xl leading-none text-white transition hover:bg-[var(--brand-blue-700)]">›</a>
+                ) : (
+                  <button type="button" aria-label={`${product.title} kholein`} onClick={(event) => { event.stopPropagation(); handleProductOpen(product); }} className="absolute bottom-0 right-0 flex h-12 w-14 items-center justify-center rounded-tl-3xl bg-[#0A4DB3] text-3xl leading-none text-white transition hover:bg-[var(--brand-blue-700)]">›</button>
+                )}
+              </article>
+            ))}
+          </div>
+
+          <div className="mt-5 flex items-center justify-center gap-3">
+            {products.map((product, index) => <button key={product.slug} type="button" aria-label={`${product.title} par jayein`} aria-current={productIndex === index ? "true" : undefined} onClick={() => scrollToProduct(index)} className={`h-2.5 rounded-full transition-all ${productIndex === index ? "w-7 bg-[var(--brand-blue-500)]" : "w-2.5 bg-white/60 hover:bg-white"}`} />)}
+            <button type="button" aria-label={productPaused ? "Products carousel play karein" : "Products carousel pause karein"} onClick={() => setProductPaused((paused) => !paused)} className="ml-2 flex h-9 w-9 items-center justify-center rounded-full border border-white/30 bg-white text-sm font-bold text-[var(--brand-blue-700)] shadow-sm">
+              {productPaused ? "▶" : "Ⅱ"}
+            </button>
+          </div>
         </div>
       </section>
 
@@ -683,6 +772,20 @@ export default function Home() {
                 placeholder="Aapki email"
                 className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-[#1f8a67] focus:bg-white"
               />
+            </div>
+
+            <div>
+              <label className="mb-2 block text-sm font-medium text-slate-700">Category (optional)</label>
+              <select
+                value={contactData.category}
+                onChange={(event) => handleContactChange("category", event.target.value)}
+                className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-[#1f8a67] focus:bg-white"
+              >
+                <option value="">Select karein</option>
+                <option value="Corporate">Corporate</option>
+                <option value="Individual">Individual</option>
+                <option value="Family">Family</option>
+              </select>
             </div>
 
             <div>

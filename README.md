@@ -20,6 +20,10 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 The contact form, product consultation enquiry, and agent pre-registration form submit to `POST /api/leads`.
 
+## Product Images
+
+Product carousel images should be placed in `public/products/` with these filenames: `life.jpg`, `health.jpg`, `takaful.jpg`, `family.jpg`, `retirement.jpg`, `education.jpg`, `corporate.jpg`, and `digital.jpg`. Missing files use the built-in light blue gradient fallback.
+
 1. Copy `.env.example` to `.env.local` and fill in the values privately. Never expose the Supabase service role key or Gmail app password in client code or `NEXT_PUBLIC_*` variables.
 2. Create a `leads` table in Supabase with these columns:
 
