@@ -63,7 +63,7 @@ export const plans: Plan[] = [
     bestFor: "Household protection",
     term: "Office se confirm karein",
     ageLimit: "Office se confirm karein",
-    details: "Family members ko extended support ke liye suitable option. Office se confirm karein.",
+    details: "Household ko extended support ke liye suitable option. Office se confirm karein.",
   },
   {
     type: "Family Protection",

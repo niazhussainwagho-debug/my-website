@@ -36,6 +36,7 @@ create table public.leads (
 	education text,
 	experience text,
 	best_time text,
+	family_members text,
 	message text,
 	consent boolean not null default false,
 	created_at timestamptz not null default now()

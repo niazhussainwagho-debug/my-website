@@ -21,14 +21,14 @@
 }
 
 html {
-  background: linear-gradient(180deg, var(--brand-blue-900) 0%, var(--brand-blue-700) 100%);
+  background: linear-gradient(to bottom, var(--brand-blue-900), var(--brand-blue-700));
   scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
-  background: linear-gradient(180deg, var(--brand-blue-900) 0%, var(--brand-blue-700) 100%);
+  background: linear-gradient(to bottom, var(--brand-blue-900), var(--brand-blue-700));
   background-attachment: fixed;
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;

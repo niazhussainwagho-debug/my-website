@@ -1,8 +1,9 @@
 import { createClient } from "@supabase/supabase-js";
 import nodemailer from "nodemailer";
 import { NextResponse } from "next/server";
+import { cleanPhone } from "../../../lib/phone";
 
-type LeadType = "contact" | "plan_enquiry" | "agent_prereg";
+type LeadType = "contact" | "plan_enquiry" | "agent_prereg" | "health_enquiry";
 
 type LeadPayload = {
   type: LeadType;
@@ -15,6 +16,7 @@ type LeadPayload = {
   education?: unknown;
   experience?: unknown;
   best_time?: unknown;
+  family_members?: unknown;
   message?: unknown;
   consent?: unknown;
   website?: unknown;
@@ -31,6 +33,7 @@ type Lead = {
   education: string | null;
   experience: string | null;
   best_time: string | null;
+  family_members: string | null;
   message: string | null;
   consent: boolean;
 };
@@ -43,7 +46,6 @@ type RateEntry = {
 const rateLimit = new Map<string, RateEntry>();
 const RATE_WINDOW_MS = 10 * 60 * 1000;
 const RATE_LIMIT = 5;
-const phonePattern = /^03\d{2}-\d{7}$/;
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const textValue = (value: unknown) => (typeof value === "string" ? value.trim() : "");
@@ -61,7 +63,10 @@ const escapeHtml = (value: string) =>
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
 
-const whatsappUrl = (phone: string) => `https://wa.me/92${phone.slice(1).replaceAll("-", "")}`;
+const whatsappUrl = (phone: string) => {
+  const normalizedPhone = phone.startsWith("03") ? `92${phone.slice(1)}` : phone;
+  return `https://wa.me/${normalizedPhone}`;
+};
 
 const successResponse = () => NextResponse.json({ success: true });
 
@@ -87,14 +92,15 @@ function isRateLimited(ip: string) {
 function validatePayload(payload: LeadPayload): Lead | string {
   const type = payload.type;
   const name = textValue(payload.name);
-  const phone = textValue(payload.phone);
+  const phoneInput = textValue(payload.phone);
+  const phone = cleanPhone(phoneInput);
   const email = textValue(payload.email);
   const message = textValue(payload.message);
 
-  if (!["contact", "plan_enquiry", "agent_prereg"].includes(type)) return "Invalid lead type.";
+  if (!["contact", "plan_enquiry", "agent_prereg", "health_enquiry"].includes(type)) return "Invalid lead type.";
   if (!name) return "Name is required.";
   if (name.length > 100) return "Name is too long.";
-  if (!phone || !phonePattern.test(phone)) return "A valid phone number is required.";
+  if (!phone) return "A valid phone number is required.";
   if (email && (email.length > 320 || !emailPattern.test(email))) return "Email is invalid.";
   if (message.length > 1000) return "Message is too long.";
   if (payload.consent !== true) return "Consent is required.";
@@ -110,6 +116,7 @@ function validatePayload(payload: LeadPayload): Lead | string {
     education: nullableText(payload.education),
     experience: nullableText(payload.experience),
     best_time: nullableText(payload.best_time),
+    family_members: nullableText(payload.family_members),
     message: message || null,
     consent: true,
   };
@@ -127,6 +134,7 @@ function fieldRows(lead: Lead) {
     ["Education", lead.education || "-"],
     ["Experience", lead.experience || "-"],
     ["Best time", lead.best_time || "-"],
+    ["Family members", lead.family_members || "-"],
     ["Message", lead.message || "-"],
     ["Consent", lead.consent ? "Yes" : "No"],
     ["WhatsApp", whatsappUrl(lead.phone)],

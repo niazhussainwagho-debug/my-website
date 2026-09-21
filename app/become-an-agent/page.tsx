@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { cleanPhone } from "../../lib/phone";
 
 const processSteps = [
   "Pre-registration form bharein ya office aayein.",
@@ -58,8 +59,6 @@ const initialForm: FormData = {
   website: "",
 };
 
-const phonePattern = /^03\d{2}-\d{7}$/;
-
 async function submitLead(payload: Record<string, unknown>) {
   try {
     const response = await fetch("/api/leads", {
@@ -94,11 +93,7 @@ export default function BecomeAnAgentPage() {
     const nextErrors: FormErrors = {};
 
     if (!formData.name.trim()) nextErrors.name = "Poora naam likhein.";
-    if (!formData.phone.trim()) {
-      nextErrors.phone = "Phone number zaroori hai.";
-    } else if (!phonePattern.test(formData.phone)) {
-      nextErrors.phone = "Phone format: 03XX-XXXXXXX.";
-    }
+    if (!cleanPhone(formData.phone)) nextErrors.phone = "Sahi number likhein (kam se kam 7 digits).";
     if (!formData.city.trim()) nextErrors.city = "Shehar likhein.";
     if (!formData.age.trim()) nextErrors.age = "Umar likhein.";
     if (!formData.education) nextErrors.education = "Taleem select karein.";
@@ -140,17 +135,13 @@ export default function BecomeAnAgentPage() {
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
           <Link href="/" className="flex min-w-0 items-center gap-3">
             <Image
-              src="/logo.png"
+              src="/area%20logo.png"
               alt="Sukkur Area Office logo"
-              width={46}
-              height={46}
-              className="h-11 w-11 shrink-0 rounded-xl object-cover shadow-sm ring-1 ring-slate-200"
+              width={210}
+              height={74}
+              className="h-12 w-[150px] max-w-full shrink-0 rounded-full object-contain sm:h-14 sm:w-[190px]"
               priority
             />
-            <div className="min-w-0">
-              <p className="truncate text-sm font-semibold tracking-[0.14em] text-slate-700 uppercase">Sukkur Area Office</p>
-              <p className="text-xs text-slate-500">Life Insurance</p>
-            </div>
           </Link>
 
           <div className="hidden items-center gap-7 text-sm font-medium text-slate-700 md:flex">
@@ -336,7 +327,7 @@ export default function BecomeAnAgentPage() {
                   <input type="text" value={formData.name} onChange={(event) => handleChange("name", event.target.value)} placeholder="Aapka poora naam" className={inputClass} />
                 </Field>
                 <Field label="Phone" error={errors.phone}>
-                  <input type="tel" value={formData.phone} onChange={(event) => handleChange("phone", event.target.value)} placeholder="03XX-XXXXXXX" className={inputClass} />
+                  <input type="tel" inputMode="tel" autoComplete="tel" value={formData.phone} onChange={(event) => handleChange("phone", event.target.value)} placeholder="Apna phone number likhein" className={inputClass} />
                 </Field>
                 <Field label="Shehar" error={errors.city}>
                   <input type="text" value={formData.city} onChange={(event) => handleChange("city", event.target.value)} placeholder="Aapka shehar" className={inputClass} />
@@ -428,7 +419,7 @@ export default function BecomeAnAgentPage() {
         <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[1.1fr_0.8fr_0.8fr] lg:px-8">
           <div>
             <div className="flex items-center gap-3">
-              <Image src="/logo.png" alt="Sukkur Area Office logo" width={46} height={46} className="h-11 w-11 rounded-xl object-cover ring-1 ring-white/10" />
+              <Image src="/area%20logo.png" alt="Sukkur Area Office logo" width={210} height={74} className="h-14 w-[190px] rounded-full object-contain" />
               <div>
                 <p className="text-lg font-bold text-white">Sukkur Area Office</p>
                 <p className="text-sm text-slate-400">Life Insurance</p>
@@ -449,7 +440,7 @@ export default function BecomeAnAgentPage() {
           <div>
             <h3 className="text-lg font-semibold text-white">Contact</h3>
             <ul className="mt-5 space-y-3 text-sm text-slate-300">
-              <li>0313-2894151</li>
+              <li>Call / WhatsApp</li>
               <li>Mon-Fri: 9:00 AM - 5:00 PM</li>
               <li>Saturday &amp; Sunday off</li>
             </ul>

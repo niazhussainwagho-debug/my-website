@@ -1,8 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { FacebookIcon, LinkedInIcon, MailIcon, PhoneIcon, WhatsAppIcon } from "../components/icons";
 import { plans, type Plan } from "../data/plans";
+import { AREA_CODE, FACEBOOK_URL, LINKEDIN_URL, MANAGER_NAME, MANAGER_TITLE, PHONE_DISPLAY, WHATSAPP_DISPLAY, emailLink, landlineLink, telLink, whatsappLink } from "../lib/contact";
+import { cleanPhone } from "../lib/phone";
 
 const products = [
   { name: "Life Insurance", short: "Long-term safety aur family protection ke liye ideal coverage.", badge: "LI" },
@@ -24,7 +27,7 @@ const reasons = [
   { number: "01", title: "Trusted Guidance", text: "Expert team aapke needs ke mutabiq suitable options explain karti hai." },
   { number: "02", title: "Simple Process", text: "Policy selection aur documentation process easy aur transparent rakha gaya hai." },
   { number: "03", title: "Local Support", text: "Sukkur-based office se face-to-face guidance aur direct assistance milti hai." },
-  { number: "04", title: "Long-Term Care", text: "Aapki family ke liye protection plans jo future ke liye stability dete hain." },
+  { number: "04", title: "Long-Term Care", text: "Aapki family ke liye coverage guidance aur local support." },
 ];
 
 const testimonials = [
@@ -56,8 +59,8 @@ const faqs = [
     answer: "Haan, claim help ke liye team aapko required forms, process, aur documentation guidance provide karti hai.",
   },
   {
-    question: "Kya family protection plans available hain?",
-    answer: "Bilkul. Family Protection, Life Insurance, aur Retirement plans ke options available hain taake aap apni family ke liye strong coverage bana sakein.",
+    question: "Kya family coverage options available hain?",
+    answer: "Bilkul. Family Protection, Life Insurance, aur Retirement ke options ke liye office se guidance lein.",
   },
   {
     question: "Office timings kya hain?",
@@ -86,8 +89,6 @@ const initialContactForm = {
   website: "",
 };
 
-const phonePattern = /^03\d{2}-\d{7}$/;
-
 async function submitLead(payload: Record<string, unknown>) {
   try {
     const response = await fetch("/api/leads", {
@@ -105,14 +106,18 @@ async function submitLead(payload: Record<string, unknown>) {
 export default function Home() {
   const [openFaq, setOpenFaq] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [productsOpen, setProductsOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState(initialForm);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [contactData, setContactData] = useState(initialContactForm);
+  const [contactPhoneError, setContactPhoneError] = useState("");
   const [contactStatus, setContactStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [planStatus, setPlanStatus] = useState<"idle" | "sending" | "error">("idle");
+  const [managerImageFailed, setManagerImageFailed] = useState(false);
+  const productsMenuRef = useRef<HTMLDivElement>(null);
 
   const plansForCategory = selectedCategory
     ? plans.filter((item: Plan) => item.type === selectedCategory)
@@ -134,6 +139,26 @@ export default function Home() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [selectedCategory, formData.selectedPlan]);
 
+  useEffect(() => {
+    const handleMenuInteraction = (event: MouseEvent | KeyboardEvent) => {
+      if (event instanceof KeyboardEvent && event.key === "Escape") {
+        setProductsOpen(false);
+        return;
+      }
+
+      if (event instanceof MouseEvent && productsMenuRef.current && !productsMenuRef.current.contains(event.target as Node)) {
+        setProductsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleMenuInteraction);
+    document.addEventListener("keydown", handleMenuInteraction);
+    return () => {
+      document.removeEventListener("mousedown", handleMenuInteraction);
+      document.removeEventListener("keydown", handleMenuInteraction);
+    };
+  }, []);
+
   const resetModalState = () => {
     setSelectedCategory(null);
     setShowForm(false);
@@ -153,6 +178,16 @@ export default function Home() {
     setShowForm(true);
   };
 
+  const openProductCategory = (category: string) => {
+    setSelectedCategory(category);
+    setProductsOpen(false);
+    setMenuOpen(false);
+    setShowForm(false);
+    setIsSubmitted(false);
+    setErrors({});
+    setFormData({ ...initialForm, selectedPlan: category });
+  };
+
   const handleInputChange = (field: keyof typeof initialForm, value: string | boolean) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
     setErrors((prev) => ({ ...prev, [field]: "" }));
@@ -162,11 +197,7 @@ export default function Home() {
     const nextErrors: { [key: string]: string } = {};
 
     if (!formData.name.trim()) nextErrors.name = "Poora naam likhein.";
-    if (!formData.phone.trim()) {
-      nextErrors.phone = "Phone number zaroori hai.";
-    } else if (!phonePattern.test(formData.phone)) {
-      nextErrors.phone = "Phone format: 03XX-XXXXXXX.";
-    }
+    if (!cleanPhone(formData.phone)) nextErrors.phone = "Sahi number likhein (kam se kam 7 digits).";
     if (!formData.city.trim()) nextErrors.city = "Shehar likhein.";
     if (!formData.age.trim()) {
       nextErrors.age = "Umar likhein.";
@@ -200,11 +231,17 @@ export default function Home() {
 
   const handleContactChange = (field: keyof typeof initialContactForm, value: string | boolean) => {
     setContactData((current) => ({ ...current, [field]: value }));
+    if (field === "phone") setContactPhoneError("");
     setContactStatus("idle");
   };
 
   const handleContactSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (!cleanPhone(contactData.phone)) {
+      setContactPhoneError("Sahi number likhein (kam se kam 7 digits).");
+      return;
+    }
+    setContactPhoneError("");
     setContactStatus("sending");
     void submitLead({ type: "contact", ...contactData }).then((success) => {
       setContactStatus(success ? "success" : "error");
@@ -218,22 +255,42 @@ export default function Home() {
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
           <a href="#home" className="flex items-center gap-3">
             <Image
-              src="/logo.png"
+              src="/area%20logo.png"
               alt="Sukkur Area Office logo"
-              width={46}
-              height={46}
-              className="h-11 w-11 rounded-xl object-cover shadow-sm ring-1 ring-slate-200"
+              width={210}
+              height={74}
+              className="h-12 w-[150px] max-w-full shrink-0 rounded-full object-contain sm:h-14 sm:w-[190px]"
               priority
             />
-            <div>
-              <p className="text-sm font-semibold tracking-[0.14em] text-slate-700 uppercase">Sukkur Area Office</p>
-              <p className="text-xs text-slate-500">Life Insurance</p>
-            </div>
           </a>
 
           <div className="hidden items-center gap-8 text-sm font-medium text-slate-700 md:flex">
             <a href="#home" className="transition hover:text-[#0b2240]">Home</a>
-            <a href="#products" className="transition hover:text-[#0b2240]">Products</a>
+            <div ref={productsMenuRef} className="relative" onMouseEnter={() => setProductsOpen(true)} onMouseLeave={() => setProductsOpen(false)}>
+              <button
+                type="button"
+                aria-expanded={productsOpen}
+                aria-haspopup="menu"
+                onClick={() => setProductsOpen((open) => !open)}
+                className="inline-flex min-h-11 items-center gap-1 transition hover:text-[#0b2240]"
+              >
+                Products
+                <span aria-hidden="true" className={`text-xs transition-transform ${productsOpen ? "rotate-180" : ""}`}>⌄</span>
+              </button>
+
+              {productsOpen && (
+                <div role="menu" className="absolute left-1/2 top-full z-50 mt-2 w-56 -translate-x-1/2 rounded-2xl border border-slate-200 bg-white p-2 text-left shadow-xl">
+                  <a href="/health-insurance" role="menuitem" className="flex min-h-11 items-center rounded-xl px-3 py-2 text-sm text-slate-700 transition hover:bg-slate-100 hover:text-[#0b2240]" onClick={() => setProductsOpen(false)}>
+                    Health Insurance
+                  </a>
+                  {["Life Insurance", "Takaful", "Family Protection", "Retirement", "Child Education"].map((category) => (
+                    <button key={category} type="button" role="menuitem" onClick={() => openProductCategory(category)} className="flex min-h-11 w-full items-center rounded-xl px-3 py-2 text-left text-sm text-slate-700 transition hover:bg-slate-100 hover:text-[#0b2240]">
+                      {category}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
             <a href="#services" className="transition hover:text-[#0b2240]">Services</a>
             <a href="#about" className="transition hover:text-[#0b2240]">About</a>
             <a href="#contact" className="transition hover:text-[#0b2240]">Contact</a>
@@ -267,23 +324,23 @@ export default function Home() {
         {menuOpen && (
           <div className="border-t border-slate-200 bg-white md:hidden">
             <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-3 sm:px-6">
-              {[
-                ["Home", "#home"],
-                ["Products", "#products"],
-                ["Services", "#services"],
-                ["About", "#about"],
-                ["Contact", "#contact"],
-                ["Join Us", "/become-an-agent"],
-              ].map(([label, href]) => (
-                <a
-                  key={label}
-                  href={href}
-                  onClick={() => setMenuOpen(false)}
-                  className="rounded-xl px-3 py-2.5 text-base font-medium text-slate-700 transition hover:bg-slate-100 hover:text-[#0b2240]"
-                >
-                  {label}
-                </a>
-              ))}
+              <a href="#home" onClick={() => setMenuOpen(false)} className="rounded-xl px-3 py-2.5 text-base font-medium text-slate-700 transition hover:bg-slate-100 hover:text-[#0b2240]">Home</a>
+              <button type="button" aria-expanded={productsOpen} onClick={() => setProductsOpen((open) => !open)} className="flex min-h-11 w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-base font-medium text-slate-700 transition hover:bg-slate-100 hover:text-[#0b2240]">
+                <span>Products</span>
+                <span aria-hidden="true" className={`text-sm transition-transform ${productsOpen ? "rotate-180" : ""}`}>⌄</span>
+              </button>
+              {productsOpen && (
+                <div className="ml-3 flex flex-col gap-1 border-l border-slate-200 pl-3">
+                  <a href="/health-insurance" onClick={() => setMenuOpen(false)} className="flex min-h-11 items-center rounded-xl px-3 py-2 text-sm text-slate-700 hover:bg-slate-100">Health Insurance</a>
+                  {["Life Insurance", "Takaful", "Family Protection", "Retirement", "Child Education"].map((category) => (
+                    <button key={category} type="button" onClick={() => openProductCategory(category)} className="flex min-h-11 items-center rounded-xl px-3 py-2 text-left text-sm text-slate-700 hover:bg-slate-100">{category}</button>
+                  ))}
+                </div>
+              )}
+              <a href="#services" onClick={() => setMenuOpen(false)} className="rounded-xl px-3 py-2.5 text-base font-medium text-slate-700 transition hover:bg-slate-100 hover:text-[#0b2240]">Services</a>
+              <a href="#about" onClick={() => setMenuOpen(false)} className="rounded-xl px-3 py-2.5 text-base font-medium text-slate-700 transition hover:bg-slate-100 hover:text-[#0b2240]">About</a>
+              <a href="#contact" onClick={() => setMenuOpen(false)} className="rounded-xl px-3 py-2.5 text-base font-medium text-slate-700 transition hover:bg-slate-100 hover:text-[#0b2240]">Contact</a>
+              <a href="/become-an-agent" onClick={() => setMenuOpen(false)} className="rounded-xl px-3 py-2.5 text-base font-medium text-slate-700 transition hover:bg-slate-100 hover:text-[#0b2240]">Join Us</a>
               <a
                 href="tel:+923132894151"
                 onClick={() => setMenuOpen(false)}
@@ -323,7 +380,7 @@ export default function Home() {
               Apki Family Ka Mustaqbil Mehfooz
             </h1>
             <p className="mt-5 max-w-xl text-lg leading-8 text-gray-300">
-              Trusted insurance guidance, smart protection plans, aur local support jo aapke family ke liye peace of mind banae. Simple, clear, aur reliable solutions.
+              Trusted insurance guidance aur local support ke liye Sukkur Area Office se rabta karein. Simple aur clear information hasil karein.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-4">
@@ -343,19 +400,10 @@ export default function Home() {
               </a>
             </div>
 
-            <div className="mt-10 flex flex-wrap gap-8 text-sm text-gray-300">
-              <div>
-                <div className="text-2xl font-bold text-white">25+</div>
-                <div>Protection plans</div>
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-white">100%</div>
-                <div>Local guidance</div>
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-white">24/7</div>
-                <div>Support intent</div>
-              </div>
+            <div className="mt-10 flex flex-wrap gap-x-8 gap-y-3 text-sm text-gray-300">
+              {['Free Consultation', 'Local Guidance', 'Call / WhatsApp Support'].map((point) => (
+                <div key={point} className="font-semibold text-white">{point}</div>
+              ))}
             </div>
           </div>
 
@@ -363,50 +411,36 @@ export default function Home() {
             <div className="absolute -left-6 top-10 h-36 w-36 rounded-full bg-[#d8f0e8] blur-3xl" />
             <div className="absolute -right-6 bottom-8 h-40 w-40 rounded-full bg-[#dfeafe] blur-3xl" />
 
-            <div className="relative overflow-hidden rounded-[32px] border border-slate-200 bg-white p-5 shadow-[0_30px_80px_rgba(15,23,42,0.12)]">
-              <div className="rounded-[24px] bg-gradient-to-br from-[#0b2240] to-[#143a66] p-6 text-white">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-xs font-medium uppercase tracking-[0.22em] text-slate-300">Coverage Snapshot</p>
-                    <p className="mt-2 text-3xl font-bold">Smart Protection</p>
+            <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 shadow-[0_30px_80px_rgba(15,23,42,0.12)] transition-transform hover:-translate-y-1">
+              <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] md:items-center">
+                <div className="min-w-0">
+                  <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-gradient-to-br from-[#0b2240] to-[var(--brand-blue-500)]">
+                    {!managerImageFailed && <Image src="/area-manager.jpg" alt="Area Manager, Sukkur Area Office" fill sizes="(max-width: 768px) 100vw, 40vw" priority className="object-cover object-top" onError={() => setManagerImageFailed(true)} />}
                   </div>
-                  <div className="rounded-full bg-white/10 px-2.5 py-1 text-xs font-medium text-emerald-300">Live</div>
+                  <span className="mt-3 inline-flex rounded-full bg-[var(--brand-blue-100)] px-3 py-1 text-xs font-semibold text-[var(--brand-blue-700)]">{MANAGER_TITLE}</span>
+                  <p className="mt-2 text-lg font-bold text-[var(--brand-blue-700)]">{MANAGER_NAME}</p>
+                  <p className="mt-1 text-sm font-semibold text-[var(--brand-blue-700)]">Area Code: {AREA_CODE}</p>
                 </div>
 
-                <div className="mt-8 space-y-4">
-                  <div className="rounded-2xl bg-white/8 p-4">
-                    <p className="text-xs uppercase tracking-[0.2em] text-slate-300">Monthly Plan</p>
-                    <div className="mt-3 flex items-end justify-between">
-                      <span className="text-3xl font-bold">PKR 12,500</span>
-                      <span className="rounded-full bg-emerald-500/15 px-2 py-1 text-xs font-semibold text-emerald-300">+8.4%</span>
-                    </div>
-                  </div>
+                <div className="min-w-0 text-[#0b2240]">
+                  <p className="mt-2 text-base font-medium text-slate-600">State Life Sukkur Area Office</p>
+                  <p className="mt-4 text-sm leading-6 text-slate-600">Office Timings: Mon-Fri, 9 AM - 5 PM</p>
 
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <div className="rounded-2xl bg-white/8 p-4">
-                      <p className="text-xs uppercase tracking-[0.2em] text-slate-300">Family</p>
-                      <p className="mt-2 text-2xl font-bold">4 Members</p>
-                    </div>
-                    <div className="rounded-2xl bg-white/8 p-4">
-                      <p className="text-xs uppercase tracking-[0.2em] text-slate-300">Support</p>
-                      <p className="mt-2 text-2xl font-bold">24/7</p>
-                    </div>
-                  </div>
-
-                  <div className="rounded-2xl bg-[#d8f0e8] p-4 text-[#0b2240]">
-                    <div className="flex items-center justify-between text-sm font-medium">
-                      <span>Growth Outlook</span>
-                      <span className="font-bold">Strong</span>
-                    </div>
-                    <div className="mt-5 flex h-20 items-end gap-2">
-                      {[45, 52, 48, 66, 74, 82, 96].map((height, index) => (
-                        <span
-                          key={index}
-                          className="w-full rounded-t-xl bg-gradient-to-t from-[#1f8a67] to-[#7ad5b0]"
-                          style={{ height: `${height}%` }}
-                        />
-                      ))}
-                    </div>
+                  <div className="mt-6 grid gap-3">
+                    <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="flex min-h-14 w-full min-w-0 items-center gap-3 rounded-2xl bg-[#1f8a67] px-4 py-3 text-white transition hover:bg-[#177454]">
+                      <WhatsAppIcon />
+                      <span className="min-w-0">
+                        <span className="block font-semibold">WhatsApp</span>
+                        <span className="block whitespace-nowrap text-sm">{WHATSAPP_DISPLAY}</span>
+                      </span>
+                    </a>
+                    <a href={telLink()} className="flex min-h-14 w-full min-w-0 items-center gap-3 rounded-2xl bg-[var(--brand-blue-700)] px-4 py-3 text-white transition hover:bg-[var(--brand-blue-900)]">
+                      <PhoneIcon />
+                      <span className="min-w-0">
+                        <span className="block font-semibold">Call</span>
+                        <span className="block whitespace-nowrap text-sm">{PHONE_DISPLAY}</span>
+                      </span>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -423,9 +457,8 @@ export default function Home() {
 
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {products.map((product) => (
-            <button
+            <div
               key={product.name}
-              type="button"
               onClick={() => {
                 setSelectedCategory(product.name);
                 setShowForm(false);
@@ -433,6 +466,18 @@ export default function Home() {
                 setErrors({});
                 setFormData({ ...initialForm, selectedPlan: product.name });
               }}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  setSelectedCategory(product.name);
+                  setShowForm(false);
+                  setIsSubmitted(false);
+                  setErrors({});
+                  setFormData({ ...initialForm, selectedPlan: product.name });
+                }
+              }}
+              role="button"
+              tabIndex={0}
               className="group rounded-[28px] border border-slate-200 bg-white p-6 text-left shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl"
             >
               <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#eafaf4] text-sm font-bold text-[#1f8a67]">
@@ -440,7 +485,16 @@ export default function Home() {
               </div>
               <h3 className="text-xl font-bold text-[#0b2240]">{product.name}</h3>
               <p className="mt-3 text-base leading-7 text-slate-600">{product.short}</p>
-            </button>
+              {product.name === "Health" && (
+                <a
+                  href="/health-insurance"
+                  onClick={(event) => event.stopPropagation()}
+                  className="mt-4 inline-flex min-h-11 items-center text-sm font-semibold text-[var(--brand-blue-700)] underline decoration-transparent underline-offset-4 transition hover:decoration-current"
+                >
+                  Health Insurance page dekhein
+                </a>
+              )}
+            </div>
           ))}
         </div>
       </section>
@@ -496,10 +550,6 @@ export default function Home() {
             <div className="rounded-[28px] border border-white/10 bg-white/5 p-6">
               <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-300">Address</p>
               <p className="mt-4 text-lg leading-8 text-slate-200">Shahlimar Road, near Session Court, Sukkur</p>
-            </div>
-            <div className="rounded-[28px] border border-white/10 bg-white/5 p-6">
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-300">Phone / WhatsApp</p>
-              <a href="tel:03132894151" className="mt-4 block text-lg font-medium text-white">0313-2894151</a>
             </div>
             <div className="rounded-[28px] border border-white/10 bg-white/5 p-6 md:col-span-2">
               <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-300">Timings</p>
@@ -584,19 +634,28 @@ export default function Home() {
 
             <div className="mt-8 space-y-4 text-slate-700">
               <p><span className="font-semibold text-[#0b2240]">Address:</span> Shahlimar Road, near Session Court, Sukkur</p>
-              <p><span className="font-semibold text-[#0b2240]">Phone:</span> 0313-2894151</p>
+              <p><span className="font-semibold text-[#0b2240]">Phone:</span> Call / WhatsApp</p>
               <p><span className="font-semibold text-[#0b2240]">Timings:</span> Mon-Fri, 9:00 AM to 5:00 PM</p>
             </div>
 
             <div className="mt-8">
-              <a
-                href="https://www.google.com/maps/dir/?api=1&destination=Shahlimar+Road,+near+Session+Court,+Sukkur,+Pakistan"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center justify-center rounded-full bg-[var(--brand-blue-500)] px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-blue-950/20 transition hover:bg-[var(--brand-blue-700)]"
-              >
-                Get Directions
-              </a>
+              <div className="flex flex-wrap gap-3">
+                <a
+                  href="https://www.google.com/maps/dir/?api=1&destination=Shahlimar+Road,+near+Session+Court,+Sukkur,+Pakistan"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center justify-center rounded-full bg-[var(--brand-blue-500)] px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-blue-950/20 transition hover:bg-[var(--brand-blue-700)]"
+                >
+                  Get Directions
+                </a>
+                <a
+                  href={landlineLink()}
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-sky-200 bg-sky-50 px-6 py-3.5 text-base font-semibold text-sky-700 transition hover:border-sky-300 hover:bg-sky-100"
+                >
+                  <PhoneIcon />
+                  Office Landline
+                </a>
+              </div>
             </div>
           </div>
 
@@ -616,11 +675,14 @@ export default function Home() {
                 <label className="mb-2 block text-sm font-medium text-slate-700">Phone</label>
                 <input
                   type="tel"
+                  inputMode="tel"
+                  autoComplete="tel"
                   value={contactData.phone}
                   onChange={(event) => handleContactChange("phone", event.target.value)}
-                  placeholder="03xx-xxxxxxx"
+                  placeholder="Apna phone number likhein"
                   className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-[#1f8a67] focus:bg-white"
                 />
+                {contactPhoneError && <p className="mt-1 text-sm text-red-600">{contactPhoneError}</p>}
               </div>
             </div>
 
@@ -682,15 +744,15 @@ export default function Home() {
       </section>
 
       <footer className="bg-[var(--brand-blue-900)] py-12 text-slate-300">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[1.1fr_0.8fr_0.8fr] lg:px-8">
+        <div className="mx-auto grid max-w-7xl gap-10 rounded-3xl border border-white/10 bg-white/[0.04] p-6 shadow-[0_20px_60px_rgba(2,12,35,0.18)] sm:px-8 lg:grid-cols-[1.1fr_0.8fr_0.8fr] lg:p-8">
           <div>
             <div className="flex items-center gap-3">
               <Image
-                src="/logo.png"
+                src="/area%20logo.png"
                 alt="Sukkur Area Office logo"
-                width={46}
-                height={46}
-                className="h-11 w-11 rounded-xl object-cover ring-1 ring-white/10"
+                width={210}
+                height={74}
+                className="h-14 w-[190px] rounded-full object-contain"
               />
               <div>
                 <p className="text-lg font-bold text-white">Sukkur Area Office</p>
@@ -703,20 +765,18 @@ export default function Home() {
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold text-white">Quick Links</h3>
+            <h3 className="text-lg font-semibold text-white">Social Media</h3>
             <ul className="mt-5 space-y-3 text-sm text-slate-300">
-              <li><a href="#home" className="hover:text-white">Home</a></li>
-              <li><a href="#products" className="hover:text-white">Products</a></li>
-              <li><a href="#services" className="hover:text-white">Services</a></li>
-              <li><a href="/become-an-agent" className="hover:text-white">Join Us</a></li>
-              <li><a href="#contact" className="hover:text-white">Contact</a></li>
+              <li><a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" aria-label="Facebook page kholein" className="flex min-h-14 min-w-0 items-center gap-3 rounded-2xl transition hover:translate-x-1 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"><span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#1877F2] text-white"><FacebookIcon /></span><span>Facebook</span></a></li>
+              <li><a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile kholein" className="flex min-h-14 min-w-0 items-center gap-3 rounded-2xl transition hover:translate-x-1 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"><span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#0A66C2] text-white"><LinkedInIcon /></span><span>LinkedIn</span></a></li>
+              <li><a href={emailLink()} aria-label="Email bhejein" className="flex min-h-14 min-w-0 items-center gap-3 rounded-2xl transition hover:translate-x-1 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"><span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#0b2240] text-white"><MailIcon /></span><span>Email</span></a></li>
             </ul>
           </div>
 
           <div>
             <h3 className="text-lg font-semibold text-white">Contact</h3>
             <ul className="mt-5 space-y-3 text-sm text-slate-300">
-              <li>0313-2894151</li>
+              <li><a href={landlineLink()} className="transition hover:text-white">Office Landline</a></li>
               <li>Mon-Fri: 9:00 AM – 5:00 PM</li>
               <li>Saturday & Sunday off</li>
             </ul>
@@ -837,10 +897,12 @@ export default function Home() {
                         <label className="mb-2 block text-sm font-medium text-slate-700">Phone</label>
                         <input
                           type="tel"
+                          inputMode="tel"
+                          autoComplete="tel"
                           value={formData.phone}
                           onChange={(event) => handleInputChange("phone", event.target.value)}
                           className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-[#1f8a67] focus:bg-white"
-                          placeholder="03XX-XXXXXXX"
+                          placeholder="Apna phone number likhein"
                         />
                         {errors.phone && <p className="mt-1 text-sm text-red-600">{errors.phone}</p>}
                       </div>
@@ -944,3 +1006,4 @@ export default function Home() {
     </main>
   );
 }
+
