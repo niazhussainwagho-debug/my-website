@@ -22,7 +22,7 @@ The contact form, product consultation enquiry, and agent pre-registration form 
 
 ## Product Images
 
-Product carousel images should be placed in `public/products/` with these filenames: `life.jpg`, `health.jpg`, `takaful.jpg`, `family.jpg`, `retirement.jpg`, `education.jpg`, `corporate.jpg`, and `digital.jpg`. Missing files use the built-in light blue gradient fallback.
+Product carousel images should be placed in `public/products/` with these filenames: `life.png`, `health.png`, `takaful.png`, `family.png`, `retirement.png`, and `education.png`. Corporate Plans and Digital Services intentionally use the built-in light blue gradient fallback.
 
 1. Copy `.env.example` to `.env.local` and fill in the values privately. Never expose the Supabase service role key or Gmail app password in client code or `NEXT_PUBLIC_*` variables.
 2. Create a `leads` table in Supabase with these columns:

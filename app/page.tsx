@@ -117,6 +117,7 @@ export default function Home() {
   const [failedProductImages, setFailedProductImages] = useState<string[]>([]);
   const productsMenuRef = useRef<HTMLDivElement>(null);
   const productCarouselRef = useRef<HTMLDivElement>(null);
+  const productResumeTimerRef = useRef<number | null>(null);
   const router = useRouter();
 
   const plansForCategory = selectedCategory
@@ -125,7 +126,7 @@ export default function Home() {
 
   useEffect(() => {
     const updateVisibleCount = () => {
-      setProductVisibleCount(window.innerWidth >= 1024 ? 4 : window.innerWidth >= 768 ? 2 : 1);
+      setProductVisibleCount(window.innerWidth >= 1024 ? 4 : window.innerWidth >= 640 ? 2 : 1);
     };
 
     updateVisibleCount();
@@ -139,6 +140,12 @@ export default function Home() {
     const card = carousel?.children[nextIndex] as HTMLElement | undefined;
     setProductIndex(nextIndex);
     if (card) carousel?.scrollTo({ left: card.offsetLeft, behavior: "smooth" });
+  };
+
+  const pauseProductCarousel = () => {
+    setProductPaused(true);
+    if (productResumeTimerRef.current) window.clearTimeout(productResumeTimerRef.current);
+    productResumeTimerRef.current = window.setTimeout(() => setProductPaused(false), 6000);
   };
 
   useEffect(() => {
@@ -524,34 +531,36 @@ export default function Home() {
             if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setProductPaused(false);
           }}
           onTouchStart={() => setProductPaused(true)}
-          onTouchEnd={() => setProductPaused(false)}
+          onTouchEnd={pauseProductCarousel}
           onKeyDown={(event) => {
             if (event.key === "ArrowLeft") {
               event.preventDefault();
+              pauseProductCarousel();
               scrollToProduct(productIndex - 1);
             }
             if (event.key === "ArrowRight") {
               event.preventDefault();
+              pauseProductCarousel();
               scrollToProduct(productIndex + 1);
             }
           }}
         >
-          <button type="button" aria-label="Pichla product" onClick={() => scrollToProduct(productIndex - 1)} className="absolute left-0 top-1/2 z-10 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-white text-3xl leading-none text-[var(--brand-blue-700)] shadow-lg transition hover:bg-[var(--brand-blue-100)] lg:-translate-x-1/2">
+          <button type="button" aria-label="Pichla product" onClick={() => { pauseProductCarousel(); scrollToProduct(productIndex - 1); }} className="absolute left-0 top-1/2 z-10 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-white text-3xl leading-none text-[var(--brand-blue-700)] shadow-lg transition hover:bg-[var(--brand-blue-100)]">
             ‹
           </button>
-          <button type="button" aria-label="Agla product" onClick={() => scrollToProduct(productIndex + 1)} className="absolute right-0 top-1/2 z-10 flex h-12 w-12 translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-white text-3xl leading-none text-[var(--brand-blue-700)] shadow-lg transition hover:bg-[var(--brand-blue-100)]">
+          <button type="button" aria-label="Agla product" onClick={() => { pauseProductCarousel(); scrollToProduct(productIndex + 1); }} className="absolute right-0 top-1/2 z-10 flex h-12 w-12 translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-white text-3xl leading-none text-[var(--brand-blue-700)] shadow-lg transition hover:bg-[var(--brand-blue-100)]">
             ›
           </button>
 
-          <div ref={productCarouselRef} className="flex snap-x snap-mandatory gap-6 overflow-x-auto overscroll-x-contain px-4 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            {products.map((product) => (
+          <div ref={productCarouselRef} className="flex touch-pan-x touch-pan-y snap-x snap-mandatory gap-6 overflow-x-auto overscroll-x-contain px-4 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {products.map((product, index) => (
               <article
                 key={product.slug}
                 onClick={() => handleProductOpen(product)}
                 className="group relative flex min-w-0 flex-[0_0_85%] snap-start flex-col overflow-hidden rounded-bl-[64px] rounded-br-xl rounded-tl-xl rounded-tr-[64px] border border-slate-200 bg-[#F5F5F5] p-4 text-left text-[#0b2240] shadow-sm transition hover:-translate-y-1 hover:shadow-xl sm:flex-[0_0_45%] lg:flex-[0_0_calc((100%_-_4.5rem)/4)]"
               >
-                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-gradient-to-br from-blue-100 to-sky-200">
-                  {!failedProductImages.includes(product.image) && <Image src={product.image} alt={product.alt} fill sizes="(max-width: 768px) 85vw, (max-width: 1024px) 45vw, 25vw" className="object-cover" onError={() => setFailedProductImages((current) => [...current, product.image])} />}
+                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-tr-[64px] rounded-tl-xl bg-gradient-to-br from-blue-100 to-sky-200">
+                  {product.image && !failedProductImages.includes(product.image) && <Image src={product.image} alt={product.alt} fill priority={index === 0} sizes="(max-width: 640px) 85vw, (max-width: 1024px) 45vw, 25vw" className="object-cover" style={{ objectPosition: product.imagePosition }} onError={() => setFailedProductImages((current) => [...current, product.image as string])} />}
                 </div>
                 <div className="flex flex-1 flex-col p-3 pb-16">
                   <h3 className="text-xl font-bold">{product.title}</h3>
@@ -568,7 +577,7 @@ export default function Home() {
           </div>
 
           <div className="mt-5 flex items-center justify-center gap-3">
-            {products.map((product, index) => <button key={product.slug} type="button" aria-label={`${product.title} par jayein`} aria-current={productIndex === index ? "true" : undefined} onClick={() => scrollToProduct(index)} className={`h-2.5 rounded-full transition-all ${productIndex === index ? "w-7 bg-[var(--brand-blue-500)]" : "w-2.5 bg-white/60 hover:bg-white"}`} />)}
+            {products.map((product, index) => <button key={product.slug} type="button" aria-label={`${product.title} par jayein`} aria-current={productIndex === index ? "true" : undefined} onClick={() => { pauseProductCarousel(); scrollToProduct(index); }} className={`h-2.5 rounded-full transition-all ${productIndex === index ? "w-7 bg-[var(--brand-blue-500)]" : "w-2.5 bg-white/60 hover:bg-white"}`} />)}
             <button type="button" aria-label={productPaused ? "Products carousel play karein" : "Products carousel pause karein"} onClick={() => setProductPaused((paused) => !paused)} className="ml-2 flex h-9 w-9 items-center justify-center rounded-full border border-white/30 bg-white text-sm font-bold text-[var(--brand-blue-700)] shadow-sm">
               {productPaused ? "▶" : "Ⅱ"}
             </button>
