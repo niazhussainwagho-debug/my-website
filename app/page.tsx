@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { FacebookIcon, LinkedInIcon, MailIcon, PhoneIcon, WhatsAppIcon } from "../components/icons";
+import { FacebookIcon, LinkedInIcon, MailIcon, PhoneIcon } from "../components/icons";
 import { plans, type Plan } from "../data/plans";
-import { AREA_CODE, FACEBOOK_URL, LINKEDIN_URL, MANAGER_NAME, MANAGER_TITLE, PHONE_DISPLAY, WHATSAPP_DISPLAY, emailLink, landlineLink, telLink, whatsappLink } from "../lib/contact";
+import { AREA_CODE, FACEBOOK_URL, LINKEDIN_URL, MANAGER_NAME, MANAGER_TITLE, emailLink, landlineLink } from "../lib/contact";
 import { cleanPhone } from "../lib/phone";
 
 const products = [
@@ -250,16 +250,17 @@ export default function Home() {
   };
 
   return (
-    <main className="overflow-x-hidden bg-transparent pb-24 text-slate-800 md:pb-0">
+    <main className="relative z-10 overflow-x-hidden bg-transparent pb-24 text-slate-800 md:pb-0">
+      <div className="site-glow" aria-hidden="true" />
       <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/90 backdrop-blur-md">
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
           <a href="#home" className="flex items-center gap-3">
             <Image
-              src="/area%20logo.png"
+              src="/area-logo.png"
               alt="Sukkur Area Office logo"
               width={210}
               height={74}
-              className="h-12 w-[150px] max-w-full shrink-0 rounded-full object-contain sm:h-14 sm:w-[190px]"
+              className="h-9 w-[105px] max-w-full shrink-0 rounded-full bg-white p-1 object-contain sm:h-11 sm:w-[140px]"
               priority
             />
           </a>
@@ -411,36 +412,23 @@ export default function Home() {
             <div className="absolute -left-6 top-10 h-36 w-36 rounded-full bg-[#d8f0e8] blur-3xl" />
             <div className="absolute -right-6 bottom-8 h-40 w-40 rounded-full bg-[#dfeafe] blur-3xl" />
 
-            <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 shadow-[0_30px_80px_rgba(15,23,42,0.12)] transition-transform hover:-translate-y-1">
-              <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] md:items-center">
+            <div className="glass relative overflow-hidden rounded-3xl p-5 text-white">
+              <div className="grid gap-6 md:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] md:items-center">
                 <div className="min-w-0">
-                  <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-gradient-to-br from-[#0b2240] to-[var(--brand-blue-500)]">
+                  <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl border border-white/30 bg-gradient-to-br from-[#0b2240] to-[var(--brand-blue-500)] shadow-lg">
                     {!managerImageFailed && <Image src="/area-manager.jpg" alt="Area Manager, Sukkur Area Office" fill sizes="(max-width: 768px) 100vw, 40vw" priority className="object-cover object-top" onError={() => setManagerImageFailed(true)} />}
                   </div>
-                  <span className="mt-3 inline-flex rounded-full bg-[var(--brand-blue-100)] px-3 py-1 text-xs font-semibold text-[var(--brand-blue-700)]">{MANAGER_TITLE}</span>
-                  <p className="mt-2 text-lg font-bold text-[var(--brand-blue-700)]">{MANAGER_NAME}</p>
-                  <p className="mt-1 text-sm font-semibold text-[var(--brand-blue-700)]">Area Code: {AREA_CODE}</p>
+                  <div className="glass mt-3 w-full rounded-xl bg-white/[0.12] px-4 py-3 text-center text-white">
+                    <p className="break-words text-balance text-lg font-bold leading-tight sm:text-xl">{MANAGER_NAME}</p>
+                    <p className="mt-1 text-xs font-semibold uppercase tracking-[0.12em] text-blue-100">{MANAGER_TITLE}</p>
+                  </div>
                 </div>
 
-                <div className="min-w-0 text-[#0b2240]">
-                  <p className="mt-2 text-base font-medium text-slate-600">State Life Sukkur Area Office</p>
-                  <p className="mt-4 text-sm leading-6 text-slate-600">Office Timings: Mon-Fri, 9 AM - 5 PM</p>
-
-                  <div className="mt-6 grid gap-3">
-                    <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="flex min-h-14 w-full min-w-0 items-center gap-3 rounded-2xl bg-[#1f8a67] px-4 py-3 text-white transition hover:bg-[#177454]">
-                      <WhatsAppIcon />
-                      <span className="min-w-0">
-                        <span className="block font-semibold">WhatsApp</span>
-                        <span className="block whitespace-nowrap text-sm">{WHATSAPP_DISPLAY}</span>
-                      </span>
-                    </a>
-                    <a href={telLink()} className="flex min-h-14 w-full min-w-0 items-center gap-3 rounded-2xl bg-[var(--brand-blue-700)] px-4 py-3 text-white transition hover:bg-[var(--brand-blue-900)]">
-                      <PhoneIcon />
-                      <span className="min-w-0">
-                        <span className="block font-semibold">Call</span>
-                        <span className="block whitespace-nowrap text-sm">{PHONE_DISPLAY}</span>
-                      </span>
-                    </a>
+                <div className="glass min-w-0 rounded-2xl p-5 text-white">
+                  <p className="text-xl font-bold text-white sm:text-2xl">State Life Sukkur Area Office</p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    <span className="glass rounded-xl px-3 py-2 text-sm font-semibold text-blue-100">Area Code: {AREA_CODE}</span>
+                    <span className="glass rounded-xl px-3 py-2 text-sm font-semibold text-blue-100">Mon-Fri, 9 AM - 5 PM</span>
                   </div>
                 </div>
               </div>
@@ -478,13 +466,13 @@ export default function Home() {
               }}
               role="button"
               tabIndex={0}
-              className="group rounded-[28px] border border-slate-200 bg-white p-6 text-left shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl"
+              className="glass group rounded-[28px] p-6 text-left text-white"
             >
-              <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#eafaf4] text-sm font-bold text-[#1f8a67]">
+              <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl border border-white/20 bg-white/15 text-sm font-bold text-white">
                 {product.badge}
               </div>
-              <h3 className="text-xl font-bold text-[#0b2240]">{product.name}</h3>
-              <p className="mt-3 text-base leading-7 text-slate-600">{product.short}</p>
+              <h3 className="text-xl font-bold text-white">{product.name}</h3>
+              <p className="mt-3 text-base leading-7 text-blue-100">{product.short}</p>
               {product.name === "Health" && (
                 <a
                   href="/health-insurance"
@@ -508,12 +496,12 @@ export default function Home() {
 
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
             {services.map((service, index) => (
-              <div key={service} className="rounded-[24px] border border-slate-200 bg-[#f7faf8] p-6 shadow-sm">
-                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--brand-blue-700)] text-sm font-bold text-white">
+              <div key={service} className="glass rounded-[24px] p-6 text-white">
+                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl border border-white/20 bg-white/15 text-sm font-bold text-white">
                   {index + 1}
                 </div>
-                <h3 className="text-lg font-bold text-[#0b2240]">{service}</h3>
-                <p className="mt-3 text-sm leading-6 text-slate-600">
+                <h3 className="text-lg font-bold text-white">{service}</h3>
+                <p className="mt-3 text-sm leading-6 text-blue-100">
                   Clear assistance, friendly guidance, aur step-by-step support ke liye hum yahan hain.
                 </p>
               </div>
@@ -530,10 +518,10 @@ export default function Home() {
 
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
           {reasons.map((reason) => (
-            <div key={reason.number} className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm">
+            <div key={reason.number} className="glass rounded-[28px] p-6 text-white">
               <div className="mb-4 text-3xl font-black text-[#1f8a67]">{reason.number}</div>
-              <h3 className="text-xl font-bold text-[#0b2240]">{reason.title}</h3>
-              <p className="mt-3 text-base leading-7 text-slate-600">{reason.text}</p>
+              <h3 className="text-xl font-bold text-white">{reason.title}</h3>
+              <p className="mt-3 text-base leading-7 text-blue-100">{reason.text}</p>
             </div>
           ))}
         </div>
@@ -547,11 +535,11 @@ export default function Home() {
           </div>
 
           <div className="grid gap-6 md:grid-cols-2">
-            <div className="rounded-[28px] border border-white/10 bg-white/5 p-6">
+            <div className="glass rounded-[28px] p-6 text-white">
               <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-300">Address</p>
               <p className="mt-4 text-lg leading-8 text-slate-200">Shahlimar Road, near Session Court, Sukkur</p>
             </div>
-            <div className="rounded-[28px] border border-white/10 bg-white/5 p-6 md:col-span-2">
+            <div className="glass rounded-[28px] p-6 text-white md:col-span-2">
               <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-300">Timings</p>
               <p className="mt-4 text-lg leading-8 text-slate-200">Monday se Friday, subah 9 baje se shaam 5 baje tak. Saturday aur Sunday off.</p>
             </div>
@@ -579,14 +567,14 @@ export default function Home() {
 
         <div className="grid gap-6 lg:grid-cols-3">
           {testimonials.map((review) => (
-            <div key={review.name} className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm">
+            <div key={review.name} className="glass rounded-[28px] p-6 text-white">
               <div className="mb-5 flex gap-1 text-amber-400">
                 {[...Array(5)].map((_, i) => (
                   <span key={i}>★</span>
                 ))}
               </div>
-              <p className="text-base leading-7 text-slate-600">“{review.text}”</p>
-              <div className="mt-6 border-t border-slate-200 pt-4 text-sm font-semibold text-[#0b2240]">{review.name}</div>
+              <p className="text-base leading-7 text-blue-100">“{review.text}”</p>
+              <div className="mt-6 border-t border-white/20 pt-4 text-sm font-semibold text-white">{review.name}</div>
             </div>
           ))}
         </div>
@@ -748,11 +736,11 @@ export default function Home() {
           <div>
             <div className="flex items-center gap-3">
               <Image
-                src="/area%20logo.png"
+                src="/area-logo.png"
                 alt="Sukkur Area Office logo"
                 width={210}
                 height={74}
-                className="h-14 w-[190px] rounded-full object-contain"
+                className="h-11 w-[140px] rounded-full bg-white p-1 object-contain"
               />
               <div>
                 <p className="text-lg font-bold text-white">Sukkur Area Office</p>

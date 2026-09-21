@@ -34,6 +34,77 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.glass {
+  background: rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+  transition: background 200ms ease, border-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+}
+
+.glass:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: translateY(-2px);
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  .glass {
+    background: rgba(20, 60, 140, 0.65);
+  }
+}
+
+@media (max-width: 768px) {
+  .glass {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass {
+    transition: none;
+  }
+
+  .glass:hover {
+    transform: none;
+  }
+}
+
+.site-glow {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.site-glow::before,
+.site-glow::after {
+  position: absolute;
+  content: "";
+  width: 38vw;
+  height: 38vw;
+  max-width: 520px;
+  max-height: 520px;
+  border-radius: 9999px;
+  filter: blur(90px);
+  opacity: 0.28;
+}
+
+.site-glow::before {
+  top: 8%;
+  left: -10%;
+  background: radial-gradient(circle, #2BB6C4 0%, transparent 70%);
+}
+
+.site-glow::after {
+  right: -10%;
+  bottom: 8%;
+  background: radial-gradient(circle, #4C8DFF 0%, transparent 70%);
+}
+
 ::selection {
   background: rgba(31, 138, 103, 0.2);
 }

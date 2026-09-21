@@ -130,16 +130,17 @@ export default function BecomeAnAgentPage() {
   };
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-transparent pb-24 text-slate-800 md:pb-0">
+    <main className="relative z-10 min-h-screen overflow-x-hidden bg-transparent pb-24 text-slate-800 md:pb-0">
+      <div className="site-glow" aria-hidden="true" />
       <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/90 backdrop-blur-md">
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
           <Link href="/" className="flex min-w-0 items-center gap-3">
             <Image
-              src="/area%20logo.png"
+              src="/area-logo.png"
               alt="Sukkur Area Office logo"
               width={210}
               height={74}
-              className="h-12 w-[150px] max-w-full shrink-0 rounded-full object-contain sm:h-14 sm:w-[190px]"
+              className="h-9 w-[105px] max-w-full shrink-0 rounded-full bg-white p-1 object-contain sm:h-11 sm:w-[140px]"
               priority
             />
           </Link>
@@ -239,9 +240,9 @@ export default function BecomeAnAgentPage() {
           </div>
           <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
             {processSteps.map((step, index) => (
-              <div key={step} className="rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm">
-                <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-2xl bg-[#eafaf4] text-sm font-bold text-[#1f8a67]">0{index + 1}</div>
-                <p className="text-base leading-7 text-slate-600">{step}</p>
+              <div key={step} className="glass rounded-[24px] p-6 text-white">
+                <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-2xl border border-white/20 bg-white/15 text-sm font-bold text-white">0{index + 1}</div>
+                <p className="text-base leading-7 text-blue-100">{step}</p>
               </div>
             ))}
           </div>
@@ -267,9 +268,9 @@ export default function BecomeAnAgentPage() {
               ))}
             </div>
           </div>
-          <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          <div className="glass rounded-[28px] p-6 text-white sm:p-8">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#1f8a67]">Important Note</p>
-            <p className="mt-4 text-lg leading-8 text-slate-600">Tamam documents Sector Head / Area Manager se attest hone chahiye.</p>
+            <p className="mt-4 text-lg leading-8 text-blue-100">Tamam documents Sector Head / Area Manager se attest hone chahiye.</p>
           </div>
         </div>
       </section>
@@ -281,17 +282,17 @@ export default function BecomeAnAgentPage() {
             <h2 className="mt-3 text-3xl font-bold text-white sm:text-4xl">Zaroori Shartein</h2>
           </div>
           <div className="grid gap-6 md:grid-cols-2">
-            <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm">
-              <h3 className="text-xl font-bold text-[#0b2240]">Form ke mutabiq</h3>
-              <ul className="mt-5 space-y-4 text-base leading-7 text-slate-600">
+            <div className="glass rounded-[28px] p-6 text-white">
+              <h3 className="text-xl font-bold text-white">Form ke mutabiq</h3>
+              <ul className="mt-5 space-y-4 text-base leading-7 text-blue-100">
                 <li>Maloomat durust honi chahiye.</li>
                 <li>Insurance Ordinance 2000 aur Insurance Rules 2017 ki pabandi zaroori hai.</li>
                 <li>Kisi aur insurer ke liye kaam nahi kar sakte.</li>
               </ul>
             </div>
-            <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm">
-              <h3 className="text-xl font-bold text-[#0b2240]">Eligibility</h3>
-              <p className="mt-5 text-base leading-7 text-slate-600">Umar aur taleem ke hawale se details office se confirm karein.</p>
+            <div className="glass rounded-[28px] p-6 text-white">
+              <h3 className="text-xl font-bold text-white">Eligibility</h3>
+              <p className="mt-5 text-base leading-7 text-blue-100">Umar aur taleem ke hawale se details office se confirm karein.</p>
             </div>
           </div>
         </div>
@@ -419,7 +420,7 @@ export default function BecomeAnAgentPage() {
         <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[1.1fr_0.8fr_0.8fr] lg:px-8">
           <div>
             <div className="flex items-center gap-3">
-              <Image src="/area%20logo.png" alt="Sukkur Area Office logo" width={210} height={74} className="h-14 w-[190px] rounded-full object-contain" />
+              <Image src="/area-logo.png" alt="Sukkur Area Office logo" width={210} height={74} className="h-11 w-[140px] rounded-full bg-white p-1 object-contain" />
               <div>
                 <p className="text-lg font-bold text-white">Sukkur Area Office</p>
                 <p className="text-sm text-slate-400">Life Insurance</p>
