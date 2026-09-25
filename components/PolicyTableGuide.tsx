@@ -85,7 +85,7 @@ export default function PolicyTableGuide() {
         <div className="max-w-3xl">
           <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#1f8a67]">{t('products.guideEyebrow')}</p>
           <h2 className="mt-3 text-3xl font-bold tracking-tight text-(--brand-blue-900) sm:text-4xl">{t('products.guideTitle')}</h2>
-          <p className="mt-4 leading-7 text-slate-600">Purpose, eligibility, terms aur payout highlights ek glance mein dekhein. Exact premium, bonus aur official policy illustration office se confirm karein.</p>
+          <p className="mt-4 leading-7 text-slate-600">Apni family ki zaroorat ke mutabiq best policy table chunain aur official premium structure ki maloomat hasil karein.</p>
         </div>
 
         <div className="mt-8 flex flex-wrap gap-2 border-b border-slate-200 pb-4" role="tablist" aria-label="Policy table categories">

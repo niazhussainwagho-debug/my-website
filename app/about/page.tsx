@@ -60,9 +60,7 @@ export default function AboutPage() {
         <div className="relative mx-auto max-w-7xl">
           <p className="text-sm font-bold uppercase tracking-[0.18em] text-cyan-200">{t("about.eyebrow")}</p>
           <h1 className="mt-4 max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl">{t("about.title")}</h1>
-          <p className="mt-6 max-w-2xl text-base leading-8 text-blue-100 sm:text-lg">
-            State Life Sukkur Area Office 5405 local families, professionals aur communities ko life protection aur financial security ke decisions samajhne mein guidance provide karta hai. Hamara focus clear information, respectful service aur long-term support par hai.
-          </p>
+          <p className="mt-6 max-w-2xl text-base leading-8 text-blue-100 sm:text-lg">{t("about.subtitle")}</p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link href="/contact" className="inline-flex min-h-12 items-center justify-center rounded-full bg-white px-6 py-3 font-bold text-(--brand-blue-900) transition hover:bg-cyan-50">{t("about.consultation")}</Link>
             <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/30 px-6 py-3 font-bold text-white transition hover:bg-white/10">{t("about.whatsapp")}</a>

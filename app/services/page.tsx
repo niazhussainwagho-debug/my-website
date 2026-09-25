@@ -8,31 +8,31 @@ import { useLanguage } from "../../context/LanguageContext";
 const services = [
   {
     title: "Policy Documentation Support",
-    detail: "Application forms, required documents aur policy paperwork ko samajhne mein practical guidance.",
+    detail: "Application forms, required documents aur policy paperwork ke liye clear, step-by-step office guidance.",
     icon: FileText,
     tone: "bg-blue-50 text-blue-700",
   },
   {
     title: "Claim Guidance & Settlement Assistance",
-    detail: "Claim process ke steps, documentation aur next action ko clear tareeqe se samajhne mein madad.",
+    detail: "Claim process, required documentation aur settlement ke next steps par respectful, practical assistance.",
     icon: ShieldCheck,
     tone: "bg-emerald-50 text-emerald-700",
   },
   {
     title: "Policy Renewal & Premium Payment Help",
-    detail: "Renewal dates, payment guidance aur policy records ke hawale se office support hasil karein.",
+    detail: "Policy renewal dates, premium payment process aur records ke liye timely office support hasil karein.",
     icon: RefreshCw,
     tone: "bg-amber-50 text-amber-700",
   },
   {
     title: "Financial Planning Consultation",
-    detail: "Family goals, protection needs aur long-term planning ke liye suitable options par mashwara.",
+    detail: "Family goals aur protection needs ko samajh kar long-term planning options par focused consultation.",
     icon: Calculator,
     tone: "bg-cyan-50 text-cyan-700",
   },
   {
     title: "Group Health & Individual Coverage Guidance",
-    detail: "Families, individuals aur organizations ke liye coverage categories ko samajhne mein rehnumai.",
+    detail: "Families, individuals aur organizations ke liye coverage categories aur documentation par clear guidance.",
     icon: UsersRound,
     tone: "bg-indigo-50 text-indigo-700",
   },
@@ -56,7 +56,7 @@ export default function ServicesPage() {
           <div className="max-w-2xl">
             <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#1f8a67]">{t("services.support")}</p>
             <h2 className="mt-3 max-w-full break-words overflow-hidden text-3xl font-bold tracking-tight text-(--brand-blue-900) sm:text-4xl">Practical help, without the paperwork guesswork.</h2>
-            <p className="mt-4 leading-7 text-slate-600">Apni existing policy ya service need select karein. Representative aapko required documents, next steps aur official process samjhayega.</p>
+            <p className="mt-4 leading-7 text-slate-600">Apni policy ya service need select karein. Hamara representative required documents, next steps aur official process clear tareeqe se samjhayega.</p>
           </div>
 
           <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
