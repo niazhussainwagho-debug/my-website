@@ -36,43 +36,52 @@ export async function submitPlanApplication(
   const gmailAppPassword = process.env.GMAIL_APP_PASSWORD;
   const ownerEmail = process.env.OWNER_EMAIL;
 
-  if (!supabaseUrl || !serviceRoleKey) {
-    return { success: false, error: 'Application service abhi available nahi hai.' };
+  let databaseSaved = false;
+  let emailSent = false;
+
+  if (supabaseUrl && serviceRoleKey) {
+    try {
+      const supabase = createClient(supabaseUrl, serviceRoleKey);
+      const { error: databaseError } = await supabase.from('plan_applications').insert({
+        plan_name: planName,
+        full_name: fullName,
+        phone,
+        cnic_or_age: cnicOrAge || null,
+        consent: true,
+      });
+
+      if (databaseError) throw databaseError;
+      databaseSaved = true;
+    } catch (error) {
+      console.error('Plan application database save failed:', error instanceof Error ? error.message : 'Unknown database error');
+    }
+  } else {
+    console.error('Plan application database save skipped: Supabase server configuration is missing.');
   }
 
-  if (!gmailUser || !gmailAppPassword || !ownerEmail) {
-    return { success: false, error: 'Email notification service abhi configure nahi hai.' };
+  if (gmailUser && gmailAppPassword && ownerEmail) {
+    try {
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: { user: gmailUser, pass: gmailAppPassword },
+      });
+      const subject = `New Plan Order: ${planName}`;
+      const body = `A new customer has applied for a plan.\nName: ${fullName}\nPhone: ${phone}\nPlan: ${planName}.`;
+
+      await transporter.sendMail({
+        from: gmailUser,
+        to: ownerEmail,
+        subject,
+        text: body,
+      });
+      emailSent = true;
+    } catch (error) {
+      console.error('Plan application email failed:', error instanceof Error ? error.message : 'Unknown email error');
+    }
+  } else {
+    console.error('Plan application email skipped: Gmail or OWNER_EMAIL configuration is missing.');
   }
 
-  try {
-    const supabase = createClient(supabaseUrl, serviceRoleKey);
-    const { error: databaseError } = await supabase.from('plan_applications').insert({
-      plan_name: planName,
-      full_name: fullName,
-      phone,
-      cnic_or_age: cnicOrAge || null,
-      consent: true,
-    });
-
-    if (databaseError) throw databaseError;
-
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: { user: gmailUser, pass: gmailAppPassword },
-    });
-    const subject = `New Plan Order: ${planName}`;
-    const body = `A new customer has applied for a plan.\nName: ${fullName}\nPhone: ${phone}\nPlan: ${planName}.`;
-
-    await transporter.sendMail({
-      from: gmailUser,
-      to: ownerEmail,
-      subject,
-      text: body,
-    });
-
-    return { success: true, planName };
-  } catch (error) {
-    console.error('Plan application failed:', error instanceof Error ? error.message : 'Unknown error');
-    return { success: false, error: 'Application submit nahi ho saki. Baraye meherbani dobara try karein.' };
-  }
+  if (databaseSaved || emailSent) return { success: true, planName };
+  return { success: false, error: 'Application save aur email dono fail ho gaye. Baraye meherbani dobara try karein.' };
 }
