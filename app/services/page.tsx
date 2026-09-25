@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import PolicyTableGuide from "../../components/PolicyTableGuide";
 
 export const metadata: Metadata = {
   title: "Services | Sukkur Area Office 5405",
@@ -60,6 +61,8 @@ export default function ServicesPage() {
           </div>
         </div>
       </section>
+
+      <PolicyTableGuide />
 
       <section className="bg-white px-4 py-14 sm:px-6 lg:px-8">
         <div className="mx-auto flex max-w-7xl flex-col gap-5 rounded-3xl bg-(--brand-blue-100) p-6 sm:p-8 md:flex-row md:items-center md:justify-between">
