@@ -375,10 +375,10 @@ export default function Home() {
                 Free Consultation
               </a>
               <a
-                href="https://wa.me/923132894151"
+                href={`https://wa.me/${WHATSAPP_NUMBER}`}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center justify-center rounded-full border border-[#0b2240]/15 bg-white px-6 py-3.5 text-base font-semibold text-[#0b2240] shadow-sm transition hover:-translate-y-0.5 hover:border-[#0b2240]/25"
+                className="inline-flex items-center justify-center rounded-full border-0 bg-white px-6 py-3.5 text-base font-semibold text-[#0b2240] shadow-sm outline-none transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f8a67]"
               >
                 WhatsApp Us
               </a>
