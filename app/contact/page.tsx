@@ -185,7 +185,12 @@ export default function ContactPage() {
               <button type="submit" disabled={status === "sending"} className="inline-flex min-h-12 w-full items-center justify-center rounded-full bg-(--brand-blue-700) px-6 py-3 font-bold text-white transition hover:bg-(--brand-blue-900) disabled:cursor-wait disabled:opacity-70 sm:w-auto">
                 {status === "sending" ? "Bhej rahe hain..." : "Send Enquiry"}
               </button>
-              {status === "success" && <p className="text-sm font-semibold text-emerald-700">Shukriya! Office team jald aap se rabta karegi.</p>}
+              {status === "success" && (
+                <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-emerald-900">
+                  <p className="font-bold">Thank You for Contacting Us!</p>
+                  <p className="mt-1 text-sm leading-6">We have received your message. Our representative from State Life Sukkur Area Office 5405 will contact you shortly.</p>
+                </div>
+              )}
               {status === "error" && <p className="text-sm font-semibold text-red-600">Kuch masla aa gaya. Baraye meherbani WhatsApp ya call par rabta karein.</p>}
             </form>
           </div>
