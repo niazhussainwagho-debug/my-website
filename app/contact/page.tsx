@@ -112,7 +112,7 @@ export default function ContactPage() {
               <span className="text-sm text-slate-500">Fields marked * required</span>
             </div>
 
-            <form onSubmit={handleSubmit} className="mt-7 space-y-5" noValidate>
+            <form id="contact-form" onSubmit={handleSubmit} className="mt-7 space-y-5" noValidate>
               <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                 <label className="block text-sm font-semibold text-slate-700">
                   Name *

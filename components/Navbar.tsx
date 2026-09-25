@@ -28,7 +28,7 @@ export default function Navbar() {
       <nav className="mx-auto flex h-full max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8" aria-label="Main navigation">
         <Link href="/" className="flex min-w-0 items-center gap-3 text-slate-900" onClick={() => setMenuOpen(false)}>
           <span className="flex shrink-0 items-center rounded-none bg-transparent p-0">
-            <Image src="/area-logo.png" alt="State Life Sukkur Area Office logo" width={420} height={144} priority className="h-12 w-40 object-contain object-left md:h-16 md:w-55" />
+            <Image src="/area-logo.png" alt="State Life Sukkur Area Office logo" width={420} height={144} priority className="h-12 w-auto object-contain object-left md:h-14 md:w-auto" />
           </span>
           <span className="min-w-0">
             <span className="block truncate text-sm font-bold sm:text-base">Sukkur Area Office</span>
