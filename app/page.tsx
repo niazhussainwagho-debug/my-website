@@ -362,7 +362,7 @@ export default function Home() {
   return (
     <main className="relative z-10 overflow-x-hidden bg-transparent pb-24 text-slate-800 md:pb-0">
       <div className="site-glow" aria-hidden="true" />
-      <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/90 backdrop-blur-md">
+      <header className="hidden">
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
           <a href="#home" className="flex items-center gap-3">
             <Image
@@ -403,8 +403,8 @@ export default function Home() {
               )}
             </div>
             <a href="#services" className="transition hover:text-[#0b2240]">Services</a>
-            <a href="#about" className="transition hover:text-[#0b2240]">About</a>
-            <a href="#contact" className="transition hover:text-[#0b2240]">Contact</a>
+            <a href="/about" className="transition hover:text-[#0b2240]">About</a>
+            <a href="/contact" className="transition hover:text-[#0b2240]">Contact</a>
             <a href="/become-an-agent" className="font-semibold text-[#1f8a67] transition hover:text-[#177454]">Join Us</a>
           </div>
 
@@ -449,8 +449,8 @@ export default function Home() {
                 </div>
               )}
               <a href="#services" onClick={() => setMenuOpen(false)} className="rounded-xl px-3 py-2.5 text-base font-medium text-slate-700 transition hover:bg-slate-100 hover:text-[#0b2240]">Services</a>
-              <a href="#about" onClick={() => setMenuOpen(false)} className="rounded-xl px-3 py-2.5 text-base font-medium text-slate-700 transition hover:bg-slate-100 hover:text-[#0b2240]">About</a>
-              <a href="#contact" onClick={() => setMenuOpen(false)} className="rounded-xl px-3 py-2.5 text-base font-medium text-slate-700 transition hover:bg-slate-100 hover:text-[#0b2240]">Contact</a>
+              <a href="/about" onClick={() => setMenuOpen(false)} className="rounded-xl px-3 py-2.5 text-base font-medium text-slate-700 transition hover:bg-slate-100 hover:text-[#0b2240]">About</a>
+              <a href="/contact" onClick={() => setMenuOpen(false)} className="rounded-xl px-3 py-2.5 text-base font-medium text-slate-700 transition hover:bg-slate-100 hover:text-[#0b2240]">Contact</a>
               <a href="/become-an-agent" onClick={() => setMenuOpen(false)} className="rounded-xl px-3 py-2.5 text-base font-medium text-slate-700 transition hover:bg-slate-100 hover:text-[#0b2240]">Join Us</a>
               <a
                 href="tel:+923132894151"
