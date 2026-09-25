@@ -16,8 +16,8 @@ export async function submitPlanApplication(
   _previousState: PlanApplicationState,
   formData: FormData,
 ): Promise<PlanApplicationState> {
-  const planName = textValue(formData.get('planName'));
-  const fullName = textValue(formData.get('fullName'));
+  const planName = textValue(formData.get('plan_name')) || textValue(formData.get('planName'));
+  const fullName = textValue(formData.get('name')) || textValue(formData.get('fullName'));
   const phone = textValue(formData.get('phone'));
   const cnicOrAge = textValue(formData.get('cnicOrAge'));
   const consent = formData.get('consent') === 'on';
