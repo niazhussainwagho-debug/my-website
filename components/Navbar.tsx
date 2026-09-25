@@ -26,36 +26,38 @@ export default function Navbar() {
   const [urduMode, setUrduMode] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full overflow-x-hidden bg-white shadow-md">
-      <div className="mx-auto flex min-h-20 w-full max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:min-h-[88px] lg:px-8">
-        <Link href="/" className="flex min-w-0 items-center gap-3 text-slate-900" onClick={() => setMenuOpen(false)}>
-          <Image src="/area-logo.png" alt="State Life Insurance Corporation of Pakistan logo" width={420} height={144} priority className="h-12 w-auto shrink-0 object-contain object-left md:h-14" />
-          <span className="min-w-0 leading-tight">
-            <span className="block truncate text-sm font-bold sm:text-base">State Life Insurance</span>
-            <span className="hidden truncate text-xs font-semibold uppercase tracking-[0.08em] text-slate-500 sm:block">Corporation of Pakistan</span>
-            <span className="block truncate text-xs text-(--brand-blue-700)">Sukkur Area Office 5405</span>
-          </span>
-        </Link>
+    <header className="sticky top-0 left-0 right-0 z-50 w-full max-w-full m-0 p-0 shadow-md bg-white">
+      <div className="m-0 w-full max-w-full overflow-hidden">
+        <div className="mx-auto flex min-h-20 w-full max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:min-h-[88px] lg:px-8">
+          <Link href="/" className="flex min-w-0 items-center gap-3 text-slate-900" onClick={() => setMenuOpen(false)}>
+            <Image src="/area-logo.png" alt="State Life Insurance Corporation of Pakistan logo" width={420} height={144} priority className="h-12 w-auto shrink-0 object-contain object-left md:h-14" />
+            <span className="min-w-0 leading-tight">
+              <span className="block truncate text-sm font-bold sm:text-base">State Life Insurance</span>
+              <span className="hidden truncate text-xs font-semibold uppercase tracking-[0.08em] text-slate-500 sm:block">Corporation of Pakistan</span>
+              <span className="block truncate text-xs text-(--brand-blue-700)">Sukkur Area Office 5405</span>
+            </span>
+          </Link>
 
-        <div className="hidden items-center gap-2 text-sm font-semibold md:flex">
-          <a href={`tel:+${WHATSAPP_NUMBER}`} className="inline-flex min-h-10 items-center rounded-full px-3 text-slate-700 transition hover:bg-slate-100 hover:text-(--brand-blue-700)">Quick Call: +92 317 0941821</a>
-          <a href={whatsappLink()} target="_blank" rel="noreferrer" className="inline-flex min-h-10 items-center rounded-full border border-[#1f8a67]/25 px-3 text-[#177454] transition hover:bg-[#eafaf4]">WhatsApp</a>
-          <button type="button" aria-pressed={urduMode} onClick={() => setUrduMode((enabled) => !enabled)} className="inline-flex min-h-9 min-w-12 items-center justify-center rounded-full border border-slate-200 px-3 text-xs font-bold text-slate-600 transition hover:bg-slate-100" title="Toggle Urdu label">
-            {urduMode ? "اردو" : "EN"}
+          <div className="hidden items-center gap-2 text-sm font-semibold md:flex">
+            <a href={`tel:+${WHATSAPP_NUMBER}`} className="inline-flex min-h-10 items-center rounded-full px-3 text-slate-700 transition hover:bg-slate-100 hover:text-(--brand-blue-700)">Quick Call: +92 317 0941821</a>
+            <a href={whatsappLink()} target="_blank" rel="noreferrer" className="inline-flex min-h-10 items-center rounded-full border border-[#1f8a67]/25 px-3 text-[#177454] transition hover:bg-[#eafaf4]">WhatsApp</a>
+            <button type="button" aria-pressed={urduMode} onClick={() => setUrduMode((enabled) => !enabled)} className="inline-flex min-h-9 min-w-12 items-center justify-center rounded-full border border-slate-200 px-3 text-xs font-bold text-slate-600 transition hover:bg-slate-100" title="Toggle Urdu label">
+              {urduMode ? "اردو" : "EN"}
+            </button>
+            <Link href="/contact#contact-form" className="inline-flex min-h-11 items-center justify-center rounded-full bg-(--brand-blue-700) px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-(--brand-blue-900)">Get Policy Quote</Link>
+          </div>
+
+          <button type="button" aria-label={menuOpen ? "Close menu" : "Open menu"} aria-expanded={menuOpen} onClick={() => setMenuOpen((open) => !open)} className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 md:hidden">
+            <span className="space-y-1.5" aria-hidden="true">
+              <span className={`block h-0.5 w-5 rounded-full bg-current transition ${menuOpen ? "translate-y-2 rotate-45" : ""}`} />
+              <span className={`block h-0.5 w-5 rounded-full bg-current transition ${menuOpen ? "opacity-0" : ""}`} />
+              <span className={`block h-0.5 w-5 rounded-full bg-current transition ${menuOpen ? "-translate-y-2 -rotate-45" : ""}`} />
+            </span>
           </button>
-          <Link href="/contact#contact-form" className="inline-flex min-h-11 items-center justify-center rounded-full bg-(--brand-blue-700) px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-(--brand-blue-900)">Get Policy Quote</Link>
         </div>
-
-        <button type="button" aria-label={menuOpen ? "Close menu" : "Open menu"} aria-expanded={menuOpen} onClick={() => setMenuOpen((open) => !open)} className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 md:hidden">
-          <span className="space-y-1.5" aria-hidden="true">
-            <span className={`block h-0.5 w-5 rounded-full bg-current transition ${menuOpen ? "translate-y-2 rotate-45" : ""}`} />
-            <span className={`block h-0.5 w-5 rounded-full bg-current transition ${menuOpen ? "opacity-0" : ""}`} />
-            <span className={`block h-0.5 w-5 rounded-full bg-current transition ${menuOpen ? "-translate-y-2 -rotate-45" : ""}`} />
-          </span>
-        </button>
       </div>
 
-      <nav className="w-full max-w-full overflow-hidden bg-[#0052cc]" aria-label="Main navigation">
+      <nav className="m-0 w-full max-w-full overflow-hidden bg-[#0052cc]" aria-label="Main navigation">
         <div className="mx-auto flex min-h-12 max-w-7xl items-center px-4 sm:px-6 lg:px-8">
           <div className="hidden w-full items-center justify-between md:flex">
             {navLinks.map((link) => {
