@@ -1,89 +1,126 @@
+export type PolicyCategory = "popular" | "child" | "special";
+
 export type PolicyTable = {
+  category: PolicyCategory;
   number: string;
   title: string;
-  summary: string;
-  benefits: string[];
-  terms: number[];
+  purpose: string;
   eligibility: string;
   ageLimits: string;
-  bonus: string;
-  choose: string;
+  terms: number[];
+  payout: string;
+  benefits: string[];
 };
 
 export const policyTables: PolicyTable[] = [
   {
+    category: "popular",
     number: "01",
     title: "Endowment Assurance",
-    summary: "Bachon ki taleem, shadi aur disciplined savings goals ke liye protection-oriented plan category.",
-    benefits: [
-      "Family protection ke saath planned savings goal par focus.",
-      "Maturity planning ko education ya marriage milestone ke saath align karne ki guidance.",
-      "Policy documentation aur beneficiary details ko samajhne mein office support.",
-    ],
+    purpose: "Bachon ki taleem, shadi aur disciplined savings goals.",
+    eligibility: "Health, income profile aur financial need ki official assessment.",
+    ageLimits: "Entry aur maturity age official illustration se confirm karein.",
     terms: [10, 15, 20, 25],
-    eligibility: "Applicant ki health, income profile aur financial need ki official assessment hoti hai.",
-    ageLimits: "Entry age aur maximum maturity age official illustration se confirm karein.",
-    bonus: "Participating policy ho to declared bonuses policy rules ke mutabiq add ho sakte hain; exact bonus guaranteed nahi samjha jaye.",
-    choose: "Yeh un families ke liye suitable discussion point hai jo protection ke saath education, shadi ya future savings goal plan karna chahti hain.",
+    payout: "Protection ke saath planned maturity benefit; exact illustration office se lein.",
+    benefits: ["Family protection", "Goal-based savings", "Education aur marriage planning"],
   },
   {
+    category: "popular",
     number: "03",
     title: "Whole Life Assurance",
-    summary: "Lifetime protection aur family security ke liye long-term assurance category.",
-    benefits: [
-      "Family financial security aur long-term protection par focus.",
-      "Nominee aur beneficiary planning ko clear karne ki guidance.",
-      "Long horizon walay customers ke liye structured policy review.",
-    ],
+    purpose: "Lifetime protection aur family security.",
+    eligibility: "Underwriting, health details aur applicant profile par depend.",
+    ageLimits: "Entry aur maturity limits current product rules se confirm hongi.",
     terms: [10, 15, 20, 25],
-    eligibility: "Policy approval underwriting, health details aur applicant profile par depend karti hai.",
-    ageLimits: "Entry aur maturity age limits applicant ke case aur official product rules se confirm hongi.",
-    bonus: "Applicable participating bonuses State Life ke declared rates aur policy terms ke mutabiq ho sakte hain; office se current illustration lein.",
-    choose: "Agar aapka primary goal lifetime family protection hai aur aap long-term commitment samajhte hain, is table par consultation lein.",
+    payout: "Long-term protection value aur applicable declared bonuses; fixed amount assume na karein.",
+    benefits: ["Long-term family cover", "Nominee planning", "Structured policy review"],
   },
   {
+    category: "popular",
     number: "08",
     title: "Sadabahar Plan",
-    summary: "3-year interval withdrawable liquidity plan ke taur par samjhi jane wali flexible planning category.",
-    benefits: [
-      "Long-term planning ke saath periodic liquidity needs discuss karne ka option.",
-      "Withdrawal timing, conditions aur policy value ko office illustration se samajhne ki sahulat.",
-      "Family protection aur access needs ko ek conversation mein review karna.",
-    ],
+    purpose: "3-year interval withdrawable liquidity planning.",
+    eligibility: "Withdrawal conditions aur approval official product documents se verify karein.",
+    ageLimits: "Entry age, maturity age aur withdrawal eligibility profile ke mutabiq.",
     terms: [10, 15, 20, 25],
-    eligibility: "Eligibility, withdrawal conditions aur policy approval official product documents se verify karein.",
-    ageLimits: "Entry age, maturity age aur withdrawal eligibility customer profile ke mutabiq confirm hoti hai.",
-    bonus: "Bonus/profit declaration aur withdrawal value policy terms, declared rates aur applicable deductions par depend kar sakti hai.",
-    choose: "Agar aapko protection ke saath future mein planned liquidity ki zaroorat ho, Table 08 ko representative ke saath compare karein.",
+    payout: "Periodic liquidity option policy terms, declared rates aur applicable conditions par depend.",
+    benefits: ["Planned liquidity", "Protection discussion", "Periodic access needs review"],
   },
   {
+    category: "popular",
+    number: "14",
+    title: "Family Protection Assurance",
+    purpose: "Household income protection aur dependents ki security.",
+    eligibility: "Applicant ki health, family need aur policy assessment ke mutabiq.",
+    ageLimits: "Entry aur maximum maturity age office se confirm karein.",
+    terms: [10, 15, 20, 25],
+    payout: "Family protection benefit aur applicable policy values official illustration par depend.",
+    benefits: ["Dependents support", "Family risk planning", "Beneficiary guidance"],
+  },
+  {
+    category: "child",
     number: "11",
     title: "Child Education & Marriage Assurance",
-    summary: "Aulad ke future education aur marriage milestones ke liye dedicated fund-planning discussion.",
-    benefits: [
-      "Child ke important future milestones ke liye time-based planning.",
-      "Parent/guardian ko nominee aur documentation requirements samajhne ki guidance.",
-      "Goal date aur policy duration ko ek structured plan mein map karna.",
-    ],
+    purpose: "Aulad ke education aur marriage milestones ke liye fund planning.",
+    eligibility: "Parent/guardian, child details aur proposed goal ki assessment.",
+    ageLimits: "Parent/child age criteria current official rules se confirm karein.",
     terms: [10, 15, 20, 25],
-    eligibility: "Parent/guardian, child details aur proposed policy purpose official assessment ka hissa ho sakte hain.",
-    ageLimits: "Parent/child age criteria aur maturity limits current official rules se confirm karein.",
-    bonus: "Participating policy mein declared bonuses apply ho sakte hain; future bonus ya fund value ko guaranteed amount na samjhein.",
-    choose: "Parents jo education ya marriage goal ke liye disciplined, long-term preparation chahte hain unke liye yeh useful starting point hai.",
+    payout: "Goal-date planning aur applicable maturity benefits; exact fund value guaranteed na samjhein.",
+    benefits: ["Education planning", "Marriage milestone", "Goal-date mapping"],
   },
   {
-    number: "Health",
-    title: "Health Insurance & Group Coverage",
-    summary: "Individual, family aur employer group health coverage needs ke liye protection guidance.",
-    benefits: [
-      "Individual aur family medical cover categories ko compare karne ki guidance.",
-      "Organizations ke liye group coverage, member eligibility aur documentation review.",
-      "Hospital network, exclusions, waiting periods aur claim process par practical questions.",
-    ],
-    terms: [1, 3, 5],
-    eligibility: "Eligibility age, health disclosure, group size aur selected coverage rules par depend karti hai.",
-    ageLimits: "Individual, family aur group plans ki age limits product-specific hoti hain; office se confirm karein.",
-    bonus: "Health cover mein bonus/profit structure life participating plans se different hota hai; benefits, limits aur renewals official schedule se verify karein.",
-    choose: "Agar aap medical expense risk, family cover ya employee benefit plan kar rahe hain, Health/Group category se start karein.",
+    category: "child",
+    number: "12",
+    title: "Child Future Assurance",
+    purpose: "Child ke long-term education aur future security goals.",
+    eligibility: "Guardian details, child information aur underwriting requirements apply.",
+    ageLimits: "Child age aur maturity limit official product sheet se confirm karein.",
+    terms: [10, 15, 20, 25],
+    payout: "Future goal ke liye planned maturity structure; official illustration zaroor lein.",
+    benefits: ["Early planning", "Guardian-led protection", "Flexible goal discussion"],
+  },
+  {
+    category: "child",
+    number: "36",
+    title: "Education Support Plan",
+    purpose: "Higher education aur family education commitments ke liye planning.",
+    eligibility: "Family profile, health disclosure aur policy purpose ki review.",
+    ageLimits: "Entry age aur maturity age case-by-case confirm hoti hai.",
+    terms: [10, 15, 20, 25],
+    payout: "Education goal ke liye applicable policy benefit; terms aur bonus office se verify karein.",
+    benefits: ["Education focus", "Long-term discipline", "Milestone planning"],
+  },
+  {
+    category: "special",
+    number: "05",
+    title: "Anticipated Endowment",
+    purpose: "Long-term protection ke saath scheduled benefit planning.",
+    eligibility: "Health, age, income aur official underwriting assessment.",
+    ageLimits: "Product-specific entry aur maturity limits confirm karein.",
+    terms: [10, 15, 20, 25],
+    payout: "Scheduled benefit structure policy terms aur official illustration par depend.",
+    benefits: ["Planned benefits", "Family protection", "Long-term goal review"],
+  },
+  {
+    category: "special",
+    number: "22",
+    title: "Retirement & Savings Plan",
+    purpose: "Retirement readiness aur long-term financial stability.",
+    eligibility: "Age, income, target retirement horizon aur policy assessment.",
+    ageLimits: "Entry age aur retirement/maturity limits office se confirm karein.",
+    terms: [10, 15, 20, 25],
+    payout: "Retirement planning illustration; returns ya bonus fixed/guaranteed assume na karein.",
+    benefits: ["Retirement horizon", "Savings discipline", "Family continuity planning"],
+  },
+  {
+    category: "special",
+    number: "70+",
+    title: "Special & Retirement Options",
+    purpose: "Special needs, retirement aur extended financial planning categories.",
+    eligibility: "Product availability, health, age aur financial objective ke mutabiq.",
+    ageLimits: "Exact age criteria aur availability office se confirm karein.",
+    terms: [10, 15, 20],
+    payout: "Applicable policy benefit, bonus aur maturity terms official quote se confirm honge.",
+    benefits: ["Specialist consultation", "Retirement review", "Needs-based comparison"],
   },
 ];
