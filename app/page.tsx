@@ -366,7 +366,7 @@ export default function Home() {
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
           <a href="#home" className="flex items-center gap-3">
             <Image
-              src="/logo%20area.png"
+              src="/area-logo.png"
               alt="Sukkur Area Office logo"
               width={210}
               height={74}
@@ -887,7 +887,7 @@ export default function Home() {
           <div>
             <div className="flex items-center gap-3">
               <Image
-                src="/logo%20area.png"
+                src="/area-logo.png"
                 alt="Sukkur Area Office logo"
                 width={210}
                 height={74}

@@ -139,7 +139,7 @@ export default function BecomeAnAgentPage() {
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
           <Link href="/" className="flex min-w-0 items-center gap-3">
             <Image
-              src="/logo%20area.png"
+              src="/area-logo.png"
               alt="Sukkur Area Office logo"
               width={210}
               height={74}
@@ -424,7 +424,7 @@ export default function BecomeAnAgentPage() {
         <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[1.1fr_0.8fr_0.8fr] lg:px-8">
           <div>
             <div className="flex items-center gap-3">
-              <Image src="/logo%20area.png" alt="State Life Sukkur Area Office logo" width={210} height={74} className="h-11 w-[140px] rounded-full bg-white p-1 object-contain" />
+              <Image src="/area-logo.png" alt="State Life Sukkur Area Office logo" width={210} height={74} className="h-11 w-[140px] rounded-full bg-white p-1 object-contain" />
               <div>
                 <p className="text-lg font-bold text-white">Sukkur Area Office</p>
                 <p className="text-sm text-slate-400">Life Insurance</p>
