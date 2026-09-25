@@ -33,27 +33,32 @@ export default function Navbar() {
         <div className="mx-auto flex min-h-20 w-full max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:min-h-[88px] lg:px-8">
           <Link href="/" className="flex min-w-0 items-center gap-3 text-slate-900" onClick={() => setMenuOpen(false)}>
             <Image src="/area-logo.png" alt="State Life Insurance Corporation of Pakistan logo" width={420} height={144} priority className="h-12 w-auto shrink-0 object-contain object-left md:h-14" />
-            <span className="min-w-0 leading-tight">
-              <span className="block truncate text-sm font-bold sm:text-base">State Life Insurance</span>
-              <span className="hidden truncate text-xs font-semibold uppercase tracking-[0.08em] text-slate-500 sm:block">Corporation of Pakistan</span>
-              <span className="block truncate text-xs text-(--brand-blue-700)">Sukkur Area Office 5405</span>
+            <span className="min-w-0 max-w-[calc(100vw-8rem)] leading-tight">
+              <span className="block truncate whitespace-nowrap text-xs font-semibold text-(--brand-blue-700)">Sukkur Area Office 5405</span>
+              <span className="block truncate whitespace-nowrap text-base font-bold text-gray-900">State Life Insurance</span>
+              <span className="block truncate whitespace-nowrap text-[10px] uppercase tracking-wider text-gray-500">Corporation of Pakistan</span>
             </span>
           </Link>
 
-          <div className="flex shrink-0 items-center gap-1 text-sm font-semibold">
+          <div className="hidden shrink-0 items-center gap-1 text-sm font-semibold md:flex">
             <button type="button" aria-pressed={lang === "UR"} onClick={toggleLanguage} className="inline-flex min-h-9 min-w-12 shrink-0 items-center justify-center rounded-full border border-slate-200 px-3 text-xs font-bold text-slate-600 transition hover:bg-slate-100" title={t("utility.toggle")}>
               {lang === "EN" ? "UR" : "EN"}
             </button>
             <Link href="/contact#contact-form" className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-full bg-(--brand-blue-700) px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-(--brand-blue-900)">{t("utility.quote")}</Link>
           </div>
 
-          <button type="button" aria-label={menuOpen ? "Close menu" : "Open menu"} aria-expanded={menuOpen} onClick={() => setMenuOpen((open) => !open)} className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 md:hidden">
-            <span className="space-y-1.5" aria-hidden="true">
-              <span className={`block h-0.5 w-5 rounded-full bg-current transition ${menuOpen ? "translate-y-2 rotate-45" : ""}`} />
-              <span className={`block h-0.5 w-5 rounded-full bg-current transition ${menuOpen ? "opacity-0" : ""}`} />
-              <span className={`block h-0.5 w-5 rounded-full bg-current transition ${menuOpen ? "-translate-y-2 -rotate-45" : ""}`} />
-            </span>
-          </button>
+          <div className="flex shrink-0 items-center gap-2 md:hidden">
+            <button type="button" aria-pressed={lang === "UR"} onClick={toggleLanguage} className="inline-flex min-h-9 min-w-11 shrink-0 items-center justify-center rounded-full border border-slate-200 px-2.5 text-xs font-bold text-slate-600 transition hover:bg-slate-100" title={t("utility.toggle")}>
+              {lang === "EN" ? "UR" : "EN"}
+            </button>
+            <button type="button" aria-label={menuOpen ? "Close menu" : "Open menu"} aria-expanded={menuOpen} onClick={() => setMenuOpen((open) => !open)} className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700">
+              <span className="space-y-1.5" aria-hidden="true">
+                <span className={`block h-0.5 w-5 rounded-full bg-current transition ${menuOpen ? "translate-y-2 rotate-45" : ""}`} />
+                <span className={`block h-0.5 w-5 rounded-full bg-current transition ${menuOpen ? "opacity-0" : ""}`} />
+                <span className={`block h-0.5 w-5 rounded-full bg-current transition ${menuOpen ? "-translate-y-2 -rotate-45" : ""}`} />
+              </span>
+            </button>
+          </div>
         </div>
       </div>
 
