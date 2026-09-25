@@ -9,7 +9,6 @@ import { products } from "../data/products";
 import { supabase } from "@/lib/supabase";
 import { AREA_CODE, FACEBOOK_URL, LINKEDIN_URL, MANAGER_NAME, MANAGER_TITLE, WHATSAPP_NUMBER, emailLink, landlineLink } from "../lib/contact";
 import { cleanPhone } from "../lib/phone";
-import { useLanguage } from "../context/LanguageContext";
 
 const services = [
   "Premium Payment Guide",
@@ -100,7 +99,6 @@ async function submitLead(payload: Record<string, unknown>) {
 }
 
 export default function Home() {
-  const { t } = useLanguage();
   const [openFaq, setOpenFaq] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
@@ -360,13 +358,13 @@ export default function Home() {
         <div className="grid items-center gap-10 lg:grid-cols-[1.2fr_0.8fr]">
           <div>
             <span className="inline-flex rounded-full border border-[#1f8a67]/30 bg-[#eafaf4] px-3.5 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#1f8a67]">
-              {t("home.eyebrow")}
+              Family protection starts here
             </span>
             <h1 className="mt-6 max-w-xl text-4xl font-black leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
-              {t("home.title")}
+              Aapki Family Ka Mustaqbil Mehfooz
             </h1>
             <p className="mt-5 max-w-xl text-lg leading-8 text-gray-300">
-              {t("home.subtitle")}
+              State Life Sukkur Area Office 5405 se trusted life insurance guidance aur local support hasil karein. Behtar financial security ke liye hum se rabta karein.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-4">
@@ -374,7 +372,7 @@ export default function Home() {
                 href="#contact"
                 className="inline-flex items-center justify-center rounded-full bg-[var(--brand-blue-500)] px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-blue-950/20 transition hover:-translate-y-0.5 hover:bg-[var(--brand-blue-700)]"
               >
-                {t("home.consultation")}
+                Free Consultation
               </a>
               <a
                 href={`https://wa.me/${WHATSAPP_NUMBER}`}
@@ -382,7 +380,7 @@ export default function Home() {
                 rel="noreferrer"
                 className="inline-flex items-center justify-center rounded-full border-0 bg-white px-6 py-3.5 text-base font-semibold text-[#0b2240] shadow-sm outline-none transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f8a67]"
               >
-                {t("home.whatsapp")}
+                WhatsApp Us
               </a>
             </div>
 

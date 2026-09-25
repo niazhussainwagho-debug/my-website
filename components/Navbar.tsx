@@ -6,15 +6,14 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { PhoneIcon, WhatsAppIcon } from "./icons";
 import { WHATSAPP_NUMBER, whatsappLink } from "../lib/contact";
-import { useLanguage } from "../context/LanguageContext";
 
 const navLinks = [
-  { key: "nav.home", href: "/" },
-  { key: "nav.products", href: "/products" },
-  { key: "nav.services", href: "/services" },
-  { key: "nav.about", href: "/about" },
-  { key: "nav.contact", href: "/contact" },
-  { key: "nav.join", href: "/become-agent" },
+  { name: "Home", href: "/" },
+  { name: "Products", href: "/products" },
+  { name: "Services", href: "/services" },
+  { name: "About Us", href: "/about" },
+  { name: "Contact", href: "/contact" },
+  { name: "Join Us", href: "/become-agent" },
 ];
 
 function isActiveRoute(pathname: string, href: string) {
@@ -25,7 +24,6 @@ function isActiveRoute(pathname: string, href: string) {
 export default function Navbar() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
-  const { lang, toggleLanguage, t } = useLanguage();
 
   return (
     <header className="sticky top-0 left-0 right-0 z-50 m-0 flex w-full max-w-full shrink-0 flex-col overflow-hidden bg-white p-0 shadow-md">
@@ -41,16 +39,10 @@ export default function Navbar() {
           </Link>
 
           <div className="hidden shrink-0 items-center gap-1 text-sm font-semibold md:flex">
-            <button type="button" aria-pressed={lang === "UR"} onClick={toggleLanguage} className="inline-flex min-h-9 min-w-12 shrink-0 items-center justify-center rounded-full border border-slate-200 px-3 text-xs font-bold text-slate-600 transition hover:bg-slate-100" title={t("utility.toggle")}>
-              {lang === "EN" ? "UR" : "EN"}
-            </button>
-            <Link href="/contact#contact-form" className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-full bg-(--brand-blue-700) px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-(--brand-blue-900)">{t("utility.quote")}</Link>
+            <Link href="/contact#contact-form" className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-full bg-(--brand-blue-700) px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-(--brand-blue-900)">Get Policy Quote</Link>
           </div>
 
           <div className="flex shrink-0 items-center gap-2 md:hidden">
-            <button type="button" aria-pressed={lang === "UR"} onClick={toggleLanguage} className="inline-flex min-h-9 min-w-11 shrink-0 items-center justify-center rounded-full border border-slate-200 px-2.5 text-xs font-bold text-slate-600 transition hover:bg-slate-100" title={t("utility.toggle")}>
-              {lang === "EN" ? "UR" : "EN"}
-            </button>
             <button type="button" aria-label={menuOpen ? "Close menu" : "Open menu"} aria-expanded={menuOpen} onClick={() => setMenuOpen((open) => !open)} className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700">
               <span className="space-y-1.5" aria-hidden="true">
                 <span className={`block h-0.5 w-5 rounded-full bg-current transition ${menuOpen ? "translate-y-2 rotate-45" : ""}`} />
@@ -67,10 +59,10 @@ export default function Navbar() {
           <div className="hidden w-full items-center justify-between md:flex">
             {navLinks.map((link) => {
               const active = isActiveRoute(pathname, link.href);
-              return <Link key={link.key} href={link.href} aria-current={active ? "page" : undefined} className={`inline-flex min-h-12 items-center border-b-2 px-3 text-sm font-semibold text-white transition hover:bg-white/10 ${active ? "border-white" : "border-transparent"}`}>{t(link.key as "nav.home")}</Link>;
+              return <Link key={link.href} href={link.href} aria-current={active ? "page" : undefined} className={`inline-flex min-h-12 items-center border-b-2 px-3 text-sm font-semibold text-white transition hover:bg-white/10 ${active ? "border-white" : "border-transparent"}`}>{link.name}</Link>;
             })}
           </div>
-          <p className="block w-full max-w-full overflow-hidden text-ellipsis whitespace-nowrap py-1.5 px-3 text-center text-xs font-semibold text-white md:hidden">{lang === "UR" ? t("blueBar.ur") : t("blueBar.en")}</p>
+          <p className="block w-full max-w-full overflow-hidden text-ellipsis whitespace-nowrap py-1.5 px-3 text-center text-xs font-semibold text-white md:hidden">Sukkur Area Office 5405</p>
         </div>
       </nav>
 
@@ -79,12 +71,12 @@ export default function Navbar() {
           <div className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-3 sm:px-6">
             {navLinks.map((link) => {
               const active = isActiveRoute(pathname, link.href);
-              return <Link key={link.key} href={link.href} aria-current={active ? "page" : undefined} onClick={() => setMenuOpen(false)} className={`rounded-xl px-3 py-3 text-base font-medium text-white transition hover:bg-white/10 ${active ? "bg-white/15 font-semibold" : ""}`}>{t(link.key as "nav.home")}</Link>;
+              return <Link key={link.href} href={link.href} aria-current={active ? "page" : undefined} onClick={() => setMenuOpen(false)} className={`rounded-xl px-3 py-3 text-base font-medium text-white transition hover:bg-white/10 ${active ? "bg-white/15 font-semibold" : ""}`}>{link.name}</Link>;
             })}
             <div className="mt-2 grid gap-2 border-t border-white/20 pt-3 sm:grid-cols-2">
-              <a href={`tel:+${WHATSAPP_NUMBER}`} onClick={() => setMenuOpen(false)} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-white px-4 py-3 text-sm font-semibold text-(--brand-blue-900)"><PhoneIcon />{t("utility.call")}</a>
-              <a href={whatsappLink()} target="_blank" rel="noreferrer" onClick={() => setMenuOpen(false)} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[#1f8a67] px-4 py-3 text-sm font-semibold text-white"><WhatsAppIcon />{t("utility.whatsapp")}</a>
-              <Link href="/contact#contact-form" onClick={() => setMenuOpen(false)} className="inline-flex min-h-11 items-center justify-center rounded-full bg-white/15 px-4 py-3 text-sm font-semibold text-white sm:col-span-2">{t("utility.quote")}</Link>
+              <a href={`tel:+${WHATSAPP_NUMBER}`} onClick={() => setMenuOpen(false)} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-white px-4 py-3 text-sm font-semibold text-(--brand-blue-900)"><PhoneIcon />Call</a>
+              <a href={whatsappLink()} target="_blank" rel="noreferrer" onClick={() => setMenuOpen(false)} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[#1f8a67] px-4 py-3 text-sm font-semibold text-white"><WhatsAppIcon />WhatsApp</a>
+              <Link href="/contact#contact-form" onClick={() => setMenuOpen(false)} className="inline-flex min-h-11 items-center justify-center rounded-full bg-white/15 px-4 py-3 text-sm font-semibold text-white sm:col-span-2">Get Policy Quote</Link>
             </div>
           </div>
         </div>
