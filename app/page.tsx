@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { FacebookIcon, LinkedInIcon, MailIcon, PhoneIcon } from "../components/icons";
 import { plans, type Plan } from "../data/plans";
 import { products } from "../data/products";
+import { supabase } from "@/lib/supabase";
 import { AREA_CODE, FACEBOOK_URL, LINKEDIN_URL, MANAGER_NAME, MANAGER_TITLE, emailLink, landlineLink } from "../lib/contact";
 import { cleanPhone } from "../lib/phone";
 
@@ -311,7 +312,7 @@ export default function Home() {
     setContactStatus("idle");
   };
 
-  const handleContactSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleContactSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!cleanPhone(contactData.phone)) {
       setContactPhoneError("Sahi number likhein (kam se kam 7 digits).");
@@ -319,10 +320,43 @@ export default function Home() {
     }
     setContactPhoneError("");
     setContactStatus("sending");
-    void submitLead({ type: "contact", ...contactData, plan: contactData.category }).then((success) => {
-      setContactStatus(success ? "success" : "error");
-      if (success) setContactData(initialContactForm);
-    });
+
+    const payload = {
+      type: "contact",
+      name: contactData.name,
+      phone: cleanPhone(contactData.phone),
+      email: contactData.email || null,
+      plan: contactData.category || null,
+      message: contactData.message || null,
+      consent: contactData.consent,
+      website: contactData.website || null,
+    };
+
+    const apiSuccess = await submitLead(payload);
+    let directSuccess = false;
+
+    if (!supabase) {
+      console.error(
+        "Supabase client is unavailable. Check NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY before direct insert.",
+      );
+    } else {
+      try {
+        const { error } = await supabase.from("leads").insert([payload]);
+
+        if (error) {
+          throw error;
+        }
+
+        directSuccess = true;
+      } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        console.error("Supabase contact insert failed:", message);
+      }
+    }
+
+    const success = apiSuccess || directSuccess;
+    setContactStatus(success ? "success" : "error");
+    if (success) setContactData(initialContactForm);
   };
 
   return (

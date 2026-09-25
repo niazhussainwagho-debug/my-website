@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { cleanPhone } from "../../lib/phone";
-
+import { supabase } from "@/lib/supabase";
 const processSteps = [
   "Pre-registration form bharein ya office aayein.",
   "Office mein asli Application Form (Form 01) aur zaroori documents jama karwayein.",
@@ -59,20 +59,6 @@ const initialForm: FormData = {
   website: "",
 };
 
-async function submitLead(payload: Record<string, unknown>) {
-  try {
-    const response = await fetch("/api/leads", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-
-    return response.ok;
-  } catch {
-    return false;
-  }
-}
-
 export default function BecomeAnAgentPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState(0);
@@ -105,28 +91,45 @@ export default function BecomeAnAgentPage() {
     return Object.keys(nextErrors).length === 0;
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!validateForm()) return;
 
     setIsSubmitting(true);
-    void submitLead({
-      type: "agent_prereg",
-      name: formData.name,
-      phone: formData.phone,
-      city: formData.city,
-      age: formData.age,
-      education: formData.education,
-      experience: formData.experience,
-      best_time: formData.contactTime,
-      message: formData.message,
-      consent: formData.consent,
-      website: formData.website,
-    }).then((success) => {
+    setSubmitError(false);
+
+    if (!supabase) {
+      console.error("Supabase configuration is missing.");
       setIsSubmitting(false);
-      setIsSubmitted(success);
-      setSubmitError(!success);
-    });
+      setSubmitError(true);
+      return;
+    }
+
+    const { error } = await supabase.from("leads").insert([
+      {
+        type: "agent_prereg",
+        name: formData.name,
+        phone: cleanPhone(formData.phone),
+        city: formData.city,
+        age: formData.age,
+        education: formData.education,
+        experience: formData.experience,
+        best_time: formData.contactTime,
+        message: formData.message,
+        consent: formData.consent,
+        website: formData.website,
+      },
+    ]);
+
+    if (error) {
+      console.error("Error:", error.message);
+      setIsSubmitting(false);
+      setSubmitError(true);
+      return;
+    }
+
+    setIsSubmitting(false);
+    setIsSubmitted(true);
   };
 
   return (
