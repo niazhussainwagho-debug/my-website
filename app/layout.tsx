@@ -26,7 +26,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="flex min-h-full w-full max-w-full flex-col overflow-x-hidden">
         <Navbar />
-        <div className="w-full max-w-full overflow-x-hidden relative m-0 p-0">{children}</div>
+        <div className="relative m-0 w-full max-w-full overflow-x-hidden p-0 pt-[88px] sm:pt-[88px] md:pt-[108px] lg:pt-[136px]">{children}</div>
       </body>
     </html>
   );
