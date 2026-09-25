@@ -29,7 +29,7 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 left-0 right-0 z-50 m-0 flex w-full max-w-full shrink-0 flex-col overflow-hidden bg-white p-0 shadow-md">
-      <div className="m-0 w-full max-w-full overflow-x-hidden">
+      <div className="m-0 w-full max-w-full overflow-hidden">
         <div className="mx-auto flex min-h-20 w-full max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:min-h-[88px] lg:px-8">
           <Link href="/" className="flex min-w-0 items-center gap-3 text-slate-900" onClick={() => setMenuOpen(false)}>
             <Image src="/area-logo.png" alt="State Life Insurance Corporation of Pakistan logo" width={420} height={144} priority className="h-12 w-auto shrink-0 object-contain object-left md:h-14" />
@@ -70,7 +70,7 @@ export default function Navbar() {
               return <Link key={link.key} href={link.href} aria-current={active ? "page" : undefined} className={`inline-flex min-h-12 items-center border-b-2 px-3 text-sm font-semibold text-white transition hover:bg-white/10 ${active ? "border-white" : "border-transparent"}`}>{t(link.key as "nav.home")}</Link>;
             })}
           </div>
-          <p className="block w-full max-w-full overflow-hidden text-ellipsis whitespace-nowrap px-4 py-2 text-center text-xs font-semibold tracking-wide text-white md:hidden">{lang === "UR" ? t("blueBar.ur") : t("blueBar.en")}</p>
+          <p className="block w-full max-w-full overflow-hidden text-ellipsis whitespace-nowrap py-1.5 px-3 text-center text-xs font-semibold text-white md:hidden">{lang === "UR" ? t("blueBar.ur") : t("blueBar.en")}</p>
         </div>
       </nav>
 

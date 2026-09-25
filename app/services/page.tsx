@@ -43,10 +43,10 @@ export default function ServicesPage() {
 
   return (
     <main className="min-h-screen bg-slate-50 text-slate-800">
-      <section className="bg-(--brand-blue-900) px-4 py-16 text-white sm:px-6 lg:px-8 lg:py-20">
+      <section className="bg-(--brand-blue-900) px-4 pb-16 pt-6 text-white sm:px-6 sm:pt-8 lg:px-8 lg:pb-20 lg:pt-10">
         <div className="mx-auto max-w-7xl">
           <p className="text-sm font-bold uppercase tracking-[0.18em] text-cyan-200">{t("services.eyebrow")}</p>
-          <h1 className="mt-4 max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl">{t("services.title")}</h1>
+          <h1 className="mt-4 max-w-full break-words overflow-hidden text-4xl font-bold tracking-tight sm:text-5xl">{t("services.title")}</h1>
           <p className="mt-6 max-w-2xl text-base leading-8 text-blue-100 sm:text-lg">{t("services.subtitle")}</p>
         </div>
       </section>
@@ -55,7 +55,7 @@ export default function ServicesPage() {
         <div className="mx-auto max-w-7xl">
           <div className="max-w-2xl">
             <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#1f8a67]">{t("services.support")}</p>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight text-(--brand-blue-900) sm:text-4xl">Practical help, without the paperwork guesswork.</h2>
+            <h2 className="mt-3 max-w-full break-words overflow-hidden text-3xl font-bold tracking-tight text-(--brand-blue-900) sm:text-4xl">Practical help, without the paperwork guesswork.</h2>
             <p className="mt-4 leading-7 text-slate-600">Apni existing policy ya service need select karein. Representative aapko required documents, next steps aur official process samjhayega.</p>
           </div>
 

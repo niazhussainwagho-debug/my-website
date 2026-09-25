@@ -25,10 +25,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col overflow-x-hidden">
+      <body className="flex min-h-full w-full max-w-full flex-col overflow-x-hidden">
         <LanguageProvider>
           <Navbar />
-          <div>{children}</div>
+          <div className="w-full max-w-full overflow-x-hidden">{children}</div>
         </LanguageProvider>
       </body>
     </html>
