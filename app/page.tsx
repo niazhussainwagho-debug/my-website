@@ -366,7 +366,7 @@ export default function Home() {
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
           <a href="#home" className="flex items-center gap-3">
             <Image
-              src="/area-logo.png"
+              src="/logo%20area.png"
               alt="Sukkur Area Office logo"
               width={210}
               height={74}
@@ -871,7 +871,12 @@ export default function Home() {
             >
               {contactStatus === "sending" ? "Bhej rahe hain..." : "Send"}
             </button>
-            {contactStatus === "success" && <p className="text-sm font-medium text-emerald-700">Shukriya! Hamari office aap se jald rabta karegi.</p>}
+            {contactStatus === "success" && (
+              <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-emerald-900">
+                <p className="font-bold">Thank You for Contacting Us!</p>
+                <p className="mt-1 text-sm leading-6">We have received your message. Our representative from State Life Sukkur Area Office 5405 will contact you shortly.</p>
+              </div>
+            )}
             {contactStatus === "error" && <p className="text-sm font-medium text-red-600">Kuch masla aa gaya, baraye meherbani WhatsApp par rabta karein</p>}
           </form>
         </div>
@@ -882,7 +887,7 @@ export default function Home() {
           <div>
             <div className="flex items-center gap-3">
               <Image
-                src="/area-logo.png"
+                src="/logo%20area.png"
                 alt="Sukkur Area Office logo"
                 width={210}
                 height={74}
@@ -1010,7 +1015,8 @@ export default function Home() {
 
                 {isSubmitted ? (
                   <div className="mt-8 rounded-[24px] border border-emerald-200 bg-emerald-50 p-6 text-center">
-                    <p className="text-xl font-bold text-[#0b2240]">Shukriya! Hamari office aap se jald rabta karegi.</p>
+                    <p className="text-xl font-bold text-[#0b2240]">Thank You for Contacting Us!</p>
+                    <p className="mt-2 leading-7 text-slate-600">We have received your message. Our representative from State Life Sukkur Area Office 5405 will contact you shortly.</p>
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="mt-6 space-y-5">
