@@ -9,8 +9,8 @@ const missingSupabaseEnv = [
   !supabaseAnonKey && "NEXT_PUBLIC_SUPABASE_ANON_KEY",
 ].filter(Boolean);
 
-if (missingSupabaseEnv.length > 0) {
-  console.error("Missing Supabase environment variables:", missingSupabaseEnv.join(", "));
+if (missingSupabaseEnv.length > 0 && typeof window === "undefined") {
+  console.warn("Supabase client is not configured:", missingSupabaseEnv.join(", "));
 }
 
 export const supabase = supabaseUrl && supabaseAnonKey ? createClient(supabaseUrl, supabaseAnonKey) : null;

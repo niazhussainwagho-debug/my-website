@@ -52,8 +52,8 @@ export default function ServicesPage() {
                 <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-(--brand-blue-100) text-lg font-bold text-(--brand-blue-700)" aria-hidden="true">+</div>
                 <h3 className="mt-5 text-xl font-bold text-(--brand-blue-900)">{service.title}</h3>
                 <p className="mt-3 flex-1 leading-7 text-slate-600">{service.detail}</p>
-                <Link href={`/contact?service=${encodeURIComponent(service.title)}#contact-form`} className="mt-6 inline-flex min-h-11 items-center justify-center rounded-full bg-(--brand-blue-700) px-5 py-3 text-sm font-semibold text-white transition hover:bg-(--brand-blue-900)">
-                  Is service ke bare mein poochein
+                <Link href={`/checkout?plan=${encodeURIComponent(service.title)}`} className="mt-6 inline-flex min-h-11 items-center justify-center rounded-full bg-(--brand-blue-700) px-5 py-3 text-sm font-semibold text-white transition hover:bg-(--brand-blue-900)">
+                  Apply for this Plan
                 </Link>
               </article>
             ))}

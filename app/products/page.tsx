@@ -61,8 +61,8 @@ export default function ProductsPage() {
                   <p className="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Policy term options</p>
                   <p className="mt-2 text-sm leading-6 text-slate-700">{product.terms}</p>
                 </div>
-                <Link href={`/contact?service=${encodeURIComponent(product.title)}#contact-form`} className="mt-6 inline-flex min-h-11 items-center justify-center rounded-full bg-(--brand-blue-700) px-5 py-3 text-sm font-semibold text-white transition hover:bg-(--brand-blue-900)">
-                  Get Plan Quote
+                <Link href={`/checkout?plan=${encodeURIComponent(product.title)}`} className="mt-6 inline-flex min-h-11 items-center justify-center rounded-full bg-(--brand-blue-700) px-5 py-3 text-sm font-semibold text-white transition hover:bg-(--brand-blue-900)">
+                  Get This Plan
                 </Link>
               </article>
             ))}
