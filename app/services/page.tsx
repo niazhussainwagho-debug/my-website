@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Calculator, FileText, RefreshCw, ShieldCheck, UsersRound } from "lucide-react";
+import { whatsappLink } from "../../lib/contact";
 
 export const metadata: Metadata = {
   title: "Services | Sukkur Area Office 5405",
@@ -88,7 +89,10 @@ export default function ServicesPage() {
             <h2 className="text-2xl font-bold text-(--brand-blue-900)">Policy tables dekhna chahte hain?</h2>
             <p className="mt-2 text-slate-600">Products page par State Life tables ka structured comparison dekhein.</p>
           </div>
-          <Link href="/products" className="inline-flex min-h-11 items-center justify-center rounded-full bg-(--brand-blue-700) px-6 py-3 font-semibold text-white transition hover:bg-(--brand-blue-900)">View policy tables</Link>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <Link href="/products" className="inline-flex min-h-11 items-center justify-center rounded-full bg-(--brand-blue-700) px-6 py-3 font-semibold text-white transition hover:bg-(--brand-blue-900)">View policy tables</Link>
+            <a href={whatsappLink()} target="_blank" rel="noreferrer" className="inline-flex min-h-11 items-center justify-center rounded-full border border-(--brand-blue-700) bg-white px-6 py-3 font-semibold text-(--brand-blue-700) transition hover:bg-slate-50">WhatsApp office</a>
+          </div>
         </div>
       </section>
     </main>
