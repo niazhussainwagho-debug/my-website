@@ -80,7 +80,7 @@ export default function PolicyTableGuide() {
           <h2 className="mt-3 text-3xl font-bold tracking-tight text-(--brand-blue-900) sm:text-4xl">Policy tables ko compare karke apna next step plan karein.</h2>
           <p className="mt-5 leading-8 text-slate-600">Yeh guide discussion aur planning ke liye hai. Exact premium, bonus, eligibility, exclusions aur official policy illustration State Life Sukkur Area Office se confirm karein.</p>
         </div>
-        <div className="mt-10 grid gap-6 lg:grid-cols-2">
+        <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {policyTables.map((table) => <PolicyTableCard key={table.number} table={table} />)}
         </div>
       </div>

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import PolicyTableGuide from "../../components/PolicyTableGuide";
+import { Calculator, FileText, RefreshCw, ShieldCheck, UsersRound } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Services | Sukkur Area Office 5405",
@@ -11,22 +11,32 @@ const services = [
   {
     title: "Policy Documentation Support",
     detail: "Application forms, required documents aur policy paperwork ko samajhne mein practical guidance.",
+    icon: FileText,
+    tone: "bg-blue-50 text-blue-700",
   },
   {
     title: "Claim Guidance & Settlement Assistance",
     detail: "Claim process ke steps, documentation aur next action ko clear tareeqe se samajhne mein madad.",
+    icon: ShieldCheck,
+    tone: "bg-emerald-50 text-emerald-700",
   },
   {
     title: "Policy Renewal & Premium Payment Help",
     detail: "Renewal dates, payment guidance aur policy records ke hawale se office support hasil karein.",
+    icon: RefreshCw,
+    tone: "bg-amber-50 text-amber-700",
   },
   {
     title: "Financial Planning Consultation",
     detail: "Family goals, protection needs aur long-term planning ke liye suitable options par mashwara.",
+    icon: Calculator,
+    tone: "bg-cyan-50 text-cyan-700",
   },
   {
     title: "Group Health & Individual Coverage Guidance",
     detail: "Families, individuals aur organizations ke liye coverage categories ko samajhne mein rehnumai.",
+    icon: UsersRound,
+    tone: "bg-indigo-50 text-indigo-700",
   },
 ];
 
@@ -44,33 +54,41 @@ export default function ServicesPage() {
       <section className="px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
         <div className="mx-auto max-w-7xl">
           <div className="max-w-2xl">
-            <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#1f8a67]">Our services</p>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight text-(--brand-blue-900) sm:text-4xl">Seedhi, local aur samajhne wali assistance.</h2>
+            <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#1f8a67]">Office support</p>
+            <h2 className="mt-3 text-3xl font-bold tracking-tight text-(--brand-blue-900) sm:text-4xl">Practical help, without the paperwork guesswork.</h2>
+            <p className="mt-4 leading-7 text-slate-600">Apni existing policy ya service need select karein. Representative aapko required documents, next steps aur official process samjhayega.</p>
           </div>
-          <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {services.map((service) => (
-              <article key={service.title} className="flex flex-col rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-(--brand-blue-100) text-lg font-bold text-(--brand-blue-700)" aria-hidden="true">+</div>
-                <h3 className="mt-5 text-xl font-bold text-(--brand-blue-900)">{service.title}</h3>
-                <p className="mt-3 flex-1 leading-7 text-slate-600">{service.detail}</p>
-                <Link href={`/checkout?plan=${encodeURIComponent(service.title)}`} className="mt-6 inline-flex min-h-11 items-center justify-center rounded-full bg-(--brand-blue-700) px-5 py-3 text-sm font-semibold text-white transition hover:bg-(--brand-blue-900)">
-                  Apply for this Plan
-                </Link>
-              </article>
-            ))}
+
+          <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {services.map((service) => {
+              const Icon = service.icon;
+              return (
+                <article key={service.title} className="flex flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
+                  <div className="flex items-start justify-between gap-4">
+                    <span className={`flex h-10 w-10 items-center justify-center rounded-xl ${service.tone}`} aria-hidden="true">
+                      <Icon size={20} strokeWidth={2} />
+                    </span>
+                    <span className="text-xs font-bold uppercase tracking-[0.12em] text-slate-400">Support</span>
+                  </div>
+                  <h3 className="mt-5 text-lg font-bold leading-7 text-(--brand-blue-900)">{service.title}</h3>
+                  <p className="mt-2 flex-1 text-sm leading-6 text-slate-600">{service.detail}</p>
+                  <Link href={`/checkout?service=${encodeURIComponent(service.title)}`} className="mt-5 inline-flex min-h-10 items-center justify-center rounded-full bg-(--brand-blue-700) px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-(--brand-blue-900)">
+                    Request Assistance
+                  </Link>
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      <PolicyTableGuide />
-
       <section className="bg-white px-4 py-14 sm:px-6 lg:px-8">
         <div className="mx-auto flex max-w-7xl flex-col gap-5 rounded-3xl bg-(--brand-blue-100) p-6 sm:p-8 md:flex-row md:items-center md:justify-between">
           <div>
-            <h2 className="text-2xl font-bold text-(--brand-blue-900)">Apni zaroorat share karein</h2>
-            <p className="mt-2 text-slate-600">Office team aapki query ke mutabiq next step samjhayegi.</p>
+            <h2 className="text-2xl font-bold text-(--brand-blue-900)">Policy tables dekhna chahte hain?</h2>
+            <p className="mt-2 text-slate-600">Products page par State Life tables ka structured comparison dekhein.</p>
           </div>
-          <Link href="/contact#contact-form" className="inline-flex min-h-11 items-center justify-center rounded-full bg-(--brand-blue-700) px-6 py-3 font-semibold text-white transition hover:bg-(--brand-blue-900)">Contact office</Link>
+          <Link href="/products" className="inline-flex min-h-11 items-center justify-center rounded-full bg-(--brand-blue-700) px-6 py-3 font-semibold text-white transition hover:bg-(--brand-blue-900)">View policy tables</Link>
         </div>
       </section>
     </main>
