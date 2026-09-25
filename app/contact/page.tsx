@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { AREA_CODE, CONTACT_EMAIL, emailLink, landlineLink, telLink, whatsappLink } from "../../lib/contact";
 import { cleanPhone } from "../../lib/phone";
+import { useLanguage } from "../../context/LanguageContext";
 
 type ContactForm = {
   name: string;
@@ -50,6 +51,7 @@ function validateForm(form: ContactForm): FormErrors {
 }
 
 export default function ContactPage() {
+  const { t } = useLanguage();
   const [form, setForm] = useState<ContactForm>(initialForm);
   const [errors, setErrors] = useState<FormErrors>({});
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
@@ -95,9 +97,9 @@ export default function ContactPage() {
     <main className="min-h-screen bg-slate-50 text-slate-800">
       <section className="bg-(--brand-blue-900) px-4 py-14 text-white sm:px-6 sm:py-18 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <p className="text-sm font-bold uppercase tracking-[0.18em] text-cyan-200">Contact Sukkur Office 5405</p>
-          <h1 className="mt-4 max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl">Aapka sawal, hamari guidance.</h1>
-          <p className="mt-5 max-w-2xl text-base leading-8 text-blue-100 sm:text-lg">Service interest share karein. Hamari office team aap se jald rabta karegi aur next steps simple way mein explain karegi.</p>
+          <p className="text-sm font-bold uppercase tracking-[0.18em] text-cyan-200">{t("contact.eyebrow")}</p>
+          <h1 className="mt-4 max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl">{t("contact.title")}</h1>
+          <p className="mt-5 max-w-2xl text-base leading-8 text-blue-100 sm:text-lg">{t("contact.subtitle")}</p>
         </div>
       </section>
 
@@ -156,7 +158,7 @@ export default function ContactPage() {
 
               <input type="text" tabIndex={-1} autoComplete="off" aria-hidden="true" value={form.website} onChange={(event) => updateField("website", event.target.value)} className="hidden" />
               <button type="submit" disabled={status === "sending"} className="inline-flex min-h-12 w-full items-center justify-center rounded-full bg-(--brand-blue-700) px-6 py-3 font-bold text-white transition hover:bg-(--brand-blue-900) disabled:cursor-wait disabled:opacity-70 sm:w-auto">
-                {status === "sending" ? "Bhej rahe hain..." : "Send Enquiry"}
+                {status === "sending" ? t("contact.sending") : t("contact.submit")}
               </button>
               {status === "success" && (
                 <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-emerald-900">
@@ -170,8 +172,8 @@ export default function ContactPage() {
 
           <div className="space-y-6">
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
-              <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-14 items-center justify-center rounded-2xl bg-[#1f8a67] px-5 py-3 font-bold text-white shadow-sm transition hover:bg-[#177454]">WhatsApp Us</a>
-              <a href={telLink()} className="inline-flex min-h-14 items-center justify-center rounded-2xl bg-(--brand-blue-700) px-5 py-3 font-bold text-white shadow-sm transition hover:bg-(--brand-blue-900)">Call Now</a>
+              <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-14 items-center justify-center rounded-2xl bg-[#1f8a67] px-5 py-3 font-bold text-white shadow-sm transition hover:bg-[#177454]">{t("contact.whatsapp")}</a>
+              <a href={telLink()} className="inline-flex min-h-14 items-center justify-center rounded-2xl bg-(--brand-blue-700) px-5 py-3 font-bold text-white shadow-sm transition hover:bg-(--brand-blue-900)">{t("contact.call")}</a>
             </div>
 
             <div className="rounded-3xl bg-(--brand-blue-900) p-6 text-white shadow-lg sm:p-8">
@@ -199,7 +201,7 @@ export default function ContactPage() {
       </section>
 
       <footer className="bg-(--brand-blue-900) px-4 py-8 text-center text-sm text-slate-300 sm:px-6 lg:px-8">
-        <p>Sukkur Area Office 5405 · <Link href="/about" className="text-white hover:text-cyan-200">About Us</Link> · <a href={emailLink()} className="text-white hover:text-cyan-200">{CONTACT_EMAIL}</a></p>
+        <p>{t("footer.office")} · <Link href="/about" className="text-white hover:text-cyan-200">{t("nav.about")}</Link> · <a href={emailLink()} className="text-white hover:text-cyan-200">{CONTACT_EMAIL}</a></p>
       </footer>
     </main>
   );

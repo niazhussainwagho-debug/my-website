@@ -1,5 +1,7 @@
-import type { Metadata } from "next";
+"use client";
+
 import Link from "next/link";
+import { useLanguage } from "../../context/LanguageContext";
 import {
   AREA_CODE,
   CONTACT_EMAIL,
@@ -9,11 +11,6 @@ import {
   landlineLink,
   whatsappLink,
 } from "../../lib/contact";
-
-export const metadata: Metadata = {
-  title: "About Us | Sukkur Area Office 5405",
-  description: "State Life Sukkur Area Office 5405 ka introduction, leadership, values, aur office details.",
-};
 
 const values = [
   {
@@ -39,13 +36,14 @@ const values = [
 ];
 
 function SiteFooter() {
+  const { t } = useLanguage();
   return (
     <footer className="bg-(--brand-blue-900) px-4 py-10 text-slate-300 sm:px-6 lg:px-8">
       <div className="mx-auto flex max-w-7xl flex-col gap-5 border-t border-white/15 pt-6 text-sm sm:flex-row sm:items-center sm:justify-between">
-        <p>State Life Sukkur Area Office 5405</p>
+        <p>{t("footer.office")}</p>
         <div className="flex flex-wrap gap-x-5 gap-y-2">
           <a href={emailLink()} className="transition hover:text-white">{CONTACT_EMAIL}</a>
-          <Link href="/contact" className="font-semibold text-white transition hover:text-cyan-200">Contact office</Link>
+          <Link href="/contact" className="font-semibold text-white transition hover:text-cyan-200">{t("footer.contact")}</Link>
         </div>
       </div>
     </footer>
@@ -53,19 +51,21 @@ function SiteFooter() {
 }
 
 export default function AboutPage() {
+  const { t } = useLanguage();
+
   return (
     <main className="min-h-screen bg-slate-50 text-slate-800">
       <section className="relative overflow-hidden bg-(--brand-blue-900) px-4 py-16 text-white sm:px-6 sm:py-20 lg:px-8">
         <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-cyan-400/20 blur-3xl" aria-hidden="true" />
         <div className="relative mx-auto max-w-7xl">
-          <p className="text-sm font-bold uppercase tracking-[0.18em] text-cyan-200">About Area Office 5405</p>
-          <h1 className="mt-4 max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl">Trust ki legacy, Sukkur ke families ke qareeb.</h1>
+          <p className="text-sm font-bold uppercase tracking-[0.18em] text-cyan-200">{t("about.eyebrow")}</p>
+          <h1 className="mt-4 max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl">{t("about.title")}</h1>
           <p className="mt-6 max-w-2xl text-base leading-8 text-blue-100 sm:text-lg">
             State Life Sukkur Area Office 5405 local families, professionals aur communities ko life protection aur financial security ke decisions samajhne mein guidance provide karta hai. Hamara focus clear information, respectful service aur long-term support par hai.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link href="/contact" className="inline-flex min-h-12 items-center justify-center rounded-full bg-white px-6 py-3 font-bold text-(--brand-blue-900) transition hover:bg-cyan-50">Free Consultation</Link>
-            <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/30 px-6 py-3 font-bold text-white transition hover:bg-white/10">WhatsApp Us</a>
+            <Link href="/contact" className="inline-flex min-h-12 items-center justify-center rounded-full bg-white px-6 py-3 font-bold text-(--brand-blue-900) transition hover:bg-cyan-50">{t("about.consultation")}</Link>
+            <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/30 px-6 py-3 font-bold text-white transition hover:bg-white/10">{t("about.whatsapp")}</a>
           </div>
         </div>
       </section>
@@ -73,7 +73,7 @@ export default function AboutPage() {
       <section className="px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
           <div>
-            <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#1f8a67]">Leadership</p>
+            <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#1f8a67]">{t("about.leadership")}</p>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-(--brand-blue-900) sm:text-4xl">Aapki zaroorat, hamari guidance.</h2>
           </div>
           <div className="border-l-2 border-cyan-200 pl-5 sm:pl-8">
@@ -95,7 +95,7 @@ export default function AboutPage() {
       <section className="bg-white px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
         <div className="mx-auto max-w-7xl">
           <div className="max-w-2xl">
-            <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#1f8a67]">Our values</p>
+            <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#1f8a67]">{t("about.values")}</p>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-(--brand-blue-900) sm:text-4xl">Service jo trust ko strong banaye.</h2>
           </div>
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -125,7 +125,7 @@ export default function AboutPage() {
               <div className="flex justify-between gap-4 border-b border-slate-100 pb-3"><dt>Area code</dt><dd className="font-semibold text-slate-900">{AREA_CODE}</dd></div>
               <div className="flex justify-between gap-4"><dt>Phone</dt><dd><a href={landlineLink()} className="font-semibold text-(--brand-blue-700)">{landlineLink().replace("tel:", "")}</a></dd></div>
             </dl>
-            <Link href="/contact" className="mt-6 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-(--brand-blue-700) px-5 py-3 text-sm font-bold text-white transition hover:bg-(--brand-blue-900)">Contact Office</Link>
+            <Link href="/contact" className="mt-6 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-(--brand-blue-700) px-5 py-3 text-sm font-bold text-white transition hover:bg-(--brand-blue-900)">{t("about.contact")}</Link>
           </div>
         </div>
       </section>

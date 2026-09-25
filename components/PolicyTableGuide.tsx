@@ -3,19 +3,22 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { policyTables, type PolicyCategory, type PolicyTable } from '../data/policy-tables';
+import { useLanguage, type TranslationKey } from '../context/LanguageContext';
 
 const categoryTabs: Array<{ key: PolicyCategory; label: string; tables: string }> = [
-  { key: 'popular', label: 'Popular Plans', tables: 'Tables 01, 03, 08, 14' },
-  { key: 'child', label: 'Child Security', tables: 'Tables 11, 12, 36' },
-  { key: 'special', label: 'Special & Retirement', tables: 'Tables 05, 22, 70+' },
+  { key: 'popular', label: 'products.tab.popular', tables: 'Tables 01, 03, 08, 14' },
+  { key: 'child', label: 'products.tab.child', tables: 'Tables 11, 12, 36' },
+  { key: 'special', label: 'products.tab.special', tables: 'Tables 05, 22, 70+' },
 ];
 
 function PolicyTableCard({ table }: { table: PolicyTable }) {
+  const { t } = useLanguage();
   const [age, setAge] = useState('30');
   const [term, setTerm] = useState(String(table.terms[0]));
   const [estimate, setEstimate] = useState(false);
   const badge = table.number === '08' ? 'Table 08 - Sadabahar' : `Table ${table.number}`;
-  const planName = `${badge} - ${table.title}`;
+  const tableTitle = t(`table.${table.number === '70+' ? '70' : table.number}.title` as TranslationKey);
+  const planName = `${badge} - ${tableTitle}`;
 
   return (
     <article className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md sm:p-6">
@@ -23,23 +26,23 @@ function PolicyTableCard({ table }: { table: PolicyTable }) {
         <span className="inline-flex rounded-full bg-(--brand-blue-100) px-3 py-1 text-xs font-bold text-(--brand-blue-700)">{badge}</span>
         <span className="text-xs font-bold uppercase tracking-[0.13em] text-[#1f8a67]">State Life</span>
       </div>
-      <h3 className="mt-4 text-xl font-bold leading-7 text-(--brand-blue-900)">{table.title}</h3>
+      <h3 className="mt-4 text-xl font-bold leading-7 text-(--brand-blue-900)">{tableTitle}</h3>
 
       <dl className="mt-5 space-y-3 text-sm">
         <div>
-          <dt className="font-bold text-(--brand-blue-900)">Suitable for</dt>
+          <dt className="font-bold text-(--brand-blue-900)">{t('products.suitable')}</dt>
           <dd className="mt-1 leading-6 text-slate-600">{table.purpose}</dd>
         </div>
         <div>
-          <dt className="font-bold text-(--brand-blue-900)">Eligibility / age limits</dt>
+          <dt className="font-bold text-(--brand-blue-900)">{t('products.eligibility')}</dt>
           <dd className="mt-1 leading-6 text-slate-600">{table.eligibility} {table.ageLimits}</dd>
         </div>
         <div>
-          <dt className="font-bold text-(--brand-blue-900)">Term options</dt>
+          <dt className="font-bold text-(--brand-blue-900)">{t('products.terms')}</dt>
           <dd className="mt-1 leading-6 text-slate-600">{table.terms.join(', ')} years; final availability office se confirm karein.</dd>
         </div>
         <div>
-          <dt className="font-bold text-(--brand-blue-900)">Financial benefit / payout</dt>
+          <dt className="font-bold text-(--brand-blue-900)">{t('products.payout')}</dt>
           <dd className="mt-1 leading-6 text-slate-600">{table.payout}</dd>
         </div>
       </dl>
@@ -49,7 +52,7 @@ function PolicyTableCard({ table }: { table: PolicyTable }) {
       </div>
 
       <details className="mt-5 rounded-xl border border-slate-200 bg-slate-50 p-3">
-        <summary className="cursor-pointer text-sm font-bold text-(--brand-blue-900)">Calculate Plan Estimate</summary>
+        <summary className="cursor-pointer text-sm font-bold text-(--brand-blue-900)">{t('products.estimate')}</summary>
         <div className="mt-3 grid gap-3 sm:grid-cols-2">
           <label className="text-xs font-semibold text-slate-600">Applicant age
             <input type="number" min="18" max="65" value={age} onChange={(event) => { setAge(event.target.value); setEstimate(false); }} className="mt-1 min-h-9 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 outline-none focus:border-(--brand-blue-500)" />
@@ -72,6 +75,7 @@ function PolicyTableCard({ table }: { table: PolicyTable }) {
 }
 
 export default function PolicyTableGuide() {
+  const { t } = useLanguage();
   const [activeCategory, setActiveCategory] = useState<PolicyCategory>('popular');
   const activeTables = policyTables.filter((table) => table.category === activeCategory);
 
@@ -79,15 +83,15 @@ export default function PolicyTableGuide() {
     <section className="bg-slate-50 px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
       <div className="mx-auto max-w-7xl">
         <div className="max-w-3xl">
-          <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#1f8a67]">State Life policy tables</p>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight text-(--brand-blue-900) sm:text-4xl">Compare tables. Choose your next step.</h2>
+          <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#1f8a67]">{t('products.guideEyebrow')}</p>
+          <h2 className="mt-3 text-3xl font-bold tracking-tight text-(--brand-blue-900) sm:text-4xl">{t('products.guideTitle')}</h2>
           <p className="mt-4 leading-7 text-slate-600">Purpose, eligibility, terms aur payout highlights ek glance mein dekhein. Exact premium, bonus aur official policy illustration office se confirm karein.</p>
         </div>
 
         <div className="mt-8 flex flex-wrap gap-2 border-b border-slate-200 pb-4" role="tablist" aria-label="Policy table categories">
           {categoryTabs.map((tab) => (
             <button key={tab.key} type="button" role="tab" aria-selected={activeCategory === tab.key} onClick={() => setActiveCategory(tab.key)} className={`rounded-full px-4 py-2.5 text-left text-sm font-semibold transition ${activeCategory === tab.key ? 'bg-(--brand-blue-700) text-white' : 'bg-white text-slate-600 hover:bg-(--brand-blue-100)'}`}>
-              <span className="block">{tab.label}</span>
+              <span className="block">{t(tab.label as TranslationKey)}</span>
               <span className={`mt-0.5 block text-xs font-normal ${activeCategory === tab.key ? 'text-blue-100' : 'text-slate-400'}`}>{tab.tables}</span>
             </button>
           ))}

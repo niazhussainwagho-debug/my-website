@@ -6,6 +6,7 @@ import { useState } from "react";
 import { cleanPhone } from "../../lib/phone";
 import { supabase } from "@/lib/supabase";
 import { WHATSAPP_NUMBER } from "../../lib/contact";
+import { useLanguage } from "../../context/LanguageContext";
 const processSteps = [
   "Pre-registration form bharein ya office aayein.",
   "Office mein asli Application Form (Form 01) aur zaroori documents jama karwayein.",
@@ -61,6 +62,7 @@ const initialForm: FormData = {
 };
 
 export default function BecomeAnAgentPage() {
+  const { t } = useLanguage();
   const [openFaq, setOpenFaq] = useState(0);
   const [formData, setFormData] = useState<FormData>(initialForm);
   const [errors, setErrors] = useState<FormErrors>({});
@@ -146,19 +148,19 @@ export default function BecomeAnAgentPage() {
 
       <section className="mx-auto max-w-7xl px-4 pb-14 pt-14 sm:px-6 lg:px-8 lg:pb-20 lg:pt-20">
         <div className="max-w-4xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-300">Join our team</p>
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-300">{t("join.eyebrow")}</p>
           <h1 className="mt-4 max-w-4xl text-4xl font-black leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
-            State Life Sukkur Area Office ke sath Insurance Advisor banein
+            {t("join.title")}
           </h1>
           <p className="mt-5 max-w-2xl text-lg leading-8 text-gray-300">
-            Insurance advisor registration ke liye apni basic maloomat share karein. Asli registration aur forms ka process office mein mukammal hoga.
+            {t("join.subtitle")}
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <a href="#pre-registration" className="inline-flex items-center justify-center rounded-full bg-[var(--brand-blue-500)] px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-blue-950/20 transition hover:bg-[var(--brand-blue-700)]">
-              Pre-Registration Form
+              {t("join.form")}
             </a>
             <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center rounded-full border border-white/30 bg-white px-6 py-3.5 text-base font-semibold text-[#0b2240] shadow-sm transition hover:bg-slate-100">
-              WhatsApp Par Poochein
+              {t("join.whatsapp")}
             </a>
           </div>
         </div>

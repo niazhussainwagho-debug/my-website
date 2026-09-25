@@ -1,12 +1,9 @@
-import type { Metadata } from "next";
+"use client";
+
 import Link from "next/link";
 import { Calculator, FileText, RefreshCw, ShieldCheck, UsersRound } from "lucide-react";
 import { whatsappLink } from "../../lib/contact";
-
-export const metadata: Metadata = {
-  title: "Services | Sukkur Area Office 5405",
-  description: "State Life Sukkur Area Office ki policy, claims, payments aur financial guidance services.",
-};
+import { useLanguage } from "../../context/LanguageContext";
 
 const services = [
   {
@@ -42,20 +39,22 @@ const services = [
 ];
 
 export default function ServicesPage() {
+  const { t } = useLanguage();
+
   return (
     <main className="min-h-screen bg-slate-50 text-slate-800">
       <section className="bg-(--brand-blue-900) px-4 py-16 text-white sm:px-6 lg:px-8 lg:py-20">
         <div className="mx-auto max-w-7xl">
-          <p className="text-sm font-bold uppercase tracking-[0.18em] text-cyan-200">Sukkur Area Office 5405</p>
-          <h1 className="mt-4 max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl">Aapki policy journey ke har qadam par local guidance.</h1>
-          <p className="mt-6 max-w-2xl text-base leading-8 text-blue-100 sm:text-lg">Documentation se claims aur payment support tak, hamari office team aapko process ko simple andaaz mein samajhne mein madad karti hai.</p>
+          <p className="text-sm font-bold uppercase tracking-[0.18em] text-cyan-200">{t("services.eyebrow")}</p>
+          <h1 className="mt-4 max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl">{t("services.title")}</h1>
+          <p className="mt-6 max-w-2xl text-base leading-8 text-blue-100 sm:text-lg">{t("services.subtitle")}</p>
         </div>
       </section>
 
       <section className="px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
         <div className="mx-auto max-w-7xl">
           <div className="max-w-2xl">
-            <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#1f8a67]">Office support</p>
+            <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#1f8a67]">{t("services.support")}</p>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-(--brand-blue-900) sm:text-4xl">Practical help, without the paperwork guesswork.</h2>
             <p className="mt-4 leading-7 text-slate-600">Apni existing policy ya service need select karein. Representative aapko required documents, next steps aur official process samjhayega.</p>
           </div>
@@ -74,7 +73,7 @@ export default function ServicesPage() {
                   <h3 className="mt-5 text-lg font-bold leading-7 text-(--brand-blue-900)">{service.title}</h3>
                   <p className="mt-2 flex-1 text-sm leading-6 text-slate-600">{service.detail}</p>
                   <Link href={`/checkout?service=${encodeURIComponent(service.title)}`} className="mt-5 inline-flex min-h-10 items-center justify-center rounded-full bg-(--brand-blue-700) px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-(--brand-blue-900)">
-                    Request Assistance
+                    {t("services.request")}
                   </Link>
                 </article>
               );
@@ -90,7 +89,7 @@ export default function ServicesPage() {
             <p className="mt-2 text-slate-600">Products page par State Life tables ka structured comparison dekhein.</p>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row">
-            <Link href="/products" className="inline-flex min-h-11 items-center justify-center rounded-full bg-(--brand-blue-700) px-6 py-3 font-semibold text-white transition hover:bg-(--brand-blue-900)">View policy tables</Link>
+            <Link href="/products" className="inline-flex min-h-11 items-center justify-center rounded-full bg-(--brand-blue-700) px-6 py-3 font-semibold text-white transition hover:bg-(--brand-blue-900)">{t("services.tables")}</Link>
             <a href={whatsappLink()} target="_blank" rel="noreferrer" className="inline-flex min-h-11 items-center justify-center rounded-full border border-(--brand-blue-700) bg-white px-6 py-3 font-semibold text-(--brand-blue-700) transition hover:bg-slate-50">WhatsApp office</a>
           </div>
         </div>
