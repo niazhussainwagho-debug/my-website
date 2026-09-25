@@ -26,9 +26,9 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 left-0 right-0 z-50 w-full max-w-full m-0 p-0 shadow-md bg-white overflow-hidden">
+    <header className="sticky top-0 left-0 right-0 z-50 w-full max-w-full m-0 p-0 shadow-md bg-white block">
       <div className="m-0 w-full max-w-full overflow-hidden">
-        <div className="mx-auto flex min-h-20 w-full max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:min-h-[88px] lg:px-8">
+        <div className="mx-auto m-0 flex min-h-[60px] w-full max-w-7xl items-center justify-between gap-4 px-4 pt-2 pb-2 sm:px-6 lg:min-h-[88px] lg:px-8">
           <Link href="/" className="flex min-w-0 items-center gap-3 text-slate-900" onClick={() => setMenuOpen(false)}>
             <Image src="/area-logo.png" alt="State Life Insurance Corporation of Pakistan logo" width={420} height={144} priority className="h-12 w-auto shrink-0 object-contain object-left md:h-14" />
             <span className="min-w-0 max-w-full leading-tight">
