@@ -7,7 +7,6 @@ import {
   MANAGER_TITLE,
   emailLink,
   landlineLink,
-  telLink,
   whatsappLink,
 } from "../../lib/contact";
 
@@ -39,32 +38,6 @@ const values = [
   },
 ];
 
-function SiteHeader() {
-  return (
-    <header className="hidden">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-        <Link href="/" className="flex min-w-0 items-center gap-3 text-slate-900">
-          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-(--brand-blue-900) text-sm font-bold text-white">5405</span>
-          <span className="min-w-0">
-            <span className="block truncate text-sm font-bold sm:text-base">Sukkur Area Office</span>
-            <span className="block text-xs text-slate-500">State Life Guidance</span>
-          </span>
-        </Link>
-        <div className="hidden items-center gap-7 text-sm font-semibold text-slate-600 md:flex">
-          <Link href="/" className="transition hover:text-(--brand-blue-700)">Home</Link>
-          <Link href="/health-insurance" className="transition hover:text-(--brand-blue-700)">Products</Link>
-          <Link href="/about" aria-current="page" className="text-(--brand-blue-700)">About</Link>
-          <Link href="/contact" className="transition hover:text-(--brand-blue-700)">Contact</Link>
-          <Link href="/become-an-agent" className="text-[#1f8a67] transition hover:text-[#177454]">Join Us</Link>
-        </div>
-        <a href={telLink()} className="inline-flex min-h-11 items-center justify-center rounded-full bg-(--brand-blue-700) px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-(--brand-blue-900) sm:px-5">
-          Call Now
-        </a>
-      </nav>
-    </header>
-  );
-}
-
 function SiteFooter() {
   return (
     <footer className="bg-(--brand-blue-900) px-4 py-10 text-slate-300 sm:px-6 lg:px-8">
@@ -82,7 +55,6 @@ function SiteFooter() {
 export default function AboutPage() {
   return (
     <main className="min-h-screen bg-slate-50 text-slate-800">
-      <SiteHeader />
       <section className="relative overflow-hidden bg-(--brand-blue-900) px-4 py-16 text-white sm:px-6 sm:py-20 lg:px-8">
         <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-cyan-400/20 blur-3xl" aria-hidden="true" />
         <div className="relative mx-auto max-w-7xl">

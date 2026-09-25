@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
 import { cleanPhone } from "../../lib/phone";
 
@@ -66,13 +65,6 @@ export default function HealthInsurancePage() {
   return (
     <main className="relative z-10 min-h-screen overflow-x-hidden bg-transparent text-slate-800">
       <div className="site-glow" aria-hidden="true" />
-      <header className="hidden">
-        <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-          <Link href="/" className="flex min-w-0 items-center gap-3"><Image src="/area-logo.png" alt="Sukkur Area Office logo" width={210} height={74} className="h-9 w-[105px] max-w-full shrink-0 rounded-full bg-white p-1 object-contain sm:h-11 sm:w-[140px]" priority /></Link>
-          <Link href="/" className="inline-flex min-h-11 items-center justify-center rounded-full bg-[var(--brand-blue-700)] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[var(--brand-blue-900)]">Home</Link>
-        </nav>
-      </header>
-
       <section className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 lg:grid-cols-2 lg:px-8 lg:py-20">
         <div><p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-300">Health Insurance</p><h1 className="mt-4 text-4xl font-black leading-tight text-white sm:text-5xl">Family Ki Sehat, Sukoon Ke Sath</h1><p className="mt-5 max-w-2xl text-lg leading-8 text-gray-300">Ilaaj ke akhrajaat achanak aa jate hain. Sukkur Area Office aap ko sahi health insurance category samajhne aur agla qadam chunne mein rehnumai deti hai.</p><a href="#health-enquiry" className="mt-8 inline-flex min-h-11 items-center justify-center rounded-full bg-[var(--brand-blue-500)] px-6 py-3.5 text-base font-semibold text-white transition hover:bg-[var(--brand-blue-700)]">Free Consultation</a></div>
         <div className="relative aspect-[16/9] w-full overflow-hidden rounded-3xl border border-white/20 bg-[var(--brand-blue-100)] shadow-xl">{!imageFailed ? <Image src="/health-hero.png" alt="Khush family ghar mein sofa par" fill priority className="object-cover object-[center_right]" onError={() => setImageFailed(true)} /> : <div className="absolute inset-0 bg-gradient-to-br from-[var(--brand-blue-100)] via-sky-100 to-[var(--brand-blue-500)]" aria-label="Health insurance visual" />}</div>

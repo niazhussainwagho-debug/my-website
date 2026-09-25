@@ -23,6 +23,7 @@
 html {
   background: linear-gradient(to bottom, var(--brand-blue-900), var(--brand-blue-700));
   scroll-behavior: smooth;
+  scrollbar-gutter: stable;
 }
 
 body {

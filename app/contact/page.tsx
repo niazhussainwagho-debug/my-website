@@ -38,32 +38,6 @@ const serviceOptions = [
   "General Consultation",
 ];
 
-function SiteHeader() {
-  return (
-    <header className="hidden">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-        <Link href="/" className="flex min-w-0 items-center gap-3 text-slate-900">
-          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-(--brand-blue-900) text-sm font-bold text-white">5405</span>
-          <span className="min-w-0">
-            <span className="block truncate text-sm font-bold sm:text-base">Sukkur Area Office</span>
-            <span className="block text-xs text-slate-500">State Life Guidance</span>
-          </span>
-        </Link>
-        <div className="hidden items-center gap-7 text-sm font-semibold text-slate-600 md:flex">
-          <Link href="/" className="transition hover:text-(--brand-blue-700)">Home</Link>
-          <Link href="/health-insurance" className="transition hover:text-(--brand-blue-700)">Products</Link>
-          <Link href="/about" className="transition hover:text-(--brand-blue-700)">About</Link>
-          <Link href="/contact" aria-current="page" className="text-(--brand-blue-700)">Contact</Link>
-          <Link href="/become-an-agent" className="text-[#1f8a67] transition hover:text-[#177454]">Join Us</Link>
-        </div>
-        <a href={telLink()} className="inline-flex min-h-11 items-center justify-center rounded-full bg-(--brand-blue-700) px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-(--brand-blue-900) sm:px-5">
-          Call Now
-        </a>
-      </nav>
-    </header>
-  );
-}
-
 function validateForm(form: ContactForm): FormErrors {
   const errors: FormErrors = {};
   if (!form.name.trim()) errors.name = "Poora naam likhein.";
@@ -119,7 +93,6 @@ export default function ContactPage() {
 
   return (
     <main className="min-h-screen bg-slate-50 text-slate-800">
-      <SiteHeader />
       <section className="bg-(--brand-blue-900) px-4 py-14 text-white sm:px-6 sm:py-18 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <p className="text-sm font-bold uppercase tracking-[0.18em] text-cyan-200">Contact Sukkur Office 5405</p>

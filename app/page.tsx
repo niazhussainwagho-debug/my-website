@@ -100,8 +100,6 @@ async function submitLead(payload: Record<string, unknown>) {
 
 export default function Home() {
   const [openFaq, setOpenFaq] = useState(0);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [productsOpen, setProductsOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -116,7 +114,6 @@ export default function Home() {
   const [productPaused, setProductPaused] = useState(false);
   const [productVisibleCount, setProductVisibleCount] = useState(1);
   const [failedProductImages, setFailedProductImages] = useState<string[]>([]);
-  const productsMenuRef = useRef<HTMLDivElement>(null);
   const productCarouselRef = useRef<HTMLDivElement>(null);
   const productResumeTimerRef = useRef<number | null>(null);
   const router = useRouter();
@@ -197,26 +194,6 @@ export default function Home() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [selectedCategory, formData.selectedPlan]);
 
-  useEffect(() => {
-    const handleMenuInteraction = (event: MouseEvent | KeyboardEvent) => {
-      if (event instanceof KeyboardEvent && event.key === "Escape") {
-        setProductsOpen(false);
-        return;
-      }
-
-      if (event instanceof MouseEvent && productsMenuRef.current && !productsMenuRef.current.contains(event.target as Node)) {
-        setProductsOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleMenuInteraction);
-    document.addEventListener("keydown", handleMenuInteraction);
-    return () => {
-      document.removeEventListener("mousedown", handleMenuInteraction);
-      document.removeEventListener("keydown", handleMenuInteraction);
-    };
-  }, []);
-
   const resetModalState = () => {
     setSelectedCategory(null);
     setShowForm(false);
@@ -238,8 +215,6 @@ export default function Home() {
 
   const openProductCategory = (category: string) => {
     setSelectedCategory(category);
-    setProductsOpen(false);
-    setMenuOpen(false);
     setShowForm(false);
     setIsSubmitted(false);
     setErrors({});
@@ -362,108 +337,6 @@ export default function Home() {
   return (
     <main className="relative z-10 overflow-x-hidden bg-transparent pb-24 text-slate-800 md:pb-0">
       <div className="site-glow" aria-hidden="true" />
-      <header className="hidden">
-        <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-          <a href="#home" className="flex items-center gap-3">
-            <Image
-              src="/area-logo.png"
-              alt="Sukkur Area Office logo"
-              width={210}
-              height={74}
-              className="h-9 w-[105px] max-w-full shrink-0 rounded-full bg-white p-1 object-contain sm:h-11 sm:w-[140px]"
-              priority
-            />
-          </a>
-
-          <div className="hidden items-center gap-8 text-sm font-medium text-slate-700 md:flex">
-            <a href="#home" className="transition hover:text-[#0b2240]">Home</a>
-            <div ref={productsMenuRef} className="relative" onMouseEnter={() => setProductsOpen(true)} onMouseLeave={() => setProductsOpen(false)}>
-              <button
-                type="button"
-                aria-expanded={productsOpen}
-                aria-haspopup="menu"
-                onClick={() => setProductsOpen((open) => !open)}
-                className="inline-flex min-h-11 items-center gap-1 transition hover:text-[#0b2240]"
-              >
-                Products
-                <span aria-hidden="true" className={`text-xs transition-transform ${productsOpen ? "rotate-180" : ""}`}>⌄</span>
-              </button>
-
-              {productsOpen && (
-                <div role="menu" className="absolute left-1/2 top-full z-50 mt-2 w-56 -translate-x-1/2 rounded-2xl border border-slate-200 bg-white p-2 text-left shadow-xl">
-                  <a href="/health-insurance" role="menuitem" className="flex min-h-11 items-center rounded-xl px-3 py-2 text-sm text-slate-700 transition hover:bg-slate-100 hover:text-[#0b2240]" onClick={() => setProductsOpen(false)}>
-                    Health Insurance
-                  </a>
-                  {["Life Insurance", "Takaful", "Family Protection", "Retirement", "Child Education"].map((category) => (
-                    <button key={category} type="button" role="menuitem" onClick={() => openProductCategory(category)} className="flex min-h-11 w-full items-center rounded-xl px-3 py-2 text-left text-sm text-slate-700 transition hover:bg-slate-100 hover:text-[#0b2240]">
-                      {category}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-            <a href="#services" className="transition hover:text-[#0b2240]">Services</a>
-            <a href="/about" className="transition hover:text-[#0b2240]">About</a>
-            <a href="/contact" className="transition hover:text-[#0b2240]">Contact</a>
-            <a href="/become-an-agent" className="font-semibold text-[#1f8a67] transition hover:text-[#177454]">Join Us</a>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <a
-              href="tel:+923132894151"
-              className="hidden items-center justify-center rounded-full bg-[var(--brand-blue-700)] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[var(--brand-blue-900)] md:inline-flex"
-            >
-              Call Now
-            </a>
-
-            <button
-              type="button"
-              aria-label="Toggle menu"
-              aria-expanded={menuOpen}
-              onClick={() => setMenuOpen((open) => !open)}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-sm md:hidden"
-            >
-              <span className="space-y-1.5">
-                <span className="block h-0.5 w-5 rounded-full bg-current" />
-                <span className="block h-0.5 w-5 rounded-full bg-current" />
-                <span className="block h-0.5 w-5 rounded-full bg-current" />
-              </span>
-            </button>
-          </div>
-        </nav>
-
-        {menuOpen && (
-          <div className="border-t border-slate-200 bg-white md:hidden">
-            <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-3 sm:px-6">
-              <a href="#home" onClick={() => setMenuOpen(false)} className="rounded-xl px-3 py-2.5 text-base font-medium text-slate-700 transition hover:bg-slate-100 hover:text-[#0b2240]">Home</a>
-              <button type="button" aria-expanded={productsOpen} onClick={() => setProductsOpen((open) => !open)} className="flex min-h-11 w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-base font-medium text-slate-700 transition hover:bg-slate-100 hover:text-[#0b2240]">
-                <span>Products</span>
-                <span aria-hidden="true" className={`text-sm transition-transform ${productsOpen ? "rotate-180" : ""}`}>⌄</span>
-              </button>
-              {productsOpen && (
-                <div className="ml-3 flex flex-col gap-1 border-l border-slate-200 pl-3">
-                  <a href="/health-insurance" onClick={() => setMenuOpen(false)} className="flex min-h-11 items-center rounded-xl px-3 py-2 text-sm text-slate-700 hover:bg-slate-100">Health Insurance</a>
-                  {["Life Insurance", "Takaful", "Family Protection", "Retirement", "Child Education"].map((category) => (
-                    <button key={category} type="button" onClick={() => openProductCategory(category)} className="flex min-h-11 items-center rounded-xl px-3 py-2 text-left text-sm text-slate-700 hover:bg-slate-100">{category}</button>
-                  ))}
-                </div>
-              )}
-              <a href="#services" onClick={() => setMenuOpen(false)} className="rounded-xl px-3 py-2.5 text-base font-medium text-slate-700 transition hover:bg-slate-100 hover:text-[#0b2240]">Services</a>
-              <a href="/about" onClick={() => setMenuOpen(false)} className="rounded-xl px-3 py-2.5 text-base font-medium text-slate-700 transition hover:bg-slate-100 hover:text-[#0b2240]">About</a>
-              <a href="/contact" onClick={() => setMenuOpen(false)} className="rounded-xl px-3 py-2.5 text-base font-medium text-slate-700 transition hover:bg-slate-100 hover:text-[#0b2240]">Contact</a>
-              <a href="/become-an-agent" onClick={() => setMenuOpen(false)} className="rounded-xl px-3 py-2.5 text-base font-medium text-slate-700 transition hover:bg-slate-100 hover:text-[#0b2240]">Join Us</a>
-              <a
-                href="tel:+923132894151"
-                onClick={() => setMenuOpen(false)}
-                className="mt-1 inline-flex items-center justify-center rounded-full bg-[var(--brand-blue-700)] px-4 py-3 text-sm font-semibold text-white"
-              >
-                Call Now
-              </a>
-            </div>
-          </div>
-        )}
-      </header>
-
       <div className="fixed inset-x-4 bottom-4 z-50 flex gap-3 md:hidden">
         <a
           href="https://wa.me/923132894151"

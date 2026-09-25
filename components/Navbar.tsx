@@ -24,11 +24,11 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 w-full bg-white/95 backdrop-blur-md shadow-sm">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8" aria-label="Main navigation">
+    <header className="fixed left-0 right-0 top-0 z-50 h-20 w-full bg-white/95 shadow-sm backdrop-blur-md md:h-24">
+      <nav className="mx-auto flex h-full max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8" aria-label="Main navigation">
         <Link href="/" className="flex min-w-0 items-center gap-3 text-slate-900" onClick={() => setMenuOpen(false)}>
           <span className="flex shrink-0 items-center rounded-none bg-transparent p-0">
-            <Image src="/area-logo.png" alt="State Life Sukkur Area Office logo" width={420} height={144} priority className="h-12 w-auto max-w-40 object-contain object-left md:h-16 md:max-w-55" />
+            <Image src="/area-logo.png" alt="State Life Sukkur Area Office logo" width={420} height={144} priority className="h-12 w-40 object-contain object-left md:h-16 md:w-55" />
           </span>
           <span className="min-w-0">
             <span className="block truncate text-sm font-bold sm:text-base">Sukkur Area Office</span>

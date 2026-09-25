@@ -60,7 +60,6 @@ const initialForm: FormData = {
 };
 
 export default function BecomeAnAgentPage() {
-  const [menuOpen, setMenuOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState(0);
   const [formData, setFormData] = useState<FormData>(initialForm);
   const [errors, setErrors] = useState<FormErrors>({});
@@ -135,76 +134,6 @@ export default function BecomeAnAgentPage() {
   return (
     <main className="relative z-10 min-h-screen overflow-x-hidden bg-transparent pb-24 text-slate-800 md:pb-0">
       <div className="site-glow" aria-hidden="true" />
-      <header className="hidden">
-        <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-          <Link href="/" className="flex min-w-0 items-center gap-3">
-            <Image
-              src="/area-logo.png"
-              alt="Sukkur Area Office logo"
-              width={210}
-              height={74}
-              className="h-9 w-[105px] max-w-full shrink-0 rounded-full bg-white p-1 object-contain sm:h-11 sm:w-[140px]"
-              priority
-            />
-          </Link>
-
-          <div className="hidden items-center gap-7 text-sm font-medium text-slate-700 md:flex">
-            <Link href="/" className="transition hover:text-[#0b2240]">Home</Link>
-            <Link href="/#products" className="transition hover:text-[#0b2240]">Products</Link>
-            <Link href="/#services" className="transition hover:text-[#0b2240]">Services</Link>
-            <Link href="/#about" className="transition hover:text-[#0b2240]">About</Link>
-            <Link href="/#contact" className="transition hover:text-[#0b2240]">Contact</Link>
-            <Link href="/become-an-agent" className="font-semibold text-[#1f8a67]">Join Us</Link>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <a href="tel:+923132894151" className="hidden rounded-full bg-[var(--brand-blue-700)] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[var(--brand-blue-900)] md:inline-flex">
-              Call Now
-            </a>
-            <button
-              type="button"
-              aria-label="Toggle menu"
-              aria-expanded={menuOpen}
-              onClick={() => setMenuOpen((open) => !open)}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-sm md:hidden"
-            >
-              <span className="space-y-1.5">
-                <span className="block h-0.5 w-5 rounded-full bg-current" />
-                <span className="block h-0.5 w-5 rounded-full bg-current" />
-                <span className="block h-0.5 w-5 rounded-full bg-current" />
-              </span>
-            </button>
-          </div>
-        </nav>
-
-        {menuOpen && (
-          <div className="border-t border-slate-200 bg-white md:hidden">
-            <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-3 sm:px-6">
-              {[
-                ["Home", "/"],
-                ["Products", "/#products"],
-                ["Services", "/#services"],
-                ["About", "/#about"],
-                ["Contact", "/#contact"],
-                ["Join Us", "/become-an-agent"],
-              ].map(([label, href]) => (
-                <Link
-                  key={label}
-                  href={href}
-                  onClick={() => setMenuOpen(false)}
-                  className="rounded-xl px-3 py-2.5 text-base font-medium text-slate-700 transition hover:bg-slate-100 hover:text-[#0b2240]"
-                >
-                  {label}
-                </Link>
-              ))}
-              <a href="tel:+923132894151" onClick={() => setMenuOpen(false)} className="mt-1 inline-flex justify-center rounded-full bg-[var(--brand-blue-700)] px-4 py-3 text-sm font-semibold text-white">
-                Call Now
-              </a>
-            </div>
-          </div>
-        )}
-      </header>
-
       <div className="fixed inset-x-4 bottom-4 z-50 flex gap-3 md:hidden">
         <a href="https://wa.me/923132894151" target="_blank" rel="noreferrer" className="flex flex-1 items-center justify-center rounded-full bg-[#1f8a67] px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-[#1f8a67]/25">
           WhatsApp
