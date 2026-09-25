@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { cleanPhone } from "../../lib/phone";
 import { supabase } from "@/lib/supabase";
+import { WHATSAPP_NUMBER } from "../../lib/contact";
 const processSteps = [
   "Pre-registration form bharein ya office aayein.",
   "Office mein asli Application Form (Form 01) aur zaroori documents jama karwayein.",
@@ -135,7 +136,7 @@ export default function BecomeAnAgentPage() {
     <main className="relative z-10 min-h-screen overflow-x-hidden bg-transparent pb-24 text-slate-800 md:pb-0">
       <div className="site-glow" aria-hidden="true" />
       <div className="fixed inset-x-4 bottom-4 z-50 flex gap-3 md:hidden">
-        <a href="https://wa.me/923132894151" target="_blank" rel="noreferrer" className="flex flex-1 items-center justify-center rounded-full bg-[#1f8a67] px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-[#1f8a67]/25">
+        <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer" className="flex flex-1 items-center justify-center rounded-full bg-[#1f8a67] px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-[#1f8a67]/25">
           WhatsApp
         </a>
         <a href="tel:+923132894151" className="flex flex-1 items-center justify-center rounded-full bg-[var(--brand-blue-700)] px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-950/25">
@@ -156,7 +157,7 @@ export default function BecomeAnAgentPage() {
             <a href="#pre-registration" className="inline-flex items-center justify-center rounded-full bg-[var(--brand-blue-500)] px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-blue-950/20 transition hover:bg-[var(--brand-blue-700)]">
               Pre-Registration Form
             </a>
-            <a href="https://wa.me/923132894151" target="_blank" rel="noreferrer" className="inline-flex items-center justify-center rounded-full border border-white/30 bg-white px-6 py-3.5 text-base font-semibold text-[#0b2240] shadow-sm transition hover:bg-slate-100">
+            <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center rounded-full border border-white/30 bg-white px-6 py-3.5 text-base font-semibold text-[#0b2240] shadow-sm transition hover:bg-slate-100">
               WhatsApp Par Poochein
             </a>
           </div>
@@ -235,7 +236,7 @@ export default function BecomeAnAgentPage() {
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#1f8a67]">Forms</p>
           <h2 className="mt-3 text-3xl font-bold text-[#0b2240] sm:text-4xl">Registration forms office se hasil karein</h2>
           <p className="mt-4 max-w-2xl text-base leading-7 text-slate-600">Asli Application Form (Form 01) aur registration ki rehnumai ke liye office se rabta karein.</p>
-          <a href="https://wa.me/923132894151" target="_blank" rel="noreferrer" className="mt-6 inline-flex items-center justify-center rounded-full bg-[var(--brand-blue-500)] px-6 py-3.5 text-base font-semibold text-white transition hover:bg-[var(--brand-blue-700)]">
+          <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer" className="mt-6 inline-flex items-center justify-center rounded-full bg-[var(--brand-blue-500)] px-6 py-3.5 text-base font-semibold text-white transition hover:bg-[var(--brand-blue-700)]">
             WhatsApp Par Poochein
           </a>
         </div>

@@ -7,7 +7,7 @@ import { FacebookIcon, LinkedInIcon, MailIcon, PhoneIcon } from "../components/i
 import { plans, type Plan } from "../data/plans";
 import { products } from "../data/products";
 import { supabase } from "@/lib/supabase";
-import { AREA_CODE, FACEBOOK_URL, LINKEDIN_URL, MANAGER_NAME, MANAGER_TITLE, emailLink, landlineLink } from "../lib/contact";
+import { AREA_CODE, FACEBOOK_URL, LINKEDIN_URL, MANAGER_NAME, MANAGER_TITLE, WHATSAPP_NUMBER, emailLink, landlineLink } from "../lib/contact";
 import { cleanPhone } from "../lib/phone";
 
 const services = [
@@ -339,7 +339,7 @@ export default function Home() {
       <div className="site-glow" aria-hidden="true" />
       <div className="fixed inset-x-4 bottom-4 z-50 flex gap-3 md:hidden">
         <a
-          href="https://wa.me/923132894151"
+          href={`https://wa.me/${WHATSAPP_NUMBER}`}
           target="_blank"
           rel="noreferrer"
           className="flex flex-1 items-center justify-center rounded-full bg-[#1f8a67] px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-[#1f8a67]/25"
