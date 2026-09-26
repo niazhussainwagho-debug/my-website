@@ -3,8 +3,9 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, ArrowUpRight, ChevronDown, Clock3, GraduationCap, HeartHandshake, MapPin, ShieldCheck, Stethoscope } from "lucide-react";
+import { ArrowRight, ArrowUpRight, ChevronDown, Clock3, GraduationCap, HeartHandshake, MapPin, Stethoscope } from "lucide-react";
 import { FacebookIcon, LinkedInIcon, MailIcon, PhoneIcon } from "../components/icons";
+import Hero from "../components/Hero";
 import Testimonials from "../components/Testimonials";
 import { plans, type Plan } from "../data/plans";
 import { products } from "../data/products";
@@ -85,8 +86,6 @@ const faqs = [
   },
 ];
 
-const heroTitle = "Aapki Family Ka Mustaqbil Mehfooz";
-
 const initialForm = {
   name: "",
   phone: "",
@@ -126,7 +125,6 @@ async function submitLead(payload: Record<string, unknown>) {
 export default function Home() {
   const [openFaq, setOpenFaq] = useState(0);
   const [openProcess, setOpenProcess] = useState(0);
-  const [heroText, setHeroText] = useState("");
   const [statsProgress, setStatsProgress] = useState(0);
   const [policySearch, setPolicySearch] = useState("");
   const [policyFilter, setPolicyFilter] = useState("All goals");
@@ -166,19 +164,6 @@ export default function Home() {
     updateVisibleCount();
     window.addEventListener("resize", updateVisibleCount);
     return () => window.removeEventListener("resize", updateVisibleCount);
-  }, []);
-
-  useEffect(() => {
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduceMotion) return;
-
-    let position = 0;
-    const timer = window.setInterval(() => {
-      position += 1;
-      setHeroText(heroTitle.slice(0, position));
-      if (position >= heroTitle.length) window.clearInterval(timer);
-    }, 48);
-    return () => window.clearInterval(timer);
   }, []);
 
   const scrollToProduct = (index: number) => {
@@ -426,55 +411,13 @@ export default function Home() {
         </a>
       </div>
 
-      <section id="home" className="relative isolate overflow-hidden bg-[#e8f0e9]">
-        <div className="mx-auto grid min-w-0 max-w-7xl items-center gap-10 px-4 py-10 sm:px-6 sm:py-14 lg:grid-cols-[1.04fr_0.96fr] lg:px-8 lg:py-16">
-          <div className="min-w-0">
-            <span className="inline-flex items-center gap-2 rounded-full border border-[#176b55]/20 bg-white/75 px-3.5 py-2 text-xs font-bold uppercase tracking-[0.12em] text-[#176b55]">
-              <ShieldCheck size={15} aria-hidden="true" /> Sukkur Area Office 5405
-            </span>
-            <h1 aria-label={heroTitle} className="mt-5 min-h-[3.3em] max-w-3xl text-[2.5rem] font-black leading-[1.05] text-[#132d2a] sm:min-h-[2.5em] sm:text-5xl lg:min-h-[2.2em] lg:text-[3.65rem]">
-              <span className="sr-only">{heroTitle}</span>
-              <span aria-hidden="true" className="motion-reduce:hidden">{heroText}<span className="ml-1 inline-block h-[0.85em] border-r-2 border-[#176b55] align-[-0.06em] motion-safe:animate-pulse" /></span>
-              <span aria-hidden="true" className="hidden motion-reduce:inline">{heroTitle}</span>
-            </h1>
-            <p className="mt-4 max-w-xl text-base leading-7 text-[#4c625d] sm:text-lg">
-              Family ke mustaqbil ke liye State Life options samjhein, aur Sukkur ki local team se seedhi rehnumai hasil karein.
-            </p>
-
-            <div className="mt-7 flex min-w-0 flex-wrap gap-3">
-              <a href="#contact" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#075a49] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#06483b]">
-                Free consultation <ArrowRight size={17} aria-hidden="true" />
-              </a>
-              <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer" className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#c7d6cf] bg-white/80 px-5 py-3 text-sm font-bold text-[#163c35] transition hover:bg-white">
-                WhatsApp us
-              </a>
-            </div>
-
-            <div className="mt-8 grid min-w-0 gap-3 rounded-2xl border border-[#dce6de] bg-white/85 p-3 sm:grid-cols-[minmax(0,1fr)_minmax(0,0.8fr)_auto] sm:items-end sm:p-4">
-              <div className="min-w-0">
-                <label htmlFor="policy-search" className="mb-1.5 block text-xs font-bold uppercase tracking-[0.08em] text-[#49625a]">Find a policy goal</label>
-                <input id="policy-search" type="search" value={policySearch} onChange={(event) => setPolicySearch(event.target.value)} placeholder="Search education, health..." className="h-11 w-full min-w-0 rounded-xl border border-[#d6e0d9] bg-[#fbfcfa] px-3 text-sm text-[#183630] outline-none placeholder:text-[#87958f] focus:border-[#176b55] focus:ring-2 focus:ring-[#176b55]/15" />
-              </div>
-              <div className="min-w-0">
-                <label htmlFor="policy-filter" className="mb-1.5 block text-xs font-bold uppercase tracking-[0.08em] text-[#49625a]">Choose a goal</label>
-                <select id="policy-filter" value={policyFilter} onChange={(event) => setPolicyFilter(event.target.value)} className="h-11 w-full min-w-0 rounded-xl border border-[#d6e0d9] bg-[#fbfcfa] px-3 text-sm text-[#183630] outline-none focus:border-[#176b55] focus:ring-2 focus:ring-[#176b55]/15">
-                  <option>All goals</option>
-                  {homePolicies.map((policy) => <option key={policy.title}>{policy.title}</option>)}
-                </select>
-              </div>
-              <a href="#policies" className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[#163c35] px-4 py-2.5 text-sm font-bold text-white transition hover:bg-[#0e302a]">
-                Explore <ArrowUpRight size={16} aria-hidden="true" />
-              </a>
-            </div>
-          </div>
-
-          <div className="relative mx-auto w-full min-w-0 max-w-2xl">
-            <div className="relative aspect-4/3 min-h-64 w-full overflow-hidden rounded-3xl bg-[#c8dacf] sm:aspect-5/4">
-              <Image src="/products/family.png" alt="Family spending time together at home" fill loading="eager" sizes="(max-width: 1023px) 100vw, 48vw" className="object-cover" />
-            </div>
-          </div>
-        </div>
-      </section>
+      <Hero
+        policyGoals={homePolicies.map((policy) => policy.title)}
+        policySearch={policySearch}
+        onPolicySearchChange={setPolicySearch}
+        policyFilter={policyFilter}
+        onPolicyFilterChange={setPolicyFilter}
+      />
 
       <section aria-label="Sukkur Area Office at a glance" className="border-y border-[#e1e8e2] bg-white">
         <div className="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-y divide-[#e6ece7] px-4 sm:px-6 lg:grid-cols-4 lg:divide-y-0 lg:px-8">
