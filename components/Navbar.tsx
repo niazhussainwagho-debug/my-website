@@ -26,10 +26,10 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 w-full max-w-full m-0 p-0 shadow-md bg-white block">
+    <header className="fixed inset-x-0 top-0 z-50 m-0 block w-full max-w-full overflow-x-hidden bg-white p-0 shadow-md">
       <div className="m-0 w-full max-w-full overflow-hidden">
-        <div className="mx-auto m-0 flex min-h-[60px] w-full max-w-7xl items-center justify-between gap-4 px-4 pt-2 pb-2 sm:px-6 lg:min-h-[88px] lg:px-8">
-          <Link href="/" className="flex min-w-0 items-center gap-3 text-slate-900" onClick={() => setMenuOpen(false)}>
+        <div className="mx-auto flex min-h-[60px] w-full max-w-7xl items-center justify-between gap-3 px-4 pt-2 pb-2 md:px-8 lg:min-h-[88px]">
+          <Link href="/" className="flex min-w-0 flex-1 items-center gap-3 text-slate-900" onClick={() => setMenuOpen(false)}>
             <Image src="/area-logo.png" alt="State Life Insurance Corporation of Pakistan logo" width={420} height={144} priority className="h-12 w-auto shrink-0 object-contain object-left md:h-14" />
             <span className="min-w-0 max-w-full leading-tight">
               <span className="block truncate whitespace-nowrap text-xs font-semibold text-(--brand-blue-700)">Sukkur Area Office 5405</span>
@@ -54,12 +54,12 @@ export default function Navbar() {
         </div>
       </div>
 
-      <nav className="m-0 w-full max-w-full overflow-hidden bg-[#0052cc]" aria-label="Main navigation">
-        <div className="mx-auto flex min-h-12 max-w-7xl items-center px-4 sm:px-6 lg:px-8">
-          <div className="hidden w-full items-center justify-between md:flex">
+      <nav className="m-0 w-full max-w-full overflow-x-hidden bg-[#0052cc]" aria-label="Main navigation">
+        <div className="mx-auto flex min-h-12 w-full max-w-7xl items-center px-4 md:px-8">
+          <div className="hidden w-full min-w-0 flex-nowrap items-center justify-between gap-1 md:flex">
             {navLinks.map((link) => {
               const active = isActiveRoute(pathname, link.href);
-              return <Link key={link.href} href={link.href} aria-current={active ? "page" : undefined} className={`inline-flex min-h-12 items-center border-b-2 px-3 text-sm font-semibold text-white transition hover:bg-white/10 ${active ? "border-white" : "border-transparent"}`}>{link.name}</Link>;
+              return <Link key={link.href} href={link.href} aria-current={active ? "page" : undefined} className={`inline-flex min-h-12 shrink-0 items-center whitespace-nowrap border-b-2 px-2 text-sm font-semibold text-white transition hover:bg-white/10 lg:px-3 ${active ? "border-white" : "border-transparent"}`}>{link.name}</Link>;
             })}
           </div>
           <div className="md:hidden"><p className="w-full max-w-full m-0 py-1.5 px-3 bg-[#0052cc] overflow-hidden text-ellipsis text-center text-xs font-semibold text-white whitespace-nowrap truncate">Sukkur Area Office 5405</p></div>
