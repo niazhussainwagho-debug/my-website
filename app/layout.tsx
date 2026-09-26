@@ -22,11 +22,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full w-full max-w-[100vw] overflow-x-hidden antialiased`}
     >
-      <body className="flex min-h-full w-full max-w-full flex-col overflow-x-hidden">
+      <body className="flex min-h-full w-full max-w-[100vw] flex-col overflow-x-hidden">
         <Navbar />
-        <div className="relative m-0 w-full max-w-full overflow-x-hidden p-0 pt-30 lg:pt-34">{children}</div>
+        <div className="relative m-0 w-full max-w-[100vw] overflow-x-hidden p-0 pt-30 lg:pt-34">{children}</div>
       </body>
     </html>
   );
