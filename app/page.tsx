@@ -3,39 +3,82 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { ArrowRight, ArrowUpRight, BadgeCheck, ChevronDown, Clock3, GraduationCap, HeartHandshake, MapPin, ShieldCheck, Stethoscope } from "lucide-react";
 import { FacebookIcon, LinkedInIcon, MailIcon, PhoneIcon } from "../components/icons";
 import { plans, type Plan } from "../data/plans";
 import { products } from "../data/products";
 import { supabase } from "@/lib/supabase";
-import { AREA_CODE, FACEBOOK_URL, LINKEDIN_URL, MANAGER_NAME, MANAGER_TITLE, WHATSAPP_NUMBER, emailLink, landlineLink } from "../lib/contact";
+import { AREA_CODE, CONTACT_EMAIL, FACEBOOK_URL, LANDLINE_NUMBER, LINKEDIN_URL, MANAGER_NAME, MANAGER_TITLE, WHATSAPP_DISPLAY, WHATSAPP_NUMBER, emailLink, landlineLink } from "../lib/contact";
 import { cleanPhone } from "../lib/phone";
-
-const services = [
-  "Premium Payment Guide",
-  "Claim Help",
-  "Policy Forms",
-  "Free Consultation",
-];
-
-const reasons = [
-  { number: "01", title: "Trusted Guidance", text: "Expert team aapke needs ke mutabiq suitable options explain karti hai." },
-  { number: "02", title: "Simple Process", text: "Policy selection aur documentation process easy aur transparent rakha gaya hai." },
-  { number: "03", title: "Local Support", text: "Sukkur-based office se face-to-face guidance aur direct assistance milti hai." },
-  { number: "04", title: "Long-Term Care", text: "Aapki family ke liye coverage guidance aur local support." },
-];
 
 const testimonials = [
   {
     name: "Ayesha K.",
     text: "Office team ne bahut clear tarike se policy samjhayi. Family protection plan ka option bohat useful tha.",
+    image: "/products/family.png",
+    alt: "Family protection planning",
   },
   {
     name: "Muhammad Ali",
     text: "Premium guidance aur claim process bahut professional tha. Team ne har sawal ka jawab politely diya.",
+    image: "/products/education.png",
+    alt: "Parent planning for a child's education",
   },
   {
     name: "Zahid R.",
     text: "Life insurance ka decision lene mein help mili. Overall experience smooth aur trustworthy raha.",
+    image: "/products/retirement.png",
+    alt: "Family considering long-term plans",
+  },
+];
+
+const homePolicies = [
+  {
+    title: "Child Education",
+    planCategory: "Child Education",
+    description: "Bachon ki taleem ke liye pehle se sochi samjhi planning.",
+    image: "/products/education.png",
+    alt: "Child learning with books",
+    icon: GraduationCap,
+  },
+  {
+    title: "Marriage Planning",
+    planCategory: "Life Insurance",
+    description: "Aane wale family milestones ke liye protection options samjhein.",
+    image: "/products/family.png",
+    alt: "Family planning for future milestones",
+    icon: HeartHandshake,
+  },
+  {
+    title: "Retirement",
+    planCategory: "Retirement",
+    description: "Apne long-term goals ke mutabiq retirement options explore karein.",
+    image: "/products/retirement.png",
+    alt: "Couple planning for retirement",
+    icon: Clock3,
+  },
+  {
+    title: "Health",
+    planCategory: "Health",
+    description: "Health cover aur available support ke baare mein guidance lein.",
+    image: "/products/health.png",
+    alt: "Family health planning",
+    icon: Stethoscope,
+  },
+];
+
+const processSteps = [
+  {
+    title: "e-Polis aur policy services",
+    description: "Official digital services ke zariye policy information dekhein. Zaroorat par Sukkur office aapko sahi channel tak guide karega.",
+  },
+  {
+    title: "Claim ki rehnumai",
+    description: "Required documents aur claim ke aglay steps samajhne ke liye local team se rabta karein.",
+  },
+  {
+    title: "Cashless support",
+    description: "Health-related cashless support aur eligibility ki tafseel policy aur provider ke mutabiq office se confirm karein.",
   },
 ];
 
@@ -61,6 +104,8 @@ const faqs = [
     answer: "Office timing Monday se Friday, subah 9 baje se shaam 5 baje tak hai. Saturday aur Sunday off rahte hain.",
   },
 ];
+
+const heroTitle = "Aapki Family Ka Mustaqbil Mehfooz";
 
 const initialForm = {
   name: "",
@@ -100,6 +145,11 @@ async function submitLead(payload: Record<string, unknown>) {
 
 export default function Home() {
   const [openFaq, setOpenFaq] = useState(0);
+  const [openProcess, setOpenProcess] = useState(0);
+  const [heroText, setHeroText] = useState("");
+  const [statsProgress, setStatsProgress] = useState(0);
+  const [policySearch, setPolicySearch] = useState("");
+  const [policyFilter, setPolicyFilter] = useState("All goals");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -121,6 +171,12 @@ export default function Home() {
   const plansForCategory = selectedCategory
     ? plans.filter((item: Plan) => item.type === selectedCategory)
     : [];
+  const visibleHomePolicies = homePolicies.filter((policy) => {
+    const matchesFilter = policyFilter === "All goals" || policy.title === policyFilter;
+    const query = policySearch.trim().toLowerCase();
+    const matchesSearch = !query || `${policy.title} ${policy.description}`.toLowerCase().includes(query);
+    return matchesFilter && matchesSearch;
+  });
 
   useEffect(() => {
     const updateVisibleCount = () => {
@@ -130,6 +186,19 @@ export default function Home() {
     updateVisibleCount();
     window.addEventListener("resize", updateVisibleCount);
     return () => window.removeEventListener("resize", updateVisibleCount);
+  }, []);
+
+  useEffect(() => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion) return;
+
+    let position = 0;
+    const timer = window.setInterval(() => {
+      position += 1;
+      setHeroText(heroTitle.slice(0, position));
+      if (position >= heroTitle.length) window.clearInterval(timer);
+    }, 48);
+    return () => window.clearInterval(timer);
   }, []);
 
   const scrollToProduct = (index: number) => {
@@ -145,6 +214,22 @@ export default function Home() {
     if (productResumeTimerRef.current) window.clearTimeout(productResumeTimerRef.current);
     productResumeTimerRef.current = window.setTimeout(() => setProductPaused(false), 6000);
   };
+
+  useEffect(() => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion) return;
+
+    let startTime = 0;
+    let animationFrame = 0;
+    const animate = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / 1100, 1);
+      setStatsProgress(progress);
+      if (progress < 1) animationFrame = window.requestAnimationFrame(animate);
+    };
+    animationFrame = window.requestAnimationFrame(animate);
+    return () => window.cancelAnimationFrame(animationFrame);
+  }, []);
 
   useEffect(() => {
     const carousel = productCarouselRef.current;
@@ -219,6 +304,14 @@ export default function Home() {
     setIsSubmitted(false);
     setErrors({});
     setFormData({ ...initialForm, selectedPlan: category });
+  };
+
+  const openHomePolicy = (policy: (typeof homePolicies)[number]) => {
+    if (policy.title === "Health") {
+      router.push("/health-insurance");
+      return;
+    }
+    openProductCategory(policy.planCategory);
   };
 
   const handleProductOpen = (product: (typeof products)[number]) => {
@@ -335,9 +428,8 @@ export default function Home() {
   };
 
   return (
-    <main className="relative z-10 overflow-x-hidden bg-transparent pb-24 text-slate-800 md:pb-0">
-      <div className="site-glow" aria-hidden="true" />
-      <div className="fixed inset-x-4 bottom-4 z-50 flex gap-3 md:hidden">
+    <main className="relative z-10 min-w-0 max-w-full overflow-x-hidden bg-[#f5f7f3] pb-24 text-slate-900 md:pb-0">
+      <div className="fixed inset-x-3 bottom-3 z-50 flex gap-3 md:hidden">
         <a
           href={`https://wa.me/${WHATSAPP_NUMBER}`}
           target="_blank"
@@ -354,76 +446,115 @@ export default function Home() {
         </a>
       </div>
 
-      <section id="home" className="mx-auto max-w-7xl px-4 pb-14 pt-10 sm:px-6 lg:px-8 lg:pb-20 lg:pt-16">
-        <div className="grid items-center gap-10 lg:grid-cols-[1.2fr_0.8fr]">
-          <div>
-            <span className="inline-flex rounded-full border border-[#1f8a67]/30 bg-[#eafaf4] px-3.5 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#1f8a67]">
-              Family protection starts here
+      <section id="home" className="relative isolate overflow-hidden bg-[#e8f0e9]">
+        <div className="mx-auto grid min-w-0 max-w-7xl items-center gap-10 px-4 py-10 sm:px-6 sm:py-14 lg:grid-cols-[1.04fr_0.96fr] lg:px-8 lg:py-16">
+          <div className="min-w-0">
+            <span className="inline-flex items-center gap-2 rounded-full border border-[#176b55]/20 bg-white/75 px-3.5 py-2 text-xs font-bold uppercase tracking-[0.12em] text-[#176b55]">
+              <ShieldCheck size={15} aria-hidden="true" /> Sukkur Area Office 5405
             </span>
-            <h1 className="mt-6 max-w-xl text-4xl font-black leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
-              Aapki Family Ka Mustaqbil Mehfooz
+            <h1 aria-label={heroTitle} className="mt-5 min-h-[3.3em] max-w-3xl text-[2.5rem] font-black leading-[1.05] text-[#132d2a] sm:min-h-[2.5em] sm:text-5xl lg:min-h-[2.2em] lg:text-[3.65rem]">
+              <span className="sr-only">{heroTitle}</span>
+              <span aria-hidden="true" className="motion-reduce:hidden">{heroText}<span className="ml-1 inline-block h-[0.85em] border-r-2 border-[#176b55] align-[-0.06em] motion-safe:animate-pulse" /></span>
+              <span aria-hidden="true" className="hidden motion-reduce:inline">{heroTitle}</span>
             </h1>
-            <p className="mt-5 max-w-xl text-lg leading-8 text-gray-300">
-              State Life Sukkur Area Office 5405 se trusted life insurance guidance aur local support hasil karein. Behtar financial security ke liye hum se rabta karein.
+            <p className="mt-4 max-w-xl text-base leading-7 text-[#4c625d] sm:text-lg">
+              Family ke mustaqbil ke liye State Life options samjhein, aur Sukkur ki local team se seedhi rehnumai hasil karein.
             </p>
 
-            <div className="mt-8 flex flex-wrap items-center gap-4">
-              <a
-                href="#contact"
-                className="inline-flex items-center justify-center rounded-full bg-[var(--brand-blue-500)] px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-blue-950/20 transition hover:-translate-y-0.5 hover:bg-[var(--brand-blue-700)]"
-              >
-                Free Consultation
+            <div className="mt-7 flex min-w-0 flex-wrap gap-3">
+              <a href="#contact" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#075a49] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#06483b]">
+                Free consultation <ArrowRight size={17} aria-hidden="true" />
               </a>
-              <a
-                href={`https://wa.me/${WHATSAPP_NUMBER}`}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center justify-center rounded-full border-0 bg-white px-6 py-3.5 text-base font-semibold text-[#0b2240] shadow-sm outline-none transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1f8a67]"
-              >
-                WhatsApp Us
+              <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer" className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#c7d6cf] bg-white/80 px-5 py-3 text-sm font-bold text-[#163c35] transition hover:bg-white">
+                WhatsApp us
               </a>
             </div>
 
-            <div className="mt-10 flex flex-wrap gap-x-8 gap-y-3 text-sm text-gray-300">
-              {['Free Consultation', 'Local Guidance', 'Call / WhatsApp Support'].map((point) => (
-                <div key={point} className="font-semibold text-white">{point}</div>
-              ))}
+            <div className="mt-8 grid min-w-0 gap-3 rounded-2xl border border-[#dce6de] bg-white/85 p-3 sm:grid-cols-[minmax(0,1fr)_minmax(0,0.8fr)_auto] sm:items-end sm:p-4">
+              <div className="min-w-0">
+                <label htmlFor="policy-search" className="mb-1.5 block text-xs font-bold uppercase tracking-[0.08em] text-[#49625a]">Find a policy goal</label>
+                <input id="policy-search" type="search" value={policySearch} onChange={(event) => setPolicySearch(event.target.value)} placeholder="Search education, health..." className="h-11 w-full min-w-0 rounded-xl border border-[#d6e0d9] bg-[#fbfcfa] px-3 text-sm text-[#183630] outline-none placeholder:text-[#87958f] focus:border-[#176b55] focus:ring-2 focus:ring-[#176b55]/15" />
+              </div>
+              <div className="min-w-0">
+                <label htmlFor="policy-filter" className="mb-1.5 block text-xs font-bold uppercase tracking-[0.08em] text-[#49625a]">Choose a goal</label>
+                <select id="policy-filter" value={policyFilter} onChange={(event) => setPolicyFilter(event.target.value)} className="h-11 w-full min-w-0 rounded-xl border border-[#d6e0d9] bg-[#fbfcfa] px-3 text-sm text-[#183630] outline-none focus:border-[#176b55] focus:ring-2 focus:ring-[#176b55]/15">
+                  <option>All goals</option>
+                  {homePolicies.map((policy) => <option key={policy.title}>{policy.title}</option>)}
+                </select>
+              </div>
+              <a href="#policies" className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[#163c35] px-4 py-2.5 text-sm font-bold text-white transition hover:bg-[#0e302a]">
+                Explore <ArrowUpRight size={16} aria-hidden="true" />
+              </a>
             </div>
           </div>
 
-          <div className="relative">
-            <div className="absolute -left-6 top-10 h-36 w-36 rounded-full bg-[#d8f0e8] blur-3xl" />
-            <div className="absolute -right-6 bottom-8 h-40 w-40 rounded-full bg-[#dfeafe] blur-3xl" />
-
-            <div className="glass relative overflow-hidden rounded-3xl p-5 text-white">
-              <div className="grid gap-6 md:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] md:items-center">
-                <div className="min-w-0">
-                  <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl border border-white/30 bg-gradient-to-br from-[#0b2240] to-[var(--brand-blue-500)] shadow-lg">
-                    {!managerImageFailed && <Image src="/area-manager.jpg" alt="Area Manager, Sukkur Area Office" fill sizes="(max-width: 768px) 100vw, 40vw" priority className="object-cover object-top" onError={() => setManagerImageFailed(true)} />}
-                  </div>
-                  <div className="glass mt-3 w-full rounded-xl bg-white/[0.12] px-4 py-3 text-center text-white">
-                    <p className="break-words text-balance text-lg font-bold leading-tight sm:text-xl">{MANAGER_NAME}</p>
-                    <p className="mt-1 text-xs font-semibold uppercase tracking-[0.12em] text-blue-100">{MANAGER_TITLE}</p>
-                  </div>
-                </div>
-
-                <div className="glass min-w-0 rounded-2xl p-5 text-white">
-                  <p className="text-xl font-bold text-white sm:text-2xl">State Life Sukkur Area Office</p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    <span className="glass rounded-xl px-3 py-2 text-sm font-semibold text-blue-100">Area Code: {AREA_CODE}</span>
-                    <span className="glass rounded-xl px-3 py-2 text-sm font-semibold text-blue-100">Mon-Fri, 9 AM - 5 PM</span>
-                  </div>
-                </div>
-              </div>
+          <div className="relative mx-auto w-full min-w-0 max-w-2xl">
+            <div className="relative aspect-4/3 min-h-64 w-full overflow-hidden rounded-3xl bg-[#c8dacf] sm:aspect-5/4">
+              <Image src="/products/family.png" alt="Family spending time together at home" fill loading="eager" sizes="(max-width: 1023px) 100vw, 48vw" className="object-cover" />
+            </div>
+            <div className="absolute bottom-3 left-3 right-3 flex min-w-0 flex-wrap items-center justify-between gap-2 rounded-xl border border-white/70 bg-white/95 px-3 py-3 shadow-lg sm:bottom-5 sm:left-5 sm:right-5 sm:px-4">
+              <span className="flex min-w-0 items-center gap-2 text-sm font-bold text-[#173d35]"><MapPin size={17} className="shrink-0 text-[#176b55]" aria-hidden="true" /><span className="truncate">Local support in Sukkur</span></span>
+              <span className="shrink-0 rounded-full bg-[#e7f3ec] px-3 py-1.5 text-xs font-bold text-[#176b55]">Area Code {AREA_CODE}</span>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="products" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <section aria-label="Sukkur Area Office at a glance" className="border-y border-[#e1e8e2] bg-white">
+        <div className="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-y divide-[#e6ece7] px-4 sm:px-6 lg:grid-cols-4 lg:divide-y-0 lg:px-8">
+          <div className="px-3 py-5 sm:px-6 sm:py-7">
+            <span className="sr-only">5,000+ Active Sukkur Policies</span><p aria-hidden="true" className="text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:hidden">{Math.floor(5000 * statsProgress).toLocaleString("en-US")}+</p><p aria-hidden="true" className="hidden text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:block">5,000+</p><p className="mt-1 text-xs font-medium leading-5 text-[#64756e] sm:text-sm">Active Sukkur Policies</p>
+          </div>
+          <div className="px-3 py-5 sm:px-6 sm:py-7">
+            <span className="sr-only">100% State-Backed Security</span><p aria-hidden="true" className="text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:hidden">{Math.floor(100 * statsProgress)}%</p><p aria-hidden="true" className="hidden text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:block">100%</p><p className="mt-1 text-xs font-medium leading-5 text-[#64756e] sm:text-sm">State-Backed Security</p>
+          </div>
+          <div className="px-3 py-5 sm:px-6 sm:py-7">
+            <span className="sr-only">PKR 50M+ Claims Facilitated</span><p aria-hidden="true" className="text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:hidden">PKR {Math.floor(50 * statsProgress)}M+</p><p aria-hidden="true" className="hidden text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:block">PKR 50M+</p><p className="mt-1 text-xs font-medium leading-5 text-[#64756e] sm:text-sm">Claims Facilitated</p>
+          </div>
+          <div className="px-3 py-5 sm:px-6 sm:py-7">
+            <span className="sr-only">24/7 Area Office Support Desk</span><p aria-hidden="true" className="text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:hidden">{Math.floor(24 * statsProgress)}/7</p><p aria-hidden="true" className="hidden text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:block">24/7</p><p className="mt-1 text-xs font-medium leading-5 text-[#64756e] sm:text-sm">Area Office Support Desk</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="policies" className="scroll-mt-30 mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-16 lg:scroll-mt-34 lg:px-8">
+        <div className="mb-8 flex min-w-0 flex-wrap items-end justify-between gap-4">
+          <div className="min-w-0">
+            <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#176b55]">Plans for life&apos;s milestones</p>
+            <h2 className="mt-2 text-3xl font-black leading-tight text-[#17332e] sm:text-4xl">Protection for what matters</h2>
+          </div>
+          <a href="/products" className="inline-flex min-h-10 items-center gap-2 text-sm font-bold text-[#176b55] hover:text-[#0b493b]">All products <ArrowRight size={16} aria-hidden="true" /></a>
+        </div>
+        {visibleHomePolicies.length ? (
+          <div className="grid min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            {visibleHomePolicies.map((policy) => {
+              const Icon = policy.icon;
+              return (
+                <button key={policy.title} type="button" onClick={() => openHomePolicy(policy)} className="group min-w-0 overflow-hidden rounded-2xl border border-[#dfe7e1] bg-white text-left shadow-[0_4px_18px_rgba(18,52,42,0.04)] transition duration-200 hover:-translate-y-1 hover:border-[#9ab7a6] hover:shadow-[0_16px_34px_rgba(18,52,42,0.12)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#176b55]">
+                  <div className="relative aspect-16/10 w-full overflow-hidden bg-[#e7eee8]">
+                    <Image src={policy.image} alt={policy.alt} fill sizes="(max-width: 639px) 100vw, (max-width: 1279px) 50vw, 25vw" className="object-cover transition duration-500 group-hover:scale-[1.03]" />
+                  </div>
+                  <span className="flex min-h-38 flex-col p-4 sm:p-5">
+                    <span className="flex items-center justify-between gap-3">
+                      <span className="text-lg font-bold leading-snug text-[#183630]">{policy.title}</span>
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#e7f3ec] text-[#176b55]"><Icon size={18} aria-hidden="true" /></span>
+                    </span>
+                    <span className="mt-2 flex-1 text-sm leading-6 text-[#677870]">{policy.description}</span>
+                    <span className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-[#176b55]">Explore options <ArrowRight size={15} aria-hidden="true" /></span>
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        ) : (
+          <p className="rounded-xl border border-[#dfe7e1] bg-white p-5 text-sm text-[#64756e]">No policy goals match that search. Try another keyword.</p>
+        )}
+      </section>
+
+      <section id="products" className="scroll-mt-30 mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:scroll-mt-34 lg:px-8">
         <div className="mb-10 text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#1f8a67]">Products</p>
-          <h2 className="mt-3 text-3xl font-bold text-white sm:text-4xl">Coverage options designed for every need</h2>
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#176b55]">More ways to plan</p>
+          <h2 className="mt-3 text-3xl font-bold text-[#17332e] sm:text-4xl">Explore all coverage options</h2>
         </div>
 
         <div
@@ -452,22 +583,22 @@ export default function Home() {
             }
           }}
         >
-          <button type="button" aria-label="Pichla product" onClick={() => { pauseProductCarousel(); scrollToProduct(productIndex - 1); }} className="absolute left-0 top-1/2 z-10 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-white text-3xl leading-none text-[var(--brand-blue-700)] shadow-lg transition hover:bg-[var(--brand-blue-100)]">
+          <button type="button" aria-label="Pichla product" onClick={() => { pauseProductCarousel(); scrollToProduct(productIndex - 1); }} className="absolute left-2 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white text-2xl leading-none text-[var(--brand-blue-700)] shadow-lg transition hover:bg-[var(--brand-blue-100)]">
             ‹
           </button>
-          <button type="button" aria-label="Agla product" onClick={() => { pauseProductCarousel(); scrollToProduct(productIndex + 1); }} className="absolute right-0 top-1/2 z-10 flex h-12 w-12 translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-white text-3xl leading-none text-[var(--brand-blue-700)] shadow-lg transition hover:bg-[var(--brand-blue-100)]">
+          <button type="button" aria-label="Agla product" onClick={() => { pauseProductCarousel(); scrollToProduct(productIndex + 1); }} className="absolute right-2 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white text-2xl leading-none text-[var(--brand-blue-700)] shadow-lg transition hover:bg-[var(--brand-blue-100)]">
             ›
           </button>
 
           <div ref={productCarouselRef} className="flex touch-pan-x touch-pan-y snap-x snap-mandatory gap-6 overflow-x-auto overscroll-x-contain px-4 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            {products.map((product, index) => (
+            {products.map((product) => (
               <article
                 key={product.slug}
                 onClick={() => handleProductOpen(product)}
                 className="group relative flex min-w-0 flex-[0_0_85%] snap-start flex-col overflow-hidden rounded-bl-[64px] rounded-br-xl rounded-tl-xl rounded-tr-[64px] border border-slate-200 bg-[#F5F5F5] p-4 text-left text-[#0b2240] shadow-sm transition hover:-translate-y-1 hover:shadow-xl sm:flex-[0_0_45%] lg:flex-[0_0_calc((100%_-_4.5rem)/4)]"
               >
                 <div className="relative aspect-[4/3] w-full overflow-hidden rounded-tr-[64px] rounded-tl-xl bg-gradient-to-br from-blue-100 to-sky-200">
-                  {product.image && !failedProductImages.includes(product.image) && <Image src={product.image} alt={product.alt} fill priority={index === 0} sizes="(max-width: 640px) 85vw, (max-width: 1024px) 45vw, 25vw" className="object-cover" style={{ objectPosition: product.imagePosition }} onError={() => setFailedProductImages((current) => [...current, product.image as string])} />}
+                  {product.image && !failedProductImages.includes(product.image) && <Image src={product.image} alt={product.alt} fill sizes="(max-width: 640px) 85vw, (max-width: 1024px) 45vw, 25vw" className="object-cover" style={{ objectPosition: product.imagePosition }} onError={() => setFailedProductImages((current) => [...current, product.image as string])} />}
                 </div>
                 <div className="flex flex-1 flex-col p-3 pb-16">
                   <h3 className="text-xl font-bold">{product.title}</h3>
@@ -485,102 +616,91 @@ export default function Home() {
 
           <div className="mt-5 flex items-center justify-center gap-3">
             {products.map((product, index) => <button key={product.slug} type="button" aria-label={`${product.title} par jayein`} aria-current={productIndex === index ? "true" : undefined} onClick={() => { pauseProductCarousel(); scrollToProduct(index); }} className={`h-2.5 rounded-full transition-all ${productIndex === index ? "w-7 bg-[var(--brand-blue-500)]" : "w-2.5 bg-white/60 hover:bg-white"}`} />)}
-            <button type="button" aria-label={productPaused ? "Products carousel play karein" : "Products carousel pause karein"} onClick={() => setProductPaused((paused) => !paused)} className="ml-2 flex h-9 w-9 items-center justify-center rounded-full border border-white/30 bg-white text-sm font-bold text-[var(--brand-blue-700)] shadow-sm">
+            <button type="button" aria-label={productPaused ? "Products carousel play karein" : "Products carousel pause karein"} onClick={() => setProductPaused((paused) => !paused)} className="ml-2 flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-sm font-bold text-[var(--brand-blue-700)] shadow-sm">
               {productPaused ? "▶" : "Ⅱ"}
             </button>
           </div>
         </div>
       </section>
 
-      <section id="services" className="bg-transparent py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-10 text-center">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#1f8a67]">Services</p>
-            <h2 className="mt-3 text-3xl font-bold text-white sm:text-4xl">Support jo aapko har stage par milay</h2>
+      <section id="services" className="scroll-mt-30 bg-[#eaf0ea] py-14 sm:py-16 lg:scroll-mt-34">
+        <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:gap-14 lg:px-8">
+          <div className="max-w-lg">
+            <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#176b55]">From first question to ongoing care</p>
+            <h2 className="mt-3 text-3xl font-black leading-tight text-[#17332e] sm:text-4xl">Support at every step</h2>
+            <p className="mt-4 text-base leading-7 text-[#60736b]">Clear local guidance for policy services, claims, and health support. Open a step to see where to start.</p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-            {services.map((service, index) => (
-              <div key={service} className="glass rounded-[24px] p-6 text-white">
-                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl border border-white/20 bg-white/15 text-sm font-bold text-white">
-                  {index + 1}
-                </div>
-                <h3 className="text-lg font-bold text-white">{service}</h3>
-                <p className="mt-3 text-sm leading-6 text-blue-100">
-                  Clear assistance, friendly guidance, aur step-by-step support ke liye hum yahan hain.
-                </p>
+          <div className="divide-y divide-[#d5e0d7] border-y border-[#d5e0d7]">
+            {processSteps.map((step, index) => (
+              <div key={step.title}>
+                <button type="button" onClick={() => setOpenProcess(openProcess === index ? -1 : index)} aria-expanded={openProcess === index} className="flex min-h-16 w-full min-w-0 items-center gap-4 py-4 text-left">
+                  <span className="w-8 shrink-0 font-mono text-sm font-bold text-[#7a9186]">0{index + 1}</span>
+                  <span className="min-w-0 flex-1 text-base font-bold text-[#183630] sm:text-lg">{step.title}</span>
+                  <ChevronDown size={19} className={`shrink-0 text-[#176b55] transition-transform ${openProcess === index ? "rotate-180" : ""}`} aria-hidden="true" />
+                </button>
+                {openProcess === index && <p className="max-w-2xl pb-5 pl-12 pr-2 text-sm leading-6 text-[#60736b] sm:text-base">{step.description}</p>}
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section id="about" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mb-10 text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#1f8a67]">Why Choose Us</p>
-          <h2 className="mt-3 text-3xl font-bold text-white sm:text-4xl">Aapki protection ka trusted local partner</h2>
-        </div>
-
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-          {reasons.map((reason) => (
-            <div key={reason.number} className="glass rounded-[28px] p-6 text-white">
-              <div className="mb-4 text-3xl font-black text-[#1f8a67]">{reason.number}</div>
-              <h3 className="text-xl font-bold text-white">{reason.title}</h3>
-              <p className="mt-3 text-base leading-7 text-blue-100">{reason.text}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="bg-[var(--brand-blue-900)] py-16 text-white">
-        <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[1fr_1.1fr] lg:px-8">
+      <section id="about" className="scroll-mt-30 overflow-hidden bg-[#143a35] py-14 text-white sm:py-16 lg:scroll-mt-34">
+        <div className="mx-auto grid max-w-7xl items-center gap-8 px-4 sm:px-6 lg:grid-cols-[1fr_0.9fr] lg:gap-16 lg:px-8">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-300">Office Info</p>
-            <h2 className="mt-3 text-3xl font-bold sm:text-4xl">Visit our office for personal assistance</h2>
+            <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#a6d4bb]">Your local point of contact</p>
+            <h2 className="mt-3 max-w-xl text-3xl font-black leading-tight sm:text-4xl">Personal guidance, right here in Sukkur</h2>
+            <p className="mt-4 max-w-xl text-base leading-7 text-[#d0e0d7]">Meet the Area Office team for policy questions, documentation guidance, and in-person assistance.</p>
+            <div className="mt-7 flex items-start gap-3 text-sm leading-6 text-[#e2ede7]">
+              <MapPin size={19} className="mt-0.5 shrink-0 text-[#a6d4bb]" aria-hidden="true" />
+              <span>Shahlimar Road, near Session Court, Sukkur</span>
+            </div>
+            <div className="mt-3 flex items-start gap-3 text-sm leading-6 text-[#e2ede7]">
+              <Clock3 size={19} className="mt-0.5 shrink-0 text-[#a6d4bb]" aria-hidden="true" />
+              <span>Monday to Friday, 9:00 AM to 5:00 PM</span>
+            </div>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=Shahlimar+Road,+near+Session+Court,+Sukkur,+Pakistan" target="_blank" rel="noreferrer" className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-full border border-white/25 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-white/10">Get directions <ArrowUpRight size={16} aria-hidden="true" /></a>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-2">
-            <div className="glass rounded-[28px] p-6 text-white">
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-300">Address</p>
-              <p className="mt-4 text-lg leading-8 text-slate-200">Shahlimar Road, near Session Court, Sukkur</p>
+          <div className="glass grid min-w-0 items-center gap-5 rounded-2xl p-4 text-white sm:grid-cols-[minmax(130px,0.75fr)_1.25fr] sm:p-5">
+            <div className="relative aspect-4/5 w-full overflow-hidden rounded-xl bg-[#355b50]">
+              {!managerImageFailed && <Image src="/area-manager.jpg" alt="Mr. Fayyaz Ahmed, Area Manager" fill sizes="(max-width: 639px) 100vw, 24vw" className="object-cover object-top" onError={() => setManagerImageFailed(true)} />}
             </div>
-            <div className="glass rounded-[28px] p-6 text-white md:col-span-2">
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-300">Timings</p>
-              <p className="mt-4 text-lg leading-8 text-slate-200">Monday se Friday, subah 9 baje se shaam 5 baje tak. Saturday aur Sunday off.</p>
+            <div className="min-w-0 py-2">
+              <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-emerald-200/25 bg-emerald-300/10 px-3 py-2 text-xs font-bold leading-5 text-emerald-100">
+                <span className="relative flex h-2.5 w-2.5 shrink-0"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-300 opacity-60" /><span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-300" /></span>
+                <span>Sukkur Area Desk Active</span>
+              </span>
+              <p className="mt-5 wrap-break-word text-2xl font-black leading-tight sm:text-3xl">{MANAGER_NAME}</p>
+              <p className="mt-2 text-sm font-semibold text-[#c5d9ce]">{MANAGER_TITLE} · Area Code {AREA_CODE}</p>
+              <div className="mt-5 flex items-center gap-2 text-sm font-medium text-[#dce9e1]"><BadgeCheck size={17} className="shrink-0 text-[#a6d4bb]" aria-hidden="true" /> Local office consultation</div>
             </div>
-          </div>
-        </div>
-
-        <div className="mx-auto mt-10 max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="overflow-hidden rounded-[28px] border border-white/10 bg-white/5 shadow-lg">
-            <iframe
-              title="Sukkur Area Office location"
-              src="https://www.google.com/maps?q=Shahlimar%20Road,%20near%20Session%20Court,%20Sukkur,%20Pakistan&output=embed"
-              className="h-[260px] w-full border-0 md:h-[340px]"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mb-10 text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#1f8a67]">Testimonials</p>
-          <h2 className="mt-3 text-3xl font-bold text-white sm:text-4xl">What our clients say</h2>
+      <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
+        <div className="mb-8 max-w-xl">
+          <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#176b55]">Community feedback</p>
+          <h2 className="mt-2 text-3xl font-black leading-tight text-[#17332e] sm:text-4xl">Families value clear guidance</h2>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-3">
+        <div className="grid min-w-0 gap-4 md:grid-cols-3">
           {testimonials.map((review) => (
-            <div key={review.name} className="glass rounded-[28px] p-6 text-white">
-              <div className="mb-5 flex gap-1 text-amber-400">
-                {[...Array(5)].map((_, i) => (
-                  <span key={i}>★</span>
-                ))}
+            <article key={review.name} className="min-w-0 overflow-hidden rounded-2xl border border-[#dfe7e1] bg-white shadow-[0_4px_18px_rgba(18,52,42,0.04)]">
+              <div className="relative aspect-16/8 w-full overflow-hidden bg-[#e7eee8]">
+                <Image src={review.image} alt={review.alt} fill sizes="(max-width: 767px) 100vw, 33vw" className="object-cover" />
+                <span aria-label="5 out of 5 stars" className="absolute right-3 top-3 rounded-full border border-white/60 bg-white/95 px-3 py-1.5 text-sm font-bold tracking-wide text-[#a75d0a]">★★★★★</span>
               </div>
-              <p className="text-base leading-7 text-blue-100">“{review.text}”</p>
-              <div className="mt-6 border-t border-white/20 pt-4 text-sm font-semibold text-white">{review.name}</div>
-            </div>
+              <div className="p-5 sm:p-6">
+                <p className="text-sm leading-6 text-[#53665e]">“{review.text}”</p>
+                <div className="mt-5 flex items-center justify-between gap-3 border-t border-[#e8eee9] pt-4">
+                  <span className="text-sm font-bold text-[#17332e]">{review.name}</span>
+                  <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[#edf5ef] px-2.5 py-1 text-[11px] font-bold text-[#176b55]"><BadgeCheck size={13} aria-hidden="true" /> Sukkur</span>
+                </div>
+              </div>
+            </article>
           ))}
         </div>
       </section>
@@ -589,7 +709,7 @@ export default function Home() {
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <div className="mb-10 text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#1f8a67]">FAQ</p>
-            <h2 className="mt-3 text-3xl font-bold text-white sm:text-4xl">Common questions, clear answers</h2>
+            <h2 className="mt-3 text-3xl font-bold text-[#17332e] sm:text-4xl">Common questions, clear answers</h2>
           </div>
 
           <div className="space-y-4">
@@ -616,7 +736,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="contact" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <section id="contact" className="scroll-mt-30 mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:scroll-mt-34 lg:px-8">
         <div className="grid gap-8 rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm lg:grid-cols-[0.9fr_1.1fr] lg:p-10">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#1f8a67]">Contact</p>
@@ -755,49 +875,61 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="bg-[var(--brand-blue-900)] py-12 text-slate-300">
-        <div className="mx-auto grid max-w-7xl gap-10 rounded-3xl border border-white/10 bg-white/[0.04] p-6 shadow-[0_20px_60px_rgba(2,12,35,0.18)] sm:px-8 lg:grid-cols-[1.1fr_0.8fr_0.8fr] lg:p-8">
-          <div>
-            <div className="flex items-center gap-3">
-              <Image
-                src="/area-logo.png"
-                alt="Sukkur Area Office logo"
-                width={210}
-                height={74}
-                className="h-11 w-[140px] rounded-full bg-white p-1 object-contain"
-              />
-              <div>
-                <p className="text-lg font-bold text-white">Sukkur Area Office</p>
-                <p className="text-sm text-slate-400">Life Insurance</p>
-              </div>
+      <section className="px-4 pb-6 sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-7xl min-w-0 flex-col justify-between gap-6 rounded-2xl bg-[#dcebe1] p-5 sm:p-8 lg:flex-row lg:items-center lg:px-10">
+          <div className="min-w-0">
+            <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#176b55]">Talk to a local advisor</p>
+            <h2 className="mt-2 max-w-2xl text-2xl font-black leading-tight text-[#17332e] sm:text-3xl">A clear first conversation can make planning easier.</h2>
+          </div>
+          <div className="flex min-w-0 flex-wrap gap-3">
+            <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#087653] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#056346]">WhatsApp <ArrowUpRight size={16} aria-hidden="true" /></a>
+            <a href="#contact" className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#a7c4b1] bg-white/80 px-5 py-3 text-sm font-bold text-[#17332e] transition hover:bg-white">Book a consultation</a>
+          </div>
+        </div>
+      </section>
+
+      <footer className="px-4 pb-5 pt-2 sm:px-6 lg:px-8">
+        <div className="mx-auto grid max-w-7xl min-w-0 gap-9 rounded-2xl bg-[#132d2a] p-5 text-[#d7e2dc] sm:p-8 lg:grid-cols-[1.25fr_0.7fr_1.15fr_0.9fr] lg:gap-8 lg:p-10">
+          <div className="min-w-0">
+            <div className="flex min-w-0 items-center gap-3">
+              <Image src="/area-logo.png" alt="Sukkur Area Office logo" width={210} height={74} className="h-11 w-32 shrink-0 rounded-md bg-white p-1 object-contain" />
+              <div className="min-w-0"><p className="text-base font-bold text-white">Sukkur Area Office</p><p className="text-xs leading-5 text-[#aabbb2]">State Life Insurance · {AREA_CODE}</p></div>
             </div>
-            <p className="mt-5 max-w-sm leading-7 text-slate-300">
-              Shahlimar Road, near Session Court, Sukkur. Family protection, consultation, aur local support ke liye hum aapke paas hain.
-            </p>
+            <p className="mt-5 max-w-sm text-sm leading-6 text-[#b9c9c1]">Local policy guidance and in-person support for families in Sukkur.</p>
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold text-white">Social Media</h3>
-            <ul className="mt-5 space-y-3 text-sm text-slate-300">
-              <li><a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" aria-label="Facebook page kholein" className="flex min-h-14 min-w-0 items-center gap-3 rounded-2xl transition hover:translate-x-1 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"><span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#1877F2] text-white"><FacebookIcon /></span><span>Facebook</span></a></li>
-              <li><a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile kholein" className="flex min-h-14 min-w-0 items-center gap-3 rounded-2xl transition hover:translate-x-1 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"><span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#0A66C2] text-white"><LinkedInIcon /></span><span>LinkedIn</span></a></li>
-              <li><a href={emailLink()} aria-label="Email bhejein" className="flex min-h-14 min-w-0 items-center gap-3 rounded-2xl transition hover:translate-x-1 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"><span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#0b2240] text-white"><MailIcon /></span><span>Email</span></a></li>
+            <h3 className="text-sm font-bold text-white">Explore</h3>
+            <ul className="mt-4 space-y-3 text-sm text-[#b9c9c1]">
+              <li><a href="/products" className="hover:text-white">Products</a></li>
+              <li><a href="/services" className="hover:text-white">Services</a></li>
+              <li><a href="/about" className="hover:text-white">About us</a></li>
+              <li><a href="/contact" className="hover:text-white">Contact</a></li>
+            </ul>
+          </div>
+
+          <div className="min-w-0">
+            <h3 className="text-sm font-bold text-white">Official contact</h3>
+            <ul className="mt-4 space-y-3 wrap-break-word text-sm leading-6 text-[#b9c9c1]">
+              <li>Shahlimar Road, near Session Court, Sukkur</li>
+              <li><a href={landlineLink()} className="hover:text-white">Office: {LANDLINE_NUMBER}</a></li>
+              <li><a href={`https://wa.me/${WHATSAPP_NUMBER}`} className="hover:text-white">WhatsApp: {WHATSAPP_DISPLAY}</a></li>
+              <li><a href={emailLink()} className="hover:text-white">{CONTACT_EMAIL}</a></li>
+              <li>Monday to Friday · 9 AM to 5 PM</li>
             </ul>
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold text-white">Contact</h3>
-            <ul className="mt-5 space-y-3 text-sm text-slate-300">
-              <li><a href={landlineLink()} className="transition hover:text-white">Office Landline</a></li>
-              <li>Mon-Fri: 9:00 AM – 5:00 PM</li>
-              <li>Saturday & Sunday off</li>
+            <h3 className="text-sm font-bold text-white">Connect</h3>
+            <ul className="mt-4 space-y-3 text-sm text-[#b9c9c1]">
+              <li><a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-white"><FacebookIcon /> Facebook</a></li>
+              <li><a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-white"><LinkedInIcon /> LinkedIn</a></li>
+              <li><a href={emailLink()} className="inline-flex items-center gap-2 hover:text-white"><MailIcon /> Email us</a></li>
             </ul>
           </div>
         </div>
 
-        <div className="mx-auto mt-10 max-w-7xl border-t border-white/10 px-4 pt-6 text-center text-sm text-slate-400 sm:px-6 lg:px-8">
-          Ye website Sukkur Area Office ki taraf se hai. Policy payment aur login ke liye official channels use karein.
-        </div>
+        <p className="mx-auto mt-5 max-w-7xl px-1 text-center text-xs leading-5 text-[#687b71]">Ye website Sukkur Area Office ki taraf se hai. Policy payment aur login ke liye official channels use karein.</p>
       </footer>
 
       {selectedCategory && (
