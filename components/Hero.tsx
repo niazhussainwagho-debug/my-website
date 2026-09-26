@@ -109,7 +109,7 @@ export default function Hero({
             </a>
           </div>
 
-          <div className="mt-8 flex w-full max-w-full min-w-0 flex-col gap-3 rounded-2xl border border-white/25 bg-slate-950/35 p-4 backdrop-blur-md sm:flex-row sm:items-end">
+          <div className="mt-8 hidden w-full max-w-full min-w-0 flex-col gap-3 rounded-2xl border border-white/25 bg-slate-950/35 p-4 backdrop-blur-md md:flex sm:flex-row sm:items-end">
             <div className="w-full min-w-0 sm:flex-1">
               <label htmlFor="policy-search" className="mb-1.5 block text-xs font-bold uppercase tracking-[0.08em] text-slate-100">Find a policy goal</label>
               <input id="policy-search" type="search" value={policySearch} onChange={(event) => onPolicySearchChange(event.target.value)} placeholder="Search education, health..." className="h-11 w-full min-w-0 rounded-xl border border-white/40 bg-white px-3 text-sm text-slate-900 outline-none placeholder:text-slate-500 focus:border-emerald-300 focus:ring-2 focus:ring-emerald-300/30" />
