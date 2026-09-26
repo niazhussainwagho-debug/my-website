@@ -3,50 +3,16 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, ArrowUpRight, ChevronDown, Clock3, GraduationCap, HeartHandshake, MapPin, Stethoscope } from "lucide-react";
+import { ArrowUpRight, ChevronDown, Clock3, MapPin } from "lucide-react";
 import { FacebookIcon, LinkedInIcon, MailIcon, PhoneIcon } from "../components/icons";
 import Hero from "../components/Hero";
+import Products, { homePolicies, type HomePolicy } from "../components/Products";
 import Testimonials from "../components/Testimonials";
 import { plans, type Plan } from "../data/plans";
 import { products } from "../data/products";
 import { supabase } from "@/lib/supabase";
 import { AREA_CODE, CONTACT_EMAIL, FACEBOOK_URL, LANDLINE_NUMBER, LINKEDIN_URL, MANAGER_NAME, MANAGER_TITLE, WHATSAPP_DISPLAY, WHATSAPP_NUMBER, emailLink, landlineLink } from "../lib/contact";
 import { cleanPhone } from "../lib/phone";
-
-const homePolicies = [
-  {
-    title: "Child Education",
-    planCategory: "Child Education",
-    description: "Bachon ki taleem ke liye pehle se sochi samjhi planning.",
-    image: "/products/education.png",
-    alt: "Child learning with books",
-    icon: GraduationCap,
-  },
-  {
-    title: "Marriage Planning",
-    planCategory: "Life Insurance",
-    description: "Aane wale family milestones ke liye protection options samjhein.",
-    image: "/products/family.png",
-    alt: "Family planning for future milestones",
-    icon: HeartHandshake,
-  },
-  {
-    title: "Retirement",
-    planCategory: "Retirement",
-    description: "Apne long-term goals ke mutabiq retirement options explore karein.",
-    image: "/products/retirement.png",
-    alt: "Couple planning for retirement",
-    icon: Clock3,
-  },
-  {
-    title: "Health",
-    planCategory: "Health",
-    description: "Health cover aur available support ke baare mein guidance lein.",
-    image: "/products/health.png",
-    alt: "Family health planning",
-    icon: Stethoscope,
-  },
-];
 
 const processSteps = [
   {
@@ -271,8 +237,8 @@ export default function Home() {
     setFormData({ ...initialForm, selectedPlan: category });
   };
 
-  const openHomePolicy = (policy: (typeof homePolicies)[number]) => {
-    if (policy.title === "Health") {
+  const openHomePolicy = (policy: HomePolicy) => {
+    if (policy.planCategory === "Health") {
       router.push("/health-insurance");
       return;
     }
@@ -436,39 +402,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="policies" className="scroll-mt-30 mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-16 lg:scroll-mt-34 lg:px-8">
-        <div className="mb-8 flex min-w-0 flex-wrap items-end justify-between gap-4">
-          <div className="min-w-0">
-            <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#176b55]">Plans for life&apos;s milestones</p>
-            <h2 className="mt-2 text-3xl font-black leading-tight text-[#17332e] sm:text-4xl">Protection for what matters</h2>
-          </div>
-          <a href="/products" className="inline-flex min-h-10 items-center gap-2 text-sm font-bold text-[#176b55] hover:text-[#0b493b]">All products <ArrowRight size={16} aria-hidden="true" /></a>
-        </div>
-        {visibleHomePolicies.length ? (
-          <div className="grid min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            {visibleHomePolicies.map((policy) => {
-              const Icon = policy.icon;
-              return (
-                <button key={policy.title} type="button" onClick={() => openHomePolicy(policy)} className="group min-w-0 overflow-hidden rounded-2xl border border-[#dfe7e1] bg-white text-left shadow-[0_4px_18px_rgba(18,52,42,0.04)] transition duration-200 hover:-translate-y-1 hover:border-[#9ab7a6] hover:shadow-[0_16px_34px_rgba(18,52,42,0.12)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#176b55]">
-                  <div className="relative aspect-16/10 w-full overflow-hidden bg-[#e7eee8]">
-                    <Image src={policy.image} alt={policy.alt} fill sizes="(max-width: 639px) 100vw, (max-width: 1279px) 50vw, 25vw" className="object-cover transition duration-500 group-hover:scale-[1.03]" />
-                  </div>
-                  <span className="flex min-h-38 flex-col p-4 sm:p-5">
-                    <span className="flex items-center justify-between gap-3">
-                      <span className="text-lg font-bold leading-snug text-[#183630]">{policy.title}</span>
-                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#e7f3ec] text-[#176b55]"><Icon size={18} aria-hidden="true" /></span>
-                    </span>
-                    <span className="mt-2 flex-1 text-sm leading-6 text-[#677870]">{policy.description}</span>
-                    <span className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-[#176b55]">Explore options <ArrowRight size={15} aria-hidden="true" /></span>
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        ) : (
-          <p className="rounded-xl border border-[#dfe7e1] bg-white p-5 text-sm text-[#64756e]">No policy goals match that search. Try another keyword.</p>
-        )}
-      </section>
+      <Products policies={visibleHomePolicies} onLearnMore={openHomePolicy} />
 
       <section id="products" className="scroll-mt-30 mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:scroll-mt-34 lg:px-8">
         <div className="mb-10 text-center">
