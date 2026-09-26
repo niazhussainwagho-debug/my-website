@@ -5,32 +5,12 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, ArrowUpRight, BadgeCheck, ChevronDown, Clock3, GraduationCap, HeartHandshake, MapPin, ShieldCheck, Stethoscope } from "lucide-react";
 import { FacebookIcon, LinkedInIcon, MailIcon, PhoneIcon } from "../components/icons";
+import Testimonials from "../components/Testimonials";
 import { plans, type Plan } from "../data/plans";
 import { products } from "../data/products";
 import { supabase } from "@/lib/supabase";
 import { AREA_CODE, CONTACT_EMAIL, FACEBOOK_URL, LANDLINE_NUMBER, LINKEDIN_URL, MANAGER_NAME, MANAGER_TITLE, WHATSAPP_DISPLAY, WHATSAPP_NUMBER, emailLink, landlineLink } from "../lib/contact";
 import { cleanPhone } from "../lib/phone";
-
-const testimonials = [
-  {
-    name: "Ayesha K.",
-    text: "Office team ne bahut clear tarike se policy samjhayi. Family protection plan ka option bohat useful tha.",
-    image: "/products/family.png",
-    alt: "Family protection planning",
-  },
-  {
-    name: "Muhammad Ali",
-    text: "Premium guidance aur claim process bahut professional tha. Team ne har sawal ka jawab politely diya.",
-    image: "/products/education.png",
-    alt: "Parent planning for a child's education",
-  },
-  {
-    name: "Zahid R.",
-    text: "Life insurance ka decision lene mein help mili. Overall experience smooth aur trustworthy raha.",
-    image: "/products/retirement.png",
-    alt: "Family considering long-term plans",
-  },
-];
 
 const homePolicies = [
   {
@@ -680,30 +660,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
-        <div className="mb-8 max-w-xl">
-          <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#176b55]">Community feedback</p>
-          <h2 className="mt-2 text-3xl font-black leading-tight text-[#17332e] sm:text-4xl">Families value clear guidance</h2>
-        </div>
-
-        <div className="grid min-w-0 gap-4 md:grid-cols-3">
-          {testimonials.map((review) => (
-            <article key={review.name} className="min-w-0 overflow-hidden rounded-2xl border border-[#dfe7e1] bg-white shadow-[0_4px_18px_rgba(18,52,42,0.04)]">
-              <div className="relative aspect-16/8 w-full overflow-hidden bg-[#e7eee8]">
-                <Image src={review.image} alt={review.alt} fill sizes="(max-width: 767px) 100vw, 33vw" className="object-cover" />
-                <span aria-label="5 out of 5 stars" className="absolute right-3 top-3 rounded-full border border-white/60 bg-white/95 px-3 py-1.5 text-sm font-bold tracking-wide text-[#a75d0a]">★★★★★</span>
-              </div>
-              <div className="p-5 sm:p-6">
-                <p className="text-sm leading-6 text-[#53665e]">“{review.text}”</p>
-                <div className="mt-5 flex items-center justify-between gap-3 border-t border-[#e8eee9] pt-4">
-                  <span className="text-sm font-bold text-[#17332e]">{review.name}</span>
-                  <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[#edf5ef] px-2.5 py-1 text-[11px] font-bold text-[#176b55]"><BadgeCheck size={13} aria-hidden="true" /> Sukkur</span>
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
+      <Testimonials />
 
       <section className="bg-transparent py-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
