@@ -168,7 +168,7 @@ export default function AdminPage() {
 
   if (!isAuthenticated) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-white px-4 py-10 text-slate-900">
+      <main className="flex min-h-[calc(100vh-120px)] items-center justify-center bg-white px-4 py-10 text-slate-900 lg:min-h-[calc(100vh-136px)]">
         <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
           <div className="mb-6">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-700">Admin</p>
@@ -204,7 +204,7 @@ export default function AdminPage() {
   }
 
   return (
-    <main className="min-h-screen bg-slate-100 px-4 py-6 text-slate-900 md:px-8">
+    <main className="min-h-[calc(100vh-120px)] bg-slate-100 px-4 py-6 text-slate-900 md:px-8 lg:min-h-[calc(100vh-136px)]">
       <div className="mx-auto max-w-7xl">
         <div className="mb-6 flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm md:flex-row md:items-center md:justify-between">
           <div>

@@ -133,7 +133,7 @@ export default function BecomeAnAgentPage() {
   };
 
   return (
-    <main className="relative z-10 min-h-screen overflow-x-hidden bg-transparent pb-24 text-slate-800 md:pb-0">
+    <main className="relative z-10 min-h-screen overflow-x-clip bg-transparent pb-24 text-slate-800 md:pb-0">
       <div className="site-glow" aria-hidden="true" />
       <div className="fixed inset-x-4 bottom-4 z-50 flex gap-3 md:hidden">
         <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer" className="flex flex-1 items-center justify-center rounded-full bg-[#1f8a67] px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-[#1f8a67]/25">

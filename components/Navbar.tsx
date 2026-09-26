@@ -26,7 +26,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 m-0 block w-full max-w-full overflow-x-hidden bg-white p-0 shadow-md">
+    <header className="fixed inset-x-0 top-0 z-50 m-0 block w-full max-w-full overflow-x-clip bg-white p-0 shadow-md">
       <div className="m-0 w-full max-w-full overflow-hidden">
         <div className="mx-auto flex min-h-[60px] w-full max-w-7xl items-center justify-between gap-3 px-4 pt-2 pb-2 md:px-8 lg:min-h-[88px]">
           <Link href="/" className="flex min-w-0 flex-1 items-center gap-3 text-slate-900" onClick={() => setMenuOpen(false)}>
@@ -54,7 +54,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      <nav className="m-0 w-full max-w-full overflow-x-hidden bg-[#0052cc]" aria-label="Main navigation">
+      <nav className="m-0 w-full max-w-full overflow-x-clip bg-[#0052cc]" aria-label="Main navigation">
         <div className="mx-auto flex min-h-12 w-full max-w-7xl items-center px-4 md:px-8">
           <div className="hidden w-full min-w-0 flex-nowrap items-center justify-between gap-1 md:flex">
             {navLinks.map((link) => {
@@ -67,7 +67,7 @@ export default function Navbar() {
       </nav>
 
       {menuOpen && (
-        <div className="w-full max-w-full overflow-x-hidden border-t border-blue-400/30 bg-[#0052cc] md:hidden">
+        <div className="w-full max-w-full overflow-x-clip border-t border-blue-400/30 bg-[#0052cc] md:hidden">
           <div className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-3 sm:px-6">
             {navLinks.map((link) => {
               const active = isActiveRoute(pathname, link.href);

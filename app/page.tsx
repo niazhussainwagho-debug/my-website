@@ -360,7 +360,7 @@ export default function Home() {
   };
 
   return (
-    <main className="relative z-10 min-w-0 max-w-full overflow-x-hidden bg-[#f5f7f3] pb-24 text-slate-900 md:pb-0">
+    <main className="relative z-10 min-w-0 max-w-full overflow-x-clip bg-[#f5f7f3] pb-24 text-slate-900 md:pb-0">
       <div className="fixed inset-x-3 bottom-3 z-50 flex gap-3 md:hidden">
         <a
           href={`https://wa.me/${WHATSAPP_NUMBER}`}
@@ -411,6 +411,7 @@ export default function Home() {
           <h2 className="mt-3 text-3xl font-bold text-[#17332e] sm:text-4xl">Explore all coverage options</h2>
         </ScrollReveal>
 
+        <ScrollReveal delayMs={100}>
         <div
           className="relative"
           role="region"
@@ -444,12 +445,12 @@ export default function Home() {
             ›
           </button>
 
-          <div ref={productCarouselRef} className="flex touch-pan-x touch-pan-y snap-x snap-mandatory gap-6 overflow-x-auto overscroll-x-contain px-4 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            {products.map((product, index) => (
-              <ScrollReveal key={product.slug} delayMs={index * 110} className="min-w-0 flex-[0_0_85%] snap-start sm:flex-[0_0_45%] lg:flex-[0_0_calc((100%_-_4.5rem)/4)]">
+          <div ref={productCarouselRef} className="flex touch-pan-x touch-pan-y snap-x snap-mandatory gap-6 overflow-x-auto overflow-y-hidden overscroll-x-contain px-4 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {products.map((product) => (
               <article
+                key={product.slug}
                 onClick={() => handleProductOpen(product)}
-                className="group relative flex h-full min-w-0 flex-col overflow-hidden rounded-bl-[64px] rounded-br-xl rounded-tl-xl rounded-tr-[64px] border border-slate-200 bg-[#F5F5F5] p-4 text-left text-[#0b2240] shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
+                className="group relative flex h-full min-w-0 flex-[0_0_85%] snap-start flex-col overflow-hidden rounded-bl-[64px] rounded-br-xl rounded-tl-xl rounded-tr-[64px] border border-slate-200 bg-[#F5F5F5] p-4 text-left text-[#0b2240] shadow-sm transition hover:-translate-y-1 hover:shadow-xl sm:flex-[0_0_45%] lg:flex-[0_0_calc((100%_-_4.5rem)/4)]"
               >
                 <div className="relative aspect-[4/3] w-full overflow-hidden rounded-tr-[64px] rounded-tl-xl bg-gradient-to-br from-blue-100 to-sky-200">
                   {product.image && !failedProductImages.includes(product.image) && <Image src={product.image} alt={product.alt} fill sizes="(max-width: 640px) 85vw, (max-width: 1024px) 45vw, 25vw" className="object-cover" style={{ objectPosition: product.imagePosition }} onError={() => setFailedProductImages((current) => [...current, product.image as string])} />}
@@ -465,7 +466,6 @@ export default function Home() {
                   <button type="button" aria-label={`${product.title} kholein`} onClick={(event) => { event.stopPropagation(); handleProductOpen(product); }} className="absolute bottom-0 right-0 flex h-12 w-14 items-center justify-center rounded-tl-3xl bg-[#0A4DB3] text-3xl leading-none text-white transition hover:bg-[var(--brand-blue-700)]">›</button>
                 )}
               </article>
-              </ScrollReveal>
             ))}
           </div>
 
@@ -476,6 +476,7 @@ export default function Home() {
             </button>
           </div>
         </div>
+        </ScrollReveal>
       </section>
 
       <section id="services" className="scroll-mt-30 bg-[#eaf0ea] py-14 sm:py-16 lg:scroll-mt-34">
