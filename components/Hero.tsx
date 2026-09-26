@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { ArrowRight, ArrowUpRight, ShieldCheck } from "lucide-react";
+import ScrollReveal from "./ScrollReveal";
 import { WHATSAPP_NUMBER } from "../lib/contact";
 
 const heroPhrases = [
@@ -86,7 +87,7 @@ export default function Hero({
       </div>
       <div aria-hidden="true" className="absolute inset-0 z-0 bg-linear-to-r from-black/85 via-black/75 to-black/65 sm:from-slate-950/80 sm:via-slate-950/60 sm:to-slate-950/50" />
 
-      <div className="relative z-10 mx-auto flex min-h-[85vh] w-full max-w-7xl items-center px-4 pt-32 pb-12 sm:px-6 sm:pt-24 sm:pb-14 lg:px-8 lg:pt-28 lg:pb-16">
+      <ScrollReveal className="relative z-10 mx-auto flex min-h-[85vh] w-full max-w-7xl items-center px-4 pt-32 pb-12 sm:px-6 sm:pt-24 sm:pb-14 lg:px-8 lg:pt-28 lg:pb-16">
         <div className="min-w-0 w-full max-w-3xl">
           <span className="inline-flex items-center gap-2 rounded-full border border-emerald-100/30 bg-emerald-950/35 px-3.5 py-2 text-xs font-bold uppercase tracking-[0.12em] text-emerald-50 backdrop-blur-sm">
             <ShieldCheck size={15} aria-hidden="true" /> SUKKUR AREA OFFICE 5405
@@ -125,7 +126,7 @@ export default function Hero({
             </a>
           </div>
         </div>
-      </div>
+      </ScrollReveal>
     </section>
   );
 }

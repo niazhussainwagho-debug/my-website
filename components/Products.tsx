@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { ArrowRight, Minus, Plus } from "lucide-react";
+import ScrollReveal from "./ScrollReveal";
 
 export type HomePolicy = {
   title: string;
@@ -59,16 +60,17 @@ export default function Products({ policies, onLearnMore }: ProductsProps) {
 
   return (
     <section id="policies" className="scroll-mt-30 mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-16 lg:scroll-mt-34 lg:px-8">
-      <div className="mb-8 flex min-w-0 flex-wrap items-end justify-between gap-4">
+      <ScrollReveal className="mb-8 flex min-w-0 flex-wrap items-end justify-between gap-4">
         <div className="min-w-0">
           <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#176b55]">Plans for life&apos;s milestones</p>
           <h2 className="mt-2 text-3xl font-black leading-tight text-[#17332e] sm:text-4xl">Protection for what matters</h2>
         </div>
         <a href="/products" className="inline-flex min-h-10 items-center gap-2 text-sm font-bold text-[#176b55] transition-colors hover:text-[#0b493b]">All products <ArrowRight size={16} aria-hidden="true" /></a>
-      </div>
+      </ScrollReveal>
 
       {activePolicy ? (
         <div className="grid min-w-0 gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-12">
+          <ScrollReveal>
           <article className="group relative flex min-h-[380px] min-w-0 overflow-hidden rounded-2xl bg-slate-950 text-white sm:min-h-[440px] lg:min-h-[500px]">
             <Image key={activePolicy.title} src={activePolicy.image} alt={activePolicy.alt} fill sizes="(max-width: 1023px) 100vw, 44vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
             <div aria-hidden="true" className="absolute inset-0 bg-linear-to-t from-slate-950/90 via-slate-950/35 to-transparent" />
@@ -81,14 +83,15 @@ export default function Products({ policies, onLearnMore }: ProductsProps) {
               </button>
             </div>
           </article>
+          </ScrollReveal>
 
           <div className="min-w-0 self-center">
             <div className="border-t border-slate-200 dark:border-slate-800">
-              {policies.map((policy) => {
+              {policies.map((policy, index) => {
                 const isActive = policy.title === activePolicy.title;
                 const Icon = isActive ? Minus : Plus;
                 return (
-                  <div key={policy.title} className="border-b border-slate-200 dark:border-slate-800">
+                  <ScrollReveal key={policy.title} delayMs={index * 120} className="border-b border-slate-200 dark:border-slate-800">
                     <button
                       type="button"
                       aria-expanded={isActive}
@@ -108,14 +111,14 @@ export default function Products({ policies, onLearnMore }: ProductsProps) {
                         <p className="max-w-xl pb-5 pr-12 text-sm leading-6 text-slate-600 dark:text-slate-400">{policy.description}</p>
                       </div>
                     </div>
-                  </div>
+                  </ScrollReveal>
                 );
               })}
             </div>
           </div>
         </div>
       ) : (
-        <p className="rounded-xl border border-slate-200 bg-white p-5 text-sm text-slate-600">No policy goals match that search. Try another keyword.</p>
+        <ScrollReveal><p className="rounded-xl border border-slate-200 bg-white p-5 text-sm text-slate-600">No policy goals match that search. Try another keyword.</p></ScrollReveal>
       )}
     </section>
   );

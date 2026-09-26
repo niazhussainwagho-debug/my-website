@@ -7,6 +7,7 @@ import { ArrowUpRight, ChevronDown, Clock3, MapPin } from "lucide-react";
 import { FacebookIcon, LinkedInIcon, MailIcon, PhoneIcon } from "../components/icons";
 import Hero from "../components/Hero";
 import Products, { homePolicies, type HomePolicy } from "../components/Products";
+import ScrollReveal from "../components/ScrollReveal";
 import Testimonials from "../components/Testimonials";
 import { plans, type Plan } from "../data/plans";
 import { products } from "../data/products";
@@ -387,28 +388,28 @@ export default function Home() {
 
       <section aria-label="Sukkur Area Office at a glance" className="border-y border-[#e1e8e2] bg-white">
         <div className="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-y divide-[#e6ece7] px-4 sm:px-6 lg:grid-cols-4 lg:divide-y-0 lg:px-8">
-          <div className="px-3 py-5 sm:px-6 sm:py-7">
+          <ScrollReveal className="px-3 py-5 sm:px-6 sm:py-7">
             <span className="sr-only">5,000+ Active Sukkur Policies</span><p aria-hidden="true" className="text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:hidden">{Math.floor(5000 * statsProgress).toLocaleString("en-US")}+</p><p aria-hidden="true" className="hidden text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:block">5,000+</p><p className="mt-1 text-xs font-medium leading-5 text-[#64756e] sm:text-sm">Active Sukkur Policies</p>
-          </div>
-          <div className="px-3 py-5 sm:px-6 sm:py-7">
+          </ScrollReveal>
+          <ScrollReveal delayMs={120} className="px-3 py-5 sm:px-6 sm:py-7">
             <span className="sr-only">100% State-Backed Security</span><p aria-hidden="true" className="text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:hidden">{Math.floor(100 * statsProgress)}%</p><p aria-hidden="true" className="hidden text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:block">100%</p><p className="mt-1 text-xs font-medium leading-5 text-[#64756e] sm:text-sm">State-Backed Security</p>
-          </div>
-          <div className="px-3 py-5 sm:px-6 sm:py-7">
+          </ScrollReveal>
+          <ScrollReveal delayMs={240} className="px-3 py-5 sm:px-6 sm:py-7">
             <span className="sr-only">PKR 50M+ Claims Facilitated</span><p aria-hidden="true" className="text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:hidden">PKR {Math.floor(50 * statsProgress)}M+</p><p aria-hidden="true" className="hidden text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:block">PKR 50M+</p><p className="mt-1 text-xs font-medium leading-5 text-[#64756e] sm:text-sm">Claims Facilitated</p>
-          </div>
-          <div className="px-3 py-5 sm:px-6 sm:py-7">
+          </ScrollReveal>
+          <ScrollReveal delayMs={360} className="px-3 py-5 sm:px-6 sm:py-7">
             <span className="sr-only">24/7 Area Office Support Desk</span><p aria-hidden="true" className="text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:hidden">{Math.floor(24 * statsProgress)}/7</p><p aria-hidden="true" className="hidden text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:block">24/7</p><p className="mt-1 text-xs font-medium leading-5 text-[#64756e] sm:text-sm">Area Office Support Desk</p>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
       <Products policies={visibleHomePolicies} onLearnMore={openHomePolicy} />
 
       <section id="products" className="scroll-mt-30 mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:scroll-mt-34 lg:px-8">
-        <div className="mb-10 text-center">
+        <ScrollReveal className="mb-10 text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#176b55]">More ways to plan</p>
           <h2 className="mt-3 text-3xl font-bold text-[#17332e] sm:text-4xl">Explore all coverage options</h2>
-        </div>
+        </ScrollReveal>
 
         <div
           className="relative"
@@ -444,11 +445,11 @@ export default function Home() {
           </button>
 
           <div ref={productCarouselRef} className="flex touch-pan-x touch-pan-y snap-x snap-mandatory gap-6 overflow-x-auto overscroll-x-contain px-4 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            {products.map((product) => (
+            {products.map((product, index) => (
+              <ScrollReveal key={product.slug} delayMs={index * 110} className="min-w-0 flex-[0_0_85%] snap-start sm:flex-[0_0_45%] lg:flex-[0_0_calc((100%_-_4.5rem)/4)]">
               <article
-                key={product.slug}
                 onClick={() => handleProductOpen(product)}
-                className="group relative flex min-w-0 flex-[0_0_85%] snap-start flex-col overflow-hidden rounded-bl-[64px] rounded-br-xl rounded-tl-xl rounded-tr-[64px] border border-slate-200 bg-[#F5F5F5] p-4 text-left text-[#0b2240] shadow-sm transition hover:-translate-y-1 hover:shadow-xl sm:flex-[0_0_45%] lg:flex-[0_0_calc((100%_-_4.5rem)/4)]"
+                className="group relative flex h-full min-w-0 flex-col overflow-hidden rounded-bl-[64px] rounded-br-xl rounded-tl-xl rounded-tr-[64px] border border-slate-200 bg-[#F5F5F5] p-4 text-left text-[#0b2240] shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
               >
                 <div className="relative aspect-[4/3] w-full overflow-hidden rounded-tr-[64px] rounded-tl-xl bg-gradient-to-br from-blue-100 to-sky-200">
                   {product.image && !failedProductImages.includes(product.image) && <Image src={product.image} alt={product.alt} fill sizes="(max-width: 640px) 85vw, (max-width: 1024px) 45vw, 25vw" className="object-cover" style={{ objectPosition: product.imagePosition }} onError={() => setFailedProductImages((current) => [...current, product.image as string])} />}
@@ -464,6 +465,7 @@ export default function Home() {
                   <button type="button" aria-label={`${product.title} kholein`} onClick={(event) => { event.stopPropagation(); handleProductOpen(product); }} className="absolute bottom-0 right-0 flex h-12 w-14 items-center justify-center rounded-tl-3xl bg-[#0A4DB3] text-3xl leading-none text-white transition hover:bg-[var(--brand-blue-700)]">›</button>
                 )}
               </article>
+              </ScrollReveal>
             ))}
           </div>
 
@@ -478,22 +480,22 @@ export default function Home() {
 
       <section id="services" className="scroll-mt-30 bg-[#eaf0ea] py-14 sm:py-16 lg:scroll-mt-34">
         <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:gap-14 lg:px-8">
-          <div className="max-w-lg">
+          <ScrollReveal className="max-w-lg">
             <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#176b55]">From first question to ongoing care</p>
             <h2 className="mt-3 text-3xl font-black leading-tight text-[#17332e] sm:text-4xl">Support at every step</h2>
             <p className="mt-4 text-base leading-7 text-[#60736b]">Clear local guidance for policy services, claims, and health support. Open a step to see where to start.</p>
-          </div>
+          </ScrollReveal>
 
           <div className="divide-y divide-[#d5e0d7] border-y border-[#d5e0d7]">
             {processSteps.map((step, index) => (
-              <div key={step.title}>
+              <ScrollReveal key={step.title} delayMs={index * 150}>
                 <button type="button" onClick={() => setOpenProcess(openProcess === index ? -1 : index)} aria-expanded={openProcess === index} className="flex min-h-16 w-full min-w-0 items-center gap-4 py-4 text-left">
                   <span className="w-8 shrink-0 font-mono text-sm font-bold text-[#7a9186]">0{index + 1}</span>
                   <span className="min-w-0 flex-1 text-base font-bold text-[#183630] sm:text-lg">{step.title}</span>
                   <ChevronDown size={19} className={`shrink-0 text-[#176b55] transition-transform ${openProcess === index ? "rotate-180" : ""}`} aria-hidden="true" />
                 </button>
                 {openProcess === index && <p className="max-w-2xl pb-5 pl-12 pr-2 text-sm leading-6 text-[#60736b] sm:text-base">{step.description}</p>}
-              </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
@@ -501,7 +503,7 @@ export default function Home() {
 
       <section id="about" className="scroll-mt-30 overflow-hidden bg-[#143a35] py-14 text-white sm:py-16 lg:scroll-mt-34">
         <div className="mx-auto grid max-w-7xl items-center gap-8 px-4 sm:px-6 lg:grid-cols-[1fr_0.9fr] lg:gap-16 lg:px-8">
-          <div>
+          <ScrollReveal>
             <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#a6d4bb]">Your local point of contact</p>
             <h2 className="mt-3 max-w-xl text-3xl font-black leading-tight sm:text-4xl">Personal guidance, right here in Sukkur</h2>
             <p className="mt-4 max-w-xl text-base leading-7 text-[#d0e0d7]">Meet the Area Office team for policy questions, documentation guidance, and in-person assistance.</p>
@@ -514,9 +516,9 @@ export default function Home() {
               <span>Monday to Friday, 9:00 AM to 5:00 PM</span>
             </div>
             <a href="https://www.google.com/maps/dir/?api=1&destination=Shahlimar+Road,+near+Session+Court,+Sukkur,+Pakistan" target="_blank" rel="noreferrer" className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-full border border-white/25 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-white/10">Get directions <ArrowUpRight size={16} aria-hidden="true" /></a>
-          </div>
+          </ScrollReveal>
 
-          <div className="glass grid min-w-0 items-center gap-5 rounded-2xl p-4 text-white sm:grid-cols-[minmax(130px,0.75fr)_1.25fr] sm:p-5">
+          <ScrollReveal delayMs={150} className="glass grid min-w-0 items-center gap-5 rounded-2xl p-4 text-white sm:grid-cols-[minmax(130px,0.75fr)_1.25fr] sm:p-5">
             <div className="relative aspect-4/5 w-full overflow-hidden rounded-xl bg-[#355b50]">
               {!managerImageFailed && <Image src="/area-manager.jpg" alt="Mr. Fayyaz Ahmed, Area Manager" fill sizes="(max-width: 639px) 100vw, 24vw" className="object-cover object-top" onError={() => setManagerImageFailed(true)} />}
             </div>
@@ -528,7 +530,7 @@ export default function Home() {
               <p className="mt-5 wrap-break-word text-2xl font-black leading-tight sm:text-3xl">{MANAGER_NAME}</p>
               <p className="mt-2 text-sm font-semibold text-[#c5d9ce]">{MANAGER_TITLE} · Sukkur Area Office {AREA_CODE}</p>
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -536,14 +538,14 @@ export default function Home() {
 
       <section className="bg-transparent py-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-10 text-center">
+          <ScrollReveal className="mb-10 text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#1f8a67]">FAQ</p>
             <h2 className="mt-3 text-3xl font-bold text-[#17332e] sm:text-4xl">Common questions, clear answers</h2>
-          </div>
+          </ScrollReveal>
 
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={faq.question} className="rounded-[22px] border border-slate-200 bg-white shadow-sm">
+              <ScrollReveal key={faq.question} delayMs={index * 120} className="rounded-[22px] border border-slate-200 bg-white shadow-sm">
                 <button
                   type="button"
                   onClick={() => setOpenFaq(openFaq === index ? -1 : index)}
@@ -559,7 +561,7 @@ export default function Home() {
                 {openFaq === index && (
                   <div className="px-5 pb-5 text-base leading-7 text-slate-600">{faq.answer}</div>
                 )}
-              </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
@@ -567,7 +569,7 @@ export default function Home() {
 
       <section id="contact" className="scroll-mt-30 mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:scroll-mt-34 lg:px-8">
         <div className="grid gap-8 rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm lg:grid-cols-[0.9fr_1.1fr] lg:p-10">
-          <div>
+          <ScrollReveal>
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#1f8a67]">Contact</p>
             <h2 className="mt-3 text-3xl font-bold text-[#0b2240] sm:text-4xl">Free consultation ke liye rabta karein</h2>
             <p className="mt-4 text-base leading-7 text-slate-600">
@@ -599,8 +601,9 @@ export default function Home() {
                 </a>
               </div>
             </div>
-          </div>
+          </ScrollReveal>
 
+          <ScrollReveal delayMs={150}>
           <form onSubmit={handleContactSubmit} className="space-y-5">
             <div className="grid gap-5 sm:grid-cols-2">
               <div>
@@ -701,11 +704,12 @@ export default function Home() {
             )}
             {contactStatus === "error" && <p className="text-sm font-medium text-red-600">Kuch masla aa gaya, baraye meherbani WhatsApp par rabta karein</p>}
           </form>
+          </ScrollReveal>
         </div>
       </section>
 
       <section className="px-4 pb-6 sm:px-6 lg:px-8">
-        <div className="mx-auto flex max-w-7xl min-w-0 flex-col justify-between gap-6 rounded-2xl bg-[#dcebe1] p-5 sm:p-8 lg:flex-row lg:items-center lg:px-10">
+        <ScrollReveal className="mx-auto flex max-w-7xl min-w-0 flex-col justify-between gap-6 rounded-2xl bg-[#dcebe1] p-5 sm:p-8 lg:flex-row lg:items-center lg:px-10">
           <div className="min-w-0">
             <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#176b55]">Talk to a local advisor</p>
             <h2 className="mt-2 max-w-2xl text-2xl font-black leading-tight text-[#17332e] sm:text-3xl">A clear first conversation can make planning easier.</h2>
@@ -714,20 +718,20 @@ export default function Home() {
             <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#087653] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#056346]">WhatsApp <ArrowUpRight size={16} aria-hidden="true" /></a>
             <a href="#contact" className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#a7c4b1] bg-white/80 px-5 py-3 text-sm font-bold text-[#17332e] transition hover:bg-white">Book a consultation</a>
           </div>
-        </div>
+        </ScrollReveal>
       </section>
 
       <footer className="px-4 pb-5 pt-2 sm:px-6 lg:px-8">
         <div className="mx-auto grid max-w-7xl min-w-0 gap-9 rounded-2xl bg-[#132d2a] p-5 text-[#d7e2dc] sm:p-8 lg:grid-cols-[1.25fr_0.7fr_1.15fr_0.9fr] lg:gap-8 lg:p-10">
-          <div className="min-w-0">
+          <ScrollReveal className="min-w-0">
             <div className="flex min-w-0 items-center gap-3">
               <Image src="/area-logo.png" alt="Sukkur Area Office logo" width={210} height={74} className="h-11 w-32 shrink-0 rounded-md bg-white p-1 object-contain" />
               <div className="min-w-0"><p className="text-base font-bold text-white">Sukkur Area Office</p><p className="text-xs leading-5 text-[#aabbb2]">State Life Insurance · {AREA_CODE}</p></div>
             </div>
             <p className="mt-5 max-w-sm text-sm leading-6 text-[#b9c9c1]">Local policy guidance and in-person support for families in Sukkur.</p>
-          </div>
+          </ScrollReveal>
 
-          <div>
+          <ScrollReveal delayMs={120}>
             <h3 className="text-sm font-bold text-white">Explore</h3>
             <ul className="mt-4 space-y-3 text-sm text-[#b9c9c1]">
               <li><a href="/products" className="hover:text-white">Products</a></li>
@@ -735,9 +739,9 @@ export default function Home() {
               <li><a href="/about" className="hover:text-white">About us</a></li>
               <li><a href="/contact" className="hover:text-white">Contact</a></li>
             </ul>
-          </div>
+          </ScrollReveal>
 
-          <div className="min-w-0">
+          <ScrollReveal delayMs={240} className="min-w-0">
             <h3 className="text-sm font-bold text-white">Official contact</h3>
             <ul className="mt-4 space-y-3 wrap-break-word text-sm leading-6 text-[#b9c9c1]">
               <li>Shahlimar Road, near Session Court, Sukkur</li>
@@ -746,19 +750,19 @@ export default function Home() {
               <li><a href={emailLink()} className="hover:text-white">{CONTACT_EMAIL}</a></li>
               <li>Monday to Friday · 9 AM to 5 PM</li>
             </ul>
-          </div>
+          </ScrollReveal>
 
-          <div>
+          <ScrollReveal delayMs={360}>
             <h3 className="text-sm font-bold text-white">Connect</h3>
             <ul className="mt-4 space-y-3 text-sm text-[#b9c9c1]">
               <li><a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-white"><FacebookIcon /> Facebook</a></li>
               <li><a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-white"><LinkedInIcon /> LinkedIn</a></li>
               <li><a href={emailLink()} className="inline-flex items-center gap-2 hover:text-white"><MailIcon /> Email us</a></li>
             </ul>
-          </div>
+          </ScrollReveal>
         </div>
 
-        <p className="mx-auto mt-5 max-w-7xl px-1 text-center text-xs leading-5 text-[#687b71]">Ye website Sukkur Area Office ki taraf se hai. Policy payment aur login ke liye official channels use karein.</p>
+        <ScrollReveal delayMs={480} className="mx-auto mt-5 max-w-7xl px-1 text-center text-xs leading-5 text-[#687b71]">Ye website Sukkur Area Office ki taraf se hai. Policy payment aur login ke liye official channels use karein.</ScrollReveal>
       </footer>
 
       {selectedCategory && (

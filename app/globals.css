@@ -64,6 +64,17 @@ body {
   transform: translateY(-2px);
 }
 
+.scroll-reveal {
+  opacity: 0;
+  transform: translate3d(0, 30px, 0);
+  transition: opacity 600ms ease-out, transform 600ms ease-out;
+}
+
+.scroll-reveal[data-revealed="true"] {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
 @supports not (backdrop-filter: blur(1px)) {
   .glass {
     background: rgba(20, 60, 140, 0.65);
@@ -78,6 +89,12 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .scroll-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
   .glass {
     transition: none;
   }
