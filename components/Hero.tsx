@@ -74,7 +74,7 @@ export default function Hero({
   }, []);
 
   return (
-    <section id="home" className="scroll-mt-30 relative isolate min-h-[85vh] w-full max-w-full overflow-hidden bg-cover bg-[right_center] text-white sm:bg-center lg:scroll-mt-34">
+    <section id="home" className="scroll-mt-30 relative isolate min-h-[85vh] w-full max-w-full overflow-hidden bg-cover bg-center text-white lg:scroll-mt-34">
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
         <Image
           src="/products/family.png"
@@ -82,7 +82,7 @@ export default function Hero({
           fill
           loading="eager"
           sizes="100vw"
-          className="object-cover object-[right_center] sm:object-center"
+          className="object-cover object-center"
         />
       </div>
       <div aria-hidden="true" className="absolute inset-0 z-0 bg-linear-to-r from-black/85 via-black/75 to-black/65 sm:from-slate-950/80 sm:via-slate-950/60 sm:to-slate-950/50" />
