@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, ArrowUpRight, BadgeCheck, ChevronDown, Clock3, GraduationCap, HeartHandshake, MapPin, ShieldCheck, Stethoscope } from "lucide-react";
+import { ArrowRight, ArrowUpRight, ChevronDown, Clock3, GraduationCap, HeartHandshake, MapPin, ShieldCheck, Stethoscope } from "lucide-react";
 import { FacebookIcon, LinkedInIcon, MailIcon, PhoneIcon } from "../components/icons";
 import Testimonials from "../components/Testimonials";
 import { plans, type Plan } from "../data/plans";
@@ -472,10 +472,6 @@ export default function Home() {
             <div className="relative aspect-4/3 min-h-64 w-full overflow-hidden rounded-3xl bg-[#c8dacf] sm:aspect-5/4">
               <Image src="/products/family.png" alt="Family spending time together at home" fill loading="eager" sizes="(max-width: 1023px) 100vw, 48vw" className="object-cover" />
             </div>
-            <div className="absolute bottom-3 left-3 right-3 flex min-w-0 flex-wrap items-center justify-between gap-2 rounded-xl border border-white/70 bg-white/95 px-3 py-3 shadow-lg sm:bottom-5 sm:left-5 sm:right-5 sm:px-4">
-              <span className="flex min-w-0 items-center gap-2 text-sm font-bold text-[#173d35]"><MapPin size={17} className="shrink-0 text-[#176b55]" aria-hidden="true" /><span className="truncate">Local support in Sukkur</span></span>
-              <span className="shrink-0 rounded-full bg-[#e7f3ec] px-3 py-1.5 text-xs font-bold text-[#176b55]">Area Code {AREA_CODE}</span>
-            </div>
           </div>
         </div>
       </section>
@@ -654,7 +650,6 @@ export default function Home() {
               </span>
               <p className="mt-5 wrap-break-word text-2xl font-black leading-tight sm:text-3xl">{MANAGER_NAME}</p>
               <p className="mt-2 text-sm font-semibold text-[#c5d9ce]">{MANAGER_TITLE} · Area Code {AREA_CODE}</p>
-              <div className="mt-5 flex items-center gap-2 text-sm font-medium text-[#dce9e1]"><BadgeCheck size={17} className="shrink-0 text-[#a6d4bb]" aria-hidden="true" /> Local office consultation</div>
             </div>
           </div>
         </div>
