@@ -48,7 +48,7 @@ export default function Hero({
           deleting = false;
           timer = window.setTimeout(tick, 100);
         } else {
-          timer = window.setTimeout(tick, 15);
+          timer = window.setTimeout(tick, 55);
         }
         return;
       }
@@ -58,9 +58,9 @@ export default function Hero({
 
       if (displayedLength === phrase.length) {
         deleting = true;
-        timer = window.setTimeout(tick, 2400);
+        timer = window.setTimeout(tick, 4500);
       } else {
-        timer = window.setTimeout(tick, 30);
+        timer = window.setTimeout(tick, 110);
       }
     };
 
