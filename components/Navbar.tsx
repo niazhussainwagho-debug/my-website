@@ -7,12 +7,12 @@ import { useState } from "react";
 import { PhoneIcon, WhatsAppIcon } from "./icons";
 import { WHATSAPP_NUMBER, whatsappLink } from "../lib/contact";
 
-const navLinks = [
-  { name: "Home", href: "/" },
-  { name: "Products", href: "/products" },
-  { name: "Services", href: "/services" },
-  { name: "About Us", href: "/about" },
-  { name: "Contact", href: "/contact" },
+const navLinks: { name: string; href: string; sectionId?: string }[] = [
+  { name: "Home", href: "/", sectionId: "home" },
+  { name: "Products", href: "/products", sectionId: "products" },
+  { name: "Services", href: "/services", sectionId: "services" },
+  { name: "About Us", href: "/about", sectionId: "about" },
+  { name: "Contact", href: "/contact", sectionId: "contact" },
   { name: "Join Us", href: "/become-agent" },
 ];
 
@@ -25,11 +25,22 @@ export default function Navbar() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const handleNavClick = (event: React.MouseEvent<HTMLAnchorElement>, sectionId?: string) => {
+    setMenuOpen(false);
+    if (pathname !== "/" || !sectionId) return;
+
+    const section = document.querySelector<HTMLElement>(`#${sectionId}`);
+    if (!section) return;
+
+    event.preventDefault();
+    section.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   return (
     <header className="fixed inset-x-0 top-0 z-50 m-0 block w-full max-w-full overflow-x-clip bg-white p-0 shadow-md">
       <div className="m-0 w-full max-w-full overflow-hidden">
         <div className="mx-auto flex min-h-[60px] w-full max-w-7xl items-center justify-between gap-3 px-4 pt-2 pb-2 md:px-8 lg:min-h-[88px]">
-          <Link href="/" className="flex min-w-0 flex-1 items-center gap-3 text-slate-900" onClick={() => setMenuOpen(false)}>
+          <Link href="/" className="flex min-w-0 flex-1 items-center gap-3 text-slate-900" onClick={(event) => handleNavClick(event, "home")}>
             <Image src="/area-logo.png" alt="State Life Insurance Corporation of Pakistan logo" width={420} height={144} priority className="h-12 w-auto shrink-0 object-contain object-left md:h-14" />
             <span className="min-w-0 max-w-full leading-tight">
               <span className="block truncate whitespace-nowrap text-xs font-semibold text-(--brand-blue-700)">Sukkur Area Office 5405</span>
@@ -39,7 +50,7 @@ export default function Navbar() {
           </Link>
 
           <div className="hidden shrink-0 items-center gap-1 text-sm font-semibold md:flex">
-            <Link href="/contact#contact-form" className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-full bg-(--brand-blue-700) px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-(--brand-blue-900)">Get Policy Quote</Link>
+            <Link href="/contact#contact-form" onClick={(event) => handleNavClick(event, "contact")} className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-full bg-(--brand-blue-700) px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-(--brand-blue-900)">Get Policy Quote</Link>
           </div>
 
           <div className="flex shrink-0 items-center gap-2 md:hidden">
@@ -59,7 +70,7 @@ export default function Navbar() {
           <div className="hidden w-full min-w-0 flex-nowrap items-center justify-between gap-1 md:flex">
             {navLinks.map((link) => {
               const active = isActiveRoute(pathname, link.href);
-              return <Link key={link.href} href={link.href} aria-current={active ? "page" : undefined} className={`inline-flex min-h-12 shrink-0 items-center whitespace-nowrap border-b-2 px-2 text-sm font-semibold text-white transition hover:bg-white/10 lg:px-3 ${active ? "border-white" : "border-transparent"}`}>{link.name}</Link>;
+              return <Link key={link.href} href={link.href} aria-current={active ? "page" : undefined} onClick={(event) => handleNavClick(event, link.sectionId)} className={`inline-flex min-h-12 shrink-0 items-center whitespace-nowrap border-b-2 px-2 text-sm font-semibold text-white transition hover:bg-white/10 lg:px-3 ${active ? "border-white" : "border-transparent"}`}>{link.name}</Link>;
             })}
           </div>
           <div className="md:hidden"><p className="w-full max-w-full m-0 py-1.5 px-3 bg-[#0052cc] overflow-hidden text-ellipsis text-center text-xs font-semibold text-white whitespace-nowrap truncate">Sukkur Area Office 5405</p></div>
@@ -71,12 +82,12 @@ export default function Navbar() {
           <div className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-3 sm:px-6">
             {navLinks.map((link) => {
               const active = isActiveRoute(pathname, link.href);
-              return <Link key={link.href} href={link.href} aria-current={active ? "page" : undefined} onClick={() => setMenuOpen(false)} className={`rounded-xl px-3 py-3 text-base font-medium text-white transition hover:bg-white/10 ${active ? "bg-white/15 font-semibold" : ""}`}>{link.name}</Link>;
+              return <Link key={link.href} href={link.href} aria-current={active ? "page" : undefined} onClick={(event) => handleNavClick(event, link.sectionId)} className={`rounded-xl px-3 py-3 text-base font-medium text-white transition hover:bg-white/10 ${active ? "bg-white/15 font-semibold" : ""}`}>{link.name}</Link>;
             })}
             <div className="mt-2 grid gap-2 border-t border-white/20 pt-3 sm:grid-cols-2">
               <a href={`tel:+${WHATSAPP_NUMBER}`} onClick={() => setMenuOpen(false)} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-white px-4 py-3 text-sm font-semibold text-(--brand-blue-900)"><PhoneIcon />Call</a>
               <a href={whatsappLink()} target="_blank" rel="noreferrer" onClick={() => setMenuOpen(false)} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[#1f8a67] px-4 py-3 text-sm font-semibold text-white"><WhatsAppIcon />WhatsApp</a>
-              <Link href="/contact#contact-form" onClick={() => setMenuOpen(false)} className="inline-flex min-h-11 items-center justify-center rounded-full bg-white/15 px-4 py-3 text-sm font-semibold text-white sm:col-span-2">Get Policy Quote</Link>
+              <Link href="/contact#contact-form" onClick={(event) => handleNavClick(event, "contact")} className="inline-flex min-h-11 items-center justify-center rounded-full bg-white/15 px-4 py-3 text-sm font-semibold text-white sm:col-span-2">Get Policy Quote</Link>
             </div>
           </div>
         </div>

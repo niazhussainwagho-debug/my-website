@@ -74,7 +74,7 @@ export default function Hero({
   }, []);
 
   return (
-    <section id="home" className="relative isolate min-h-[85vh] w-full max-w-full overflow-hidden bg-cover bg-[right_center] text-white sm:bg-center">
+    <section id="home" className="scroll-mt-30 relative isolate min-h-[85vh] w-full max-w-full overflow-hidden bg-cover bg-[right_center] text-white sm:bg-center lg:scroll-mt-34">
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
         <Image
           src="/products/family.png"
