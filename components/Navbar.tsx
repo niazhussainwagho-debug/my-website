@@ -7,7 +7,9 @@ import { useState } from "react";
 import { PhoneIcon, WhatsAppIcon } from "./icons";
 import { WHATSAPP_NUMBER, whatsappLink } from "../lib/contact";
 
-const navLinks: { name: string; href: string; sectionId?: string }[] = [
+type NavLink = { name: string; href: string; sectionId?: string };
+
+const navLinks: NavLink[] = [
   { name: "Home", href: "/", sectionId: "home" },
   { name: "Products", href: "/products", sectionId: "products" },
   { name: "Services", href: "/services", sectionId: "services" },
@@ -15,6 +17,11 @@ const navLinks: { name: string; href: string; sectionId?: string }[] = [
   { name: "Contact", href: "/contact", sectionId: "contact" },
   { name: "Join Us", href: "/become-agent" },
 ];
+
+function getNavHref(pathname: string, link: NavLink) {
+  if (!link.sectionId) return link.href;
+  return pathname === "/" ? `#${link.sectionId}` : `/#${link.sectionId}`;
+}
 
 function isActiveRoute(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
@@ -70,7 +77,7 @@ export default function Navbar() {
           <div className="hidden w-full min-w-0 flex-nowrap items-center justify-between gap-1 md:flex">
             {navLinks.map((link) => {
               const active = isActiveRoute(pathname, link.href);
-              return <Link key={link.href} href={link.href} aria-current={active ? "page" : undefined} onClick={(event) => handleNavClick(event, link.sectionId)} className={`inline-flex min-h-12 shrink-0 items-center whitespace-nowrap border-b-2 px-2 text-sm font-semibold text-white transition hover:bg-white/10 lg:px-3 ${active ? "border-white" : "border-transparent"}`}>{link.name}</Link>;
+              return <Link key={link.href} href={getNavHref(pathname, link)} aria-current={active ? "page" : undefined} onClick={(event) => handleNavClick(event, link.sectionId)} className={`inline-flex min-h-12 shrink-0 items-center whitespace-nowrap border-b-2 px-2 text-sm font-semibold text-white transition hover:bg-white/10 lg:px-3 ${active ? "border-white" : "border-transparent"}`}>{link.name}</Link>;
             })}
           </div>
           <div className="md:hidden"><p className="w-full max-w-full m-0 py-1.5 px-3 bg-[#0052cc] overflow-hidden text-ellipsis text-center text-xs font-semibold text-white whitespace-nowrap truncate">Sukkur Area Office 5405</p></div>
@@ -82,7 +89,7 @@ export default function Navbar() {
           <div className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-3 sm:px-6">
             {navLinks.map((link) => {
               const active = isActiveRoute(pathname, link.href);
-              return <Link key={link.href} href={link.href} aria-current={active ? "page" : undefined} onClick={(event) => handleNavClick(event, link.sectionId)} className={`rounded-xl px-3 py-3 text-base font-medium text-white transition hover:bg-white/10 ${active ? "bg-white/15 font-semibold" : ""}`}>{link.name}</Link>;
+              return <Link key={link.href} href={getNavHref(pathname, link)} aria-current={active ? "page" : undefined} onClick={(event) => handleNavClick(event, link.sectionId)} className={`rounded-xl px-3 py-3 text-base font-medium text-white transition hover:bg-white/10 ${active ? "bg-white/15 font-semibold" : ""}`}>{link.name}</Link>;
             })}
             <div className="mt-2 grid gap-2 border-t border-white/20 pt-3 sm:grid-cols-2">
               <a href={`tel:+${WHATSAPP_NUMBER}`} onClick={() => setMenuOpen(false)} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-white px-4 py-3 text-sm font-semibold text-(--brand-blue-900)"><PhoneIcon />Call</a>
