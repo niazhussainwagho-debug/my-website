@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, ChevronDown, Clock3, MapPin } from "lucide-react";
@@ -14,6 +15,7 @@ import { products } from "../data/products";
 import { supabase } from "@/lib/supabase";
 import { AREA_CODE, CONTACT_EMAIL, FACEBOOK_URL, LANDLINE_NUMBER, LINKEDIN_URL, MANAGER_NAME, MANAGER_TITLE, WHATSAPP_DISPLAY, WHATSAPP_NUMBER, emailLink, landlineLink } from "../lib/contact";
 import { cleanPhone } from "../lib/phone";
+import { cardContentVariants, staggerContainerVariants, staticCardVariants } from "../components/card-motion";
 
 const processSteps = [
   {
@@ -544,9 +546,22 @@ export default function Home() {
             <h2 className="mt-3 text-3xl font-bold text-[#17332e] sm:text-4xl">Common questions, clear answers</h2>
           </ScrollReveal>
 
-          <div className="space-y-4">
+          <motion.div
+            variants={staggerContainerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            className="space-y-4"
+          >
             {faqs.map((faq, index) => (
-              <ScrollReveal key={faq.question} delayMs={index * 120} className="rounded-[22px] border border-slate-200 bg-white shadow-sm">
+              <motion.div
+                key={faq.question}
+                variants={staticCardVariants}
+                whileHover={{ y: -8, scale: 1.02, boxShadow: "0px 20px 30px rgba(0,0,0,0.12)" }}
+                transition={{ type: "spring", stiffness: 90, damping: 18 }}
+                className="overflow-hidden rounded-xl border border-slate-200/60 bg-white/80 shadow-sm backdrop-blur-md dark:border-slate-800/60 dark:bg-slate-900/80"
+              >
+                <motion.div variants={cardContentVariants}>
                 <button
                   type="button"
                   onClick={() => setOpenFaq(openFaq === index ? -1 : index)}
@@ -562,15 +577,25 @@ export default function Home() {
                 {openFaq === index && (
                   <div className="px-5 pb-5 text-base leading-7 text-slate-600">{faq.answer}</div>
                 )}
-              </ScrollReveal>
+                </motion.div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       <section id="contact" className="scroll-mt-30 mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:scroll-mt-34 lg:px-8">
-        <div className="grid gap-8 rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm lg:grid-cols-[0.9fr_1.1fr] lg:p-10">
-          <ScrollReveal>
+        <motion.div
+          variants={staggerContainerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          whileHover={{ y: -8, scale: 1.02, boxShadow: "0px 20px 30px rgba(0,0,0,0.12)" }}
+          transition={{ type: "spring", stiffness: 90, damping: 18 }}
+          className="grid gap-8 rounded-[32px] border border-slate-200/60 bg-white/80 p-6 shadow-sm backdrop-blur-md dark:border-slate-800/60 dark:bg-slate-900/80 lg:grid-cols-[0.9fr_1.1fr] lg:p-10"
+        >
+          <motion.div variants={staticCardVariants}>
+          <motion.div variants={cardContentVariants}>
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#1f8a67]">Contact</p>
             <h2 className="mt-3 text-3xl font-bold text-[#0b2240] sm:text-4xl">Free consultation ke liye rabta karein</h2>
             <p className="mt-4 text-base leading-7 text-slate-600">
@@ -602,12 +627,14 @@ export default function Home() {
                 </a>
               </div>
             </div>
-          </ScrollReveal>
+          </motion.div>
+          </motion.div>
 
-          <ScrollReveal delayMs={150}>
-          <form onSubmit={handleContactSubmit} className="space-y-5">
-            <div className="grid gap-5 sm:grid-cols-2">
-              <div>
+          <motion.div variants={staticCardVariants}>
+          <form onSubmit={handleContactSubmit}>
+            <motion.div variants={staggerContainerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="space-y-5">
+            <motion.div variants={staticCardVariants} className="grid gap-5 sm:grid-cols-2">
+              <motion.div variants={cardContentVariants}>
                 <label className="mb-2 block text-sm font-medium text-slate-700">Naam</label>
                 <input
                   type="text"
@@ -616,8 +643,8 @@ export default function Home() {
                   placeholder="Aapka naam"
                   className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-[#1f8a67] focus:bg-white"
                 />
-              </div>
-              <div>
+              </motion.div>
+              <motion.div variants={cardContentVariants}>
                 <label className="mb-2 block text-sm font-medium text-slate-700">Phone</label>
                 <input
                   type="tel"
@@ -629,10 +656,10 @@ export default function Home() {
                   className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-[#1f8a67] focus:bg-white"
                 />
                 {contactPhoneError && <p className="mt-1 text-sm text-red-600">{contactPhoneError}</p>}
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
 
-            <div>
+            <motion.div variants={cardContentVariants}>
               <label className="mb-2 block text-sm font-medium text-slate-700">Email (optional)</label>
               <input
                 type="email"
@@ -641,9 +668,9 @@ export default function Home() {
                 placeholder="Aapki email"
                 className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-[#1f8a67] focus:bg-white"
               />
-            </div>
+            </motion.div>
 
-            <div>
+            <motion.div variants={cardContentVariants}>
               <label className="mb-2 block text-sm font-medium text-slate-700">Category (optional)</label>
               <select
                 value={contactData.category}
@@ -655,9 +682,9 @@ export default function Home() {
                 <option value="Individual">Individual</option>
                 <option value="Family">Family</option>
               </select>
-            </div>
+            </motion.div>
 
-            <div>
+            <motion.div variants={cardContentVariants}>
               <label className="mb-2 block text-sm font-medium text-slate-700">Message</label>
               <textarea
                 rows={5}
@@ -666,9 +693,9 @@ export default function Home() {
                 placeholder="Aap apni query likhein..."
                 className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-[#1f8a67] focus:bg-white"
               />
-            </div>
+            </motion.div>
 
-            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+            <motion.div variants={cardContentVariants} className="rounded-2xl border border-slate-200/60 bg-white/80 p-4 backdrop-blur-md dark:border-slate-800/60 dark:bg-slate-900/80">
               <label className="flex items-start gap-3 text-sm text-slate-700">
                 <input
                   type="checkbox"
@@ -678,7 +705,7 @@ export default function Home() {
                 />
                 <span>Main apni info office ko dene ki ijazat deta hun.</span>
               </label>
-            </div>
+            </motion.div>
 
             <input
               type="text"
@@ -690,23 +717,25 @@ export default function Home() {
               className="hidden"
             />
 
-            <button
+            <motion.button
+              variants={cardContentVariants}
               type="submit"
               disabled={contactStatus === "sending"}
               className="inline-flex items-center justify-center rounded-full bg-[var(--brand-blue-700)] px-6 py-3.5 text-base font-semibold text-white transition hover:bg-[var(--brand-blue-900)]"
             >
               {contactStatus === "sending" ? "Bhej rahe hain..." : "Send"}
-            </button>
+            </motion.button>
             {contactStatus === "success" && (
-              <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-emerald-900">
+              <motion.div variants={cardContentVariants} className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-emerald-900">
                 <p className="font-bold">Thank You for Contacting Us!</p>
                 <p className="mt-1 text-sm leading-6">We have received your message. Our representative from State Life Sukkur Area Office 5405 will contact you shortly.</p>
-              </div>
+              </motion.div>
             )}
-            {contactStatus === "error" && <p className="text-sm font-medium text-red-600">Kuch masla aa gaya, baraye meherbani WhatsApp par rabta karein</p>}
+            {contactStatus === "error" && <motion.p variants={cardContentVariants} className="text-sm font-medium text-red-600">Kuch masla aa gaya, baraye meherbani WhatsApp par rabta karein</motion.p>}
+            </motion.div>
           </form>
-          </ScrollReveal>
-        </div>
+          </motion.div>
+        </motion.div>
       </section>
 
       <section className="px-4 pb-6 sm:px-6 lg:px-8">
@@ -723,16 +752,27 @@ export default function Home() {
       </section>
 
       <footer className="px-4 pb-5 pt-2 sm:px-6 lg:px-8">
-        <div className="mx-auto grid max-w-7xl min-w-0 gap-9 rounded-2xl bg-[#132d2a] p-5 text-[#d7e2dc] sm:p-8 lg:grid-cols-[1.25fr_0.7fr_1.15fr_0.9fr] lg:gap-8 lg:p-10">
-          <ScrollReveal className="min-w-0">
+        <motion.div
+          variants={staggerContainerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          whileHover={{ y: -8, scale: 1.02, boxShadow: "0px 20px 30px rgba(0,0,0,0.12)" }}
+          transition={{ type: "spring", stiffness: 90, damping: 18 }}
+          className="mx-auto grid max-w-7xl min-w-0 gap-9 rounded-2xl bg-[#132d2a] p-5 text-[#d7e2dc] sm:p-8 lg:grid-cols-[1.25fr_0.7fr_1.15fr_0.9fr] lg:gap-8 lg:p-10"
+        >
+          <motion.div variants={staticCardVariants} className="min-w-0">
+          <motion.div variants={cardContentVariants}>
             <div className="flex min-w-0 items-center gap-3">
               <Image src="/area-logo.png" alt="Sukkur Area Office logo" width={210} height={74} className="h-11 w-32 shrink-0 rounded-md bg-white p-1 object-contain" />
               <div className="min-w-0"><p className="text-base font-bold text-white">Sukkur Area Office</p><p className="text-xs leading-5 text-[#aabbb2]">State Life Insurance · {AREA_CODE}</p></div>
             </div>
             <p className="mt-5 max-w-sm text-sm leading-6 text-[#b9c9c1]">Local policy guidance and in-person support for families in Sukkur.</p>
-          </ScrollReveal>
+          </motion.div>
+          </motion.div>
 
-          <ScrollReveal delayMs={120}>
+          <motion.div variants={staticCardVariants}>
+          <motion.div variants={cardContentVariants}>
             <h3 className="text-sm font-bold text-white">Explore</h3>
             <ul className="mt-4 space-y-3 text-sm text-[#b9c9c1]">
               <li><a href="/products" className="hover:text-white">Products</a></li>
@@ -740,9 +780,11 @@ export default function Home() {
               <li><a href="/about" className="hover:text-white">About us</a></li>
               <li><a href="/contact" className="hover:text-white">Contact</a></li>
             </ul>
-          </ScrollReveal>
+          </motion.div>
+          </motion.div>
 
-          <ScrollReveal delayMs={240} className="min-w-0">
+          <motion.div variants={staticCardVariants} className="min-w-0">
+          <motion.div variants={cardContentVariants}>
             <h3 className="text-sm font-bold text-white">Official contact</h3>
             <ul className="mt-4 space-y-3 wrap-break-word text-sm leading-6 text-[#b9c9c1]">
               <li>Shahlimar Road, near Session Court, Sukkur</li>
@@ -751,19 +793,28 @@ export default function Home() {
               <li><a href={emailLink()} className="hover:text-white">{CONTACT_EMAIL}</a></li>
               <li>Monday to Friday · 9 AM to 5 PM</li>
             </ul>
-          </ScrollReveal>
+          </motion.div>
+          </motion.div>
 
-          <ScrollReveal delayMs={360}>
+          <motion.div variants={staticCardVariants}>
+          <motion.div variants={cardContentVariants}>
             <h3 className="text-sm font-bold text-white">Connect</h3>
             <ul className="mt-4 space-y-3 text-sm text-[#b9c9c1]">
               <li><a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-white"><FacebookIcon /> Facebook</a></li>
               <li><a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-white"><LinkedInIcon /> LinkedIn</a></li>
               <li><a href={emailLink()} className="inline-flex items-center gap-2 hover:text-white"><MailIcon /> Email us</a></li>
             </ul>
-          </ScrollReveal>
-        </div>
+          </motion.div>
+          </motion.div>
+        </motion.div>
 
-        <ScrollReveal delayMs={480} className="mx-auto mt-5 max-w-7xl px-1 text-center text-xs leading-5 text-[#687b71]">Ye website Sukkur Area Office ki taraf se hai. Policy payment aur login ke liye official channels use karein.</ScrollReveal>
+        <motion.p
+          variants={cardContentVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          className="mx-auto mt-5 max-w-7xl px-1 text-center text-xs leading-5 text-[#687b71]"
+        >Ye website Sukkur Area Office ki taraf se hai. Policy payment aur login ke liye official channels use karein.</motion.p>
       </footer>
 
       {selectedCategory && (

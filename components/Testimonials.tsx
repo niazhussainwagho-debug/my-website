@@ -1,4 +1,8 @@
+"use client";
+
+import { motion } from "framer-motion";
 import ScrollReveal from "./ScrollReveal";
+import { cardContentVariants, staggerContainerVariants, staticCardVariants } from "./card-motion";
 
 const testimonials = [
   {
@@ -26,23 +30,35 @@ export default function Testimonials() {
         <h2 id="testimonials-heading" className="mt-2 text-3xl font-black leading-tight text-[#17332e] sm:text-4xl">Families value clear guidance</h2>
       </ScrollReveal>
 
-      <div className="grid min-w-0 gap-4 md:grid-cols-3">
-        {testimonials.map((review, index) => (
-          <ScrollReveal key={review.name} delayMs={index * 150}>
-          <article className="group flex min-w-0 flex-col rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-blue-500 hover:shadow-lg sm:p-6">
-            <div aria-label="5 out of 5 stars" className="text-sm leading-none tracking-[0.12em] text-amber-500">★★★★★</div>
-            <blockquote className="mt-4 flex-1 text-sm leading-6 text-slate-600">“{review.text}”</blockquote>
-            <div className="mt-5 flex min-w-0 items-center gap-3 border-t border-slate-100 pt-4">
-              <span aria-hidden="true" className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#e7f3ec] text-xs font-black text-[#176b55]">{review.initials}</span>
-              <div className="min-w-0">
-                <p className="truncate text-sm font-bold text-[#17332e]">{review.name}</p>
-                <p className="mt-0.5 text-xs font-medium text-slate-500">Verified Client <span aria-hidden="true">·</span> Sukkur</p>
+      <motion.div
+        variants={staggerContainerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        className="grid min-w-0 gap-4 md:grid-cols-3"
+      >
+        {testimonials.map((review) => (
+          <motion.article
+            key={review.name}
+            variants={staticCardVariants}
+            whileHover={{ y: -8, scale: 1.02, boxShadow: "0px 20px 30px rgba(0,0,0,0.12)" }}
+            transition={{ type: "spring", stiffness: 90, damping: 18 }}
+            className="group flex min-w-0 flex-col overflow-hidden rounded-xl border border-slate-200/60 bg-white/80 p-5 shadow-sm backdrop-blur-md dark:border-slate-800/60 dark:bg-slate-900/80 sm:p-6"
+          >
+            <motion.div variants={cardContentVariants} className="flex h-full min-w-0 flex-col">
+              <div aria-label="5 out of 5 stars" className="text-sm leading-none tracking-[0.12em] text-amber-500">★★★★★</div>
+              <blockquote className="mt-4 flex-1 text-sm leading-6 text-slate-600">“{review.text}”</blockquote>
+              <div className="mt-5 flex min-w-0 items-center gap-3 border-t border-slate-100 pt-4">
+                <span aria-hidden="true" className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#e7f3ec] text-xs font-black text-[#176b55]">{review.initials}</span>
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-bold text-[#17332e]">{review.name}</p>
+                  <p className="mt-0.5 text-xs font-medium text-slate-500">Verified Client <span aria-hidden="true">·</span> Sukkur</p>
+                </div>
               </div>
-            </div>
-          </article>
-          </ScrollReveal>
+            </motion.div>
+          </motion.article>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 }
