@@ -72,7 +72,7 @@ export default function AboutPage() {
           </div>
           <div className="border-l-2 border-cyan-200 pl-5 sm:pl-8">
             <p className="text-2xl font-bold text-slate-900">{MANAGER_NAME}</p>
-            <p className="mt-1 font-semibold text-(--brand-blue-700)">{MANAGER_TITLE}, Area Code {AREA_CODE}</p>
+            <p className="mt-1 font-semibold text-(--brand-blue-700)">{MANAGER_TITLE}, Sukkur Area Office {AREA_CODE}</p>
             <p className="mt-5 leading-8 text-slate-600">
               Mr. Fayyaz Ahmed ki leadership mein office ka maqsad yeh hai ke har visitor ko apne family goals aur financial priorities ke hawale se practical, understandable guidance mile. Unka approach listening, transparency aur responsible follow-through par based hai.
             </p>
@@ -116,7 +116,7 @@ export default function AboutPage() {
             <p className="mt-4 font-semibold text-slate-900">Shahlimar Road, near Session Court, Sukkur, Sindh</p>
             <dl className="mt-5 space-y-3 text-sm">
               <div className="flex justify-between gap-4 border-b border-slate-100 pb-3"><dt>Working hours</dt><dd className="font-semibold text-slate-900">Mon-Fri, 9 AM - 5 PM</dd></div>
-              <div className="flex justify-between gap-4 border-b border-slate-100 pb-3"><dt>Area code</dt><dd className="font-semibold text-slate-900">{AREA_CODE}</dd></div>
+              <div className="flex justify-between gap-4 border-b border-slate-100 pb-3"><dt>Area Office</dt><dd className="font-semibold text-slate-900">{AREA_CODE}</dd></div>
               <div className="flex justify-between gap-4"><dt>Phone</dt><dd><a href={landlineLink()} className="font-semibold text-(--brand-blue-700)">{landlineLink().replace("tel:", "")}</a></dd></div>
             </dl>
             <Link href="/contact" className="mt-6 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-(--brand-blue-700) px-5 py-3 text-sm font-bold text-white transition hover:bg-(--brand-blue-900)">Contact Office</Link>

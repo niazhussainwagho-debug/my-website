@@ -649,7 +649,7 @@ export default function Home() {
                 <span>Sukkur Area Desk Active</span>
               </span>
               <p className="mt-5 wrap-break-word text-2xl font-black leading-tight sm:text-3xl">{MANAGER_NAME}</p>
-              <p className="mt-2 text-sm font-semibold text-[#c5d9ce]">{MANAGER_TITLE} · Area Code {AREA_CODE}</p>
+              <p className="mt-2 text-sm font-semibold text-[#c5d9ce]">{MANAGER_TITLE} · Sukkur Area Office {AREA_CODE}</p>
             </div>
           </div>
         </div>
