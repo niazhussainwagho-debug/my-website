@@ -5,9 +5,11 @@ import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, ChevronDown, Clock3, MapPin } from "lucide-react";
+import CarouselArrow from "../components/CarouselArrow";
 import { FacebookIcon, LinkedInIcon, MailIcon, PhoneIcon } from "../components/icons";
 import Hero from "../components/Hero";
 import Products, { homePolicies, type HomePolicy } from "../components/Products";
+import SectionJumpControls from "../components/SectionJumpControls";
 import ScrollReveal from "../components/ScrollReveal";
 import Testimonials from "../components/Testimonials";
 import { plans, type Plan } from "../data/plans";
@@ -110,6 +112,8 @@ export default function Home() {
   const [productIndex, setProductIndex] = useState(0);
   const [productPaused, setProductPaused] = useState(false);
   const [productVisibleCount, setProductVisibleCount] = useState(1);
+  const [canScrollProductPrevious, setCanScrollProductPrevious] = useState(false);
+  const [canScrollProductNext, setCanScrollProductNext] = useState(false);
   const [failedProductImages, setFailedProductImages] = useState<string[]>([]);
   const productCarouselRef = useRef<HTMLDivElement>(null);
   const productResumeTimerRef = useRef<number | null>(null);
@@ -136,7 +140,7 @@ export default function Home() {
   }, []);
 
   const scrollToProduct = (index: number) => {
-    const nextIndex = (index + products.length) % products.length;
+    const nextIndex = Math.max(0, Math.min(index, products.length - 1));
     const carousel = productCarouselRef.current;
     const card = carousel?.children[nextIndex] as HTMLElement | undefined;
     setProductIndex(nextIndex);
@@ -147,6 +151,11 @@ export default function Home() {
     setProductPaused(true);
     if (productResumeTimerRef.current) window.clearTimeout(productResumeTimerRef.current);
     productResumeTimerRef.current = window.setTimeout(() => setProductPaused(false), 6000);
+  };
+
+  const scrollProductsBy = (direction: -1 | 1) => {
+    pauseProductCarousel();
+    productCarouselRef.current?.scrollBy({ left: direction * 320, behavior: "smooth" });
   };
 
   useEffect(() => {
@@ -171,6 +180,9 @@ export default function Home() {
 
     const updateIndexFromScroll = () => {
       const cards = Array.from(carousel.children) as HTMLElement[];
+      const firstCardOffset = (cards[0] as HTMLElement | undefined)?.offsetLeft ?? 0;
+      setCanScrollProductPrevious(carousel.scrollLeft > firstCardOffset + 1);
+      setCanScrollProductNext(carousel.scrollLeft + carousel.clientWidth < carousel.scrollWidth - 1);
       const nearestIndex = cards.reduce((closest, card, index) => {
         const closestDistance = Math.abs(cards[closest].offsetLeft - carousel.scrollLeft);
         const distance = Math.abs(card.offsetLeft - carousel.scrollLeft);
@@ -179,13 +191,14 @@ export default function Home() {
       setProductIndex(nearestIndex);
     };
 
+    updateIndexFromScroll();
     carousel.addEventListener("scroll", updateIndexFromScroll, { passive: true });
     return () => carousel.removeEventListener("scroll", updateIndexFromScroll);
   }, [productVisibleCount]);
 
   useEffect(() => {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduceMotion || productPaused) return;
+    if (reduceMotion || productPaused || productIndex >= products.length - 1) return;
 
     const timer = window.setInterval(() => scrollToProduct(productIndex + 1), 4000);
     return () => window.clearInterval(timer);
@@ -363,6 +376,7 @@ export default function Home() {
 
   return (
     <main className="relative z-10 min-w-0 max-w-full overflow-x-clip bg-[#f5f7f3] pb-24 text-slate-900 dark:bg-slate-950 dark:text-slate-100 md:pb-0">
+      <SectionJumpControls />
       <div className="fixed inset-x-3 bottom-3 z-50 flex gap-3 md:hidden">
         <a
           href={`https://wa.me/${WHATSAPP_NUMBER}`}
@@ -388,7 +402,7 @@ export default function Home() {
         onPolicyFilterChange={setPolicyFilter}
       />
 
-      <section aria-label="Sukkur Area Office at a glance" className="border-y border-[#e1e8e2] bg-white dark:border-slate-700 dark:bg-slate-900">
+      <section id="overview" aria-label="Sukkur Area Office at a glance" className="scroll-mt-30 border-y border-[#e1e8e2] bg-white dark:border-slate-700 dark:bg-slate-900 lg:scroll-mt-34">
         <div className="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-y divide-[#e6ece7] px-4 sm:px-6 lg:grid-cols-4 lg:divide-y-0 lg:px-8 dark:divide-slate-700">
           <ScrollReveal className="px-3 py-5 sm:px-6 sm:py-7">
             <span className="sr-only">5,000+ Active Sukkur Policies</span><p aria-hidden="true" className="text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:hidden dark:text-slate-100">{Math.floor(5000 * statsProgress).toLocaleString("en-US")}+</p><p aria-hidden="true" className="hidden text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:block dark:text-slate-100">5,000+</p><p className="mt-1 text-xs font-medium leading-5 text-[#64756e] sm:text-sm dark:text-slate-300">Active Sukkur Policies</p>
@@ -430,22 +444,16 @@ export default function Home() {
           onKeyDown={(event) => {
             if (event.key === "ArrowLeft") {
               event.preventDefault();
-              pauseProductCarousel();
-              scrollToProduct(productIndex - 1);
+              scrollProductsBy(-1);
             }
             if (event.key === "ArrowRight") {
               event.preventDefault();
-              pauseProductCarousel();
-              scrollToProduct(productIndex + 1);
+              scrollProductsBy(1);
             }
           }}
         >
-          <button type="button" aria-label="Pichla product" onClick={() => { pauseProductCarousel(); scrollToProduct(productIndex - 1); }} className="absolute left-2 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white text-2xl leading-none text-[var(--brand-blue-700)] shadow-lg transition hover:bg-[var(--brand-blue-100)]">
-            ‹
-          </button>
-          <button type="button" aria-label="Agla product" onClick={() => { pauseProductCarousel(); scrollToProduct(productIndex + 1); }} className="absolute right-2 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white text-2xl leading-none text-[var(--brand-blue-700)] shadow-lg transition hover:bg-[var(--brand-blue-100)]">
-            ›
-          </button>
+          <CarouselArrow direction="previous" label="Previous product" disabled={!canScrollProductPrevious} onClick={() => scrollProductsBy(-1)} className="absolute left-2 top-1/2 z-10 -translate-y-1/2" />
+          <CarouselArrow direction="next" label="Next product" disabled={!canScrollProductNext} onClick={() => scrollProductsBy(1)} className="absolute right-2 top-1/2 z-10 -translate-y-1/2" />
 
           <div ref={productCarouselRef} className="flex touch-pan-x touch-pan-y snap-x snap-mandatory gap-6 overflow-x-auto overflow-y-hidden overscroll-x-contain px-4 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {products.map((product) => (
@@ -539,7 +547,7 @@ export default function Home() {
 
       <Testimonials />
 
-      <section className="bg-transparent py-16">
+      <section id="faq" className="scroll-mt-30 bg-transparent py-16 lg:scroll-mt-34">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <ScrollReveal className="mb-10 text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#1f8a67]">FAQ</p>

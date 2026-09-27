@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { ArrowRight, Minus, Plus } from "lucide-react";
+import CarouselArrow from "./CarouselArrow";
 import ScrollReveal from "./ScrollReveal";
 
 export type HomePolicy = {
@@ -57,6 +58,7 @@ type ProductsProps = {
 export default function Products({ policies, onLearnMore }: ProductsProps) {
   const [activeTitle, setActiveTitle] = useState(homePolicies[0].title);
   const activePolicy = policies.find((policy) => policy.title === activeTitle) ?? policies[0];
+  const activeIndex = Math.max(0, policies.findIndex((policy) => policy.title === activePolicy?.title));
 
   return (
     <section id="policies" className="scroll-mt-30 mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-16 lg:scroll-mt-34 lg:px-8">
@@ -74,6 +76,20 @@ export default function Products({ policies, onLearnMore }: ProductsProps) {
           <article className="group relative flex min-h-[380px] min-w-0 overflow-hidden rounded-2xl bg-slate-950 text-white sm:min-h-[440px] lg:min-h-[500px]">
             <Image key={activePolicy.title} src={activePolicy.image} alt={activePolicy.alt} fill sizes="(max-width: 1023px) 100vw, 44vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
             <div aria-hidden="true" className="absolute inset-0 bg-linear-to-t from-slate-950/90 via-slate-950/35 to-transparent" />
+            <CarouselArrow
+              direction="previous"
+              label="Previous coverage option"
+              disabled={activeIndex === 0}
+              onClick={() => setActiveTitle(policies[activeIndex - 1].title)}
+              className="absolute left-3 top-1/2 z-20 -translate-y-1/2"
+            />
+            <CarouselArrow
+              direction="next"
+              label="Next coverage option"
+              disabled={activeIndex >= policies.length - 1}
+              onClick={() => setActiveTitle(policies[activeIndex + 1].title)}
+              className="absolute right-3 top-1/2 z-20 -translate-y-1/2"
+            />
             <div className="relative z-10 mt-auto w-full p-5 sm:p-7">
               <span className="inline-flex items-center rounded-full border border-white/25 bg-white/10 px-3 py-1.5 text-xs font-bold text-white backdrop-blur-sm">{activePolicy.category}</span>
               <h3 className="mt-4 text-2xl font-black leading-tight sm:text-3xl">{activePolicy.title}</h3>
