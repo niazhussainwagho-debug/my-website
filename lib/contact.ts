@@ -1,13 +1,13 @@
 export const WHATSAPP_NUMBER = "923170941821";
-export const PHONE_NUMBER = "+923132894151";
-export const LANDLINE_NUMBER = "+92715621091";
+export const PHONE_NUMBER = "+923008312850";
+export const LANDLINE_NUMBER = "0715621091";
 export const whatsappLink = () => `https://wa.me/${WHATSAPP_NUMBER}`;
 export const telLink = () => `tel:${PHONE_NUMBER}`;
 export const landlineLink = () => `tel:${LANDLINE_NUMBER}`;
 export const MANAGER_NAME = "Mr Fayyaz Ahmed";
 export const MANAGER_TITLE = "Area Manager";
 export const AREA_CODE = "5405";
-export const WHATSAPP_DISPLAY = "0317-0941821";
+export const WHATSAPP_DISPLAY = "+92 317 0941821";
 export const PHONE_DISPLAY = "0300-8312850";
 export const FACEBOOK_URL = "https://www.facebook.com/share/1HnQeA4XGy/";
 export const LINKEDIN_URL = "https://www.linkedin.com/in/niaz-hussain-wagho-9ab971354";

@@ -13,7 +13,7 @@ import Testimonials from "../components/Testimonials";
 import { plans, type Plan } from "../data/plans";
 import { products } from "../data/products";
 import { supabase } from "@/lib/supabase";
-import { AREA_CODE, CONTACT_EMAIL, FACEBOOK_URL, LANDLINE_NUMBER, LINKEDIN_URL, MANAGER_NAME, MANAGER_TITLE, WHATSAPP_DISPLAY, WHATSAPP_NUMBER, emailLink, landlineLink } from "../lib/contact";
+import { AREA_CODE, CONTACT_EMAIL, FACEBOOK_URL, LINKEDIN_URL, MANAGER_NAME, MANAGER_TITLE, WHATSAPP_DISPLAY, WHATSAPP_NUMBER, emailLink, landlineLink, telLink } from "../lib/contact";
 import { cleanPhone } from "../lib/phone";
 import { cardContentVariants, staggerContainerVariants, staticCardVariants } from "../components/card-motion";
 
@@ -373,7 +373,7 @@ export default function Home() {
           WhatsApp
         </a>
         <a
-          href="tel:+923132894151"
+          href={telLink()}
           className="flex flex-1 items-center justify-center rounded-full bg-[var(--brand-blue-700)] px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-950/25"
         >
           Call
@@ -543,7 +543,7 @@ export default function Home() {
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <ScrollReveal className="mb-10 text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#1f8a67]">FAQ</p>
-            <h2 className="mt-3 text-3xl font-bold text-[#17332e] sm:text-4xl">Common questions, clear answers</h2>
+            <h2 className="mt-3 text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">Common questions, clear answers</h2>
           </ScrollReveal>
 
           <motion.div
@@ -565,17 +565,17 @@ export default function Home() {
                 <button
                   type="button"
                   onClick={() => setOpenFaq(openFaq === index ? -1 : index)}
-                  className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
+                  className="group flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
                   aria-expanded={openFaq === index}
                 >
-                  <span className="text-base font-semibold text-[#0b2240]">{faq.question}</span>
+                  <span className="text-base font-semibold text-slate-900 dark:text-slate-100 dark:group-hover:text-blue-400">{faq.question}</span>
                   <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#eafaf4] text-lg font-bold text-[#1f8a67]">
                     {openFaq === index ? "−" : "+"}
                   </span>
                 </button>
 
                 {openFaq === index && (
-                  <div className="px-5 pb-5 text-base leading-7 text-slate-600">{faq.answer}</div>
+                  <div className="px-5 pb-5 text-base leading-7 text-slate-600 dark:text-slate-300">{faq.answer}</div>
                 )}
                 </motion.div>
               </motion.div>
@@ -597,15 +597,15 @@ export default function Home() {
           <motion.div variants={staticCardVariants}>
           <motion.div variants={cardContentVariants}>
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#1f8a67]">Contact</p>
-            <h2 className="mt-3 text-3xl font-bold text-[#0b2240] sm:text-4xl">Free consultation ke liye rabta karein</h2>
-            <p className="mt-4 text-base leading-7 text-slate-600">
+            <h2 className="mt-3 text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">Free consultation ke liye rabta karein</h2>
+            <p className="mt-4 text-base font-semibold leading-7 text-slate-700 dark:text-slate-200">
               Aap humse message, call, ya WhatsApp ke zariye contact kar sakte hain. Team aapke sawalat ka jawab dene ke liye ready hai.
             </p>
 
-            <div className="mt-8 space-y-4 text-slate-700">
-              <p><span className="font-semibold text-[#0b2240]">Address:</span> Shahlimar Road, near Session Court, Sukkur</p>
-              <p><span className="font-semibold text-[#0b2240]">Phone:</span> Call / WhatsApp</p>
-              <p><span className="font-semibold text-[#0b2240]">Timings:</span> Mon-Fri, 9:00 AM to 5:00 PM</p>
+            <div className="mt-8 space-y-4 font-semibold text-slate-700 dark:text-slate-200">
+              <p><span className="font-semibold text-slate-800 dark:text-slate-200">Address:</span> Shahlimar Road, near Session Court, Sukkur</p>
+              <p><span className="font-semibold text-slate-800 dark:text-slate-200">Phone:</span> Call / WhatsApp</p>
+              <p><span className="font-semibold text-slate-800 dark:text-slate-200">Timings:</span> Mon-Fri, 9:00 AM to 5:00 PM</p>
             </div>
 
             <div className="mt-8">
@@ -635,17 +635,17 @@ export default function Home() {
             <motion.div variants={staggerContainerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="space-y-5">
             <motion.div variants={staticCardVariants} className="grid gap-5 sm:grid-cols-2">
               <motion.div variants={cardContentVariants}>
-                <label className="mb-2 block text-sm font-medium text-slate-700">Naam</label>
+                <label className="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">Naam</label>
                 <input
                   type="text"
                   value={contactData.name}
                   onChange={(event) => handleContactChange("name", event.target.value)}
                   placeholder="Aapka naam"
-                  className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-[#1f8a67] focus:bg-white"
+                  className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-[#1f8a67] focus:bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 dark:focus:bg-slate-800"
                 />
               </motion.div>
               <motion.div variants={cardContentVariants}>
-                <label className="mb-2 block text-sm font-medium text-slate-700">Phone</label>
+                <label className="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">Phone</label>
                 <input
                   type="tel"
                   inputMode="tel"
@@ -653,29 +653,29 @@ export default function Home() {
                   value={contactData.phone}
                   onChange={(event) => handleContactChange("phone", event.target.value)}
                   placeholder="Apna phone number likhein"
-                  className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-[#1f8a67] focus:bg-white"
+                  className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-[#1f8a67] focus:bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 dark:focus:bg-slate-800"
                 />
                 {contactPhoneError && <p className="mt-1 text-sm text-red-600">{contactPhoneError}</p>}
               </motion.div>
             </motion.div>
 
             <motion.div variants={cardContentVariants}>
-              <label className="mb-2 block text-sm font-medium text-slate-700">Email (optional)</label>
+              <label className="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">Email (optional)</label>
               <input
                 type="email"
                 value={contactData.email}
                 onChange={(event) => handleContactChange("email", event.target.value)}
                 placeholder="Aapki email"
-                className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-[#1f8a67] focus:bg-white"
+                className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-[#1f8a67] focus:bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 dark:focus:bg-slate-800"
               />
             </motion.div>
 
             <motion.div variants={cardContentVariants}>
-              <label className="mb-2 block text-sm font-medium text-slate-700">Category (optional)</label>
+              <label className="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">Category (optional)</label>
               <select
                 value={contactData.category}
                 onChange={(event) => handleContactChange("category", event.target.value)}
-                className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-[#1f8a67] focus:bg-white"
+                className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-[#1f8a67] focus:bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 dark:focus:bg-slate-800"
               >
                 <option value="">Select karein</option>
                 <option value="Corporate">Corporate</option>
@@ -685,18 +685,18 @@ export default function Home() {
             </motion.div>
 
             <motion.div variants={cardContentVariants}>
-              <label className="mb-2 block text-sm font-medium text-slate-700">Message</label>
+              <label className="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">Message</label>
               <textarea
                 rows={5}
                 value={contactData.message}
                 onChange={(event) => handleContactChange("message", event.target.value)}
                 placeholder="Aap apni query likhein..."
-                className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-[#1f8a67] focus:bg-white"
+                className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-[#1f8a67] focus:bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 dark:focus:bg-slate-800"
               />
             </motion.div>
 
             <motion.div variants={cardContentVariants} className="rounded-2xl border border-slate-200/60 bg-white/80 p-4 backdrop-blur-md dark:border-slate-800/60 dark:bg-slate-900/80">
-              <label className="flex items-start gap-3 text-sm text-slate-700">
+              <label className="flex items-start gap-3 text-sm text-slate-700 dark:text-slate-200">
                 <input
                   type="checkbox"
                   checked={contactData.consent}
@@ -788,7 +788,7 @@ export default function Home() {
             <h3 className="text-sm font-bold text-white">Official contact</h3>
             <ul className="mt-4 space-y-3 wrap-break-word text-sm leading-6 text-[#b9c9c1]">
               <li>Shahlimar Road, near Session Court, Sukkur</li>
-              <li><a href={landlineLink()} className="font-semibold text-emerald-300 transition-colors hover:text-emerald-200">Office: {LANDLINE_NUMBER}</a></li>
+              <li><a href={landlineLink()} className="inline-flex min-h-10 items-center rounded-full border border-emerald-300/40 px-3 font-semibold text-emerald-300 transition-colors hover:bg-emerald-300/10 hover:text-emerald-200">Office Landline</a></li>
               <li><a href={`https://wa.me/${WHATSAPP_NUMBER}`} className="font-semibold text-emerald-300 transition-colors hover:text-emerald-200">WhatsApp: {WHATSAPP_DISPLAY}</a></li>
               <li><a href={emailLink()} className="font-semibold text-cyan-200 transition-colors hover:text-emerald-200">{CONTACT_EMAIL}</a></li>
               <li>Monday to Friday · 9 AM to 5 PM</li>

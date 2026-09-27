@@ -6,20 +6,21 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { PhoneIcon, WhatsAppIcon } from "./icons";
 import ThemeToggle from "./ThemeToggle";
-import { WHATSAPP_NUMBER, whatsappLink } from "../lib/contact";
+import { telLink, whatsappLink } from "../lib/contact";
 
 const navLinks = [
-  { name: "Home", href: "/" },
-  { name: "Products", href: "/products" },
-  { name: "Services", href: "/services" },
-  { name: "About Us", href: "/about" },
-  { name: "Contact", href: "/contact" },
-  { name: "Join Us", href: "/become-agent" },
+  { name: "Home", href: "/#home" },
+  { name: "Products", href: "/products#page-top" },
+  { name: "Services", href: "/services#page-top" },
+  { name: "About Us", href: "/about#page-top" },
+  { name: "Contact", href: "/contact#page-top" },
+  { name: "Join Us", href: "/become-an-agent#page-top" },
 ];
 
 function isActiveRoute(pathname: string, href: string) {
-  if (href === "/") return pathname === "/";
-  return pathname === href || pathname.startsWith(`${href}/`);
+  const route = href.split("#", 1)[0];
+  if (route === "/") return pathname === "/";
+  return pathname === route || pathname.startsWith(`${route}/`);
 }
 
 export default function Navbar() {
@@ -77,7 +78,7 @@ export default function Navbar() {
               return <Link key={link.href} href={link.href} aria-current={active ? "page" : undefined} onClick={() => setMenuOpen(false)} className={`rounded-xl px-3 py-3 text-base font-medium text-white transition hover:bg-white/10 ${active ? "bg-white/15 font-semibold" : ""}`}>{link.name}</Link>;
             })}
             <div className="mt-2 grid gap-2 border-t border-white/20 pt-3 sm:grid-cols-2">
-              <a href={`tel:+${WHATSAPP_NUMBER}`} onClick={() => setMenuOpen(false)} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-white px-4 py-3 text-sm font-semibold text-(--brand-blue-900)"><PhoneIcon />Call</a>
+              <a href={telLink()} onClick={() => setMenuOpen(false)} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-white px-4 py-3 text-sm font-semibold text-(--brand-blue-900)"><PhoneIcon />Call</a>
               <a href={whatsappLink()} target="_blank" rel="noreferrer" onClick={() => setMenuOpen(false)} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[#1f8a67] px-4 py-3 text-sm font-semibold text-white"><WhatsAppIcon />WhatsApp</a>
               <Link href="/contact#contact-form" onClick={() => setMenuOpen(false)} className="inline-flex min-h-11 items-center justify-center rounded-full bg-white/15 px-4 py-3 text-sm font-semibold text-white sm:col-span-2">Get Policy Quote</Link>
             </div>
