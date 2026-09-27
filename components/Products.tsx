@@ -91,7 +91,7 @@ export default function Products({ policies, onLearnMore }: ProductsProps) {
                 const isActive = policy.title === activePolicy.title;
                 const Icon = isActive ? Minus : Plus;
                 return (
-                  <ScrollReveal key={policy.title} delayMs={index * 120} className="border-b border-slate-200 dark:border-slate-800">
+                  <ScrollReveal key={policy.title} delayMs={index * 150} className="border-b border-slate-200 dark:border-slate-800">
                     <button
                       type="button"
                       aria-expanded={isActive}

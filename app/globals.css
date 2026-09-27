@@ -89,11 +89,13 @@ html.dark body {
 
 .scroll-reveal {
   opacity: 0;
-  transition: opacity 600ms ease-out;
+  transform: translateY(20px);
+  transition: opacity 800ms ease-out, transform 800ms ease-out;
 }
 
 .scroll-reveal[data-revealed="true"] {
   opacity: 1;
+  transform: translateY(0);
 }
 
 @supports not (backdrop-filter: blur(1px)) {
@@ -112,6 +114,7 @@ html.dark body {
 @media (prefers-reduced-motion: reduce) {
   .scroll-reveal {
     opacity: 1;
+    transform: none;
     transition: none;
   }
 

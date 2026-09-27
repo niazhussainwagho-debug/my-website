@@ -15,7 +15,7 @@ import { products } from "../data/products";
 import { supabase } from "@/lib/supabase";
 import { AREA_CODE, CONTACT_EMAIL, FACEBOOK_URL, LINKEDIN_URL, MANAGER_NAME, MANAGER_TITLE, WHATSAPP_DISPLAY, WHATSAPP_NUMBER, emailLink, landlineLink, telLink } from "../lib/contact";
 import { cleanPhone } from "../lib/phone";
-import { cardContentVariants, staggerContainerVariants, staticCardVariants } from "../components/card-motion";
+import { cardContentVariants, softSpringTransition, staggerContainerVariants, staticCardVariants } from "../components/card-motion";
 
 const processSteps = [
   {
@@ -557,8 +557,8 @@ export default function Home() {
               <motion.div
                 key={faq.question}
                 variants={staticCardVariants}
-                whileHover={{ y: -8, scale: 1.02, boxShadow: "0px 20px 30px rgba(0,0,0,0.12)" }}
-                transition={{ type: "spring", stiffness: 90, damping: 18 }}
+                whileHover={{ y: -4, scale: 1.01, boxShadow: "0px 16px 24px rgba(0,0,0,0.10)" }}
+                transition={softSpringTransition}
                 className="overflow-hidden rounded-xl border border-slate-200/60 bg-white/80 shadow-sm backdrop-blur-md dark:border-slate-800/60 dark:bg-slate-900/80"
               >
                 <motion.div variants={cardContentVariants}>
@@ -590,8 +590,8 @@ export default function Home() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
-          whileHover={{ y: -8, scale: 1.02, boxShadow: "0px 20px 30px rgba(0,0,0,0.12)" }}
-          transition={{ type: "spring", stiffness: 90, damping: 18 }}
+          whileHover={{ y: -4, scale: 1.01, boxShadow: "0px 16px 24px rgba(0,0,0,0.10)" }}
+          transition={softSpringTransition}
           className="grid gap-8 rounded-[32px] border border-slate-200/60 bg-white/80 p-6 shadow-sm backdrop-blur-md dark:border-slate-800/60 dark:bg-slate-900/80 lg:grid-cols-[0.9fr_1.1fr] lg:p-10"
         >
           <motion.div variants={staticCardVariants}>
@@ -757,8 +757,8 @@ export default function Home() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
-          whileHover={{ y: -8, scale: 1.02, boxShadow: "0px 20px 30px rgba(0,0,0,0.12)" }}
-          transition={{ type: "spring", stiffness: 90, damping: 18 }}
+          whileHover={{ y: -4, scale: 1.01, boxShadow: "0px 16px 24px rgba(0,0,0,0.10)" }}
+          transition={softSpringTransition}
           className="mx-auto grid max-w-7xl min-w-0 gap-9 rounded-2xl bg-[#132d2a] p-5 text-[#d7e2dc] sm:p-8 lg:grid-cols-[1.25fr_0.7fr_1.15fr_0.9fr] lg:gap-8 lg:p-10"
         >
           <motion.div variants={staticCardVariants} className="min-w-0">

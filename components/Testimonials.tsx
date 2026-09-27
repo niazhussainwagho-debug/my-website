@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import ScrollReveal from "./ScrollReveal";
-import { cardContentVariants, staggerContainerVariants, staticCardVariants } from "./card-motion";
+import { cardContentVariants, softSpringTransition, staggerContainerVariants, staticCardVariants } from "./card-motion";
 
 const testimonials = [
   {
@@ -41,8 +41,8 @@ export default function Testimonials() {
           <motion.article
             key={review.name}
             variants={staticCardVariants}
-            whileHover={{ y: -8, scale: 1.02, boxShadow: "0px 20px 30px rgba(0,0,0,0.12)" }}
-            transition={{ type: "spring", stiffness: 90, damping: 18 }}
+            whileHover={{ y: -4, scale: 1.01, boxShadow: "0px 16px 24px rgba(0,0,0,0.10)" }}
+            transition={softSpringTransition}
             className="group flex min-w-0 flex-col overflow-hidden rounded-xl border border-slate-200/60 bg-white/80 p-5 shadow-sm backdrop-blur-md dark:border-slate-800/60 dark:bg-slate-900/80 sm:p-6"
           >
             <motion.div variants={cardContentVariants} className="flex h-full min-w-0 flex-col">

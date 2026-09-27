@@ -1,9 +1,16 @@
 import type { Variants } from "framer-motion";
 
+export const softSpringTransition = {
+  type: "spring" as const,
+  stiffness: 60,
+  damping: 25,
+  mass: 1.2,
+};
+
 export const staggerContainerVariants: Variants = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.12 },
+    transition: { staggerChildren: 0.15 },
   },
 };
 
@@ -13,16 +20,16 @@ export const staticCardVariants: Variants = {
     opacity: 1,
     y: 0,
     scale: 1,
-    transition: { type: "spring", stiffness: 90, damping: 18, staggerChildren: 0.12 },
+    transition: { ...softSpringTransition, staggerChildren: 0.15 },
   },
 };
 
 export const cardContentVariants: Variants = {
-  hidden: { opacity: 0, y: 50, scale: 0.96 },
+  hidden: { opacity: 0, y: 20, scale: 0.98 },
   visible: {
     opacity: 1,
     y: 0,
     scale: 1,
-    transition: { type: "spring", stiffness: 90, damping: 18 },
+    transition: softSpringTransition,
   },
 };
