@@ -10,10 +10,10 @@ import { telLink, whatsappLink } from "../lib/contact";
 
 const navLinks = [
   { name: "Home", href: "/#home" },
-  { name: "Products", href: "/products#hero" },
-  { name: "Services", href: "/services#hero" },
-  { name: "About Us", href: "/about#hero" },
-  { name: "Contact", href: "/contact#hero" },
+  { name: "Products", href: "/products#products" },
+  { name: "Services", href: "/services#services" },
+  { name: "About Us", href: "/about#about" },
+  { name: "Contact", href: "/contact#contact" },
   { name: "Join Us", href: "/become-an-agent#join" },
 ];
 
