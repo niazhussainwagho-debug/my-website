@@ -2,17 +2,16 @@
 
 import Link from "next/link";
 import PolicyTableGuide from "../../components/PolicyTableGuide";
+import SubpageHero from "../../components/SubpageHero";
 
 export default function ProductsPage() {
   return (
     <main className="min-h-screen bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100">
-      <section className="bg-(--brand-blue-900) px-4 py-16 text-white sm:px-6 lg:px-8 lg:py-20">
-        <div className="mx-auto max-w-7xl">
-          <p className="text-sm font-bold uppercase tracking-[0.18em] text-cyan-200">Plans & products</p>
-          <h1 className="mt-4 max-w-3xl break-words text-4xl font-bold tracking-tight sm:text-5xl">State Life Insurance Plans Aur Life Policies</h1>
-          <p className="mt-6 max-w-2xl break-words text-base leading-8 text-blue-100 sm:text-lg">Apni family ki zaroorat ke mutabiq best policy table chunain aur official premium structure ki maloomat hasil karein.</p>
-        </div>
-      </section>
+      <SubpageHero
+        category="Plans & products"
+        title={<><span className="text-blue-500 dark:text-blue-400">State Life Insurance Plans</span> Aur <span className="text-blue-500 dark:text-blue-400">Life Policies</span></>}
+        subtitle="Apni family ki zaroorat ke mutabiq best policy table chunain aur official premium structure ki maloomat hasil karein."
+      />
 
       <PolicyTableGuide />
 

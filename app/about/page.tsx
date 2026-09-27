@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import SubpageHero from "../../components/SubpageHero";
 import {
   AREA_CODE,
   CONTACT_EMAIL,
@@ -51,18 +52,15 @@ function SiteFooter() {
 export default function AboutPage() {
   return (
     <main className="min-h-screen bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100">
-      <section className="relative overflow-hidden bg-(--brand-blue-900) px-4 py-16 text-white sm:px-6 sm:py-20 lg:px-8">
-        <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-cyan-400/20 blur-3xl" aria-hidden="true" />
-        <div className="relative mx-auto max-w-7xl">
-          <p className="text-sm font-bold uppercase tracking-[0.18em] text-cyan-200">About Area Office 5405</p>
-          <h1 className="mt-4 max-w-3xl break-words text-4xl font-bold tracking-tight sm:text-5xl">Aapka Etemad, Hamari Pehchan - Sukkur Area Office 5405</h1>
-          <p className="mt-6 max-w-2xl break-words text-base leading-8 text-blue-100 sm:text-lg">State Life Sukkur Area Office local families aur professionals ko financial security aur life protection plans samajhne mein mukammal rehnumai aur support faraham karta hai.</p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link href="/contact" className="inline-flex min-h-12 items-center justify-center rounded-full bg-white px-6 py-3 font-bold text-(--brand-blue-900) transition hover:bg-cyan-50">Free Consultation</Link>
-            <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/30 px-6 py-3 font-bold text-white transition hover:bg-white/10">WhatsApp Us</a>
-          </div>
-        </div>
-      </section>
+      <SubpageHero
+        category="About Area Office"
+        title={<>Aapka <span className="text-blue-500 dark:text-blue-400">Etemad</span>, Hamari Pehchan - Sukkur Area Office 5405</>}
+        subtitle="State Life Sukkur Area Office local families aur professionals ko financial security aur life protection plans samajhne mein mukammal rehnumai aur support faraham karta hai."
+        actions={<>
+          <Link href="/contact" className="inline-flex min-h-12 items-center justify-center rounded-full bg-white px-6 py-3 font-bold text-(--brand-blue-900) transition hover:bg-cyan-50">Free Consultation</Link>
+          <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/30 px-6 py-3 font-bold text-white transition hover:bg-white/10">WhatsApp Us</a>
+        </>}
+      />
 
       <section className="px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">

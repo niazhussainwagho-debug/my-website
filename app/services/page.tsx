@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Calculator, FileText, RefreshCw, ShieldCheck, UsersRound } from "lucide-react";
+import SubpageHero from "../../components/SubpageHero";
 import { whatsappLink } from "../../lib/contact";
 
 const services = [
@@ -40,13 +41,11 @@ const services = [
 export default function ServicesPage() {
   return (
     <main className="min-h-screen bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100">
-      <section className="bg-(--brand-blue-900) px-4 pb-16 pt-6 text-white sm:px-6 sm:pt-8 lg:px-8 lg:pb-20 lg:pt-10">
-        <div className="mx-auto max-w-7xl">
-          <p className="text-sm font-bold uppercase tracking-[0.18em] text-cyan-200">Sukkur Area Office 5405</p>
-          <h1 className="mt-4 max-w-full break-words overflow-hidden text-4xl font-bold tracking-tight sm:text-5xl">Aasan Process Aur Mukammal Office Support</h1>
-          <p className="mt-6 max-w-2xl break-words text-base leading-8 text-blue-100 sm:text-lg">Documentation, claims aur payment support ke liye hamari office team aapko clear aur respectful guidance faraham karti hai.</p>
-        </div>
-      </section>
+      <SubpageHero
+        category="Services"
+        title={<>Aasan Process Aur Mukammal <span className="text-blue-500 dark:text-blue-400">Office Support</span></>}
+        subtitle="Documentation, claims aur payment support ke liye hamari office team aapko clear aur respectful guidance faraham karti hai."
+      />
 
       <section className="px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
         <div className="mx-auto max-w-7xl">

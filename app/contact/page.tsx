@@ -3,6 +3,7 @@
 import type { FormEvent } from "react";
 import Link from "next/link";
 import { useState } from "react";
+import SubpageHero from "../../components/SubpageHero";
 import { AREA_CODE, CONTACT_EMAIL, emailLink, landlineLink, telLink, whatsappLink } from "../../lib/contact";
 import { cleanPhone } from "../../lib/phone";
 
@@ -93,13 +94,11 @@ export default function ContactPage() {
 
   return (
     <main className="min-h-screen bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100">
-      <section className="bg-(--brand-blue-900) px-4 py-14 text-white sm:px-6 sm:py-18 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <p className="text-sm font-bold uppercase tracking-[0.18em] text-cyan-200">Contact Sukkur Office 5405</p>
-          <h1 className="mt-4 max-w-3xl break-words text-4xl font-bold tracking-tight sm:text-5xl">Hum Se Rabta Karein - Sukkur Area Office 5405</h1>
-          <p className="mt-5 max-w-2xl break-words text-base leading-8 text-blue-100 sm:text-lg">Apni kisi bhi policy enquiry ya new policy guidance ke liye hamari office team se direct rabta karein.</p>
-        </div>
-      </section>
+      <SubpageHero
+        category="Contact"
+        title={<>Hum Se <span className="text-blue-500 dark:text-blue-400">Rabta</span> Karein - Sukkur Area Office 5405</>}
+        subtitle="Apni kisi bhi policy enquiry ya new policy guidance ke liye hamari office team se direct rabta karein."
+      />
 
       <section className="px-4 py-10 sm:px-6 lg:px-8 lg:py-16">
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 md:grid-cols-2 md:items-start">
@@ -112,7 +111,7 @@ export default function ContactPage() {
               <span className="text-sm text-slate-500 dark:text-slate-400">Fields marked * required</span>
             </div>
 
-            <form id="contact-form" onSubmit={handleSubmit} className="mt-7 space-y-5" noValidate>
+            <form id="contact-form" onSubmit={handleSubmit} className="scroll-mt-30 mt-7 space-y-5 lg:scroll-mt-34" noValidate>
               <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                 <label className="block text-sm font-semibold text-slate-700 dark:text-slate-200">
                   Name *
