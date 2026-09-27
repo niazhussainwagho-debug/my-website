@@ -20,7 +20,7 @@ const faqs = [
 
 type FormData = { name: string; phone: string; city: string; category: string; familyMembers: string; message: string; consent: boolean; website: string };
 const initialForm: FormData = { name: "", phone: "", city: "", category: "", familyMembers: "", message: "", consent: false, website: "" };
-const inputClass = "w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-[var(--brand-blue-500)] focus:bg-white";
+const inputClass = "w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-[var(--brand-blue-500)] focus:bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 dark:focus:bg-slate-800";
 async function submitLead(payload: Record<string, unknown>) {
   try {
     const response = await fetch("/api/leads", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
@@ -85,5 +85,5 @@ export default function HealthInsurancePage() {
 }
 
 function HealthField({ label, error, children }: { label: string; error?: string; children: React.ReactNode }) {
-  return <div><label className="mb-2 block text-sm font-medium text-slate-700">{label}</label>{children}{error && <p className="mt-1 text-sm text-red-600">{error}</p>}</div>;
+  return <div><label className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-200">{label}</label>{children}{error && <p className="mt-1 text-sm text-red-600">{error}</p>}</div>;
 }

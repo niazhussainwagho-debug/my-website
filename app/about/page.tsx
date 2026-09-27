@@ -50,7 +50,7 @@ function SiteFooter() {
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-slate-50 text-slate-800">
+    <main className="min-h-screen bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100">
       <section className="relative overflow-hidden bg-(--brand-blue-900) px-4 py-16 text-white sm:px-6 sm:py-20 lg:px-8">
         <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-cyan-400/20 blur-3xl" aria-hidden="true" />
         <div className="relative mx-auto max-w-7xl">
@@ -72,32 +72,32 @@ export default function AboutPage() {
           </div>
           <div className="border-l-2 border-cyan-200 pl-5 sm:pl-8">
             <p className="text-2xl font-bold text-slate-900">{MANAGER_NAME}</p>
-            <p className="mt-1 font-semibold text-(--brand-blue-700)">{MANAGER_TITLE}, Sukkur Area Office {AREA_CODE}</p>
-            <p className="mt-5 leading-8 text-slate-600">
+            <p className="mt-1 font-semibold text-(--brand-blue-700) dark:text-blue-300">{MANAGER_TITLE}, Sukkur Area Office {AREA_CODE}</p>
+            <p className="mt-5 leading-8 text-slate-600 dark:text-slate-300">
               Mr. Fayyaz Ahmed ki leadership mein office ka maqsad yeh hai ke har visitor ko apne family goals aur financial priorities ke hawale se practical, understandable guidance mile. Unka approach listening, transparency aur responsible follow-through par based hai.
             </p>
-            <blockquote className="mt-6 rounded-2xl bg-(--brand-blue-100) p-5 font-semibold leading-7 text-(--brand-blue-900)">
+            <blockquote className="mt-6 rounded-2xl bg-(--brand-blue-100) p-5 font-semibold leading-7 text-(--brand-blue-900) dark:bg-slate-800 dark:text-slate-100">
               “Behtar protection ka pehla qadam clear information hai. Hum har family ko decision samajhne ka waqt aur support dete hain.”
             </blockquote>
-            <p className="mt-5 leading-8 text-slate-600">
+            <p className="mt-5 leading-8 text-slate-600 dark:text-slate-300">
               Vision yeh hai ke Sukkur region mein insurance aur financial security ki baat simple, accessible aur trust-based ho, jahan log apne future ke liye informed decisions le saken.
             </p>
           </div>
         </div>
       </section>
 
-      <section className="bg-white px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
+      <section className="bg-white px-4 py-14 dark:bg-slate-900 sm:px-6 lg:px-8 lg:py-20">
         <div className="mx-auto max-w-7xl">
           <div className="max-w-2xl">
             <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#1f8a67]">Our values</p>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight text-(--brand-blue-900) sm:text-4xl">Service jo trust ko strong banaye.</h2>
+            <h2 className="mt-3 text-3xl font-bold tracking-tight text-(--brand-blue-900) dark:text-white sm:text-4xl">Service jo trust ko strong banaye.</h2>
           </div>
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {values.map((value) => (
-              <article key={value.title} className="rounded-2xl border border-slate-200 bg-slate-50 p-6 shadow-sm transition hover:-translate-y-1 hover:border-cyan-200 hover:shadow-md">
+              <article key={value.title} className="rounded-2xl border border-slate-200 bg-slate-50 p-6 shadow-sm transition hover:-translate-y-1 hover:border-cyan-200 hover:shadow-md dark:border-slate-700 dark:bg-slate-800">
                 <span className="text-sm font-bold text-[#1f8a67]">{value.number}</span>
-                <h3 className="mt-5 text-xl font-bold text-(--brand-blue-900)">{value.title}</h3>
-                <p className="mt-3 text-sm leading-7 text-slate-600">{value.text}</p>
+                <h3 className="mt-5 text-xl font-bold text-(--brand-blue-900) dark:text-slate-100">{value.title}</h3>
+                <p className="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-300">{value.text}</p>
               </article>
             ))}
           </div>
@@ -111,12 +111,12 @@ export default function AboutPage() {
             <h2 className="mt-3 text-3xl font-bold">Sukkur mein direct guidance.</h2>
             <p className="mt-4 max-w-xl leading-8 text-blue-100">Aap office visit kar ke apni needs discuss kar sakte hain. Team aapko available options aur process ko simple way mein explain karegi.</p>
           </div>
-          <div className="rounded-2xl bg-white p-6 text-slate-700 shadow-xl">
+          <div className="rounded-2xl bg-white p-6 text-slate-700 shadow-xl dark:bg-slate-800 dark:text-slate-200">
             <p className="text-sm font-bold uppercase tracking-[0.14em] text-[#1f8a67]">Sukkur Area Office 5405</p>
-            <p className="mt-4 font-semibold text-slate-900">Shahlimar Road, near Session Court, Sukkur, Sindh</p>
+            <p className="mt-4 font-semibold text-slate-900 dark:text-slate-100">Shahlimar Road, near Session Court, Sukkur, Sindh</p>
             <dl className="mt-5 space-y-3 text-sm">
-              <div className="flex justify-between gap-4 border-b border-slate-100 pb-3"><dt>Working hours</dt><dd className="font-semibold text-slate-900">Mon-Fri, 9 AM - 5 PM</dd></div>
-              <div className="flex justify-between gap-4 border-b border-slate-100 pb-3"><dt>Area Office</dt><dd className="font-semibold text-slate-900">{AREA_CODE}</dd></div>
+              <div className="flex justify-between gap-4 border-b border-slate-100 pb-3 dark:border-slate-700"><dt>Working hours</dt><dd className="font-semibold text-slate-900 dark:text-slate-100">Mon-Fri, 9 AM - 5 PM</dd></div>
+              <div className="flex justify-between gap-4 border-b border-slate-100 pb-3 dark:border-slate-700"><dt>Area Office</dt><dd className="font-semibold text-slate-900 dark:text-slate-100">{AREA_CODE}</dd></div>
               <div className="flex justify-between gap-4"><dt>Phone</dt><dd><a href={landlineLink()} className="font-semibold text-(--brand-blue-700)">{landlineLink().replace("tel:", "")}</a></dd></div>
             </dl>
             <Link href="/contact" className="mt-6 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-(--brand-blue-700) px-5 py-3 text-sm font-bold text-white transition hover:bg-(--brand-blue-900)">Contact Office</Link>

@@ -232,10 +232,10 @@ export default function BecomeAnAgentPage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+        <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900 sm:p-8">
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#1f8a67]">Forms</p>
-          <h2 className="mt-3 text-3xl font-bold text-[#0b2240] sm:text-4xl">Registration forms office se hasil karein</h2>
-          <p className="mt-4 max-w-2xl text-base leading-7 text-slate-600">Asli Application Form (Form 01) aur registration ki rehnumai ke liye office se rabta karein.</p>
+          <h2 className="mt-3 text-3xl font-bold text-[#0b2240] dark:text-white sm:text-4xl">Registration forms office se hasil karein</h2>
+          <p className="mt-4 max-w-2xl text-base leading-7 text-slate-600 dark:text-slate-300">Asli Application Form (Form 01) aur registration ki rehnumai ke liye office se rabta karein.</p>
           <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer" className="mt-6 inline-flex items-center justify-center rounded-full bg-[var(--brand-blue-500)] px-6 py-3.5 text-base font-semibold text-white transition hover:bg-[var(--brand-blue-700)]">
             WhatsApp Par Poochein
           </a>
@@ -251,12 +251,12 @@ export default function BecomeAnAgentPage() {
           </div>
 
           {isSubmitted ? (
-            <div className="rounded-[28px] border border-emerald-200 bg-emerald-50 p-6 text-center sm:p-10">
-              <p className="text-xl font-bold text-[#0b2240]">Thank You for Contacting Us!</p>
-              <p className="mt-2 leading-7 text-slate-600">We have received your message. Our representative from State Life Sukkur Area Office 5405 will contact you shortly. Asli registration office mein forms par mukammal hogi.</p>
+            <div className="rounded-[28px] border border-emerald-200 bg-emerald-50 p-6 text-center dark:border-emerald-900 dark:bg-emerald-950 sm:p-10">
+              <p className="text-xl font-bold text-[#0b2240] dark:text-emerald-100">Thank You for Contacting Us!</p>
+              <p className="mt-2 leading-7 text-slate-600 dark:text-emerald-200">We have received your message. Our representative from State Life Sukkur Area Office 5405 will contact you shortly. Asli registration office mein forms par mukammal hogi.</p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+            <form onSubmit={handleSubmit} className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900 sm:p-8">
               <div className="grid gap-5 sm:grid-cols-2">
                 <Field label="Poora Naam" error={errors.name}>
                   <input type="text" value={formData.name} onChange={(event) => handleChange("name", event.target.value)} placeholder="Aapka poora naam" className={inputClass} />
@@ -300,12 +300,12 @@ export default function BecomeAnAgentPage() {
               </div>
 
               <div className="mt-5">
-                <label className="mb-2 block text-sm font-medium text-slate-700">Message (optional)</label>
+                <label className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-200">Message (optional)</label>
                 <textarea rows={4} value={formData.message} onChange={(event) => handleChange("message", event.target.value)} placeholder="Aap apni query likhein" className={inputClass} />
               </div>
 
-              <div className="mt-5 rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                <label className="flex items-start gap-3 text-sm leading-6 text-slate-700">
+              <div className="mt-5 rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-800">
+                <label className="flex items-start gap-3 text-sm leading-6 text-slate-700 dark:text-slate-200">
                   <input type="checkbox" checked={formData.consent} onChange={(event) => handleChange("consent", event.target.checked)} className="mt-1 h-4 w-4 accent-[#1f8a67]" />
                   <span>Main apni info office ko dene ki ijazat deta hun.</span>
                 </label>
@@ -339,12 +339,12 @@ export default function BecomeAnAgentPage() {
         </div>
         <div className="space-y-4">
           {faqs.map((faq, index) => (
-            <div key={faq.question} className="rounded-[22px] border border-slate-200 bg-white shadow-sm">
+            <div key={faq.question} className="rounded-[22px] border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
               <button type="button" onClick={() => setOpenFaq(openFaq === index ? -1 : index)} aria-expanded={openFaq === index} className="flex min-h-14 w-full items-center justify-between gap-4 px-5 py-4 text-left">
-                <span className="text-base font-semibold text-[#0b2240]">{faq.question}</span>
+                <span className="text-base font-semibold text-[#0b2240] dark:text-slate-100">{faq.question}</span>
                 <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#eafaf4] text-lg font-bold text-[#1f8a67]">{openFaq === index ? "-" : "+"}</span>
               </button>
-              {openFaq === index && <div className="px-5 pb-5 text-base leading-7 text-slate-600">{faq.answer}</div>}
+              {openFaq === index && <div className="px-5 pb-5 text-base leading-7 text-slate-600 dark:text-slate-300">{faq.answer}</div>}
             </div>
           ))}
         </div>
@@ -387,12 +387,12 @@ export default function BecomeAnAgentPage() {
   );
 }
 
-const inputClass = "w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-[#1f8a67] focus:bg-white";
+const inputClass = "w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-[#1f8a67] focus:bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 dark:focus:bg-slate-800";
 
 function Field({ label, error, children }: { label: string; error?: string; children: React.ReactNode }) {
   return (
     <div>
-      <label className="mb-2 block text-sm font-medium text-slate-700">{label}</label>
+      <label className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-200">{label}</label>
       {children}
       {error && <p className="mt-1 text-sm text-red-600">{error}</p>}
     </div>

@@ -96,11 +96,11 @@ export default function PlanApplicationForm({ planName }: PlanApplicationFormPro
       : '';
     const mailtoHref = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(`New Plan Order: ${planName}`)}&body=${encodeURIComponent(fallbackBody)}`;
     return (
-      <div className="rounded-3xl border border-emerald-200 bg-emerald-50 p-6 text-emerald-950 shadow-sm sm:p-8" role="status">
-        <p className="text-sm font-bold uppercase tracking-[0.16em] text-emerald-700">Application received</p>
+      <div className="rounded-3xl border border-emerald-200 bg-emerald-50 p-6 text-emerald-950 shadow-sm dark:border-emerald-900 dark:bg-emerald-950 dark:text-emerald-100 sm:p-8" role="status">
+        <p className="text-sm font-bold uppercase tracking-[0.16em] text-emerald-700 dark:text-emerald-300">Application received</p>
         <h2 className="mt-3 text-2xl font-bold">Your application for {planName} has been received successfully!</h2>
         <p className="mt-4 leading-7">Our representative will contact you shortly to process your policy documentation.</p>
-        {isSubmitting && <p className="mt-4 text-sm text-emerald-800">Your request is being securely forwarded to our office.</p>}
+        {isSubmitting && <p className="mt-4 text-sm text-emerald-800 dark:text-emerald-200">Your request is being securely forwarded to our office.</p>}
         <div className="mt-6 flex flex-wrap gap-4 text-sm font-semibold">
           <a href={mailtoHref} className="text-(--brand-blue-700) underline underline-offset-4">Email request manually</a>
           <a href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Plan application: ${planName}`)}`} target="_blank" rel="noreferrer" className="text-[#1f8a67] underline underline-offset-4">WhatsApp office</a>
@@ -110,39 +110,39 @@ export default function PlanApplicationForm({ planName }: PlanApplicationFormPro
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+    <form onSubmit={handleSubmit} className="space-y-5 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900 sm:p-8">
       <input type="hidden" name="plan_name" value={planName} />
       <div>
-        <label htmlFor="plan-name" className="block text-sm font-semibold text-slate-700">Selected Plan</label>
-        <input id="plan-name" value={planName} readOnly className="mt-2 min-h-12 w-full rounded-xl border border-slate-200 bg-slate-100 px-4 py-3 font-semibold text-(--brand-blue-900)" />
+        <label htmlFor="plan-name" className="block text-sm font-semibold text-slate-700 dark:text-slate-200">Selected Plan</label>
+        <input id="plan-name" value={planName} readOnly className="mt-2 min-h-12 w-full rounded-xl border border-slate-200 bg-slate-100 px-4 py-3 font-semibold text-(--brand-blue-900) dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100" />
       </div>
 
       <div>
-        <label htmlFor="full-name" className="block text-sm font-semibold text-slate-700">Full Name *</label>
-        <input id="full-name" name="name" required maxLength={100} autoComplete="name" className="mt-2 min-h-12 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none transition focus:border-(--brand-blue-500) focus:ring-4 focus:ring-blue-100" />
+        <label htmlFor="full-name" className="block text-sm font-semibold text-slate-700 dark:text-slate-200">Full Name *</label>
+        <input id="full-name" name="name" required maxLength={100} autoComplete="name" className="mt-2 min-h-12 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-(--brand-blue-500) focus:ring-4 focus:ring-blue-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 dark:focus:ring-blue-900" />
       </div>
 
       <div>
-        <label htmlFor="email" className="block text-sm font-semibold text-slate-700">Email <span className="font-normal text-slate-500">(optional)</span></label>
-        <input id="email" name="email" type="email" maxLength={320} autoComplete="email" className="mt-2 min-h-12 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none transition focus:border-(--brand-blue-500) focus:ring-4 focus:ring-blue-100" />
+        <label htmlFor="email" className="block text-sm font-semibold text-slate-700 dark:text-slate-200">Email <span className="font-normal text-slate-500 dark:text-slate-400">(optional)</span></label>
+        <input id="email" name="email" type="email" maxLength={320} autoComplete="email" className="mt-2 min-h-12 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-(--brand-blue-500) focus:ring-4 focus:ring-blue-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 dark:focus:ring-blue-900" />
       </div>
 
       <div>
-        <label htmlFor="phone" className="block text-sm font-semibold text-slate-700">Contact Number *</label>
-        <input id="phone" name="phone" required maxLength={40} type="tel" inputMode="tel" autoComplete="tel" className="mt-2 min-h-12 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none transition focus:border-(--brand-blue-500) focus:ring-4 focus:ring-blue-100" />
+        <label htmlFor="phone" className="block text-sm font-semibold text-slate-700 dark:text-slate-200">Contact Number *</label>
+        <input id="phone" name="phone" required maxLength={40} type="tel" inputMode="tel" autoComplete="tel" className="mt-2 min-h-12 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-(--brand-blue-500) focus:ring-4 focus:ring-blue-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 dark:focus:ring-blue-900" />
       </div>
 
       <div>
-        <label htmlFor="message" className="block text-sm font-semibold text-slate-700">Message <span className="font-normal text-slate-500">(optional)</span></label>
-        <textarea id="message" name="message" rows={3} maxLength={1000} placeholder="Apni query ya preferred contact time" className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none transition focus:border-(--brand-blue-500) focus:ring-4 focus:ring-blue-100" />
+        <label htmlFor="message" className="block text-sm font-semibold text-slate-700 dark:text-slate-200">Message <span className="font-normal text-slate-500 dark:text-slate-400">(optional)</span></label>
+        <textarea id="message" name="message" rows={3} maxLength={1000} placeholder="Apni query ya preferred contact time" className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition placeholder:text-slate-500 focus:border-(--brand-blue-500) focus:ring-4 focus:ring-blue-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 dark:focus:ring-blue-900" />
       </div>
 
       <div>
-        <label htmlFor="cnic-or-age" className="block text-sm font-semibold text-slate-700">CNIC / Age <span className="font-normal text-slate-500">(optional)</span></label>
-        <input id="cnic-or-age" name="cnicOrAge" maxLength={80} placeholder="CNIC number ya age" className="mt-2 min-h-12 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none transition focus:border-(--brand-blue-500) focus:ring-4 focus:ring-blue-100" />
+        <label htmlFor="cnic-or-age" className="block text-sm font-semibold text-slate-700 dark:text-slate-200">CNIC / Age <span className="font-normal text-slate-500 dark:text-slate-400">(optional)</span></label>
+        <input id="cnic-or-age" name="cnicOrAge" maxLength={80} placeholder="CNIC number ya age" className="mt-2 min-h-12 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition placeholder:text-slate-500 focus:border-(--brand-blue-500) focus:ring-4 focus:ring-blue-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 dark:focus:ring-blue-900" />
       </div>
 
-      <label className="flex items-start gap-3 text-sm leading-6 text-slate-600">
+      <label className="flex items-start gap-3 text-sm leading-6 text-slate-600 dark:text-slate-300">
         <input name="consent" type="checkbox" required className="mt-1 h-4 w-4 accent-(--brand-blue-700)" />
         <span>Main apni information Sukkur Area Office ke representative ke saath share karne ki ijazat deta/deti hoon.</span>
       </label>

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { PhoneIcon, WhatsAppIcon } from "./icons";
+import ThemeToggle from "./ThemeToggle";
 import { WHATSAPP_NUMBER, whatsappLink } from "../lib/contact";
 
 const navLinks = [
@@ -26,24 +27,26 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 m-0 block w-full max-w-full overflow-x-clip bg-white p-0 shadow-md">
+    <header className="fixed inset-x-0 top-0 z-50 m-0 block w-full max-w-full overflow-x-clip bg-white p-0 shadow-md dark:bg-slate-950">
       <div className="m-0 w-full max-w-full overflow-hidden">
         <div className="mx-auto flex min-h-[60px] w-full max-w-7xl items-center justify-between gap-3 px-4 pt-2 pb-2 md:px-8 lg:min-h-[88px]">
-          <Link href="/" className="flex min-w-0 flex-1 items-center gap-3 text-slate-900" onClick={() => setMenuOpen(false)}>
+          <Link href="/" className="flex min-w-0 flex-1 items-center gap-3 text-slate-900 dark:text-slate-100" onClick={() => setMenuOpen(false)}>
             <Image src="/area-logo.png" alt="State Life Insurance Corporation of Pakistan logo" width={420} height={144} priority className="h-12 w-auto shrink-0 object-contain object-left md:h-14" />
             <span className="min-w-0 max-w-full leading-tight">
-              <span className="block truncate whitespace-nowrap text-xs font-semibold text-(--brand-blue-700)">Sukkur Area Office 5405</span>
-              <span className="block truncate whitespace-nowrap text-base font-bold text-gray-900">State Life Insurance</span>
-              <span className="block truncate whitespace-nowrap text-[10px] uppercase tracking-wider text-gray-500">Corporation of Pakistan</span>
+              <span className="block truncate whitespace-nowrap text-xs font-semibold text-(--brand-blue-700) dark:text-blue-300">Sukkur Area Office 5405</span>
+              <span className="block truncate whitespace-nowrap text-base font-bold text-gray-900 dark:text-white">State Life Insurance</span>
+              <span className="block truncate whitespace-nowrap text-[10px] uppercase tracking-wider text-gray-500 dark:text-slate-400">Corporation of Pakistan</span>
             </span>
           </Link>
 
-          <div className="hidden shrink-0 items-center gap-1 text-sm font-semibold md:flex">
+          <div className="hidden shrink-0 items-center gap-2 text-sm font-semibold md:flex">
+            <ThemeToggle />
             <Link href="/contact#contact-form" className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-full bg-(--brand-blue-700) px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-(--brand-blue-900)">Get Policy Quote</Link>
           </div>
 
           <div className="flex shrink-0 items-center gap-2 md:hidden">
-            <button type="button" aria-label={menuOpen ? "Close menu" : "Open menu"} aria-expanded={menuOpen} onClick={() => setMenuOpen((open) => !open)} className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700">
+            <ThemeToggle />
+            <button type="button" aria-label={menuOpen ? "Close menu" : "Open menu"} aria-expanded={menuOpen} onClick={() => setMenuOpen((open) => !open)} className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
               <span className="space-y-1.5" aria-hidden="true">
                 <span className={`block h-0.5 w-5 rounded-full bg-current transition ${menuOpen ? "translate-y-2 rotate-45" : ""}`} />
                 <span className={`block h-0.5 w-5 rounded-full bg-current transition ${menuOpen ? "opacity-0" : ""}`} />

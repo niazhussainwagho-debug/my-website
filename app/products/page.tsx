@@ -5,7 +5,7 @@ import PolicyTableGuide from "../../components/PolicyTableGuide";
 
 export default function ProductsPage() {
   return (
-    <main className="min-h-screen bg-slate-50 text-slate-800">
+    <main className="min-h-screen bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100">
       <section className="bg-(--brand-blue-900) px-4 py-16 text-white sm:px-6 lg:px-8 lg:py-20">
         <div className="mx-auto max-w-7xl">
           <p className="text-sm font-bold uppercase tracking-[0.18em] text-cyan-200">Plans & products</p>
@@ -16,11 +16,11 @@ export default function ProductsPage() {
 
       <PolicyTableGuide />
 
-      <section className="bg-white px-4 py-14 sm:px-6 lg:px-8">
-        <div className="mx-auto flex max-w-7xl flex-col gap-5 rounded-3xl bg-(--brand-blue-100) p-6 sm:p-8 md:flex-row md:items-center md:justify-between">
+      <section className="bg-white px-4 py-14 dark:bg-slate-900 sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-7xl flex-col gap-5 rounded-3xl bg-(--brand-blue-100) p-6 dark:bg-slate-800 sm:p-8 md:flex-row md:items-center md:justify-between">
           <div>
-            <h2 className="text-2xl font-bold text-(--brand-blue-900)">Compare tables. Choose your next step.</h2>
-            <p className="mt-2 text-slate-600">Apne goals aur zaroorat office ke saath share karein.</p>
+            <h2 className="text-2xl font-bold text-(--brand-blue-900) dark:text-white">Compare tables. Choose your next step.</h2>
+            <p className="mt-2 text-slate-600 dark:text-slate-300">Apne goals aur zaroorat office ke saath share karein.</p>
           </div>
           <Link href="/contact#contact-form" className="inline-flex min-h-11 items-center justify-center rounded-full bg-(--brand-blue-700) px-6 py-3 font-semibold text-white transition hover:bg-(--brand-blue-900)">Contact office</Link>
         </div>

@@ -362,7 +362,7 @@ export default function Home() {
   };
 
   return (
-    <main className="relative z-10 min-w-0 max-w-full overflow-x-clip bg-[#f5f7f3] pb-24 text-slate-900 md:pb-0">
+    <main className="relative z-10 min-w-0 max-w-full overflow-x-clip bg-[#f5f7f3] pb-24 text-slate-900 dark:bg-slate-950 dark:text-slate-100 md:pb-0">
       <div className="fixed inset-x-3 bottom-3 z-50 flex gap-3 md:hidden">
         <a
           href={`https://wa.me/${WHATSAPP_NUMBER}`}
@@ -388,19 +388,19 @@ export default function Home() {
         onPolicyFilterChange={setPolicyFilter}
       />
 
-      <section aria-label="Sukkur Area Office at a glance" className="border-y border-[#e1e8e2] bg-white">
-        <div className="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-y divide-[#e6ece7] px-4 sm:px-6 lg:grid-cols-4 lg:divide-y-0 lg:px-8">
+      <section aria-label="Sukkur Area Office at a glance" className="border-y border-[#e1e8e2] bg-white dark:border-slate-700 dark:bg-slate-900">
+        <div className="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-y divide-[#e6ece7] px-4 sm:px-6 lg:grid-cols-4 lg:divide-y-0 lg:px-8 dark:divide-slate-700">
           <ScrollReveal className="px-3 py-5 sm:px-6 sm:py-7">
-            <span className="sr-only">5,000+ Active Sukkur Policies</span><p aria-hidden="true" className="text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:hidden">{Math.floor(5000 * statsProgress).toLocaleString("en-US")}+</p><p aria-hidden="true" className="hidden text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:block">5,000+</p><p className="mt-1 text-xs font-medium leading-5 text-[#64756e] sm:text-sm">Active Sukkur Policies</p>
+            <span className="sr-only">5,000+ Active Sukkur Policies</span><p aria-hidden="true" className="text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:hidden dark:text-slate-100">{Math.floor(5000 * statsProgress).toLocaleString("en-US")}+</p><p aria-hidden="true" className="hidden text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:block dark:text-slate-100">5,000+</p><p className="mt-1 text-xs font-medium leading-5 text-[#64756e] sm:text-sm dark:text-slate-300">Active Sukkur Policies</p>
           </ScrollReveal>
           <ScrollReveal delayMs={120} className="px-3 py-5 sm:px-6 sm:py-7">
-            <span className="sr-only">100% State-Backed Security</span><p aria-hidden="true" className="text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:hidden">{Math.floor(100 * statsProgress)}%</p><p aria-hidden="true" className="hidden text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:block">100%</p><p className="mt-1 text-xs font-medium leading-5 text-[#64756e] sm:text-sm">State-Backed Security</p>
+            <span className="sr-only">100% State-Backed Security</span><p aria-hidden="true" className="text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:hidden dark:text-slate-100">{Math.floor(100 * statsProgress)}%</p><p aria-hidden="true" className="hidden text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:block dark:text-slate-100">100%</p><p className="mt-1 text-xs font-medium leading-5 text-[#64756e] sm:text-sm dark:text-slate-300">State-Backed Security</p>
           </ScrollReveal>
           <ScrollReveal delayMs={240} className="px-3 py-5 sm:px-6 sm:py-7">
-            <span className="sr-only">PKR 50M+ Claims Facilitated</span><p aria-hidden="true" className="text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:hidden">PKR {Math.floor(50 * statsProgress)}M+</p><p aria-hidden="true" className="hidden text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:block">PKR 50M+</p><p className="mt-1 text-xs font-medium leading-5 text-[#64756e] sm:text-sm">Claims Facilitated</p>
+            <span className="sr-only">PKR 50M+ Claims Facilitated</span><p aria-hidden="true" className="text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:hidden dark:text-slate-100">PKR {Math.floor(50 * statsProgress)}M+</p><p aria-hidden="true" className="hidden text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:block dark:text-slate-100">PKR 50M+</p><p className="mt-1 text-xs font-medium leading-5 text-[#64756e] sm:text-sm dark:text-slate-300">Claims Facilitated</p>
           </ScrollReveal>
           <ScrollReveal delayMs={360} className="px-3 py-5 sm:px-6 sm:py-7">
-            <span className="sr-only">24/7 Area Office Support Desk</span><p aria-hidden="true" className="text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:hidden">{Math.floor(24 * statsProgress)}/7</p><p aria-hidden="true" className="hidden text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:block">24/7</p><p className="mt-1 text-xs font-medium leading-5 text-[#64756e] sm:text-sm">Area Office Support Desk</p>
+            <span className="sr-only">24/7 Area Office Support Desk</span><p aria-hidden="true" className="text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:hidden dark:text-slate-100">{Math.floor(24 * statsProgress)}/7</p><p aria-hidden="true" className="hidden text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:block dark:text-slate-100">24/7</p><p className="mt-1 text-xs font-medium leading-5 text-[#64756e] sm:text-sm dark:text-slate-300">Area Office Support Desk</p>
           </ScrollReveal>
         </div>
       </section>
@@ -410,7 +410,7 @@ export default function Home() {
       <section id="products" className="scroll-mt-30 mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:scroll-mt-34 lg:px-8">
         <ScrollReveal className="mb-10 text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#176b55]">More ways to plan</p>
-          <h2 className="mt-3 text-3xl font-bold text-[#17332e] sm:text-4xl">Explore all coverage options</h2>
+          <h2 className="mt-3 text-3xl font-bold text-[#17332e] sm:text-4xl dark:text-white">Explore all coverage options</h2>
         </ScrollReveal>
 
         <ScrollReveal delayMs={100}>
@@ -452,14 +452,14 @@ export default function Home() {
               <article
                 key={product.slug}
                 onClick={() => handleProductOpen(product)}
-                className="group relative flex h-full min-w-0 flex-[0_0_85%] snap-start flex-col overflow-hidden rounded-bl-[64px] rounded-br-xl rounded-tl-xl rounded-tr-[64px] border border-slate-200 bg-[#F5F5F5] p-4 text-left text-[#0b2240] shadow-sm transition hover:-translate-y-1 hover:shadow-xl sm:flex-[0_0_45%] lg:flex-[0_0_calc((100%_-_4.5rem)/4)]"
+                className="group relative flex h-full min-w-0 flex-[0_0_85%] snap-start flex-col overflow-hidden rounded-bl-[64px] rounded-br-xl rounded-tl-xl rounded-tr-[64px] border border-slate-200 bg-[#F5F5F5] p-4 text-left text-[#0b2240] shadow-sm transition hover:-translate-y-1 hover:shadow-xl dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 sm:flex-[0_0_45%] lg:flex-[0_0_calc((100%_-_4.5rem)/4)]"
               >
                 <div className="relative aspect-[4/3] w-full overflow-hidden rounded-tr-[64px] rounded-tl-xl bg-gradient-to-br from-blue-100 to-sky-200">
                   {product.image && !failedProductImages.includes(product.image) && <Image src={product.image} alt={product.alt} fill sizes="(max-width: 640px) 85vw, (max-width: 1024px) 45vw, 25vw" className="object-cover" style={{ objectPosition: product.imagePosition }} onError={() => setFailedProductImages((current) => [...current, product.image as string])} />}
                 </div>
                 <div className="flex flex-1 flex-col p-3 pb-16">
                   <h3 className="text-xl font-bold">{product.title}</h3>
-                  <p className="mt-3 line-clamp-3 text-base leading-7 text-slate-600">{product.description}</p>
+                  <p className="mt-3 line-clamp-3 text-base leading-7 text-slate-600 dark:text-slate-300">{product.description}</p>
                   {product.action === "digital" && <span className="mt-3 text-sm font-semibold text-[var(--brand-blue-700)]">Official website</span>}
                 </div>
                 {product.action === "digital" ? (
@@ -481,12 +481,12 @@ export default function Home() {
         </ScrollReveal>
       </section>
 
-      <section id="services" className="scroll-mt-30 bg-[#eaf0ea] py-14 sm:py-16 lg:scroll-mt-34">
+      <section id="services" className="scroll-mt-30 bg-[#eaf0ea] py-14 sm:py-16 dark:bg-slate-900 lg:scroll-mt-34">
         <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:gap-14 lg:px-8">
           <ScrollReveal className="max-w-lg">
             <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#176b55]">From first question to ongoing care</p>
-            <h2 className="mt-3 text-3xl font-black leading-tight text-[#17332e] sm:text-4xl">Support at every step</h2>
-            <p className="mt-4 text-base leading-7 text-[#60736b]">Clear local guidance for policy services, claims, and health support. Open a step to see where to start.</p>
+            <h2 className="mt-3 text-3xl font-black leading-tight text-[#17332e] sm:text-4xl dark:text-white">Support at every step</h2>
+            <p className="mt-4 text-base leading-7 text-[#60736b] dark:text-slate-300">Clear local guidance for policy services, claims, and health support. Open a step to see where to start.</p>
           </ScrollReveal>
 
           <div className="divide-y divide-[#d5e0d7] border-y border-[#d5e0d7]">
@@ -494,10 +494,10 @@ export default function Home() {
               <ScrollReveal key={step.title} delayMs={index * 150}>
                 <button type="button" onClick={() => setOpenProcess(openProcess === index ? -1 : index)} aria-expanded={openProcess === index} className="flex min-h-16 w-full min-w-0 items-center gap-4 py-4 text-left">
                   <span className="w-8 shrink-0 font-mono text-sm font-bold text-[#7a9186]">0{index + 1}</span>
-                  <span className="min-w-0 flex-1 text-base font-bold text-[#183630] sm:text-lg">{step.title}</span>
+                  <span className="min-w-0 flex-1 text-base font-bold text-[#183630] sm:text-lg dark:text-slate-100">{step.title}</span>
                   <ChevronDown size={19} className={`shrink-0 text-[#176b55] transition-transform ${openProcess === index ? "rotate-180" : ""}`} aria-hidden="true" />
                 </button>
-                {openProcess === index && <p className="max-w-2xl pb-5 pl-12 pr-2 text-sm leading-6 text-[#60736b] sm:text-base">{step.description}</p>}
+                {openProcess === index && <p className="max-w-2xl pb-5 pl-12 pr-2 text-sm leading-6 text-[#60736b] sm:text-base dark:text-slate-300">{step.description}</p>}
               </ScrollReveal>
             ))}
           </div>
@@ -820,11 +820,11 @@ export default function Home() {
       {selectedCategory && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-slate-900/60" onClick={resetModalState} />
-          <div className="relative z-10 max-h-[90vh] w-full max-w-5xl overflow-y-auto rounded-[28px] border border-slate-200 bg-white p-5 shadow-2xl sm:p-6">
+          <div className="relative z-10 max-h-[90vh] w-full max-w-5xl overflow-y-auto rounded-[28px] border border-slate-200 bg-white p-5 text-slate-900 shadow-2xl dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 sm:p-6">
             <button
               type="button"
               onClick={resetModalState}
-              className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-xl text-slate-600 transition hover:bg-slate-200"
+              className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-xl text-slate-600 transition hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
               aria-label="Close modal"
             >
               ×
@@ -834,12 +834,12 @@ export default function Home() {
               <>
                 <div className="pr-12">
                   <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#1f8a67]">Products</p>
-                  <h3 className="mt-3 text-3xl font-bold text-[#0b2240]">{selectedCategory}</h3>
+                  <h3 className="mt-3 text-3xl font-bold text-[#0b2240] dark:text-white">{selectedCategory}</h3>
                 </div>
 
                 <div className="mt-6 hidden overflow-x-auto md:block">
                   <table className="min-w-full overflow-hidden rounded-2xl border border-slate-200">
-                    <thead className="bg-[#edf7f3] text-left text-sm text-[#0b2240]">
+                    <thead className="bg-[#edf7f3] text-left text-sm text-[#0b2240] dark:bg-slate-800 dark:text-slate-100">
                       <tr>
                         <th className="px-4 py-3 font-semibold">Plan Name</th>
                         <th className="px-4 py-3 font-semibold">Best For</th>
@@ -851,12 +851,12 @@ export default function Home() {
                     </thead>
                     <tbody>
                       {plansForCategory.map((plan) => (
-                        <tr key={plan.name} className="border-t border-slate-200 align-top">
-                          <td className="px-4 py-3 font-medium text-[#0b2240]">{plan.name}</td>
-                          <td className="px-4 py-3 text-slate-600">{plan.bestFor}</td>
-                          <td className="px-4 py-3 text-slate-600">{plan.term}</td>
-                          <td className="px-4 py-3 text-slate-600">{plan.ageLimit}</td>
-                          <td className="px-4 py-3 text-slate-600">{plan.details}</td>
+                        <tr key={plan.name} className="border-t border-slate-200 align-top dark:border-slate-700">
+                          <td className="px-4 py-3 font-medium text-[#0b2240] dark:text-slate-100">{plan.name}</td>
+                          <td className="px-4 py-3 text-slate-600 dark:text-slate-300">{plan.bestFor}</td>
+                          <td className="px-4 py-3 text-slate-600 dark:text-slate-300">{plan.term}</td>
+                          <td className="px-4 py-3 text-slate-600 dark:text-slate-300">{plan.ageLimit}</td>
+                          <td className="px-4 py-3 text-slate-600 dark:text-slate-300">{plan.details}</td>
                           <td className="px-4 py-3">
                             <button
                               type="button"
@@ -874,16 +874,16 @@ export default function Home() {
 
                 <div className="mt-6 space-y-4 md:hidden">
                   {plansForCategory.map((plan) => (
-                    <div key={plan.name} className="rounded-[22px] border border-slate-200 bg-slate-50 p-4">
+                    <div key={plan.name} className="rounded-[22px] border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-800">
                       <div className="mb-3">
                         <p className="text-sm text-slate-500">Plan Name</p>
-                        <p className="text-lg font-bold text-[#0b2240]">{plan.name}</p>
+                        <p className="text-lg font-bold text-[#0b2240] dark:text-slate-100">{plan.name}</p>
                       </div>
-                      <div className="grid gap-3 text-sm text-slate-600">
-                        <p><span className="font-semibold text-[#0b2240]">Best For:</span> {plan.bestFor}</p>
-                        <p><span className="font-semibold text-[#0b2240]">Term:</span> {plan.term}</p>
-                        <p><span className="font-semibold text-[#0b2240]">Age Limit:</span> {plan.ageLimit}</p>
-                        <p><span className="font-semibold text-[#0b2240]">Details:</span> {plan.details}</p>
+                      <div className="grid gap-3 text-sm text-slate-600 dark:text-slate-300">
+                        <p><span className="font-semibold text-[#0b2240] dark:text-slate-100">Best For:</span> {plan.bestFor}</p>
+                        <p><span className="font-semibold text-[#0b2240] dark:text-slate-100">Term:</span> {plan.term}</p>
+                        <p><span className="font-semibold text-[#0b2240] dark:text-slate-100">Age Limit:</span> {plan.ageLimit}</p>
+                        <p><span className="font-semibold text-[#0b2240] dark:text-slate-100">Details:</span> {plan.details}</p>
                       </div>
                       <button
                         type="button"
@@ -900,13 +900,13 @@ export default function Home() {
               <>
                 <div className="pr-12">
                   <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#1f8a67]">Consultation</p>
-                  <h3 className="mt-3 text-2xl font-bold text-[#0b2240]">{formData.selectedPlan || selectedCategory}</h3>
+                  <h3 className="mt-3 text-2xl font-bold text-[#0b2240] dark:text-white">{formData.selectedPlan || selectedCategory}</h3>
                 </div>
 
                 {isSubmitted ? (
-                  <div className="mt-8 rounded-[24px] border border-emerald-200 bg-emerald-50 p-6 text-center">
-                    <p className="text-xl font-bold text-[#0b2240]">Thank You for Contacting Us!</p>
-                    <p className="mt-2 leading-7 text-slate-600">We have received your message. Our representative from State Life Sukkur Area Office 5405 will contact you shortly.</p>
+                  <div className="mt-8 rounded-[24px] border border-emerald-200 bg-emerald-50 p-6 text-center dark:border-emerald-900 dark:bg-emerald-950">
+                    <p className="text-xl font-bold text-[#0b2240] dark:text-emerald-100">Thank You for Contacting Us!</p>
+                    <p className="mt-2 leading-7 text-slate-600 dark:text-emerald-200">We have received your message. Our representative from State Life Sukkur Area Office 5405 will contact you shortly.</p>
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="mt-6 space-y-5">

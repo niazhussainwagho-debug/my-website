@@ -92,7 +92,7 @@ export default function ContactPage() {
   };
 
   return (
-    <main className="min-h-screen bg-slate-50 text-slate-800">
+    <main className="min-h-screen bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100">
       <section className="bg-(--brand-blue-900) px-4 py-14 text-white sm:px-6 sm:py-18 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <p className="text-sm font-bold uppercase tracking-[0.18em] text-cyan-200">Contact Sukkur Office 5405</p>
@@ -103,38 +103,38 @@ export default function ContactPage() {
 
       <section className="px-4 py-10 sm:px-6 lg:px-8 lg:py-16">
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 md:grid-cols-2 md:items-start">
-          <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-8">
+          <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900 sm:p-8">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#1f8a67]">Send an enquiry</p>
-                <h2 className="mt-2 text-2xl font-bold text-(--brand-blue-900) sm:text-3xl">Contact form</h2>
+                <h2 className="mt-2 text-2xl font-bold text-(--brand-blue-900) dark:text-white sm:text-3xl">Contact form</h2>
               </div>
-              <span className="text-sm text-slate-500">Fields marked * required</span>
+              <span className="text-sm text-slate-500 dark:text-slate-400">Fields marked * required</span>
             </div>
 
             <form id="contact-form" onSubmit={handleSubmit} className="mt-7 space-y-5" noValidate>
               <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                <label className="block text-sm font-semibold text-slate-700">
+                <label className="block text-sm font-semibold text-slate-700 dark:text-slate-200">
                   Name *
-                  <input value={form.name} onChange={(event) => updateField("name", event.target.value)} type="text" autoComplete="name" placeholder="Aapka naam" className="mt-2 min-h-12 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 font-normal outline-none transition focus:border-(--brand-blue-500) focus:ring-4 focus:ring-blue-100" />
+                  <input value={form.name} onChange={(event) => updateField("name", event.target.value)} type="text" autoComplete="name" placeholder="Aapka naam" className="mt-2 min-h-12 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 font-normal text-slate-900 outline-none transition placeholder:text-slate-500 focus:border-(--brand-blue-500) focus:ring-4 focus:ring-blue-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 dark:focus:bg-slate-800" />
                   {errors.name && <span className="mt-1 block text-xs font-normal text-red-600">{errors.name}</span>}
                 </label>
-                <label className="block text-sm font-semibold text-slate-700">
+                <label className="block text-sm font-semibold text-slate-700 dark:text-slate-200">
                   Phone Number *
-                  <input value={form.phone} onChange={(event) => updateField("phone", event.target.value)} type="tel" autoComplete="tel" placeholder="03xx-xxxxxxx" className="mt-2 min-h-12 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 font-normal outline-none transition focus:border-(--brand-blue-500) focus:ring-4 focus:ring-blue-100" />
+                  <input value={form.phone} onChange={(event) => updateField("phone", event.target.value)} type="tel" autoComplete="tel" placeholder="03xx-xxxxxxx" className="mt-2 min-h-12 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 font-normal text-slate-900 outline-none transition placeholder:text-slate-500 focus:border-(--brand-blue-500) focus:ring-4 focus:ring-blue-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 dark:focus:bg-slate-800" />
                   {errors.phone && <span className="mt-1 block text-xs font-normal text-red-600">{errors.phone}</span>}
                 </label>
               </div>
 
               <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                <label className="block text-sm font-semibold text-slate-700">
+                <label className="block text-sm font-semibold text-slate-700 dark:text-slate-200">
                   Email
-                  <input value={form.email} onChange={(event) => updateField("email", event.target.value)} type="email" autoComplete="email" placeholder="name@example.com" className="mt-2 min-h-12 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 font-normal outline-none transition focus:border-(--brand-blue-500) focus:ring-4 focus:ring-blue-100" />
+                  <input value={form.email} onChange={(event) => updateField("email", event.target.value)} type="email" autoComplete="email" placeholder="name@example.com" className="mt-2 min-h-12 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 font-normal text-slate-900 outline-none transition placeholder:text-slate-500 focus:border-(--brand-blue-500) focus:ring-4 focus:ring-blue-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 dark:focus:bg-slate-800" />
                   {errors.email && <span className="mt-1 block text-xs font-normal text-red-600">{errors.email}</span>}
                 </label>
-                <label className="block text-sm font-semibold text-slate-700">
+                <label className="block text-sm font-semibold text-slate-700 dark:text-slate-200">
                   Service Interest *
-                  <select value={form.service} onChange={(event) => updateField("service", event.target.value)} className="mt-2 min-h-12 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 font-normal outline-none transition focus:border-(--brand-blue-500) focus:ring-4 focus:ring-blue-100">
+                  <select value={form.service} onChange={(event) => updateField("service", event.target.value)} className="mt-2 min-h-12 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 font-normal text-slate-900 outline-none transition focus:border-(--brand-blue-500) focus:ring-4 focus:ring-blue-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100">
                     <option value="">Service select karein</option>
                     {serviceOptions.map((option) => <option key={option} value={option}>{option}</option>)}
                   </select>
@@ -142,13 +142,13 @@ export default function ContactPage() {
                 </label>
               </div>
 
-              <label className="block text-sm font-semibold text-slate-700">
+              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-200">
                 Message *
-                <textarea value={form.message} onChange={(event) => updateField("message", event.target.value)} rows={5} placeholder="Aap kis information ya guidance ke liye rabta kar rahe hain?" className="mt-2 w-full resize-y rounded-xl border border-slate-300 bg-white px-4 py-3 font-normal outline-none transition focus:border-(--brand-blue-500) focus:ring-4 focus:ring-blue-100" />
+                <textarea value={form.message} onChange={(event) => updateField("message", event.target.value)} rows={5} placeholder="Aap kis information ya guidance ke liye rabta kar rahe hain?" className="mt-2 w-full resize-y rounded-xl border border-slate-300 bg-white px-4 py-3 font-normal text-slate-900 outline-none transition placeholder:text-slate-500 focus:border-(--brand-blue-500) focus:ring-4 focus:ring-blue-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 dark:focus:bg-slate-800" />
                 {errors.message && <span className="mt-1 block text-xs font-normal text-red-600">{errors.message}</span>}
               </label>
 
-              <label className="flex items-start gap-3 text-sm leading-6 text-slate-600">
+              <label className="flex items-start gap-3 text-sm leading-6 text-slate-600 dark:text-slate-300">
                 <input checked={form.consent} onChange={(event) => updateField("consent", event.target.checked)} type="checkbox" className="mt-1 h-4 w-4 shrink-0 accent-[#1f8a67]" />
                 <span>Main apni information Sukkur Area Office se rabtay ke liye share karne ki ijazat deta/deti hoon. *</span>
               </label>
@@ -174,7 +174,7 @@ export default function ContactPage() {
               <a href={telLink()} className="inline-flex min-h-14 items-center justify-center rounded-2xl bg-(--brand-blue-700) px-5 py-3 font-bold text-white shadow-sm transition hover:bg-(--brand-blue-900)">Call Now</a>
             </div>
 
-            <div className="rounded-3xl bg-(--brand-blue-900) p-6 text-white shadow-lg sm:p-8">
+              <div className="rounded-3xl bg-(--brand-blue-900) p-6 text-white shadow-lg sm:p-8">
               <p className="text-sm font-bold uppercase tracking-[0.16em] text-cyan-200">Office details</p>
               <h2 className="mt-3 text-2xl font-bold">Sukkur Area Office {AREA_CODE}</h2>
               <address className="mt-5 not-italic leading-7 text-blue-100">Shahlimar Road, near Session Court,<br />Sukkur, Sindh, Pakistan</address>
@@ -185,12 +185,12 @@ export default function ContactPage() {
               </dl>
             </div>
 
-            <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
-              <div className="aspect-4/3 min-h-64 w-full bg-slate-200">
+            <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
+              <div className="aspect-4/3 min-h-64 w-full bg-slate-200 dark:bg-slate-800">
                 <iframe title="Sukkur Area Office location map" src="https://www.google.com/maps?q=Shahlimar+Road+near+Session+Court+Sukkur&output=embed" className="h-full w-full border-0" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
               </div>
               <div className="flex flex-col gap-3 p-5 sm:flex-row sm:items-center sm:justify-between">
-                <p className="text-sm text-slate-600">Office location dekhne ke liye map use karein.</p>
+                <p className="text-sm text-slate-600 dark:text-slate-300">Office location dekhne ke liye map use karein.</p>
                 <a href="https://www.google.com/maps/search/?api=1&query=Shahlimar+Road+near+Session+Court+Sukkur" target="_blank" rel="noopener noreferrer" className="font-semibold text-(--brand-blue-700) hover:text-(--brand-blue-900)">Open in Maps</a>
               </div>
             </div>
