@@ -95,12 +95,13 @@ export default function ContactPage() {
   return (
     <main className="min-h-screen bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100">
       <SubpageHero
+        sectionId="contact"
         category="Contact"
         title={<>Hum Se <span className="text-blue-500 dark:text-blue-400">Rabta</span> Karein - Sukkur Area Office 5405</>}
         subtitle="Apni kisi bhi policy enquiry ya new policy guidance ke liye hamari office team se direct rabta karein."
       />
 
-      <section id="contact" className="scroll-mt-30 px-4 py-10 sm:px-6 lg:px-8 lg:py-16">
+      <section className="px-4 py-10 sm:px-6 lg:px-8 lg:py-16">
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 md:grid-cols-2 md:items-start">
           <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900 sm:p-8">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">

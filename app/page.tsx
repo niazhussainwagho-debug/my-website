@@ -375,7 +375,7 @@ export default function Home() {
 
   return (
     <main className="relative z-10 min-w-0 max-w-full overflow-x-clip bg-[#f5f7f3] pb-24 text-slate-900 dark:bg-slate-950 dark:text-slate-100 md:pb-0">
-      <div className="fixed inset-x-3 bottom-3 z-50 flex gap-3 md:hidden">
+      <div className="fixed inset-x-3 bottom-3 z-50 flex gap-3 pr-36 md:pr-0 md:hidden">
         <a
           href={`https://wa.me/${WHATSAPP_NUMBER}`}
           target="_blank"

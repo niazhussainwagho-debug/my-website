@@ -135,7 +135,7 @@ export default function BecomeAnAgentPage() {
   return (
     <main className="relative z-10 min-h-screen overflow-x-clip bg-transparent pb-24 text-slate-800 md:pb-0">
       <div className="site-glow" aria-hidden="true" />
-      <div className="fixed inset-x-4 bottom-4 z-50 flex gap-3 md:hidden">
+      <div className="fixed inset-x-4 bottom-4 z-50 flex gap-3 pr-36 md:pr-0 md:hidden">
         <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer" className="flex flex-1 items-center justify-center rounded-full bg-[#1f8a67] px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-[#1f8a67]/25">
           WhatsApp
         </a>
@@ -144,7 +144,7 @@ export default function BecomeAnAgentPage() {
         </a>
       </div>
 
-      <section className="mx-auto max-w-7xl px-4 pb-14 pt-14 sm:px-6 lg:px-8 lg:pb-20 lg:pt-20">
+      <section id="join" className="scroll-mt-30 mx-auto max-w-7xl px-4 pb-14 pt-14 sm:px-6 lg:px-8 lg:pb-20 lg:pt-20 lg:scroll-mt-34">
         <div className="max-w-4xl">
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-300">Join our team</p>
           <h1 className="mt-4 max-w-4xl text-4xl font-black leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">

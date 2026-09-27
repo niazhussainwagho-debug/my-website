@@ -42,12 +42,13 @@ export default function ServicesPage() {
   return (
     <main className="min-h-screen bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100">
       <SubpageHero
+        sectionId="services"
         category="Services"
         title={<>Aasan Process Aur Mukammal <span className="text-blue-500 dark:text-blue-400">Office Support</span></>}
         subtitle="Documentation, claims aur payment support ke liye hamari office team aapko clear aur respectful guidance faraham karti hai."
       />
 
-      <section id="services" className="scroll-mt-30 px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
+      <section className="px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
         <div className="mx-auto max-w-7xl">
           <div className="max-w-2xl">
             <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#1f8a67]">Office support</p>
@@ -78,7 +79,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <section id="products" className="scroll-mt-30 bg-white px-4 py-14 dark:bg-slate-900 sm:px-6 lg:px-8">
+      <section className="bg-white px-4 py-14 dark:bg-slate-900 sm:px-6 lg:px-8">
         <div className="mx-auto flex max-w-7xl flex-col gap-5 rounded-3xl bg-(--brand-blue-100) p-6 dark:bg-slate-800 sm:p-8 md:flex-row md:items-center md:justify-between">
           <div>
             <h2 className="text-2xl font-bold text-(--brand-blue-900) dark:text-white">Policy tables dekhna chahte hain?</h2>

@@ -53,6 +53,7 @@ export default function AboutPage() {
   return (
     <main className="min-h-screen bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100">
       <SubpageHero
+        sectionId="about"
         category="About Area Office"
         title={<>Aapka <span className="text-blue-500 dark:text-blue-400">Etemad</span>, Hamari Pehchan - Sukkur Area Office 5405</>}
         subtitle="State Life Sukkur Area Office local families aur professionals ko financial security aur life protection plans samajhne mein mukammal rehnumai aur support faraham karta hai."
