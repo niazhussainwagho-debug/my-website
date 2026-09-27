@@ -66,7 +66,7 @@ export default function HealthInsurancePage() {
   return (
     <main className="relative z-10 min-h-screen overflow-x-clip bg-transparent text-slate-800">
       <div className="site-glow" aria-hidden="true" />
-      <section className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 lg:grid-cols-2 lg:px-8 lg:py-20">
+      <section id="hero" className="scroll-mt-30 mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 lg:grid-cols-2 lg:px-8 lg:py-20 lg:scroll-mt-34">
         <div><p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-300">Health Insurance</p><h1 className="mt-4 text-4xl font-black leading-tight text-white sm:text-5xl">Family Ki Sehat, Sukoon Ke Sath</h1><p className="mt-5 max-w-2xl text-lg leading-8 text-gray-300">Sukkur Area Office health insurance categories aur next steps samajhne mein clear guidance faraham karta hai.</p><a href="#health-enquiry" className="mt-8 inline-flex min-h-11 items-center justify-center rounded-full bg-[var(--brand-blue-500)] px-6 py-3.5 text-base font-semibold text-white transition hover:bg-[var(--brand-blue-700)]">Free Consultation</a></div>
         <div className="relative aspect-[16/9] w-full overflow-hidden rounded-3xl border border-white/20 bg-[var(--brand-blue-100)] shadow-xl">{!imageFailed ? <Image src="/health-hero.png" alt="Khush family ghar mein sofa par" fill priority className="object-cover object-[center_right]" onError={() => setImageFailed(true)} /> : <div className="absolute inset-0 bg-gradient-to-br from-[var(--brand-blue-100)] via-sky-100 to-[var(--brand-blue-500)]" aria-label="Health insurance visual" />}</div>
       </section>

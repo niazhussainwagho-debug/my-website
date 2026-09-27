@@ -24,6 +24,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-auto min-h-screen w-full max-w-[100vw] overflow-x-hidden antialiased`}
     >
