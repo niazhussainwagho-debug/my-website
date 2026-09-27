@@ -180,8 +180,8 @@ export default function ContactPage() {
               <address className="mt-5 not-italic leading-7 text-blue-100">Shahlimar Road, near Session Court,<br />Sukkur, Sindh, Pakistan</address>
               <dl className="mt-6 space-y-4 text-sm">
                 <div className="flex gap-4 border-t border-white/15 pt-4"><dt className="w-28 shrink-0 text-blue-200">Hours</dt><dd className="font-semibold">Monday - Friday, 9 AM - 5 PM</dd></div>
-                <div className="flex gap-4 border-t border-white/15 pt-4"><dt className="w-28 shrink-0 text-blue-200">Phone</dt><dd><a href={landlineLink()} className="font-semibold hover:text-cyan-200">{landlineLink().replace("tel:", "")}</a></dd></div>
-                <div className="flex gap-4 border-t border-white/15 pt-4"><dt className="w-28 shrink-0 text-blue-200">Email</dt><dd className="min-w-0"><a href={emailLink()} className="break-all font-semibold hover:text-cyan-200">{CONTACT_EMAIL}</a></dd></div>
+                <div className="flex gap-4 border-t border-white/15 pt-4"><dt className="w-28 shrink-0 text-blue-200">Phone</dt><dd><a href={landlineLink()} className="font-bold text-emerald-300 transition-colors hover:text-emerald-200">{landlineLink().replace("tel:", "")}</a></dd></div>
+                <div className="flex gap-4 border-t border-white/15 pt-4"><dt className="w-28 shrink-0 text-blue-200">Email</dt><dd className="min-w-0"><a href={emailLink()} className="break-all font-bold text-cyan-200 transition-colors hover:text-emerald-200">{CONTACT_EMAIL}</a></dd></div>
               </dl>
             </div>
 

@@ -620,7 +620,7 @@ export default function Home() {
                 </a>
                 <a
                   href={landlineLink()}
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-sky-200 bg-sky-50 px-6 py-3.5 text-base font-semibold text-sky-700 transition hover:border-sky-300 hover:bg-sky-100"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-emerald-300 bg-emerald-50 px-6 py-3.5 text-base font-bold text-emerald-800 transition hover:border-emerald-400 hover:bg-emerald-100 dark:border-emerald-400/50 dark:bg-emerald-950 dark:text-emerald-200 dark:hover:bg-emerald-900"
                 >
                   <PhoneIcon />
                   Office Landline
@@ -788,9 +788,9 @@ export default function Home() {
             <h3 className="text-sm font-bold text-white">Official contact</h3>
             <ul className="mt-4 space-y-3 wrap-break-word text-sm leading-6 text-[#b9c9c1]">
               <li>Shahlimar Road, near Session Court, Sukkur</li>
-              <li><a href={landlineLink()} className="hover:text-white">Office: {LANDLINE_NUMBER}</a></li>
-              <li><a href={`https://wa.me/${WHATSAPP_NUMBER}`} className="hover:text-white">WhatsApp: {WHATSAPP_DISPLAY}</a></li>
-              <li><a href={emailLink()} className="hover:text-white">{CONTACT_EMAIL}</a></li>
+              <li><a href={landlineLink()} className="font-semibold text-emerald-300 transition-colors hover:text-emerald-200">Office: {LANDLINE_NUMBER}</a></li>
+              <li><a href={`https://wa.me/${WHATSAPP_NUMBER}`} className="font-semibold text-emerald-300 transition-colors hover:text-emerald-200">WhatsApp: {WHATSAPP_DISPLAY}</a></li>
+              <li><a href={emailLink()} className="font-semibold text-cyan-200 transition-colors hover:text-emerald-200">{CONTACT_EMAIL}</a></li>
               <li>Monday to Friday · 9 AM to 5 PM</li>
             </ul>
           </motion.div>

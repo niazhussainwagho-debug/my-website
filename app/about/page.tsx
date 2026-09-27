@@ -117,7 +117,7 @@ export default function AboutPage() {
             <dl className="mt-5 space-y-3 text-sm">
               <div className="flex justify-between gap-4 border-b border-slate-100 pb-3 dark:border-slate-700"><dt>Working hours</dt><dd className="font-semibold text-slate-900 dark:text-slate-100">Mon-Fri, 9 AM - 5 PM</dd></div>
               <div className="flex justify-between gap-4 border-b border-slate-100 pb-3 dark:border-slate-700"><dt>Area Office</dt><dd className="font-semibold text-slate-900 dark:text-slate-100">{AREA_CODE}</dd></div>
-              <div className="flex justify-between gap-4"><dt>Phone</dt><dd><a href={landlineLink()} className="font-semibold text-(--brand-blue-700)">{landlineLink().replace("tel:", "")}</a></dd></div>
+              <div className="flex justify-between gap-4"><dt>Phone</dt><dd><a href={landlineLink()} className="font-bold text-(--brand-blue-700) transition-colors hover:underline dark:text-cyan-300 dark:hover:text-emerald-200">{landlineLink().replace("tel:", "")}</a></dd></div>
             </dl>
             <Link href="/contact" className="mt-6 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-(--brand-blue-700) px-5 py-3 text-sm font-bold text-white transition hover:bg-(--brand-blue-900)">Contact Office</Link>
           </div>

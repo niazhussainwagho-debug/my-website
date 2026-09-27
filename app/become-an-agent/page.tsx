@@ -341,10 +341,10 @@ export default function BecomeAnAgentPage() {
           {faqs.map((faq, index) => (
             <div key={faq.question} className="rounded-[22px] border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
               <button type="button" onClick={() => setOpenFaq(openFaq === index ? -1 : index)} aria-expanded={openFaq === index} className="flex min-h-14 w-full items-center justify-between gap-4 px-5 py-4 text-left">
-                <span className="text-base font-semibold text-[#0b2240] dark:text-slate-100">{faq.question}</span>
+                <span className="text-base font-bold text-[#0b2240] dark:text-white">{faq.question}</span>
                 <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#eafaf4] text-lg font-bold text-[#1f8a67]">{openFaq === index ? "-" : "+"}</span>
               </button>
-              {openFaq === index && <div className="px-5 pb-5 text-base leading-7 text-slate-600 dark:text-slate-300">{faq.answer}</div>}
+              {openFaq === index && <div className="px-5 pb-5 text-base font-medium leading-7 text-slate-600 dark:text-slate-200">{faq.answer}</div>}
             </div>
           ))}
         </div>
