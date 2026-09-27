@@ -92,7 +92,7 @@ export default function Hero({
           <span className="inline-flex items-center gap-2 rounded-full border border-emerald-100/30 bg-emerald-950/35 px-3.5 py-2 text-xs font-bold uppercase tracking-[0.12em] text-emerald-50 backdrop-blur-sm">
             <ShieldCheck size={15} aria-hidden="true" /> SUKKUR AREA OFFICE 5405
           </span>
-          <h1 aria-label={heroPhrases[0]} aria-live="off" className="mt-5 min-h-[2.2em] max-w-3xl text-2xl font-black leading-[1.08] text-white sm:min-h-[2.2em] sm:text-4xl md:min-h-[3.2em] md:text-6xl">
+          <h1 aria-label={heroPhrases[0]} aria-live="off" className="mt-5 min-h-[2.2em] max-w-3xl text-2xl font-bold leading-[1.08] text-blue-600 dark:text-blue-400 sm:min-h-[2.2em] sm:text-4xl md:min-h-[3.2em] md:text-6xl">
             {displayedText}
             <span aria-hidden="true" className="ml-1 inline-block h-[0.85em] border-r-2 border-emerald-300 align-[-0.06em] motion-safe:animate-pulse" />
           </h1>
