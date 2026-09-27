@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "../components/Navbar";
+import SectionJumpControls from "../components/SectionJumpControls";
 import ThemeProvider from "../components/ThemeProvider";
 import "./globals.css";
 
@@ -29,6 +30,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="flex h-auto min-h-screen w-full max-w-[100vw] flex-col overflow-x-clip">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <Navbar />
+          <SectionJumpControls />
           <div className="relative m-0 w-full max-w-[100vw] overflow-x-clip p-0 pt-30 lg:pt-34">{children}</div>
         </ThemeProvider>
       </body>

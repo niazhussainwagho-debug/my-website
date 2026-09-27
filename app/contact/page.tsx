@@ -100,7 +100,7 @@ export default function ContactPage() {
         subtitle="Apni kisi bhi policy enquiry ya new policy guidance ke liye hamari office team se direct rabta karein."
       />
 
-      <section className="px-4 py-10 sm:px-6 lg:px-8 lg:py-16">
+      <section id="contact" className="scroll-mt-30 px-4 py-10 sm:px-6 lg:px-8 lg:py-16">
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 md:grid-cols-2 md:items-start">
           <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900 sm:p-8">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
@@ -197,7 +197,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <footer className="bg-(--brand-blue-900) px-4 py-8 text-center text-sm text-slate-300 sm:px-6 lg:px-8">
+      <footer id="footer" className="bg-(--brand-blue-900) px-4 py-8 text-center text-sm text-slate-300 sm:px-6 lg:px-8">
         <p>State Life Sukkur Area Office 5405 · <Link href="/about" className="text-white hover:text-cyan-200">About Us</Link> · <a href={emailLink()} className="text-white hover:text-cyan-200">{CONTACT_EMAIL}</a></p>
       </footer>
     </main>

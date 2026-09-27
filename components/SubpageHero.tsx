@@ -10,7 +10,7 @@ type SubpageHeroProps = {
 
 export default function SubpageHero({ category, title, subtitle, actions }: SubpageHeroProps) {
   return (
-    <section id="page-top" className="scroll-mt-30 bg-slate-900 px-4 py-14 text-slate-100 dark:bg-slate-950 sm:px-6 lg:scroll-mt-34 lg:px-8 lg:py-16">
+    <section id="hero" className="scroll-mt-30 bg-slate-900 px-4 py-14 text-slate-100 dark:bg-slate-950 sm:px-6 lg:scroll-mt-34 lg:px-8 lg:py-16">
       <div className="mx-auto max-w-7xl">
         <span className="inline-flex items-center gap-2 rounded-full border border-emerald-100/30 bg-emerald-950/35 px-3.5 py-2 text-xs font-bold uppercase tracking-[0.12em] text-emerald-50">
           <ShieldCheck size={15} aria-hidden="true" />

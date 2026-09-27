@@ -24,9 +24,9 @@ export default function CarouselArrow({ direction, label, disabled, onClick, cla
       onClick={onClick}
       whileTap={{ scale: 0.95 }}
       transition={softSpringTransition}
-      className={`inline-flex h-12 w-12 shrink-0 touch-manipulation items-center justify-center rounded-full border border-white/60 bg-white/75 text-slate-800 shadow-md backdrop-blur-md transition-colors hover:bg-white dark:border-slate-600/70 dark:bg-slate-900/75 dark:text-slate-100 dark:hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-40 ${className}`}
+      className={`group inline-flex h-12 min-h-11 w-12 min-w-11 shrink-0 touch-manipulation items-center justify-center rounded-full border border-slate-700/60 bg-slate-900/80 text-blue-500 shadow-lg backdrop-blur-md transition-colors hover:bg-slate-800 dark:text-blue-400 dark:hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-40 ${className}`}
     >
-      <Icon size={21} strokeWidth={2.25} aria-hidden="true" />
+      <Icon size={21} strokeWidth={2.25} aria-hidden="true" className="transition-transform group-hover:scale-110" />
     </motion.button>
   );
 }

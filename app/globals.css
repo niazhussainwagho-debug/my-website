@@ -57,6 +57,18 @@ html {
   scrollbar-gutter: stable;
 }
 
+main section[id],
+main footer[id] {
+  scroll-margin-top: 7.5rem;
+}
+
+@media (min-width: 1024px) {
+  main section[id],
+  main footer[id] {
+    scroll-margin-top: 8.5rem;
+  }
+}
+
 body {
   margin: 0;
   min-height: 100vh;

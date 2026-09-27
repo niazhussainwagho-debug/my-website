@@ -37,7 +37,7 @@ const values = [
 
 function SiteFooter() {
   return (
-    <footer className="bg-(--brand-blue-900) px-4 py-10 text-slate-300 sm:px-6 lg:px-8">
+    <footer id="footer" className="bg-(--brand-blue-900) px-4 py-10 text-slate-300 sm:px-6 lg:px-8">
       <div className="mx-auto flex max-w-7xl flex-col gap-5 border-t border-white/15 pt-6 text-sm sm:flex-row sm:items-center sm:justify-between">
         <p>State Life Sukkur Area Office 5405</p>
         <div className="flex flex-wrap gap-x-5 gap-y-2">
@@ -62,7 +62,7 @@ export default function AboutPage() {
         </>}
       />
 
-      <section className="px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
+      <section id="about-intro" className="scroll-mt-30 px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
           <div>
             <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#1f8a67]">Leadership</p>
@@ -84,7 +84,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="bg-white px-4 py-14 dark:bg-slate-900 sm:px-6 lg:px-8 lg:py-20">
+      <section id="mission" className="scroll-mt-30 bg-white px-4 py-14 dark:bg-slate-900 sm:px-6 lg:px-8 lg:py-20">
         <div className="mx-auto max-w-7xl">
           <div className="max-w-2xl">
             <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#1f8a67]">Our values</p>
@@ -102,7 +102,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
+      <section id="contact" className="scroll-mt-30 px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
         <div className="mx-auto grid max-w-7xl gap-6 rounded-3xl bg-(--brand-blue-900) p-6 text-white sm:p-9 md:grid-cols-2 md:items-center">
           <div>
             <p className="text-sm font-bold uppercase tracking-[0.16em] text-cyan-200">Visit our office</p>

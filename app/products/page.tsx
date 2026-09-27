@@ -15,7 +15,7 @@ export default function ProductsPage() {
 
       <PolicyTableGuide />
 
-      <section className="bg-white px-4 py-14 dark:bg-slate-900 sm:px-6 lg:px-8">
+      <section id="contact" className="scroll-mt-30 bg-white px-4 py-14 dark:bg-slate-900 sm:px-6 lg:px-8">
         <div className="mx-auto flex max-w-7xl flex-col gap-5 rounded-3xl bg-(--brand-blue-100) p-6 dark:bg-slate-800 sm:p-8 md:flex-row md:items-center md:justify-between">
           <div>
             <h2 className="text-2xl font-bold text-(--brand-blue-900) dark:text-white">Compare tables. Choose your next step.</h2>

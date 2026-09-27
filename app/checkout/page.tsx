@@ -21,7 +21,7 @@ export default async function CheckoutPage({ searchParams }: CheckoutPageProps) 
     <main className="min-h-screen bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100">
       <CheckoutHeader />
 
-      <section className="px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+      <section id="application" className="scroll-mt-30 px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
         <div className="mx-auto grid max-w-4xl gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
           <div className="rounded-3xl bg-(--brand-blue-100) p-6 sm:p-8 dark:bg-slate-900">
             <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#1f8a67]">Next step</p>

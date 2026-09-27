@@ -9,7 +9,6 @@ import CarouselArrow from "../components/CarouselArrow";
 import { FacebookIcon, LinkedInIcon, MailIcon, PhoneIcon } from "../components/icons";
 import Hero from "../components/Hero";
 import Products, { homePolicies, type HomePolicy } from "../components/Products";
-import SectionJumpControls from "../components/SectionJumpControls";
 import ScrollReveal from "../components/ScrollReveal";
 import Testimonials from "../components/Testimonials";
 import { plans, type Plan } from "../data/plans";
@@ -376,7 +375,6 @@ export default function Home() {
 
   return (
     <main className="relative z-10 min-w-0 max-w-full overflow-x-clip bg-[#f5f7f3] pb-24 text-slate-900 dark:bg-slate-950 dark:text-slate-100 md:pb-0">
-      <SectionJumpControls />
       <div className="fixed inset-x-3 bottom-3 z-50 flex gap-3 md:hidden">
         <a
           href={`https://wa.me/${WHATSAPP_NUMBER}`}
@@ -746,7 +744,7 @@ export default function Home() {
         </motion.div>
       </section>
 
-      <section className="px-4 pb-6 sm:px-6 lg:px-8">
+      <section id="local-advisor" className="scroll-mt-30 px-4 pb-6 sm:px-6 lg:px-8 lg:scroll-mt-34">
         <ScrollReveal className="mx-auto flex max-w-7xl min-w-0 flex-col justify-between gap-6 rounded-2xl bg-[#dcebe1] p-5 sm:p-8 lg:flex-row lg:items-center lg:px-10">
           <div className="min-w-0">
             <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#176b55]">Talk to a local advisor</p>
@@ -759,7 +757,7 @@ export default function Home() {
         </ScrollReveal>
       </section>
 
-      <footer className="px-4 pb-5 pt-2 sm:px-6 lg:px-8">
+      <footer id="footer" className="scroll-mt-30 px-4 pb-5 pt-2 sm:px-6 lg:px-8 lg:scroll-mt-34">
         <motion.div
           variants={staggerContainerVariants}
           initial="hidden"
