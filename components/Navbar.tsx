@@ -9,12 +9,12 @@ import ThemeToggle from "./ThemeToggle";
 import { telLink, whatsappLink } from "../lib/contact";
 
 const navLinks = [
-  { name: "Home", href: "/#hero" },
+  { name: "Home", href: "/#home" },
   { name: "Products", href: "/products#hero" },
   { name: "Services", href: "/services#hero" },
   { name: "About Us", href: "/about#hero" },
   { name: "Contact", href: "/contact#hero" },
-  { name: "Join Us", href: "/become-an-agent#hero" },
+  { name: "Join Us", href: "/become-an-agent#join" },
 ];
 
 function isActiveRoute(pathname: string, href: string) {

@@ -5,59 +5,71 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ArrowDown, ArrowRight, ArrowUp } from "lucide-react";
 
-type NavigationSection = { id: string; label: string };
-
 const sectionIdsByRoute: Record<string, string[]> = {
-  "/": ["hero", "overview", "policies", "products", "services", "about", "testimonials", "faq", "contact", "local-advisor", "footer"],
+  "/": ["home", "overview", "policies", "products", "services", "about", "testimonials", "faq", "contact", "local-advisor", "footer"],
   "/about": ["hero", "about-intro", "mission", "contact", "footer"],
   "/products": ["hero", "policies", "contact"],
   "/services": ["hero", "services", "products"],
   "/contact": ["hero", "contact", "footer"],
   "/health-insurance": ["hero", "coverage-options", "how-it-works", "official-links", "health-enquiry", "faq", "footer"],
-  "/become-an-agent": ["hero", "process", "documents", "requirements", "forms", "pre-registration", "faq", "footer"],
+  "/become-an-agent": ["join", "process", "documents", "requirements", "forms", "pre-registration", "faq", "footer"],
   "/checkout": ["hero", "application"],
 };
 
-const homeNavigationIds = ["hero", "products", "services", "about", "contact"];
+const navigationIdsByRoute: Record<string, string[]> = {
+  "/": ["home", "products", "services", "about", "contact"],
+  ...Object.fromEntries(Object.entries(sectionIdsByRoute).filter(([pathname]) => pathname !== "/")),
+};
 
-function getNavigationSections(pathname: string): NavigationSection[] {
+const sectionLabels: Record<string, string> = {
+  home: "Home",
+  hero: "Top of page",
+  overview: "Office overview",
+  policies: "Coverage options",
+  products: "Products",
+  services: "Services",
+  about: "About Us",
+  "about-intro": "About us",
+  mission: "Our values",
+  testimonials: "Community feedback",
+  faq: "FAQ",
+  contact: "Contact",
+  "local-advisor": "Local advisor",
+  footer: "Footer",
+  join: "Join Us",
+  process: "Registration process",
+  documents: "Documents",
+  requirements: "Requirements",
+  forms: "Registration forms",
+  "pre-registration": "Pre-registration",
+  "coverage-options": "Coverage options",
+  "how-it-works": "How it works",
+  "official-links": "Official links",
+  "health-enquiry": "Health enquiry",
+  application: "Application",
+};
+
+function assignRouteSectionIds(pathname: string) {
+  const sectionIds = sectionIdsByRoute[pathname];
   const main = document.querySelector("main");
-  if (!main) return [];
+  if (!sectionIds || !main) return;
 
-  const sectionElements = Array.from(main.querySelectorAll<HTMLElement>("section, footer"));
-  const routeSectionIds = sectionIdsByRoute[pathname];
-
-  if (routeSectionIds) {
-    sectionElements.forEach((element, index) => {
-      const id = routeSectionIds[index];
-      if (id) element.id = id;
-    });
-  }
-
-  const navigationIds = pathname === "/"
-    ? homeNavigationIds
-    : routeSectionIds ?? sectionElements.map((element) => element.id).filter(Boolean);
-
-  return navigationIds.flatMap((id) => {
-    const element = document.getElementById(id);
-    if (!element || !main.contains(element)) return [];
-
-    return [{
-      id,
-      label: element.getAttribute("aria-label") || element.querySelector("h1, h2, h3")?.textContent?.trim() || id,
-    }];
+  main.querySelectorAll<HTMLElement>("section, footer").forEach((element, index) => {
+    const id = sectionIds[index];
+    if (id) element.id = id;
   });
 }
 
 export default function SectionJumpControls() {
   const pathname = usePathname();
   const router = useRouter();
-  const [sections, setSections] = useState<NavigationSection[]>([]);
-  const [activeSectionId, setActiveSectionId] = useState("");
+  const sections = (navigationIdsByRoute[pathname] ?? []).map((id) => ({ id, label: sectionLabels[id] ?? id }));
+  const [activeSectionId, setActiveSectionId] = useState(sections[0]?.id ?? "");
   const [isAtPageEnd, setIsAtPageEnd] = useState(false);
 
   useEffect(() => {
-    const pageSections = getNavigationSections(pathname);
+    assignRouteSectionIds(pathname);
+    const pageSections = (navigationIdsByRoute[pathname] ?? []).map((id) => ({ id, label: sectionLabels[id] ?? id }));
     let animationFrame = 0;
     let sectionFrame = 0;
 
@@ -80,11 +92,10 @@ export default function SectionJumpControls() {
     };
 
     sectionFrame = window.requestAnimationFrame(() => {
-      setSections(pageSections);
       const hashId = decodeURIComponent(window.location.hash.slice(1));
       const hashTarget = pageSections.find((section) => section.id === hashId);
       if (hashTarget) {
-        document.getElementById(hashTarget.id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+        router.replace(`${pathname}${window.location.search}#${hashTarget.id}`);
         setActiveSectionId(hashTarget.id);
         setIsAtPageEnd(hashTarget.id === pageSections[pageSections.length - 1]?.id);
       } else {
@@ -96,14 +107,14 @@ export default function SectionJumpControls() {
 
     const handlePopState = () => {
       if (window.location.pathname !== pathname) {
-        router.replace(`${window.location.pathname}${window.location.search}${window.location.hash}`, { scroll: false });
+        router.replace(`${window.location.pathname}${window.location.search}${window.location.hash}`);
         return;
       }
 
       const hashId = decodeURIComponent(window.location.hash.slice(1));
       const hashTarget = pageSections.find((section) => section.id === hashId);
       if (hashTarget) {
-        document.getElementById(hashTarget.id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+        router.replace(`${pathname}${window.location.search}#${hashTarget.id}`);
         setActiveSectionId(hashTarget.id);
         setIsAtPageEnd(hashTarget.id === pageSections[pageSections.length - 1]?.id);
       } else {
@@ -123,14 +134,14 @@ export default function SectionJumpControls() {
     };
   }, [pathname, router]);
 
-  const activeIndex = sections.findIndex((section) => section.id === activeSectionId);
+  const activeIndex = Math.max(0, sections.findIndex((section) => section.id === activeSectionId));
   const nextSection = sections[activeIndex + 1];
   const moveToJoin = pathname === "/" && activeSectionId === "contact" && !isAtPageEnd;
-  const returnHome = isAtPageEnd || (pathname === "/contact" && activeSectionId === "contact") || (pathname !== "/" && activeIndex === sections.length - 1);
+  const returnHome = activeSectionId === "join" || isAtPageEnd || (pathname === "/contact" && activeSectionId === "contact") || (pathname !== "/" && activeIndex === sections.length - 1);
   const targetSection = returnHome
-    ? { id: "hero", label: "Home", pathname: "/" }
+    ? { id: "home", label: "Home", pathname: "/" }
     : moveToJoin
-      ? { id: "hero", label: "Join Us", pathname: "/become-an-agent" }
+      ? { id: "join", label: "Join Us", pathname: "/become-an-agent" }
       : nextSection
         ? { ...nextSection, pathname }
         : undefined;
@@ -143,8 +154,7 @@ export default function SectionJumpControls() {
       return;
     }
 
-    router.push(`${pathname}${window.location.search}#${targetSection.id}`, { scroll: false });
-    document.getElementById(targetSection.id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    router.push(`${pathname}${window.location.search}#${targetSection.id}`);
     setActiveSectionId(targetSection.id);
     setIsAtPageEnd(false);
   };
@@ -154,7 +164,7 @@ export default function SectionJumpControls() {
   return (
     <nav
       aria-label="Page section navigation"
-      className={`fixed right-3 z-40 flex gap-2 md:right-5 ${activeSectionId === "faq" ? "top-32 lg:top-36" : "bottom-[calc(env(safe-area-inset-bottom)+5rem)] md:bottom-5"}`}
+      className="fixed bottom-6 right-6 z-50 flex gap-2"
     >
       <motion.button
         type="button"
