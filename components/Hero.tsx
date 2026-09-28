@@ -97,7 +97,7 @@ export default function Hero({
             <span aria-hidden="true" className="ml-1 inline-block h-[0.85em] border-r-2 border-emerald-300 align-[-0.06em] motion-safe:animate-pulse" />
           </h1>
           <p className="mt-4 max-w-xl text-base leading-7 text-slate-100 sm:text-lg">
-            Family ke mustaqbil ke liye State Life options samjhein, aur Sukkur ki local team se seedhi rehnumai hasil karein.
+            Family ke mustaqbil ke liye State Life plans samjhein, aur hamari Sukkur team se mahirana rehnumai hasil karein.
           </p>
 
           <div className="mt-7 flex min-w-0 flex-wrap gap-3">
