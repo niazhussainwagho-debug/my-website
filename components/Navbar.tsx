@@ -28,7 +28,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 m-0 block w-full max-w-full overflow-x-clip bg-white p-0 shadow-md dark:bg-slate-950">
+    <header className="fixed inset-x-0 top-0 z-[60] m-0 block w-full max-w-full overflow-x-clip bg-white p-0 shadow-md dark:bg-slate-950">
       <div className="m-0 w-full max-w-full overflow-hidden">
         <div className="mx-auto flex min-h-[60px] w-full max-w-7xl items-center justify-between gap-3 px-4 pt-2 pb-2 md:px-8 lg:min-h-[88px]">
           <Link href="/" className="flex min-w-0 flex-1 items-center gap-3 text-slate-900 dark:text-slate-100" onClick={() => setMenuOpen(false)}>
@@ -47,7 +47,7 @@ export default function Navbar() {
 
           <div className="flex shrink-0 items-center gap-2 md:hidden">
             <ThemeToggle />
-            <button type="button" aria-label={menuOpen ? "Close menu" : "Open menu"} aria-expanded={menuOpen} onClick={() => setMenuOpen((open) => !open)} className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
+            <button type="button" aria-label={menuOpen ? "Close menu" : "Open menu"} aria-expanded={menuOpen} aria-controls="mobile-navigation" onClick={() => setMenuOpen((open) => !open)} className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
               <span className="space-y-1.5" aria-hidden="true">
                 <span className={`block h-0.5 w-5 rounded-full bg-current transition ${menuOpen ? "translate-y-2 rotate-45" : ""}`} />
                 <span className={`block h-0.5 w-5 rounded-full bg-current transition ${menuOpen ? "opacity-0" : ""}`} />
@@ -71,7 +71,7 @@ export default function Navbar() {
       </nav>
 
       {menuOpen && (
-        <div className="w-full max-w-full overflow-x-clip border-t border-blue-400/30 bg-[#0052cc] md:hidden">
+        <div id="mobile-navigation" className="absolute inset-x-0 top-full max-h-[calc(100dvh-7rem)] w-full max-w-full overflow-x-clip overflow-y-auto border-t border-blue-400/30 bg-[#0052cc] shadow-lg md:hidden">
           <div className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-3 sm:px-6">
             {navLinks.map((link) => {
               const active = isActiveRoute(pathname, link.href);
