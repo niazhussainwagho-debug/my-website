@@ -10,6 +10,6 @@ export const AREA_CODE = "5405";
 export const WHATSAPP_DISPLAY = "+92 317 0941821";
 export const PHONE_DISPLAY = "0300-8312850";
 export const FACEBOOK_URL = "https://www.facebook.com/share/1HnQeA4XGy/";
-export const LINKEDIN_URL = "https://www.linkedin.com/in/niaz-hussain-wagho-9ab971354";
+export const LINKEDIN_URL = "https://pk.linkedin.com/in/fayyaz-ahmed-a6a298134";
 export const CONTACT_EMAIL = "waghofayyaz@gmail.com";
 export const emailLink = () => `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("Enquiry - Sukkur Area Office")}`;
