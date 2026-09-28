@@ -13,7 +13,6 @@ import ScrollReveal from "../components/ScrollReveal";
 import Testimonials from "../components/Testimonials";
 import { plans, type Plan } from "../data/plans";
 import { products } from "../data/products";
-import { supabase } from "@/lib/supabase";
 import { AREA_CODE, CONTACT_EMAIL, FACEBOOK_URL, LINKEDIN_URL, MANAGER_NAME, MANAGER_TITLE, WHATSAPP_DISPLAY, WHATSAPP_NUMBER, emailLink, landlineLink, telLink } from "../lib/contact";
 import { cleanPhone } from "../lib/phone";
 import { cardContentVariants, softSpringTransition, staggerContainerVariants, staticCardVariants } from "../components/card-motion";
@@ -346,29 +345,7 @@ export default function Home() {
       website: contactData.website || null,
     };
 
-    const apiSuccess = await submitLead(payload);
-    let directSuccess = false;
-
-    if (!supabase) {
-      console.error(
-        "Supabase client is unavailable. Check NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY before direct insert.",
-      );
-    } else {
-      try {
-        const { error } = await supabase.from("leads").insert([payload]);
-
-        if (error) {
-          throw error;
-        }
-
-        directSuccess = true;
-      } catch (error) {
-        const message = error instanceof Error ? error.message : String(error);
-        console.error("Supabase contact insert failed:", message);
-      }
-    }
-
-    const success = apiSuccess || directSuccess;
+    const success = await submitLead(payload);
     setContactStatus(success ? "success" : "error");
     if (success) setContactData(initialContactForm);
   };

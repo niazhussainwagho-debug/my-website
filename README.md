@@ -20,6 +20,21 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 The contact form, product consultation enquiry, and agent pre-registration form submit to `POST /api/leads`.
 
+## Staff Workspace Setup
+
+1. Create the `leads` table using the schema below if it does not already exist.
+2. Run [`supabase/staff-auth.sql`](supabase/staff-auth.sql) in the Supabase SQL Editor. It creates staff profiles, adds lead assignment and status fields, and limits authenticated staff to their assigned leads and status updates.
+3. In Supabase Authentication, create or invite each staff user. Copy the new user's UUID, then add their profile:
+
+```sql
+insert into public.staff_profiles (user_id, display_name)
+values ('AUTH_USER_UUID', 'Staff name');
+```
+
+4. Assign a lead by setting its `assigned_to` field to that staff user's UUID. Staff accounts can sign in at `/staff/login`.
+
+The app requires `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` for staff sign-in. Keep `SUPABASE_SERVICE_ROLE_KEY` server-only; public lead forms submit through `/api/leads` and do not need anonymous direct-insert permissions.
+
 ## Product Images
 
 Product carousel images should be placed in `public/products/` with these filenames: `life.png`, `health.png`, `takaful.png`, `family.png`, `retirement.png`, and `education.png`. Corporate Plans and Digital Services intentionally use the built-in light blue gradient fallback.

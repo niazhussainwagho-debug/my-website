@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { cleanPhone } from "../../lib/phone";
-import { supabase } from "@/lib/supabase";
 import { WHATSAPP_NUMBER, telLink } from "../../lib/contact";
 const processSteps = [
   "Pre-registration form bharein ya office aayein.",
@@ -98,15 +97,11 @@ export default function BecomeAnAgentPage() {
     setIsSubmitting(true);
     setSubmitError(false);
 
-    if (!supabase) {
-      console.error("Supabase configuration is missing.");
-      setIsSubmitting(false);
-      setSubmitError(true);
-      return;
-    }
-
-    const { error } = await supabase.from("leads").insert([
-      {
+    try {
+      const response = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
         type: "agent_prereg",
         name: formData.name,
         phone: cleanPhone(formData.phone),
@@ -118,11 +113,12 @@ export default function BecomeAnAgentPage() {
         message: formData.message,
         consent: formData.consent,
         website: formData.website,
-      },
-    ]);
+        }),
+      });
 
-    if (error) {
-      console.error("Error:", error.message);
+      if (!response.ok) throw new Error("Lead submission failed.");
+    } catch (error) {
+      console.error("Agent pre-registration submission failed:", error);
       setIsSubmitting(false);
       setSubmitError(true);
       return;
