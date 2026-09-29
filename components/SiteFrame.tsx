@@ -17,7 +17,7 @@ export default function SiteFrame({ children }: { children: ReactNode }) {
     <>
       <Navbar />
       <SectionJumpControls />
-      <div className="relative m-0 w-full max-w-[100vw] overflow-x-clip p-0 pt-24 sm:pt-28">{children}</div>
+      <div className="relative m-0 w-full max-w-[100vw] overflow-x-clip p-0 pt-20 sm:pt-24">{children}</div>
     </>
   );
 }
