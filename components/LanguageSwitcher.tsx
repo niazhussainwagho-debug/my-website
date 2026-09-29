@@ -47,13 +47,14 @@ export default function LanguageSwitcher() {
         aria-haspopup="true"
         aria-expanded={isOpen}
         aria-label="Select website language"
-        className="inline-flex h-9 sm:h-10 items-center gap-1 sm:gap-1.5 rounded-full border border-white/20 bg-white/10 px-2 sm:px-3 text-xs font-bold text-white shadow-xs backdrop-blur-md transition-all hover:bg-white/20 hover:border-white/30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
+        className="inline-flex h-8 sm:h-8.5 xl:h-10 shrink-0 items-center gap-1 sm:gap-1.5 rounded-full border border-white/20 bg-white/10 px-2 sm:px-2.5 xl:px-3 text-xs font-bold text-white shadow-xs backdrop-blur-md transition-all hover:bg-white/20 hover:border-white/30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 whitespace-nowrap"
       >
-        <Globe size={14} className="text-sky-300 shrink-0" aria-hidden="true" />
-        <span className="font-semibold tracking-wide">{currentLang.native}</span>
+        <Globe size={13} className="text-sky-300 shrink-0" aria-hidden="true" />
+        <span className="hidden sm:inline font-semibold tracking-wide text-xs">{currentLang.native}</span>
+        <span className="inline sm:hidden font-bold tracking-wide uppercase text-[10px]">{currentLang.code}</span>
         <ChevronDown
-          size={12}
-          className={`text-slate-300 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+          size={11}
+          className={`text-slate-300 transition-transform duration-200 shrink-0 ${isOpen ? "rotate-180" : ""}`}
           aria-hidden="true"
         />
       </button>

@@ -85,11 +85,11 @@ export default function Navbar() {
   return (
     <header className="fixed inset-x-0 top-0 z-[60] pointer-events-none px-3 pt-3 sm:px-6 sm:pt-4 lg:px-8">
       {/* Floating Glassmorphic Capsule Bar */}
-      <div className="pointer-events-auto mx-auto flex h-16 sm:h-20 w-full max-w-7xl items-center justify-between gap-3 sm:gap-4 rounded-2xl sm:rounded-3xl border border-white/20 bg-slate-950/50 px-4 sm:px-6 shadow-[0_8px_32px_0_rgba(0,0,0,0.45)] backdrop-blur-2xl transition-all duration-200">
+      <div className="pointer-events-auto mx-auto flex h-[68px] sm:h-20 w-full max-w-7xl items-center justify-between gap-2 sm:gap-4 rounded-2xl sm:rounded-3xl border border-white/20 bg-slate-950/60 px-3 sm:px-6 shadow-[0_8px_32px_0_rgba(0,0,0,0.45)] backdrop-blur-2xl transition-all duration-200">
         {/* Brand Logo & Info */}
         <Link
           href="/"
-          className="group flex min-w-0 items-center gap-2.5 sm:gap-3 transition-opacity hover:opacity-95"
+          className="group flex min-w-0 items-center gap-2 sm:gap-3 transition-opacity hover:opacity-95"
           onClick={(e) => {
             setMenuOpen(false);
             if (isHome) {
@@ -106,23 +106,23 @@ export default function Navbar() {
             width={420}
             height={144}
             priority
-            className="h-10 w-auto shrink-0 object-contain sm:h-12 transition-transform group-hover:scale-[1.02]"
+            className="h-9 w-auto shrink-0 object-contain sm:h-11 md:h-12 transition-transform group-hover:scale-[1.02]"
           />
-          <span className="flex min-w-0 flex-col">
-            <span className="text-[10px] font-extrabold uppercase tracking-widest text-sky-400 sm:text-xs">
+          <span className="flex min-w-0 flex-col justify-center leading-tight">
+            <span className="truncate text-[9px] font-extrabold uppercase tracking-wide text-sky-400 sm:text-xs leading-tight">
               {t.brandArea}
             </span>
-            <span className="text-sm font-black leading-tight tracking-tight text-white sm:text-base md:text-lg">
+            <span className="truncate text-xs font-black leading-tight tracking-tight text-white sm:text-base md:text-lg">
               {t.brandCompany}
             </span>
-            <span className="text-[9px] font-bold uppercase tracking-wider text-white dark:text-white sm:text-[10px]">
+            <span className="truncate text-[8px] font-bold uppercase tracking-wide text-white/90 sm:text-[10px] leading-tight">
               {t.brandSub}
             </span>
           </span>
         </Link>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden items-center gap-1 lg:flex" aria-label="Main navigation">
+        <nav className="hidden items-center gap-0.5 xl:gap-1.5 lg:flex shrink-0" aria-label="Main navigation">
           {navLinks.map((link) => {
             const active = isLinkActive(link);
             return (
@@ -131,7 +131,7 @@ export default function Navbar() {
                 href={link.href}
                 onClick={(e) => handleLinkClick(e, link.href)}
                 aria-current={active ? "page" : undefined}
-                className={`inline-flex items-center px-3.5 py-2 text-sm font-semibold rounded-full transition-all duration-200 ${
+                className={`inline-flex items-center shrink-0 whitespace-nowrap px-2.5 py-1.5 xl:px-3.5 xl:py-2 text-xs xl:text-sm font-semibold rounded-full transition-all duration-200 ${
                   active
                     ? "bg-white/20 text-white font-bold shadow-xs backdrop-blur-md"
                     : "text-white/80 hover:text-white hover:bg-white/10"
@@ -144,14 +144,14 @@ export default function Navbar() {
         </nav>
 
         {/* Desktop Right Action Area */}
-        <div className="hidden shrink-0 items-center gap-2 sm:flex">
+        <div className="hidden shrink-0 items-center gap-1.5 xl:gap-2 lg:flex">
           <a
             href={whatsappLink()}
             target="_blank"
             rel="noreferrer"
             title="Chat on WhatsApp"
             aria-label="Chat on WhatsApp"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-emerald-400/30 bg-emerald-500/20 text-emerald-300 transition hover:bg-emerald-500/30"
+            className="inline-flex h-8.5 w-8.5 xl:h-10 xl:w-10 items-center justify-center rounded-full border border-emerald-400/30 bg-emerald-500/20 text-emerald-300 transition hover:bg-emerald-500/30 shrink-0"
           >
             <WhatsAppIcon />
           </a>
@@ -159,47 +159,63 @@ export default function Navbar() {
             href={telLink()}
             title="Call Office"
             aria-label="Call Office"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-blue-400/30 bg-blue-500/20 text-sky-300 transition hover:bg-blue-500/30"
+            className="inline-flex h-8.5 w-8.5 xl:h-10 xl:w-10 items-center justify-center rounded-full border border-blue-400/30 bg-blue-500/20 text-sky-300 transition hover:bg-blue-500/30 shrink-0"
           >
             <PhoneIcon />
           </a>
           <LanguageSwitcher />
-          <ThemeToggle />
+          <ThemeToggle
+            className="inline-flex h-8.5 w-8.5 xl:h-10 xl:w-10 shrink-0 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white transition-colors hover:bg-white/20 shadow-xs backdrop-blur-md"
+            iconSize={15}
+          />
           <Link
             href={quoteHref}
             onClick={(e) => handleLinkClick(e, quoteHref)}
-            className="inline-flex min-h-10 shrink-0 items-center justify-center rounded-full bg-blue-600 hover:bg-blue-500 px-5 py-2 text-sm font-bold text-white shadow-lg shadow-blue-600/40 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-blue-500/50"
+            className="inline-flex h-8.5 xl:h-10 shrink-0 items-center justify-center rounded-full bg-blue-600 hover:bg-blue-500 px-3.5 py-1.5 xl:px-5 xl:py-2 text-xs xl:text-sm font-bold text-white shadow-lg shadow-blue-600/40 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-blue-500/50 whitespace-nowrap"
           >
             {t.navQuoteBtn}
           </Link>
         </div>
 
-        {/* Mobile Hamburger & Controls */}
-        <div className="flex shrink-0 items-center gap-1.5 sm:hidden">
+        {/* Mobile & Tablet Controls (< lg) */}
+        <div className="flex shrink-0 items-center gap-1 sm:gap-1.5 lg:hidden">
+          <a
+            href={whatsappLink()}
+            target="_blank"
+            rel="noreferrer"
+            title="Chat on WhatsApp"
+            aria-label="Chat on WhatsApp"
+            className="hidden sm:inline-flex h-8.5 w-8.5 items-center justify-center rounded-full border border-emerald-400/30 bg-emerald-500/20 text-emerald-300 transition hover:bg-emerald-500/30 shrink-0"
+          >
+            <WhatsAppIcon />
+          </a>
           <LanguageSwitcher />
-          <ThemeToggle />
+          <ThemeToggle
+            className="inline-flex h-8 w-8 sm:h-8.5 sm:w-8.5 shrink-0 items-center justify-center rounded-xl border border-white/20 bg-white/10 text-white transition-colors hover:bg-white/20 shadow-xs backdrop-blur-md"
+            iconSize={14}
+          />
           <button
             type="button"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
             aria-controls="mobile-navigation"
             onClick={() => setMenuOpen((open) => !open)}
-            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/20 bg-white/10 text-white transition hover:bg-white/20"
+            className="inline-flex h-8 w-8 sm:h-8.5 sm:w-8.5 shrink-0 items-center justify-center rounded-xl border border-white/20 bg-white/10 text-white transition hover:bg-white/20"
           >
-            <span className="space-y-1.5" aria-hidden="true">
+            <span className="space-y-1 sm:space-y-1.5" aria-hidden="true">
               <span
-                className={`block h-0.5 w-5 rounded-full bg-current transition ${
-                  menuOpen ? "translate-y-2 rotate-45" : ""
+                className={`block h-0.5 w-4 sm:w-5 rounded-full bg-current transition ${
+                  menuOpen ? "translate-y-1.5 sm:translate-y-2 rotate-45" : ""
                 }`}
               />
               <span
-                className={`block h-0.5 w-5 rounded-full bg-current transition ${
+                className={`block h-0.5 w-4 sm:w-5 rounded-full bg-current transition ${
                   menuOpen ? "opacity-0" : ""
                 }`}
               />
               <span
-                className={`block h-0.5 w-5 rounded-full bg-current transition ${
-                  menuOpen ? "-translate-y-2 -rotate-45" : ""
+                className={`block h-0.5 w-4 sm:w-5 rounded-full bg-current transition ${
+                  menuOpen ? "-translate-y-1.5 sm:-translate-y-2 -rotate-45" : ""
                 }`}
               />
             </span>
