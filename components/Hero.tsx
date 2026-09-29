@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { ArrowUpRight, ShieldCheck } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
 
@@ -21,17 +20,12 @@ export default function Hero({
 }: HeroProps) {
   return (
     <section id="home" className="scroll-mt-30 relative isolate min-h-[42rem] w-full max-w-full overflow-hidden bg-slate-950 text-white sm:min-h-[44rem] lg:scroll-mt-34 lg:min-h-[46rem]">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
-        <Image
-          src="/hero-bg.jpg"
-          alt=""
-          fill
-          loading="eager"
-          sizes="100vw"
-          className="object-cover object-center opacity-25 brightness-75"
-        />
-      </div>
-      <div aria-hidden="true" className="absolute inset-0 z-0 bg-linear-to-br from-slate-950/98 via-slate-950/90 to-blue-950/85 dark:from-black/98 dark:via-slate-950/90 dark:to-blue-950/85" />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-0 scale-[1.01] bg-cover bg-center"
+        style={{ backgroundImage: "url('/hero-bg.jpg')", opacity: 0.2, filter: "brightness(35%) blur(1px)" }}
+      />
+      <div aria-hidden="true" className="absolute inset-0 z-0 bg-linear-to-r from-slate-950/95 via-slate-950/85 to-slate-950/60 dark:from-black/95 dark:via-slate-950/90 dark:to-slate-950/70" />
 
       <ScrollReveal className="relative z-10 mx-auto flex min-h-[42rem] w-full max-w-7xl items-center px-4 pb-10 pt-28 sm:min-h-[44rem] sm:px-6 sm:pb-12 sm:pt-28 lg:min-h-[46rem] lg:px-8 lg:pb-16 lg:pt-28">
         <div className="w-full max-w-2xl rounded-2xl border border-slate-800/80 bg-slate-950/80 p-6 shadow-2xl shadow-black/30 backdrop-blur-xl sm:p-8">
