@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { ArrowRight, ArrowUpRight, ShieldCheck } from "lucide-react";
+import { ArrowRight, ArrowUpRight, CheckCircle2, ShieldCheck } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
 import { WHATSAPP_NUMBER } from "../lib/contact";
 
@@ -74,31 +74,37 @@ export default function Hero({
   }, []);
 
   return (
-    <section id="home" className="scroll-mt-20 lg:scroll-mt-24 relative isolate min-h-[85vh] w-full max-w-full overflow-hidden bg-cover bg-center text-white">
-      {/* Background Image & Gradient Mesh */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
+    <section id="home" className="scroll-mt-20 lg:scroll-mt-24 relative isolate min-h-[85vh] w-full max-w-full overflow-hidden bg-[#071326] text-white">
+      {/* Ambient background glow */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-40 top-0 h-96 w-96 rounded-full bg-blue-600/15 blur-3xl"
+      />
+
+      {/* Right-side family imagery matching approved demo */}
+      <div aria-hidden="true" className="pointer-events-none absolute right-0 top-0 bottom-0 z-0 h-full w-full lg:w-[56%] overflow-hidden">
         <Image
           src="/products/family.png"
           alt=""
           fill
           priority
-          sizes="100vw"
-          className="object-cover object-center"
+          sizes="(max-width: 1024px) 100vw, 56vw"
+          className="object-cover object-center lg:object-[center_20%]"
         />
+        {/* Soft edge blend overlays */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#071326] via-[#071326]/75 to-transparent lg:from-[#071326] lg:via-[#071326]/35 lg:to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#071326] via-transparent to-transparent opacity-85" />
       </div>
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 z-0 bg-gradient-to-r from-slate-950/95 via-slate-950/85 to-blue-950/75"
-      />
 
-      <ScrollReveal className="relative z-10 mx-auto flex min-h-[85vh] w-full max-w-7xl items-center px-4 pt-8 pb-16 sm:px-6 sm:pt-12 sm:pb-20 lg:px-8">
-        <div className="min-w-0 w-full max-w-3xl">
+      <ScrollReveal className="relative z-10 mx-auto flex min-h-[85vh] w-full max-w-7xl items-center px-4 pt-10 pb-16 sm:px-6 sm:pt-14 sm:pb-20 lg:px-8">
+        <div className="min-w-0 w-full max-w-3xl lg:max-w-2xl">
           {/* Official Branch Trust Pill */}
-          <span className="inline-flex items-center gap-2 rounded-full border border-emerald-100/30 bg-emerald-950/40 px-3.5 py-2 text-xs font-bold uppercase tracking-[0.12em] text-emerald-50 backdrop-blur-sm">
-            <ShieldCheck size={15} aria-hidden="true" /> SUKKUR AREA OFFICE 5405
-          </span>
+          <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-500/20 px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider text-emerald-300 backdrop-blur-md">
+            <ShieldCheck size={15} aria-hidden="true" />
+            <span>SUKKUR AREA OFFICE 5405</span>
+          </div>
 
-          {/* Dynamic Headline with Premium Contrast */}
+          {/* Dynamic Headline matching approved demo */}
           <h1
             aria-label={heroPhrases[0]}
             aria-live="off"
@@ -111,7 +117,7 @@ export default function Hero({
             />
           </h1>
 
-          <p className="mt-4 max-w-xl text-base leading-7 text-slate-100 sm:text-lg">
+          <p className="mt-4 max-w-xl text-base leading-7 text-slate-200 sm:text-lg">
             Family ke mustaqbil ke liye State Life plans samjhein, aur hamari Sukkur team se mahirana rehnumai hasil karein.
           </p>
 
@@ -119,7 +125,7 @@ export default function Hero({
           <div className="mt-8 flex min-w-0 flex-wrap items-center gap-3.5">
             <a
               href="#contact"
-              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-blue-700 via-blue-600 to-blue-500 px-7 py-3 text-sm sm:text-base font-bold text-white shadow-lg shadow-blue-600/30 transition-all duration-200 hover:-translate-y-0.5 hover:from-blue-800 hover:to-blue-600 hover:shadow-xl hover:shadow-blue-600/40"
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-blue-600 hover:bg-blue-500 px-7 py-3 text-sm sm:text-base font-bold text-white shadow-lg shadow-blue-600/30 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-blue-500/40"
             >
               Free Consultation <ArrowRight size={17} aria-hidden="true" />
             </a>
@@ -127,14 +133,14 @@ export default function Hero({
               href={`https://wa.me/${WHATSAPP_NUMBER}`}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-950/60 px-7 py-3 text-sm sm:text-base font-bold text-emerald-200 backdrop-blur-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-emerald-900/80 hover:text-white hover:border-emerald-300 shadow-md shadow-emerald-950/30"
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#108A5E] hover:bg-[#0D734E] px-7 py-3 text-sm sm:text-base font-bold text-white shadow-lg shadow-emerald-700/30 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-emerald-600/40"
             >
               WhatsApp Us
             </a>
           </div>
 
           {/* Interactive Policy Goal Quick-Matcher Card */}
-          <div className="mt-10 hidden w-full max-w-full min-w-0 flex-col gap-3 rounded-2xl border border-white/20 bg-slate-900/70 p-4 sm:p-5 backdrop-blur-xl shadow-2xl md:flex sm:flex-row sm:items-end">
+          <div className="mt-9 flex w-full max-w-full min-w-0 flex-col gap-3 rounded-2xl border border-white/20 bg-slate-900/70 p-4 sm:p-5 backdrop-blur-xl shadow-2xl sm:flex-row sm:items-end">
             <div className="w-full min-w-0 sm:flex-1">
               <label htmlFor="policy-search" className="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-200">
                 Search Policy Goal
@@ -166,24 +172,26 @@ export default function Hero({
             </div>
             <a
               href="#policies"
-              className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-700 to-blue-600 px-5 py-2.5 text-sm font-bold text-white shadow-md shadow-blue-700/30 transition-all duration-200 hover:-translate-y-0.5 hover:from-blue-800 hover:to-blue-700 sm:w-auto"
+              className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-500 px-5 py-2.5 text-sm font-bold text-white shadow-md shadow-blue-700/30 transition-all duration-200 hover:-translate-y-0.5 sm:w-auto"
             >
               Explore Plans <ArrowUpRight size={16} aria-hidden="true" />
             </a>
           </div>
 
-          {/* Quick Trust Badges Strip */}
-          <div className="mt-8 flex flex-wrap items-center gap-4 text-xs font-medium text-slate-300">
-            <span className="flex items-center gap-1.5">
-              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-              100% Federal Govt. Guarantee
-            </span>
-            <span className="text-slate-600">•</span>
-            <span>5,000+ Sukkur Policies</span>
-            <span className="text-slate-600">•</span>
-            <span>Fast Claims Guidance</span>
-            <span className="text-slate-600">•</span>
-            <span>Sukkur Dedicated Desk</span>
+          {/* Quick Trust Badges matching demo */}
+          <div className="mt-6 flex flex-wrap items-center gap-3 text-xs font-semibold text-slate-200">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 backdrop-blur-xs">
+              <CheckCircle2 size={15} className="text-emerald-400" />
+              <span>100% Federal Govt. Guarantee</span>
+            </div>
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 backdrop-blur-xs">
+              <CheckCircle2 size={15} className="text-emerald-400" />
+              <span>5,000+ Sukkur Policies</span>
+            </div>
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 backdrop-blur-xs">
+              <CheckCircle2 size={15} className="text-emerald-400" />
+              <span>Fast Claims Assistance</span>
+            </div>
           </div>
         </div>
       </ScrollReveal>
