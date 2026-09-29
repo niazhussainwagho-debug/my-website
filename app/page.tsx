@@ -504,8 +504,8 @@ export default function Home() {
             <a href="https://www.google.com/maps/dir/?api=1&destination=Shahlimar+Road,+near+Session+Court,+Sukkur,+Pakistan" target="_blank" rel="noreferrer" className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-full border border-sky-200/55 bg-sky-400/15 px-4 py-2.5 text-sm font-bold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_0_22px_rgba(14,165,233,0.28)] backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-sky-100/75 hover:bg-sky-300/25 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.38),0_0_30px_rgba(14,165,233,0.45)]">Get directions <ArrowUpRight size={16} aria-hidden="true" /></a>
           </ScrollReveal>
 
-          <ScrollReveal delayMs={150} className="glass grid min-w-0 items-center gap-5 rounded-2xl border-white/25 bg-white/10 p-4 text-white shadow-[0_18px_50px_rgba(0,0,0,0.2)] sm:grid-cols-[minmax(130px,0.75fr)_1.25fr] sm:p-5">
-            <div className="relative aspect-4/5 w-full overflow-hidden rounded-xl bg-[#355b50]">
+          <ScrollReveal delayMs={150} className="grid min-w-0 items-center gap-5 rounded-[18px] border border-white/25 bg-[#315753]/80 p-5 text-white shadow-[0_20px_55px_rgba(0,0,0,0.24)] backdrop-blur-xl sm:grid-cols-[180px_1fr] sm:p-5">
+            <div className="relative aspect-4/5 w-full overflow-hidden rounded-xl bg-[#355b50] sm:aspect-auto sm:h-[228px]">
               {!managerImageFailed && <Image src="/area-manager.jpg" alt="Mr. Fayyaz Ahmed, Area Manager" fill sizes="(max-width: 639px) 100vw, 24vw" className="object-cover object-top" onError={() => setManagerImageFailed(true)} />}
             </div>
             <div className="min-w-0 py-2">
