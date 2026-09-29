@@ -747,8 +747,12 @@ export default function Home() {
           <motion.div variants={staticCardVariants} className="min-w-0">
           <motion.div variants={cardContentVariants}>
             <div className="flex min-w-0 items-center gap-3">
-              <Image src="/area-logo.png" alt="Sukkur Area Office logo" width={210} height={74} className="h-11 w-32 shrink-0 rounded-md bg-white p-1 object-contain" />
-              <div className="min-w-0"><p className="text-base font-bold text-white">Sukkur Area Office</p><p className="text-xs leading-5 text-[#aabbb2]">State Life Insurance · {AREA_CODE}</p></div>
+              <Image src="/logo area.png" alt="State Life Insurance Corporation of Pakistan logo" width={420} height={144} className="h-14 w-auto shrink-0 object-contain" />
+              <div className="flex min-w-0 flex-col">
+                <p className="text-xs font-semibold uppercase tracking-wide text-sky-300 sm:text-sm">Sukkur Area Office 5405</p>
+                <p className="text-lg font-bold leading-tight tracking-tight text-white sm:text-xl">State Life Insurance</p>
+                <p className="text-xs font-bold uppercase tracking-widest text-white sm:text-sm">Corporation of Pakistan</p>
+              </div>
             </div>
             <p className="mt-5 max-w-sm text-sm leading-6 text-[#b9c9c1]">Local policy guidance and in-person support for families in Sukkur.</p>
           </motion.div>
