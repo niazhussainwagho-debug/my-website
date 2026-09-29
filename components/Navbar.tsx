@@ -3,32 +3,84 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { PhoneIcon, WhatsAppIcon } from "./icons";
 import ThemeToggle from "./ThemeToggle";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { telLink, whatsappLink } from "../lib/contact";
 import { useLanguage } from "../context/LanguageContext";
 
-function isActiveRoute(pathname: string, href: string) {
-  const route = href.split("#", 1)[0];
-  if (route === "/") return pathname === "/";
-  return pathname === route || pathname.startsWith(`${route}/`);
-}
-
 export default function Navbar() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
   const { t } = useLanguage();
 
+  const isHome = pathname === "/";
+
   const navLinks = [
-    { name: t.navHome, href: "/#home" },
-    { name: t.navProducts, href: "/products#products" },
-    { name: t.navServices, href: "/services#services" },
-    { name: t.navAbout, href: "/about#about" },
-    { name: t.navContact, href: "/contact#contact" },
-    { name: t.navJoin, href: "/become-an-agent#join" },
+    { id: "home", name: t.navHome, href: isHome ? "#home" : "/#home" },
+    { id: "products", name: t.navProducts, href: isHome ? "#products" : "/#products" },
+    { id: "services", name: t.navServices, href: isHome ? "#services" : "/#services" },
+    { id: "about", name: t.navAbout, href: isHome ? "#about" : "/#about" },
+    { id: "contact", name: t.navContact, href: isHome ? "#contact" : "/#contact" },
+    { id: "join", name: t.navJoin, href: "/become-an-agent" },
   ];
+
+  // Dynamically track active section on homepage
+  useEffect(() => {
+    if (!isHome) return;
+
+    const sections = ["home", "products", "services", "about", "contact"];
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 220;
+      for (const sectionId of sections) {
+        const el = document.getElementById(sectionId);
+        if (el) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (scrollPosition >= top && scrollPosition < top + height) {
+            setActiveSection(sectionId);
+          }
+        }
+      }
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isHome]);
+
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    setMenuOpen(false);
+
+    if (href.startsWith("#")) {
+      e.preventDefault();
+      const targetId = href.slice(1);
+      const targetEl = document.getElementById(targetId);
+      if (targetEl) {
+        targetEl.scrollIntoView({ behavior: "smooth" });
+        window.history.pushState(null, "", href);
+      }
+    } else if (href.startsWith("/#") && isHome) {
+      e.preventDefault();
+      const targetId = href.slice(2);
+      const targetEl = document.getElementById(targetId);
+      if (targetEl) {
+        targetEl.scrollIntoView({ behavior: "smooth" });
+        window.history.pushState(null, "", href.slice(1));
+      }
+    }
+  };
+
+  const isLinkActive = (link: { id: string; href: string }) => {
+    if (isHome) {
+      return activeSection === link.id;
+    }
+    return pathname === link.href || pathname.startsWith(`${link.href}/`);
+  };
+
+  const quoteHref = isHome ? "#contact" : "/contact#contact-form";
 
   return (
     <header className="fixed inset-x-0 top-0 z-[60] pointer-events-none px-3 pt-3 sm:px-6 sm:pt-4 lg:px-8">
@@ -38,7 +90,15 @@ export default function Navbar() {
         <Link
           href="/"
           className="group flex min-w-0 items-center gap-2.5 sm:gap-3 transition-opacity hover:opacity-95"
-          onClick={() => setMenuOpen(false)}
+          onClick={(e) => {
+            setMenuOpen(false);
+            if (isHome) {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+              window.history.pushState(null, "", "/");
+              setActiveSection("home");
+            }
+          }}
         >
           <Image
             src="/logo area.png"
@@ -64,15 +124,16 @@ export default function Navbar() {
         {/* Desktop Navigation Links */}
         <nav className="hidden items-center gap-1 lg:flex" aria-label="Main navigation">
           {navLinks.map((link) => {
-            const active = isActiveRoute(pathname, link.href);
+            const active = isLinkActive(link);
             return (
               <Link
-                key={link.href}
+                key={link.id}
                 href={link.href}
+                onClick={(e) => handleLinkClick(e, link.href)}
                 aria-current={active ? "page" : undefined}
                 className={`inline-flex items-center px-3.5 py-2 text-sm font-semibold rounded-full transition-all duration-200 ${
                   active
-                    ? "bg-white/20 text-white font-bold shadow-xs"
+                    ? "bg-white/20 text-white font-bold shadow-xs backdrop-blur-md"
                     : "text-white/80 hover:text-white hover:bg-white/10"
                 }`}
               >
@@ -105,7 +166,8 @@ export default function Navbar() {
           <LanguageSwitcher />
           <ThemeToggle />
           <Link
-            href="/contact#contact-form"
+            href={quoteHref}
+            onClick={(e) => handleLinkClick(e, quoteHref)}
             className="inline-flex min-h-10 shrink-0 items-center justify-center rounded-full bg-blue-600 hover:bg-blue-500 px-5 py-2 text-sm font-bold text-white shadow-lg shadow-blue-600/40 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-blue-500/50"
           >
             {t.navQuoteBtn}
@@ -153,13 +215,13 @@ export default function Navbar() {
         >
           <div className="flex flex-col gap-1.5">
             {navLinks.map((link) => {
-              const active = isActiveRoute(pathname, link.href);
+              const active = isLinkActive(link);
               return (
                 <Link
-                  key={link.href}
+                  key={link.id}
                   href={link.href}
                   aria-current={active ? "page" : undefined}
-                  onClick={() => setMenuOpen(false)}
+                  onClick={(e) => handleLinkClick(e, link.href)}
                   className={`rounded-xl px-4 py-3 text-sm font-semibold transition ${
                     active
                       ? "bg-white/20 text-white font-bold"
@@ -188,8 +250,8 @@ export default function Navbar() {
                 <WhatsAppIcon /> {t.chatWhatsapp}
               </a>
               <Link
-                href="/contact#contact-form"
-                onClick={() => setMenuOpen(false)}
+                href={quoteHref}
+                onClick={(e) => handleLinkClick(e, quoteHref)}
                 className="col-span-2 inline-flex min-h-11 items-center justify-center rounded-xl bg-blue-600 hover:bg-blue-500 px-4 py-2.5 text-sm font-bold text-white shadow-lg shadow-blue-600/40"
               >
                 {t.navQuoteBtn}
