@@ -522,7 +522,7 @@ export default function Home() {
 
       <Testimonials />
 
-      <section id="faq" className="scroll-mt-30 bg-transparent py-16 lg:scroll-mt-34">
+      <section id="faq" className="scroll-mt-30 bg-[#020617] py-16 text-white lg:scroll-mt-34">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <ScrollReveal className="mb-10 text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#1f8a67]">FAQ</p>
@@ -542,7 +542,7 @@ export default function Home() {
                 variants={staticCardVariants}
                 whileHover={{ y: -4, scale: 1.01, boxShadow: "0px 16px 24px rgba(0,0,0,0.10)" }}
                 transition={softSpringTransition}
-                className="overflow-hidden rounded-xl border border-slate-200/60 bg-white/80 shadow-sm backdrop-blur-md dark:border-slate-800/60 dark:bg-slate-900/80"
+                className="overflow-hidden rounded-xl border border-slate-800/80 bg-[#0b1328] shadow-[0_12px_30px_rgba(0,0,0,0.16)] backdrop-blur-md"
               >
                 <motion.div variants={cardContentVariants}>
                 <button
@@ -551,14 +551,14 @@ export default function Home() {
                   className="group flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
                   aria-expanded={openFaq === index}
                 >
-                  <span className="text-base font-semibold text-slate-900 dark:text-slate-100 dark:group-hover:text-blue-400">{faq.question}</span>
+                  <span className="text-base font-semibold text-slate-100 transition-colors group-hover:text-cyan-200">{faq.question}</span>
                   <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#eafaf4] text-lg font-bold text-[#1f8a67]">
                     {openFaq === index ? "−" : "+"}
                   </span>
                 </button>
 
                 {openFaq === index && (
-                  <div className="px-5 pb-5 text-base leading-7 text-slate-600 dark:text-slate-300">{faq.answer}</div>
+                  <div className="px-5 pb-5 text-base leading-7 text-slate-300">{faq.answer}</div>
                 )}
                 </motion.div>
               </motion.div>
