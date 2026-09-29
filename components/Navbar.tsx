@@ -6,16 +6,9 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { PhoneIcon, WhatsAppIcon } from "./icons";
 import ThemeToggle from "./ThemeToggle";
+import LanguageSwitcher from "./LanguageSwitcher";
 import { telLink, whatsappLink } from "../lib/contact";
-
-const navLinks = [
-  { name: "Home", href: "/#home" },
-  { name: "Products", href: "/products#products" },
-  { name: "Services", href: "/services#services" },
-  { name: "About Us", href: "/about#about" },
-  { name: "Contact", href: "/contact#contact" },
-  { name: "Join Us", href: "/become-an-agent#join" },
-];
+import { useLanguage } from "../context/LanguageContext";
 
 function isActiveRoute(pathname: string, href: string) {
   const route = href.split("#", 1)[0];
@@ -26,6 +19,16 @@ function isActiveRoute(pathname: string, href: string) {
 export default function Navbar() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const { t } = useLanguage();
+
+  const navLinks = [
+    { name: t.navHome, href: "/#home" },
+    { name: t.navProducts, href: "/products#products" },
+    { name: t.navServices, href: "/services#services" },
+    { name: t.navAbout, href: "/about#about" },
+    { name: t.navContact, href: "/contact#contact" },
+    { name: t.navJoin, href: "/become-an-agent#join" },
+  ];
 
   return (
     <header className="fixed inset-x-0 top-0 z-[60] pointer-events-none px-3 pt-3 sm:px-6 sm:pt-4 lg:px-8">
@@ -47,13 +50,13 @@ export default function Navbar() {
           />
           <span className="flex min-w-0 flex-col">
             <span className="text-[10px] font-extrabold uppercase tracking-widest text-sky-400 sm:text-xs">
-              Sukkur Area Office 5405
+              {t.brandArea}
             </span>
             <span className="text-sm font-black leading-tight tracking-tight text-white sm:text-base md:text-lg">
-              State Life Insurance
+              {t.brandCompany}
             </span>
             <span className="text-[9px] font-bold uppercase tracking-wider text-white dark:text-white sm:text-[10px]">
-              Corporation of Pakistan
+              {t.brandSub}
             </span>
           </span>
         </Link>
@@ -80,7 +83,7 @@ export default function Navbar() {
         </nav>
 
         {/* Desktop Right Action Area */}
-        <div className="hidden shrink-0 items-center gap-2.5 sm:flex">
+        <div className="hidden shrink-0 items-center gap-2 sm:flex">
           <a
             href={whatsappLink()}
             target="_blank"
@@ -99,17 +102,19 @@ export default function Navbar() {
           >
             <PhoneIcon />
           </a>
+          <LanguageSwitcher />
           <ThemeToggle />
           <Link
             href="/contact#contact-form"
             className="inline-flex min-h-10 shrink-0 items-center justify-center rounded-full bg-blue-600 hover:bg-blue-500 px-5 py-2 text-sm font-bold text-white shadow-lg shadow-blue-600/40 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-blue-500/50"
           >
-            Get Policy Quote
+            {t.navQuoteBtn}
           </Link>
         </div>
 
-        {/* Mobile Hamburger & Theme Toggle */}
-        <div className="flex shrink-0 items-center gap-2 sm:hidden">
+        {/* Mobile Hamburger & Controls */}
+        <div className="flex shrink-0 items-center gap-1.5 sm:hidden">
+          <LanguageSwitcher />
           <ThemeToggle />
           <button
             type="button"
@@ -171,7 +176,7 @@ export default function Navbar() {
                 onClick={() => setMenuOpen(false)}
                 className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-blue-400/30 bg-blue-500/20 px-3 py-2 text-xs font-bold text-sky-200"
               >
-                <PhoneIcon /> Call Office
+                <PhoneIcon /> {t.callOffice}
               </a>
               <a
                 href={whatsappLink()}
@@ -180,14 +185,14 @@ export default function Navbar() {
                 onClick={() => setMenuOpen(false)}
                 className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-emerald-400/30 bg-emerald-500/20 px-3 py-2 text-xs font-bold text-emerald-200"
               >
-                <WhatsAppIcon /> WhatsApp
+                <WhatsAppIcon /> {t.chatWhatsapp}
               </a>
               <Link
                 href="/contact#contact-form"
                 onClick={() => setMenuOpen(false)}
                 className="col-span-2 inline-flex min-h-11 items-center justify-center rounded-xl bg-blue-600 hover:bg-blue-500 px-4 py-2.5 text-sm font-bold text-white shadow-lg shadow-blue-600/40"
               >
-                Get Policy Quote
+                {t.navQuoteBtn}
               </Link>
             </div>
           </div>

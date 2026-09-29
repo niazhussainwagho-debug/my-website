@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import SiteFrame from "../components/SiteFrame";
 import ThemeProvider from "../components/ThemeProvider";
+import { LanguageProvider } from "../context/LanguageContext";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -29,7 +30,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="flex h-auto min-h-screen w-full max-w-[100vw] flex-col overflow-x-clip">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <SiteFrame>{children}</SiteFrame>
+          <LanguageProvider>
+            <SiteFrame>{children}</SiteFrame>
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>
