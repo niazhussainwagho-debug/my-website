@@ -31,12 +31,12 @@ export default function Navbar() {
     <header className="fixed inset-x-0 top-0 z-[60] m-0 block w-full max-w-full overflow-x-clip bg-white p-0 shadow-md dark:bg-slate-950">
       <div className="m-0 w-full max-w-full overflow-hidden">
         <div className="mx-auto flex min-h-[60px] w-full max-w-7xl items-center justify-between gap-3 px-4 pt-2 pb-2 md:px-8 lg:min-h-[88px]">
-          <Link href="/" className="flex min-w-0 flex-1 items-center gap-3 text-slate-900 dark:text-slate-100" onClick={() => setMenuOpen(false)}>
-            <Image src="/area-logo.png" alt="State Life Insurance Corporation of Pakistan logo" width={420} height={144} priority className="h-12 w-auto shrink-0 object-contain object-left md:h-14" />
-            <span className="min-w-0 max-w-full leading-tight">
-              <span className="block truncate whitespace-nowrap text-xs font-semibold text-(--brand-blue-700) dark:text-blue-300">Sukkur Area Office 5405</span>
-              <span className="block truncate whitespace-nowrap text-base font-bold text-gray-900 dark:text-white">State Life Insurance</span>
-              <span className="block truncate whitespace-nowrap text-[10px] uppercase tracking-wider text-gray-500 dark:text-slate-400">Corporation of Pakistan</span>
+          <Link href="/" className="flex min-w-0 flex-1 items-center gap-3 rounded-lg bg-white p-3 text-slate-900 transition-colors duration-200 dark:bg-slate-950 dark:text-slate-100" onClick={() => setMenuOpen(false)}>
+            <Image src="/area-logo.png" alt="State Life Insurance Corporation of Pakistan logo" width={420} height={144} priority className="h-14 w-auto shrink-0 object-contain" />
+            <span className="flex min-w-0 flex-col">
+              <span className="text-xs font-semibold uppercase tracking-wide text-blue-600 dark:text-sky-400 sm:text-sm">Sukkur Area Office 5405</span>
+              <span className="text-lg font-bold leading-tight tracking-tight text-slate-900 dark:text-white sm:text-xl">State Life Insurance</span>
+              <span className="text-xs font-medium uppercase tracking-widest text-slate-500 dark:text-slate-300 sm:text-sm">Corporation of Pakistan</span>
             </span>
           </Link>
 
