@@ -1,7 +1,16 @@
 "use client";
 
-import { ArrowUpRight, ShieldCheck } from "lucide-react";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import { ArrowRight, ArrowUpRight, ShieldCheck } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
+import { WHATSAPP_NUMBER } from "../lib/contact";
+
+const heroPhrases = [
+  "Aapki Family Ka Mustaqbil Mehfooz",
+  "Bachon Ki Taleem Aur Shadi Ke Liye Mehfooz Bachat",
+  "Retirement Aur Sehat Ki Mukammal Protection",
+];
 
 type HeroProps = {
   policyGoals: string[];
@@ -18,38 +27,89 @@ export default function Hero({
   policyFilter,
   onPolicyFilterChange,
 }: HeroProps) {
-  return (
-    <section id="home" className="scroll-mt-30 relative isolate min-h-[42rem] w-full max-w-full overflow-hidden bg-slate-950 text-white sm:min-h-[44rem] lg:scroll-mt-34 lg:min-h-[46rem]">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-0 scale-[1.01] bg-cover bg-center"
-        style={{ backgroundImage: "url('/hero-bg.jpg')", opacity: 0.2, filter: "brightness(35%) blur(1px)" }}
-      />
-      <div aria-hidden="true" className="absolute inset-0 z-0 bg-linear-to-r from-slate-950/95 via-slate-950/85 to-slate-950/60 dark:from-black/95 dark:via-slate-950/90 dark:to-slate-950/70" />
+  const [displayedText, setDisplayedText] = useState(heroPhrases[0]);
 
-      <ScrollReveal className="relative z-10 mx-auto flex min-h-[42rem] w-full max-w-7xl items-center px-4 pb-10 pt-28 sm:min-h-[44rem] sm:px-6 sm:pb-12 sm:pt-28 lg:min-h-[46rem] lg:px-8 lg:pb-16 lg:pt-28">
-        <div className="w-full max-w-2xl rounded-2xl border border-slate-800/80 bg-slate-950/80 p-6 shadow-2xl shadow-black/30 backdrop-blur-xl sm:p-8">
-          <span className="glass inline-flex items-center gap-2 rounded-full border-white/25 bg-white/10 px-4 py-2.5 text-xs font-bold uppercase tracking-[0.14em] text-white shadow-xl shadow-black/10 sm:text-sm">
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    let phraseIndex = 0;
+    let displayedLength = heroPhrases[phraseIndex].length;
+    let deleting = false;
+    let timer = 0;
+
+    const tick = () => {
+      const phrase = heroPhrases[phraseIndex];
+
+      if (deleting) {
+        displayedLength = Math.max(0, displayedLength - 1);
+        setDisplayedText(phrase.slice(0, displayedLength));
+
+        if (displayedLength === 0) {
+          phraseIndex = (phraseIndex + 1) % heroPhrases.length;
+          deleting = false;
+          timer = window.setTimeout(tick, 100);
+        } else {
+          timer = window.setTimeout(tick, 55);
+        }
+        return;
+      }
+
+      displayedLength = Math.min(phrase.length, displayedLength + 1);
+      setDisplayedText(phrase.slice(0, displayedLength));
+
+      if (displayedLength === phrase.length) {
+        deleting = true;
+        timer = window.setTimeout(tick, 4500);
+      } else {
+        timer = window.setTimeout(tick, 110);
+      }
+    };
+
+    timer = window.setTimeout(() => {
+      deleting = true;
+      tick();
+    }, 4500);
+
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  return (
+    <section id="home" className="scroll-mt-30 relative isolate min-h-[85vh] w-full max-w-full overflow-hidden bg-cover bg-center text-white lg:scroll-mt-34">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
+        <Image
+          src="/products/family.png"
+          alt=""
+          fill
+          loading="eager"
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+      </div>
+      <div aria-hidden="true" className="absolute inset-0 z-0 bg-linear-to-r from-black/85 via-black/75 to-black/65 sm:from-slate-950/80 sm:via-slate-950/60 sm:to-slate-950/50" />
+
+      <ScrollReveal className="relative z-10 mx-auto flex min-h-[85vh] w-full max-w-7xl items-center px-4 pt-32 pb-12 sm:px-6 sm:pt-24 sm:pb-14 lg:px-8 lg:pt-28 lg:pb-16">
+        <div className="min-w-0 w-full max-w-3xl">
+          <span className="inline-flex items-center gap-2 rounded-full border border-emerald-100/30 bg-emerald-950/35 px-3.5 py-2 text-xs font-bold uppercase tracking-[0.12em] text-emerald-50 backdrop-blur-sm">
             <ShieldCheck size={15} aria-hidden="true" /> SUKKUR AREA OFFICE 5405
           </span>
-          <h1 className="mt-5 max-w-2xl text-3xl font-black leading-[1.05] tracking-tight text-white sm:text-4xl lg:text-5xl">
-            Securing Your Future,
-            <span className="mt-2 block bg-linear-to-r from-cyan-200 via-sky-300 to-emerald-300 bg-clip-text text-transparent">Empowering Generations</span>
+          <h1 aria-label={heroPhrases[0]} aria-live="off" className="mt-5 min-h-[2.2em] max-w-3xl text-2xl font-bold leading-[1.08] text-blue-600 dark:text-blue-400 sm:min-h-[2.2em] sm:text-4xl md:min-h-[3.2em] md:text-6xl">
+            {displayedText}
+            <span aria-hidden="true" className="ml-1 inline-block h-[0.85em] border-r-2 border-emerald-300 align-[-0.06em] motion-safe:animate-pulse" />
           </h1>
-          <p className="mt-5 max-w-xl text-base leading-7 text-slate-200 sm:text-lg sm:leading-8">
-            Family ke mustaqbil ke liye State Life plans samjhein, aur Sukkur Area Office 5405 se mahirana rehnumai hasil karein.
+          <p className="mt-4 max-w-xl text-base leading-7 text-slate-100 sm:text-lg">
+            Family ke mustaqbil ke liye State Life plans samjhein, aur hamari Sukkur team se mahirana rehnumai hasil karein.
           </p>
 
-          <div className="mt-6 flex min-w-0 flex-wrap gap-3">
-            <a href="/staff/login" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-bold text-slate-950 shadow-lg shadow-black/20 transition hover:-translate-y-0.5 hover:bg-cyan-50">
-              Staff Portal Access <ArrowUpRight size={17} aria-hidden="true" />
+          <div className="mt-7 flex min-w-0 flex-wrap gap-3">
+            <a href="#contact" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-emerald-700 px-5 py-3 text-sm font-bold text-white transition hover:bg-emerald-600">
+              Free consultation <ArrowRight size={17} aria-hidden="true" />
             </a>
-            <a href="#policies" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/35 bg-white/10 px-5 py-3 text-sm font-bold text-white backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/20">
-              Explore Plans <ArrowUpRight size={17} aria-hidden="true" />
+            <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer" className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/30 bg-white/10 px-5 py-3 text-sm font-bold text-white backdrop-blur-sm transition hover:bg-white/20">
+              WhatsApp us
             </a>
           </div>
 
-          <div className="mt-6 hidden w-full max-w-2xl min-w-0 flex-col gap-3 rounded-xl border border-white/20 bg-black/20 p-4 backdrop-blur-md md:flex sm:flex-row sm:items-end">
+          <div className="mt-8 hidden w-full max-w-full min-w-0 flex-col gap-3 rounded-2xl border border-white/25 bg-slate-950/35 p-4 backdrop-blur-md md:flex sm:flex-row sm:items-end">
             <div className="w-full min-w-0 sm:flex-1">
               <label htmlFor="policy-search" className="mb-1.5 block text-xs font-bold uppercase tracking-[0.08em] text-slate-100">Find a policy goal</label>
               <input id="policy-search" type="search" value={policySearch} onChange={(event) => onPolicySearchChange(event.target.value)} placeholder="Search education, health..." className="h-11 w-full min-w-0 rounded-xl border border-white/40 bg-white px-3 text-sm text-slate-900 outline-none placeholder:text-slate-500 focus:border-emerald-300 focus:ring-2 focus:ring-emerald-300/30" />
