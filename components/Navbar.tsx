@@ -36,7 +36,7 @@ export default function Navbar() {
             <span className="flex min-w-0 flex-col">
               <span className="text-xs font-semibold uppercase tracking-wide text-blue-600 dark:text-sky-400 sm:text-sm">Sukkur Area Office 5405</span>
               <span className="text-lg font-bold leading-tight tracking-tight text-slate-900 dark:text-white sm:text-xl">State Life Insurance</span>
-              <span className="text-xs font-bold uppercase tracking-widest text-white sm:text-sm">Corporation of Pakistan</span>
+              <span className="text-xs font-bold uppercase tracking-widest text-slate-600 dark:text-white sm:text-sm">Corporation of Pakistan</span>
             </span>
           </Link>
 
