@@ -101,10 +101,10 @@ export default function Hero({
           </p>
 
           <div className="mt-7 flex min-w-0 flex-wrap gap-3">
-            <a href="#contact" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-emerald-300/40 bg-linear-to-r from-emerald-700 to-emerald-500 px-5 py-3 text-sm font-bold text-white shadow-[0_0_24px_rgba(16,185,129,0.32)] transition hover:-translate-y-0.5 hover:from-emerald-600 hover:to-emerald-400 hover:shadow-[0_0_30px_rgba(16,185,129,0.48)]">
+            <a href="#contact" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-emerald-200/55 bg-emerald-400/20 px-5 py-3 text-sm font-bold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_0_24px_rgba(16,185,129,0.32)] backdrop-blur-xl transition hover:-translate-y-0.5 hover:bg-emerald-300/30 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.4),0_0_30px_rgba(16,185,129,0.48)]">
               Free consultation <ArrowRight size={17} aria-hidden="true" />
             </a>
-            <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer" className="inline-flex min-h-12 items-center justify-center rounded-full border border-sky-200/35 bg-slate-950/55 px-5 py-3 text-sm font-bold text-white shadow-[0_0_22px_rgba(56,189,248,0.2)] backdrop-blur-md transition hover:-translate-y-0.5 hover:border-sky-200/60 hover:bg-slate-900/70 hover:shadow-[0_0_28px_rgba(56,189,248,0.35)]">
+            <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer" className="inline-flex min-h-12 items-center justify-center rounded-full border border-sky-100/45 bg-white/10 px-5 py-3 text-sm font-bold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.22),0_0_22px_rgba(56,189,248,0.2)] backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-sky-100/70 hover:bg-white/20 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.32),0_0_28px_rgba(56,189,248,0.35)]">
               WhatsApp us
             </a>
           </div>
@@ -121,7 +121,7 @@ export default function Hero({
                 {policyGoals.map((goal) => <option key={goal}>{goal}</option>)}
               </select>
             </div>
-            <a href="#policies" className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-emerald-300/40 bg-linear-to-r from-emerald-700 to-emerald-500 px-4 py-2.5 text-sm font-bold text-white shadow-[0_0_20px_rgba(16,185,129,0.25)] transition hover:-translate-y-0.5 hover:from-emerald-600 hover:to-emerald-400 sm:w-auto">
+            <a href="#policies" className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-emerald-200/50 bg-emerald-400/20 px-4 py-2.5 text-sm font-bold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_0_20px_rgba(16,185,129,0.25)] backdrop-blur-xl transition hover:-translate-y-0.5 hover:bg-emerald-300/30 sm:w-auto">
               Explore <ArrowUpRight size={16} aria-hidden="true" />
             </a>
           </div>
