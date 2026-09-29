@@ -28,13 +28,13 @@ export default function Hero({
           fill
           loading="eager"
           sizes="100vw"
-          className="object-cover object-center"
+          className="object-cover object-center opacity-25 brightness-75"
         />
       </div>
-      <div aria-hidden="true" className="absolute inset-0 z-0 bg-linear-to-br from-slate-950/95 via-slate-950/75 to-blue-950/70 dark:from-black/95 dark:via-slate-950/80 dark:to-blue-950/75" />
+      <div aria-hidden="true" className="absolute inset-0 z-0 bg-linear-to-br from-slate-950/98 via-slate-950/90 to-blue-950/85 dark:from-black/98 dark:via-slate-950/90 dark:to-blue-950/85" />
 
       <ScrollReveal className="relative z-10 mx-auto flex min-h-[42rem] w-full max-w-7xl items-center px-4 pb-10 pt-28 sm:min-h-[44rem] sm:px-6 sm:pb-12 sm:pt-28 lg:min-h-[46rem] lg:px-8 lg:pb-16 lg:pt-28">
-        <div className="w-full max-w-2xl">
+        <div className="w-full max-w-2xl rounded-2xl border border-slate-800/80 bg-slate-950/80 p-6 shadow-2xl shadow-black/30 backdrop-blur-xl sm:p-8">
           <span className="glass inline-flex items-center gap-2 rounded-full border-white/25 bg-white/10 px-4 py-2.5 text-xs font-bold uppercase tracking-[0.14em] text-white shadow-xl shadow-black/10 sm:text-sm">
             <ShieldCheck size={15} aria-hidden="true" /> SUKKUR AREA OFFICE 5405
           </span>
@@ -55,7 +55,7 @@ export default function Hero({
             </a>
           </div>
 
-          <div className="mt-6 hidden w-full max-w-2xl min-w-0 flex-col gap-3 rounded-2xl border border-white/25 bg-slate-950/35 p-4 backdrop-blur-md md:flex sm:flex-row sm:items-end">
+          <div className="mt-6 hidden w-full max-w-2xl min-w-0 flex-col gap-3 rounded-xl border border-white/20 bg-black/20 p-4 backdrop-blur-md md:flex sm:flex-row sm:items-end">
             <div className="w-full min-w-0 sm:flex-1">
               <label htmlFor="policy-search" className="mb-1.5 block text-xs font-bold uppercase tracking-[0.08em] text-slate-100">Find a policy goal</label>
               <input id="policy-search" type="search" value={policySearch} onChange={(event) => onPolicySearchChange(event.target.value)} placeholder="Search education, health..." className="h-11 w-full min-w-0 rounded-xl border border-white/40 bg-white px-3 text-sm text-slate-900 outline-none placeholder:text-slate-500 focus:border-emerald-300 focus:ring-2 focus:ring-emerald-300/30" />
