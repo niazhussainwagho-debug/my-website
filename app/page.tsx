@@ -16,6 +16,7 @@ import { products } from "../data/products";
 import { AREA_CODE, CONTACT_EMAIL, FACEBOOK_URL, LINKEDIN_URL, MANAGER_NAME, MANAGER_TITLE, WHATSAPP_DISPLAY, WHATSAPP_NUMBER, emailLink, landlineLink, telLink } from "../lib/contact";
 import { cleanPhone } from "../lib/phone";
 import { cardContentVariants, softSpringTransition, staggerContainerVariants, staticCardVariants } from "../components/card-motion";
+import { useLanguage } from "../context/LanguageContext";
 
 const processSteps = [
   {
@@ -92,6 +93,7 @@ async function submitLead(payload: Record<string, unknown>) {
 }
 
 export default function Home() {
+  const { t } = useLanguage();
   const [openFaq, setOpenFaq] = useState(0);
   const [openProcess, setOpenProcess] = useState(0);
   const [statsProgress, setStatsProgress] = useState(0);
@@ -380,16 +382,16 @@ export default function Home() {
       <section id="overview" aria-label="Sukkur Area Office at a glance" className="scroll-mt-30 border-y border-[#e1e8e2] bg-white dark:border-slate-700 dark:bg-slate-900 lg:scroll-mt-34">
         <div className="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-y divide-[#e6ece7] px-4 sm:px-6 lg:grid-cols-4 lg:divide-y-0 lg:px-8 dark:divide-slate-700">
           <ScrollReveal className="px-3 py-5 sm:px-6 sm:py-7">
-            <span className="sr-only">5,000+ Active Sukkur Policies</span><p aria-hidden="true" className="text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:hidden dark:text-slate-100">{Math.floor(5000 * statsProgress).toLocaleString("en-US")}+</p><p aria-hidden="true" className="hidden text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:block dark:text-slate-100">5,000+</p><p className="mt-1 text-xs font-medium leading-5 text-[#64756e] sm:text-sm dark:text-slate-300">Active Sukkur Policies</p>
+            <span className="sr-only">5,000+ Active Sukkur Policies</span><p aria-hidden="true" className="text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:hidden dark:text-slate-100">{Math.floor(5000 * statsProgress).toLocaleString("en-US")}+</p><p aria-hidden="true" className="hidden text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:block dark:text-slate-100">5,000+</p><p className="mt-1 text-xs font-medium leading-5 text-[#64756e] sm:text-sm dark:text-slate-300">{t.statsPolicies}</p>
           </ScrollReveal>
           <ScrollReveal delayMs={120} className="px-3 py-5 sm:px-6 sm:py-7">
-            <span className="sr-only">100% State-Backed Security</span><p aria-hidden="true" className="text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:hidden dark:text-slate-100">{Math.floor(100 * statsProgress)}%</p><p aria-hidden="true" className="hidden text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:block dark:text-slate-100">100%</p><p className="mt-1 text-xs font-medium leading-5 text-[#64756e] sm:text-sm dark:text-slate-300">State-Backed Security</p>
+            <span className="sr-only">100% State-Backed Security</span><p aria-hidden="true" className="text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:hidden dark:text-slate-100">{Math.floor(100 * statsProgress)}%</p><p aria-hidden="true" className="hidden text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:block dark:text-slate-100">100%</p><p className="mt-1 text-xs font-medium leading-5 text-[#64756e] sm:text-sm dark:text-slate-300">{t.statsSecurity}</p>
           </ScrollReveal>
           <ScrollReveal delayMs={240} className="px-3 py-5 sm:px-6 sm:py-7">
-            <span className="sr-only">PKR 50M+ Claims Facilitated</span><p aria-hidden="true" className="text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:hidden dark:text-slate-100">PKR {Math.floor(50 * statsProgress)}M+</p><p aria-hidden="true" className="hidden text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:block dark:text-slate-100">PKR 50M+</p><p className="mt-1 text-xs font-medium leading-5 text-[#64756e] sm:text-sm dark:text-slate-300">Claims Facilitated</p>
+            <span className="sr-only">PKR 50M+ Claims Facilitated</span><p aria-hidden="true" className="text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:hidden dark:text-slate-100">PKR {Math.floor(50 * statsProgress)}M+</p><p aria-hidden="true" className="hidden text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:block dark:text-slate-100">PKR 50M+</p><p className="mt-1 text-xs font-medium leading-5 text-[#64756e] sm:text-sm dark:text-slate-300">{t.statsClaims}</p>
           </ScrollReveal>
           <ScrollReveal delayMs={360} className="px-3 py-5 sm:px-6 sm:py-7">
-            <span className="sr-only">24/7 Area Office Support Desk</span><p aria-hidden="true" className="text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:hidden dark:text-slate-100">{Math.floor(24 * statsProgress)}/7</p><p aria-hidden="true" className="hidden text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:block dark:text-slate-100">24/7</p><p className="mt-1 text-xs font-medium leading-5 text-[#64756e] sm:text-sm dark:text-slate-300">Area Office Support Desk</p>
+            <span className="sr-only">24/7 Area Office Support Desk</span><p aria-hidden="true" className="text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:hidden dark:text-slate-100">{Math.floor(24 * statsProgress)}/7</p><p aria-hidden="true" className="hidden text-2xl font-black tabular-nums text-[#163c35] sm:text-3xl motion-reduce:block dark:text-slate-100">24/7</p><p className="mt-1 text-xs font-medium leading-5 text-[#64756e] sm:text-sm dark:text-slate-300">{t.statsSupport}</p>
           </ScrollReveal>
         </div>
       </section>
@@ -398,8 +400,8 @@ export default function Home() {
 
       <section id="products" className="scroll-mt-30 mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:scroll-mt-34 lg:px-8">
         <ScrollReveal className="mb-10 text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#176b55]">More ways to plan</p>
-          <h2 className="mt-3 text-3xl font-bold text-[#17332e] sm:text-4xl dark:text-white">Explore all coverage options</h2>
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#176b55]">{t.productsTag}</p>
+          <h2 className="mt-3 text-3xl font-bold text-[#17332e] sm:text-4xl dark:text-white">{t.productsHeading}</h2>
         </ScrollReveal>
 
         <ScrollReveal delayMs={100}>
@@ -467,9 +469,9 @@ export default function Home() {
       <section id="services" className="scroll-mt-30 bg-[#eaf0ea] py-14 sm:py-16 dark:bg-slate-900 lg:scroll-mt-34">
         <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:gap-14 lg:px-8">
           <ScrollReveal className="max-w-lg">
-            <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#176b55]">From first question to ongoing care</p>
-            <h2 className="mt-3 text-3xl font-black leading-tight text-[#17332e] sm:text-4xl dark:text-white">Support at every step</h2>
-            <p className="mt-4 text-base leading-7 text-[#60736b] dark:text-slate-300">Clear local guidance for policy services, claims, and health support. Open a step to see where to start.</p>
+            <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#176b55]">{t.servicesTag}</p>
+            <h2 className="mt-3 text-3xl font-black leading-tight text-[#17332e] sm:text-4xl dark:text-white">{t.servicesHeading}</h2>
+            <p className="mt-4 text-base leading-7 text-[#60736b] dark:text-slate-300">{t.servicesSubtitle}</p>
           </ScrollReveal>
 
           <div className="divide-y divide-[#d5e0d7] border-y border-[#d5e0d7]">
@@ -490,18 +492,18 @@ export default function Home() {
       <section id="about" className="scroll-mt-30 overflow-hidden bg-[#143a35] py-14 text-white sm:py-16 lg:scroll-mt-34">
         <div className="mx-auto grid max-w-7xl items-center gap-8 px-4 sm:px-6 lg:grid-cols-[1fr_0.9fr] lg:gap-16 lg:px-8">
           <ScrollReveal>
-            <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#a6d4bb]">Your local point of contact</p>
-            <h2 className="mt-3 max-w-xl text-3xl font-black leading-tight sm:text-4xl">Personal guidance, right here in Sukkur</h2>
-            <p className="mt-4 max-w-xl text-base leading-7 text-[#d0e0d7]">Meet the Area Office team for policy questions, documentation guidance, and in-person assistance.</p>
+            <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#a6d4bb]">{t.aboutTag}</p>
+            <h2 className="mt-3 max-w-xl text-3xl font-black leading-tight sm:text-4xl">{t.aboutHeading}</h2>
+            <p className="mt-4 max-w-xl text-base leading-7 text-[#d0e0d7]">{t.aboutSubtitle}</p>
             <div className="mt-7 flex items-start gap-3 text-sm leading-6 text-[#e2ede7]">
               <MapPin size={19} className="mt-0.5 shrink-0 text-[#a6d4bb]" aria-hidden="true" />
-              <span>Shahlimar Road, near Session Court, Sukkur</span>
+              <span>{t.aboutAddress}</span>
             </div>
             <div className="mt-3 flex items-start gap-3 text-sm leading-6 text-[#e2ede7]">
               <Clock3 size={19} className="mt-0.5 shrink-0 text-[#a6d4bb]" aria-hidden="true" />
-              <span>Monday to Friday, 9:00 AM to 5:00 PM</span>
+              <span>{t.aboutHours}</span>
             </div>
-            <a href="https://www.google.com/maps/dir/?api=1&destination=Shahlimar+Road,+near+Session+Court,+Sukkur,+Pakistan" target="_blank" rel="noreferrer" className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-full border border-sky-200/55 bg-sky-400/15 px-4 py-2.5 text-sm font-bold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_0_22px_rgba(14,165,233,0.28)] backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-sky-100/75 hover:bg-sky-300/25 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.38),0_0_30px_rgba(14,165,233,0.45)]">Get directions <ArrowUpRight size={16} aria-hidden="true" /></a>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=Shahlimar+Road,+near+Session+Court,+Sukkur,+Pakistan" target="_blank" rel="noreferrer" className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-full border border-sky-200/55 bg-sky-400/15 px-4 py-2.5 text-sm font-bold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_0_22px_rgba(14,165,233,0.28)] backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-sky-100/75 hover:bg-sky-300/25 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.38),0_0_30px_rgba(14,165,233,0.45)]">{t.getDirections} <ArrowUpRight size={16} aria-hidden="true" /></a>
           </ScrollReveal>
 
           <ScrollReveal delayMs={150} className="grid min-w-0 items-center gap-5 rounded-[18px] border border-white/40 bg-linear-to-br from-white/22 via-white/10 to-sky-200/15 p-5 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.38),inset_0_-1px_0_rgba(125,211,252,0.12),0_20px_55px_rgba(0,0,0,0.24),0_0_38px_rgba(56,189,248,0.18)] ring-1 ring-white/10 backdrop-blur-3xl sm:grid-cols-[180px_1fr] sm:p-5">
@@ -511,7 +513,7 @@ export default function Home() {
             <div className="min-w-0 py-2">
               <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-emerald-200/25 bg-emerald-300/10 px-3 py-2 text-xs font-bold leading-5 text-emerald-100">
                 <span className="relative flex h-2.5 w-2.5 shrink-0"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-300 opacity-60" /><span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-300" /></span>
-                <span>Sukkur Area Desk Active</span>
+                <span>{t.deskActive}</span>
               </span>
               <p className="mt-5 wrap-break-word text-2xl font-black leading-tight sm:text-3xl">{MANAGER_NAME}</p>
               <p className="mt-2 text-sm font-semibold text-[#c5d9ce]">{MANAGER_TITLE} · Sukkur Area Office {AREA_CODE}</p>
@@ -749,36 +751,36 @@ export default function Home() {
             <div className="flex min-w-0 items-center gap-3">
               <Image src="/logo area.png" alt="State Life Insurance Corporation of Pakistan logo" width={420} height={144} className="h-14 w-auto shrink-0 object-contain" />
               <div className="flex min-w-0 flex-col">
-                <p className="text-xs font-semibold uppercase tracking-wide text-sky-300 sm:text-sm">Sukkur Area Office 5405</p>
-                <p className="text-lg font-bold leading-tight tracking-tight text-white sm:text-xl">State Life Insurance</p>
-                <p className="text-xs font-bold uppercase tracking-widest text-white sm:text-sm">Corporation of Pakistan</p>
+                <p className="text-xs font-semibold uppercase tracking-wide text-sky-300 sm:text-sm">{t.brandArea}</p>
+                <p className="text-lg font-bold leading-tight tracking-tight text-white sm:text-xl">{t.brandCompany}</p>
+                <p className="text-xs font-bold uppercase tracking-widest text-white sm:text-sm">{t.brandSub}</p>
               </div>
             </div>
-            <p className="mt-5 max-w-sm text-sm leading-6 text-[#b9c9c1]">Local policy guidance and in-person support for families in Sukkur.</p>
+            <p className="mt-5 max-w-sm text-sm leading-6 text-[#b9c9c1]">{t.footerAbout}</p>
           </motion.div>
           </motion.div>
 
           <motion.div variants={staticCardVariants}>
           <motion.div variants={cardContentVariants}>
-            <h3 className="text-sm font-bold text-white">Explore</h3>
+            <h3 className="text-sm font-bold text-white">{t.footerExplore}</h3>
             <ul className="mt-4 space-y-3 text-sm text-[#b9c9c1]">
-              <li><a href="/products" className="hover:text-white">Products</a></li>
-              <li><a href="/services" className="hover:text-white">Services</a></li>
-              <li><a href="/about" className="hover:text-white">About us</a></li>
-              <li><a href="/contact" className="hover:text-white">Contact</a></li>
+              <li><a href="/products" className="hover:text-white">{t.navProducts}</a></li>
+              <li><a href="/services" className="hover:text-white">{t.navServices}</a></li>
+              <li><a href="/about" className="hover:text-white">{t.navAbout}</a></li>
+              <li><a href="/contact" className="hover:text-white">{t.navContact}</a></li>
             </ul>
           </motion.div>
           </motion.div>
 
           <motion.div variants={staticCardVariants} className="min-w-0">
           <motion.div variants={cardContentVariants}>
-            <h3 className="text-sm font-bold text-white">Official contact</h3>
+            <h3 className="text-sm font-bold text-white">{t.footerContact}</h3>
             <ul className="mt-4 space-y-3 wrap-break-word text-sm leading-6 text-[#b9c9c1]">
-              <li>Shahlimar Road, near Session Court, Sukkur</li>
+              <li>{t.aboutAddress}</li>
               <li><a href={landlineLink()} className="inline-flex min-h-10 items-center rounded-full border border-emerald-300/40 px-3 font-semibold text-emerald-300 transition-colors hover:bg-emerald-300/10 hover:text-emerald-200">Office Landline</a></li>
               <li><a href={`https://wa.me/${WHATSAPP_NUMBER}`} className="font-semibold text-emerald-300 transition-colors hover:text-emerald-200">WhatsApp: {WHATSAPP_DISPLAY}</a></li>
               <li><a href={emailLink()} className="font-semibold text-cyan-200 transition-colors hover:text-emerald-200">{CONTACT_EMAIL}</a></li>
-              <li>Monday to Friday · 9 AM to 5 PM</li>
+              <li>{t.aboutHours}</li>
             </ul>
           </motion.div>
           </motion.div>
@@ -801,7 +803,7 @@ export default function Home() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
           className="mx-auto mt-5 max-w-7xl px-1 text-center text-xs leading-5 text-[#687b71]"
-        >Ye website Sukkur Area Office ki taraf se hai. Policy payment aur login ke liye official channels use karein.</motion.p>
+        >{t.footerDisclaimer}</motion.p>
       </footer>
 
       {selectedCategory && (

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Globe, Check } from "lucide-react";
+import { Globe, Check, ChevronDown } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 import { Language } from "../lib/translations";
 
@@ -16,7 +16,7 @@ export default function LanguageSwitcher() {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Close on outside click
+  // Close on outside click or escape
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
@@ -46,11 +46,16 @@ export default function LanguageSwitcher() {
         onClick={() => setIsOpen((prev) => !prev)}
         aria-haspopup="true"
         aria-expanded={isOpen}
-        aria-label="Select language"
-        className="inline-flex h-10 items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3 text-xs font-bold text-white shadow-xs backdrop-blur-md transition-all hover:bg-white/20 hover:border-white/30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
+        aria-label="Select website language"
+        className="inline-flex h-9 sm:h-10 items-center gap-1 sm:gap-1.5 rounded-full border border-white/20 bg-white/10 px-2 sm:px-3 text-xs font-bold text-white shadow-xs backdrop-blur-md transition-all hover:bg-white/20 hover:border-white/30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
       >
-        <Globe size={15} className="text-sky-300" aria-hidden="true" />
+        <Globe size={14} className="text-sky-300 shrink-0" aria-hidden="true" />
         <span className="font-semibold tracking-wide">{currentLang.native}</span>
+        <ChevronDown
+          size={12}
+          className={`text-slate-300 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+          aria-hidden="true"
+        />
       </button>
 
       {/* Dropdown Menu */}
@@ -58,7 +63,7 @@ export default function LanguageSwitcher() {
         <div
           role="menu"
           aria-orientation="vertical"
-          className="absolute right-0 rtl:right-auto rtl:left-0 mt-2 w-40 origin-top-right rounded-2xl border border-white/20 bg-slate-950/95 p-1.5 shadow-2xl backdrop-blur-2xl z-[70] animate-in fade-in zoom-in-95 duration-150"
+          className="absolute right-0 mt-2 w-40 sm:w-44 origin-top-right rounded-2xl border border-white/20 bg-slate-950/95 p-1.5 shadow-2xl backdrop-blur-2xl z-[100] animate-in fade-in zoom-in-95 duration-150"
         >
           {languages.map((item) => {
             const isSelected = item.code === language;

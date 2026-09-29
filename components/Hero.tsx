@@ -115,7 +115,7 @@ export default function Hero({
             {displayedText}
             <span
               aria-hidden="true"
-              className="ml-1 rtl:mr-1 rtl:ml-0 inline-block h-[0.82em] border-r-3 rtl:border-l-3 rtl:border-r-0 border-emerald-400 align-[-0.06em] motion-safe:animate-pulse"
+              className="ml-1 inline-block h-[0.82em] border-r-3 border-emerald-400 align-[-0.06em] motion-safe:animate-pulse"
             />
           </h1>
 
@@ -129,7 +129,7 @@ export default function Hero({
               href="#contact"
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-blue-600 hover:bg-blue-500 px-7 py-3 text-sm sm:text-base font-bold text-white shadow-lg shadow-blue-600/30 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-blue-500/40"
             >
-              {t.heroConsultBtn} <ArrowRight size={17} aria-hidden="true" className="rtl:rotate-180" />
+              {t.heroConsultBtn} <ArrowRight size={17} aria-hidden="true" />
             </a>
             <a
               href={`https://wa.me/${WHATSAPP_NUMBER}`}
@@ -176,7 +176,7 @@ export default function Hero({
               href="#policies"
               className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-500 px-5 py-2.5 text-sm font-bold text-white shadow-md shadow-blue-700/30 transition-all duration-200 hover:-translate-y-0.5 sm:w-auto"
             >
-              {t.heroExploreBtn} <ArrowUpRight size={16} aria-hidden="true" className="rtl:rotate-270" />
+              {t.heroExploreBtn} <ArrowUpRight size={16} aria-hidden="true" />
             </a>
           </div>
 

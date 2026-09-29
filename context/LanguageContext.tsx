@@ -38,9 +38,9 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
   const updateDocAttributes = (lang: Language) => {
     if (typeof document === "undefined") return;
-    const isRtl = lang === "ur" || lang === "sd";
     document.documentElement.lang = lang;
-    document.documentElement.dir = isRtl ? "rtl" : "ltr";
+    // Keep consistent LTR alignment as requested so elements and buttons do not flip sides
+    document.documentElement.dir = "ltr";
   };
 
   const setLanguage = (lang: Language) => {
