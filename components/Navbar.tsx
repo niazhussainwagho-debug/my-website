@@ -28,59 +28,166 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-[60] m-0 block w-full max-w-full overflow-x-clip bg-white p-0 shadow-md dark:bg-slate-950">
-      <div className="m-0 w-full max-w-full overflow-hidden">
-        <div className="mx-auto flex min-h-[60px] w-full max-w-7xl items-center justify-between gap-3 px-4 pt-2 pb-2 md:px-8 lg:min-h-[88px]">
-          <Link href="/" className="flex min-w-0 flex-1 items-center gap-3 rounded-lg bg-white p-3 text-slate-900 transition-colors duration-200 dark:bg-slate-950 dark:text-slate-100" onClick={() => setMenuOpen(false)}>
-            <Image src="/logo area.png" alt="State Life Insurance Corporation of Pakistan logo" width={420} height={144} priority className="h-14 w-auto shrink-0 object-contain" />
-            <span className="flex min-w-0 flex-col">
-              <span className="text-xs font-semibold uppercase tracking-wide text-blue-600 dark:text-sky-400 sm:text-sm">Sukkur Area Office 5405</span>
-              <span className="text-lg font-bold leading-tight tracking-tight text-slate-900 dark:text-white sm:text-xl">State Life Insurance</span>
-              <span className="text-xs font-bold uppercase tracking-widest text-slate-600 dark:text-white sm:text-sm">Corporation of Pakistan</span>
+    <header className="fixed inset-x-0 top-0 z-[60] m-0 block w-full max-w-full overflow-x-clip border-b border-slate-200/80 bg-white/90 backdrop-blur-md transition-colors duration-200 dark:border-slate-800/80 dark:bg-slate-950/90 shadow-xs">
+      <div className="mx-auto flex h-20 w-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+        {/* Brand Logo & Info */}
+        <Link
+          href="/"
+          className="group flex min-w-0 items-center gap-3 transition-opacity hover:opacity-95"
+          onClick={() => setMenuOpen(false)}
+        >
+          <Image
+            src="/logo area.png"
+            alt="State Life Insurance Corporation of Pakistan logo"
+            width={420}
+            height={144}
+            priority
+            className="h-12 w-auto shrink-0 object-contain sm:h-14 transition-transform group-hover:scale-[1.02]"
+          />
+          <span className="flex min-w-0 flex-col">
+            <span className="text-[10px] font-extrabold uppercase tracking-widest text-blue-600 dark:text-sky-400 sm:text-xs">
+              Sukkur Area Office 5405
             </span>
+            <span className="text-base font-black leading-tight tracking-tight text-slate-900 dark:text-white sm:text-lg">
+              State Life Insurance
+            </span>
+            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 sm:text-[11px]">
+              Corporation of Pakistan
+            </span>
+          </span>
+        </Link>
+
+        {/* Desktop Navigation Links */}
+        <nav className="hidden items-center gap-1 lg:flex" aria-label="Main navigation">
+          {navLinks.map((link) => {
+            const active = isActiveRoute(pathname, link.href);
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                aria-current={active ? "page" : undefined}
+                className={`inline-flex items-center px-3.5 py-2 text-sm font-semibold rounded-full transition-all duration-200 ${
+                  active
+                    ? "bg-blue-50 text-blue-700 dark:bg-blue-950/70 dark:text-sky-300 font-bold shadow-xs"
+                    : "text-slate-600 hover:text-blue-600 dark:text-slate-300 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60"
+                }`}
+              >
+                {link.name}
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* Desktop Right Action Area */}
+        <div className="hidden shrink-0 items-center gap-2.5 sm:flex">
+          <a
+            href={whatsappLink()}
+            target="_blank"
+            rel="noreferrer"
+            title="Chat on WhatsApp"
+            aria-label="Chat on WhatsApp"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-emerald-200 bg-emerald-50 text-emerald-600 transition hover:bg-emerald-100 dark:border-emerald-800/60 dark:bg-emerald-950/40 dark:text-emerald-400 dark:hover:bg-emerald-900/50"
+          >
+            <WhatsAppIcon />
+          </a>
+          <a
+            href={telLink()}
+            title="Call Office"
+            aria-label="Call Office"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-blue-200 bg-blue-50 text-blue-600 transition hover:bg-blue-100 dark:border-blue-800/60 dark:bg-blue-950/40 dark:text-sky-400 dark:hover:bg-blue-900/50"
+          >
+            <PhoneIcon />
+          </a>
+          <ThemeToggle />
+          <Link
+            href="/contact#contact-form"
+            className="inline-flex min-h-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-blue-700 to-blue-600 px-5 py-2 text-sm font-bold text-white shadow-md shadow-blue-700/20 transition-all duration-200 hover:-translate-y-0.5 hover:from-blue-800 hover:to-blue-700 hover:shadow-lg hover:shadow-blue-700/30"
+          >
+            Get Policy Quote
           </Link>
+        </div>
 
-          <div className="hidden shrink-0 items-center gap-2 text-sm font-semibold md:flex">
-            <ThemeToggle />
-            <Link href="/contact#contact-form" className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-full bg-(--brand-blue-700) px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-(--brand-blue-900)">Get Policy Quote</Link>
-          </div>
-
-          <div className="flex shrink-0 items-center gap-2 md:hidden">
-            <ThemeToggle />
-            <button type="button" aria-label={menuOpen ? "Close menu" : "Open menu"} aria-expanded={menuOpen} aria-controls="mobile-navigation" onClick={() => setMenuOpen((open) => !open)} className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
-              <span className="space-y-1.5" aria-hidden="true">
-                <span className={`block h-0.5 w-5 rounded-full bg-current transition ${menuOpen ? "translate-y-2 rotate-45" : ""}`} />
-                <span className={`block h-0.5 w-5 rounded-full bg-current transition ${menuOpen ? "opacity-0" : ""}`} />
-                <span className={`block h-0.5 w-5 rounded-full bg-current transition ${menuOpen ? "-translate-y-2 -rotate-45" : ""}`} />
-              </span>
-            </button>
-          </div>
+        {/* Mobile Hamburger & Theme Toggle */}
+        <div className="flex shrink-0 items-center gap-2 sm:hidden">
+          <ThemeToggle />
+          <button
+            type="button"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-navigation"
+            onClick={() => setMenuOpen((open) => !open)}
+            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 transition hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800"
+          >
+            <span className="space-y-1.5" aria-hidden="true">
+              <span
+                className={`block h-0.5 w-5 rounded-full bg-current transition ${
+                  menuOpen ? "translate-y-2 rotate-45" : ""
+                }`}
+              />
+              <span
+                className={`block h-0.5 w-5 rounded-full bg-current transition ${
+                  menuOpen ? "opacity-0" : ""
+                }`}
+              />
+              <span
+                className={`block h-0.5 w-5 rounded-full bg-current transition ${
+                  menuOpen ? "-translate-y-2 -rotate-45" : ""
+                }`}
+              />
+            </span>
+          </button>
         </div>
       </div>
 
-      <nav className="m-0 w-full max-w-full overflow-x-clip bg-[#0052cc]" aria-label="Main navigation">
-        <div className="mx-auto flex min-h-12 w-full max-w-7xl items-center px-4 md:px-8">
-          <div className="hidden w-full min-w-0 flex-nowrap items-center justify-between gap-1 md:flex">
-            {navLinks.map((link) => {
-              const active = isActiveRoute(pathname, link.href);
-              return <Link key={link.href} href={link.href} aria-current={active ? "page" : undefined} className={`inline-flex min-h-12 shrink-0 items-center whitespace-nowrap border-b-2 px-2 text-sm font-semibold text-white transition hover:bg-white/10 lg:px-3 ${active ? "border-white" : "border-transparent"}`}>{link.name}</Link>;
-            })}
-          </div>
-          <div className="md:hidden"><p className="w-full max-w-full m-0 py-1.5 px-3 bg-[#0052cc] overflow-hidden text-ellipsis text-center text-xs font-semibold text-white whitespace-nowrap truncate">Sukkur Area Office 5405</p></div>
-        </div>
-      </nav>
-
+      {/* Mobile Navigation Drawer */}
       {menuOpen && (
-        <div id="mobile-navigation" className="absolute inset-x-0 top-full max-h-[calc(100dvh-7rem)] w-full max-w-full overflow-x-clip overflow-y-auto border-t border-blue-400/30 bg-[#0052cc] shadow-lg md:hidden">
-          <div className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-3 sm:px-6">
+        <div
+          id="mobile-navigation"
+          className="border-t border-slate-200/80 bg-white/95 px-4 pt-3 pb-6 backdrop-blur-xl dark:border-slate-800 dark:bg-slate-950/95 lg:hidden shadow-xl"
+        >
+          <div className="flex flex-col gap-1.5">
             {navLinks.map((link) => {
               const active = isActiveRoute(pathname, link.href);
-              return <Link key={link.href} href={link.href} aria-current={active ? "page" : undefined} onClick={() => setMenuOpen(false)} className={`rounded-xl px-3 py-3 text-base font-medium text-white transition hover:bg-white/10 ${active ? "bg-white/15 font-semibold" : ""}`}>{link.name}</Link>;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  aria-current={active ? "page" : undefined}
+                  onClick={() => setMenuOpen(false)}
+                  className={`rounded-xl px-4 py-3 text-sm font-semibold transition ${
+                    active
+                      ? "bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-sky-300 font-bold"
+                      : "text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-900"
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              );
             })}
-            <div className="mt-2 grid gap-2 border-t border-white/20 pt-3 sm:grid-cols-2">
-              <a href={telLink()} onClick={() => setMenuOpen(false)} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-white px-4 py-3 text-sm font-semibold text-(--brand-blue-900)"><PhoneIcon />Call</a>
-              <a href={whatsappLink()} target="_blank" rel="noreferrer" onClick={() => setMenuOpen(false)} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[#1f8a67] px-4 py-3 text-sm font-semibold text-white"><WhatsAppIcon />WhatsApp</a>
-              <Link href="/contact#contact-form" onClick={() => setMenuOpen(false)} className="inline-flex min-h-11 items-center justify-center rounded-full bg-white/15 px-4 py-3 text-sm font-semibold text-white sm:col-span-2">Get Policy Quote</Link>
+            <div className="mt-3 grid grid-cols-2 gap-2 border-t border-slate-200 pt-3 dark:border-slate-800">
+              <a
+                href={telLink()}
+                onClick={() => setMenuOpen(false)}
+                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-blue-200 bg-blue-50 px-3 py-2 text-xs font-bold text-blue-700 dark:border-blue-900 dark:bg-blue-950/60 dark:text-sky-300"
+              >
+                <PhoneIcon /> Call Office
+              </a>
+              <a
+                href={whatsappLink()}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => setMenuOpen(false)}
+                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-bold text-emerald-700 dark:border-emerald-900 dark:bg-emerald-950/60 dark:text-emerald-300"
+              >
+                <WhatsAppIcon /> WhatsApp
+              </a>
+              <Link
+                href="/contact#contact-form"
+                onClick={() => setMenuOpen(false)}
+                className="col-span-2 inline-flex min-h-11 items-center justify-center rounded-xl bg-gradient-to-r from-blue-700 to-blue-600 px-4 py-2.5 text-sm font-bold text-white shadow-md shadow-blue-700/20"
+              >
+                Get Policy Quote
+              </Link>
             </div>
           </div>
         </div>

@@ -59,13 +59,13 @@ html {
 
 main section[id],
 main footer[id] {
-  scroll-margin-top: 7.5rem;
+  scroll-margin-top: 5.5rem;
 }
 
 @media (min-width: 1024px) {
   main section[id],
   main footer[id] {
-    scroll-margin-top: 8.5rem;
+    scroll-margin-top: 5.75rem;
   }
 }
 
