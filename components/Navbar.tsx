@@ -52,7 +52,7 @@ export default function Navbar() {
             <span className="text-sm font-black leading-tight tracking-tight text-white sm:text-base md:text-lg">
               State Life Insurance
             </span>
-            <span className="text-[9px] font-bold uppercase tracking-wider text-slate-300 sm:text-[10px]">
+            <span className="text-[9px] font-bold uppercase tracking-wider text-white dark:text-white sm:text-[10px]">
               Corporation of Pakistan
             </span>
           </span>
