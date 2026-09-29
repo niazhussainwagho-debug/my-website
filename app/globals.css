@@ -26,16 +26,16 @@ body {
 }
 
 :root {
-  --brand-blue-900: #0A2A66;
-  --brand-blue-700: #0E3F94;
-  --brand-blue-500: #1A5FCC;
+  --brand-blue-900: #061224;
+  --brand-blue-700: #0B1E3B;
+  --brand-blue-500: #1D4ED8;
   --brand-blue-100: #E6EEFB;
-  --background: var(--brand-blue-900);
+  --background: #061224;
   --foreground: #f8fafc;
 }
 
 :root.dark {
-  --background: #020617;
+  --background: #040c18;
   --foreground: #f1f5f9;
   color-scheme: dark;
 }
@@ -52,35 +52,34 @@ body {
 }
 
 html {
-  background: linear-gradient(to bottom, var(--brand-blue-900), var(--brand-blue-700));
+  background: #061224;
   scroll-behavior: smooth;
   scrollbar-gutter: stable;
 }
 
 main section[id],
 main footer[id] {
-  scroll-margin-top: 5.5rem;
+  scroll-margin-top: 6.5rem;
 }
 
 @media (min-width: 1024px) {
   main section[id],
   main footer[id] {
-    scroll-margin-top: 5.75rem;
+    scroll-margin-top: 7rem;
   }
 }
 
 body {
   margin: 0;
   min-height: 100vh;
-  background: linear-gradient(to bottom, var(--brand-blue-900), var(--brand-blue-700));
-  background-attachment: fixed;
+  background: #061224;
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
 
 html.dark,
 html.dark body {
-  background: #020617;
+  background: #040c18;
   color: #f1f5f9;
 }
 

@@ -74,11 +74,11 @@ export default function Hero({
   }, []);
 
   return (
-    <section id="home" className="scroll-mt-20 lg:scroll-mt-24 relative isolate min-h-[85vh] w-full max-w-full overflow-hidden bg-[#071326] text-white">
-      {/* Ambient background glow */}
+    <section id="home" className="scroll-mt-24 relative isolate min-h-[85vh] w-full max-w-full overflow-hidden bg-[#061224] text-white">
+      {/* Ambient background glow from demo */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -left-40 top-0 h-96 w-96 rounded-full bg-blue-600/15 blur-3xl"
+        className="pointer-events-none absolute -left-20 -top-20 h-[500px] w-[500px] rounded-full bg-blue-600/25 blur-[120px]"
       />
 
       {/* Right-side family imagery matching approved demo */}
@@ -92,8 +92,8 @@ export default function Hero({
           className="object-cover object-center lg:object-[center_20%]"
         />
         {/* Soft edge blend overlays */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#071326] via-[#071326]/75 to-transparent lg:from-[#071326] lg:via-[#071326]/35 lg:to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#071326] via-transparent to-transparent opacity-85" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#061224] via-[#061224]/75 to-transparent lg:from-[#061224] lg:via-[#061224]/30 lg:to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#061224] via-transparent to-transparent opacity-85" />
       </div>
 
       <ScrollReveal className="relative z-10 mx-auto flex min-h-[85vh] w-full max-w-7xl items-center px-4 pt-10 pb-16 sm:px-6 sm:pt-14 sm:pb-20 lg:px-8">
