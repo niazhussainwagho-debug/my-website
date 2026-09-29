@@ -13,74 +13,25 @@ import { useLanguage } from "../context/LanguageContext";
 export default function Navbar() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("home");
   const { t } = useLanguage();
 
-  const isHome = pathname === "/";
-
   const navLinks = [
-    { id: "home", name: t.navHome, href: isHome ? "#home" : "/#home" },
-    { id: "products", name: t.navProducts, href: isHome ? "#products" : "/#products" },
-    { id: "services", name: t.navServices, href: isHome ? "#services" : "/#services" },
-    { id: "about", name: t.navAbout, href: isHome ? "#about" : "/#about" },
-    { id: "contact", name: t.navContact, href: isHome ? "#contact" : "/#contact" },
+    { id: "home", name: t.navHome, href: "/" },
+    { id: "products", name: t.navProducts, href: "/products" },
+    { id: "services", name: t.navServices, href: "/services" },
+    { id: "about", name: t.navAbout, href: "/about" },
+    { id: "contact", name: t.navContact, href: "/contact" },
     { id: "join", name: t.navJoin, href: "/become-an-agent" },
   ];
 
-  // Dynamically track active section on homepage
-  useEffect(() => {
-    if (!isHome) return;
-
-    const sections = ["home", "products", "services", "about", "contact"];
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY + 220;
-      for (const sectionId of sections) {
-        const el = document.getElementById(sectionId);
-        if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPosition >= top && scrollPosition < top + height) {
-            setActiveSection(sectionId);
-          }
-        }
-      }
-    };
-
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [isHome]);
-
-  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    setMenuOpen(false);
-
-    if (href.startsWith("#")) {
-      e.preventDefault();
-      const targetId = href.slice(1);
-      const targetEl = document.getElementById(targetId);
-      if (targetEl) {
-        targetEl.scrollIntoView({ behavior: "smooth" });
-        window.history.pushState(null, "", href);
-      }
-    } else if (href.startsWith("/#") && isHome) {
-      e.preventDefault();
-      const targetId = href.slice(2);
-      const targetEl = document.getElementById(targetId);
-      if (targetEl) {
-        targetEl.scrollIntoView({ behavior: "smooth" });
-        window.history.pushState(null, "", href.slice(1));
-      }
-    }
-  };
-
   const isLinkActive = (link: { id: string; href: string }) => {
-    if (isHome) {
-      return activeSection === link.id;
+    if (link.href === "/") {
+      return pathname === "/";
     }
     return pathname === link.href || pathname.startsWith(`${link.href}/`);
   };
 
-  const quoteHref = isHome ? "#contact" : "/contact#contact-form";
+  const quoteHref = "/contact";
 
   return (
     <header className="fixed inset-x-0 top-0 z-[60] pointer-events-none px-3 pt-3 sm:px-6 sm:pt-4 lg:px-8">
@@ -90,15 +41,7 @@ export default function Navbar() {
         <Link
           href="/"
           className="group flex min-w-0 items-center gap-2 sm:gap-3 transition-opacity hover:opacity-95"
-          onClick={(e) => {
-            setMenuOpen(false);
-            if (isHome) {
-              e.preventDefault();
-              window.scrollTo({ top: 0, behavior: "smooth" });
-              window.history.pushState(null, "", "/");
-              setActiveSection("home");
-            }
-          }}
+          onClick={() => setMenuOpen(false)}
         >
           <Image
             src="/logo area.png"
@@ -129,7 +72,7 @@ export default function Navbar() {
               <Link
                 key={link.id}
                 href={link.href}
-                onClick={(e) => handleLinkClick(e, link.href)}
+                onClick={() => setMenuOpen(false)}
                 aria-current={active ? "page" : undefined}
                 className={`inline-flex items-center shrink-0 whitespace-nowrap px-2.5 py-1.5 xl:px-3.5 xl:py-2 text-xs xl:text-sm font-semibold rounded-full transition-all duration-200 ${
                   active
@@ -170,7 +113,7 @@ export default function Navbar() {
           />
           <Link
             href={quoteHref}
-            onClick={(e) => handleLinkClick(e, quoteHref)}
+            onClick={() => setMenuOpen(false)}
             className="inline-flex h-8.5 xl:h-10 shrink-0 items-center justify-center rounded-full bg-blue-600 hover:bg-blue-500 px-3.5 py-1.5 xl:px-5 xl:py-2 text-xs xl:text-sm font-bold text-white shadow-lg shadow-blue-600/40 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-blue-500/50 whitespace-nowrap"
           >
             {t.navQuoteBtn}
@@ -237,7 +180,7 @@ export default function Navbar() {
                   key={link.id}
                   href={link.href}
                   aria-current={active ? "page" : undefined}
-                  onClick={(e) => handleLinkClick(e, link.href)}
+                  onClick={() => setMenuOpen(false)}
                   className={`rounded-xl px-4 py-3 text-sm font-semibold transition ${
                     active
                       ? "bg-white/20 text-white font-bold"
@@ -267,7 +210,7 @@ export default function Navbar() {
               </a>
               <Link
                 href={quoteHref}
-                onClick={(e) => handleLinkClick(e, quoteHref)}
+                onClick={() => setMenuOpen(false)}
                 className="col-span-2 inline-flex min-h-11 items-center justify-center rounded-xl bg-blue-600 hover:bg-blue-500 px-4 py-2.5 text-sm font-bold text-white shadow-lg shadow-blue-600/40"
               >
                 {t.navQuoteBtn}
