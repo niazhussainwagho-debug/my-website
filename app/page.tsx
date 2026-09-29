@@ -525,8 +525,8 @@ export default function Home() {
       <section id="faq" className="scroll-mt-30 bg-[#020617] py-16 text-white lg:scroll-mt-34">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <ScrollReveal className="mb-10 text-center">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#1f8a67]">FAQ</p>
-            <h2 className="mt-3 text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">Common questions, clear answers</h2>
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-300">FAQ</p>
+            <h2 className="mt-3 text-3xl font-bold text-white sm:text-4xl">Common questions, clear answers</h2>
           </ScrollReveal>
 
           <motion.div
