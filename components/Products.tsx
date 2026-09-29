@@ -64,10 +64,10 @@ export default function Products({ policies, onLearnMore }: ProductsProps) {
     <section id="policies" className="scroll-mt-30 mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-16 lg:scroll-mt-34 lg:px-8">
       <ScrollReveal className="mb-8 flex min-w-0 flex-wrap items-end justify-between gap-4">
         <div className="min-w-0">
-          <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#176b55]">Plans for life&apos;s milestones</p>
-          <h2 className="mt-2 text-3xl font-black leading-tight text-[#17332e] sm:text-4xl">Protection for what matters</h2>
+          <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#176b55] dark:text-cyan-300">Plans for life&apos;s milestones</p>
+          <h2 className="mt-2 text-3xl font-black leading-tight text-[#17332e] dark:text-white sm:text-4xl">Protection for what matters</h2>
         </div>
-        <a href="/products" className="inline-flex min-h-10 items-center gap-2 text-sm font-bold text-[#176b55] transition-colors hover:text-[#0b493b]">All products <ArrowRight size={16} aria-hidden="true" /></a>
+        <a href="/products" className="inline-flex min-h-10 items-center gap-2 text-sm font-bold text-[#176b55] transition-colors hover:text-[#0b493b] dark:text-cyan-300 dark:hover:text-cyan-200">All products <ArrowRight size={16} aria-hidden="true" /></a>
       </ScrollReveal>
 
       {activePolicy ? (
