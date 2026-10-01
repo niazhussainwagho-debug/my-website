@@ -31,7 +31,7 @@ export default function ServicesPage() {
   const { t } = useLanguage();
 
   return (
-    <main className="min-h-screen bg-[#061224] text-white">
+    <main className="min-h-screen bg-[#040914] dark:bg-[#040914] text-white">
       {/* ── Ambient Background Lighting ── */}
       <div className="relative isolate overflow-hidden">
         <div

@@ -37,7 +37,7 @@ export default function ProductsPage() {
   });
 
   return (
-    <main className="min-h-screen bg-[#061224] text-white">
+    <main className="min-h-screen bg-[#040914] dark:bg-[#040914] text-white">
       {/* ── Ambient Background Glows ── */}
       <div className="relative isolate overflow-hidden">
         <div
