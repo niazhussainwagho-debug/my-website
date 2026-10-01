@@ -30,8 +30,9 @@ body {
   --brand-blue-700: #0B1E3B;
   --brand-blue-500: #1D4ED8;
   --brand-blue-100: #E6EEFB;
-  --background: #061224;
+  --background: #040c18;
   --foreground: #f8fafc;
+  color-scheme: dark;
 }
 
 :root.dark {
@@ -43,16 +44,12 @@ body {
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-* {
-  box-sizing: border-box;
+  --font-sans: var(--font-geist-sans), "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-geist-mono), "JetBrains Mono", "Fira Code", "Courier New", Courier, monospace;
 }
 
 html {
-  background: #061224;
+  background: #040c18;
   scroll-behavior: smooth;
   scrollbar-gutter: stable;
 }
@@ -72,9 +69,13 @@ main footer[id] {
 body {
   margin: 0;
   min-height: 100vh;
-  background: #061224;
+  background: #040c18;
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 html.dark,
@@ -83,21 +84,35 @@ html.dark body {
   color: #f1f5f9;
 }
 
+/* ── Premium Typography Scale ── */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+p {
+  line-height: 1.7;
+}
+
+/* ── Glassmorphism Utility ── */
 .glass {
-  background: rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(14px) saturate(140%);
   -webkit-backdrop-filter: blur(14px) saturate(140%);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
   transition: background 200ms ease, border-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
 }
 
 .glass:hover {
-  background: rgba(255, 255, 255, 0.16);
-  border-color: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.10);
+  border-color: rgba(255, 255, 255, 0.20);
   transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
 }
 
+/* ── Scroll Reveal Animation ── */
 .scroll-reveal {
   opacity: 0;
   transform: translateY(20px);
@@ -111,7 +126,7 @@ html.dark body {
 
 @supports not (backdrop-filter: blur(1px)) {
   .glass {
-    background: rgba(20, 60, 140, 0.65);
+    background: rgba(10, 30, 70, 0.85);
   }
 }
 
@@ -138,6 +153,7 @@ html.dark body {
   }
 }
 
+/* ── Ambient Glow Layer ── */
 .site-glow {
   position: fixed;
   inset: 0;
@@ -156,7 +172,7 @@ html.dark body {
   max-height: 520px;
   border-radius: 9999px;
   filter: blur(90px);
-  opacity: 0.28;
+  opacity: 0.25;
 }
 
 .site-glow::before {
@@ -171,6 +187,53 @@ html.dark body {
   background: radial-gradient(circle, #4C8DFF 0%, transparent 70%);
 }
 
+/* ── Premium Selection Color ── */
 ::selection {
-  background: rgba(31, 138, 103, 0.2);
+  background: rgba(43, 182, 196, 0.25);
+  color: #fff;
+}
+
+/* ── Scrollbar Styling ── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #040c18;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 99px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* ── Form Input Focus Glow ── */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(43, 182, 196, 0.3);
+}
+
+/* ── Gradient Text Utility ── */
+.gradient-text {
+  background: linear-gradient(135deg, #10b981, #06b6d4, #f59e0b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Premium Card Hover ── */
+.card-hover {
+  transition: transform 300ms ease, box-shadow 300ms ease, border-color 300ms ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
 }

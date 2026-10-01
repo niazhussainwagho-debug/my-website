@@ -3,31 +3,74 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import {
+  ShieldCheck,
+  Award,
+  Sparkles,
+  TrendingUp,
+  GraduationCap,
+  Briefcase,
+  Clock,
+  ArrowRight,
+  ArrowUpRight,
+  MessageSquare,
+  CheckCircle2,
+  AlertCircle,
+  Loader2,
+  ChevronDown,
+  Building2,
+  Phone,
+  Users,
+} from "lucide-react";
 import { cleanPhone } from "../../lib/phone";
-import { WHATSAPP_NUMBER, telLink } from "../../lib/contact";
+import {
+  AREA_CODE,
+  MANAGER_NAME,
+  MANAGER_TITLE,
+  PHONE_DISPLAY,
+  WHATSAPP_NUMBER,
+  telLink,
+} from "../../lib/contact";
+
 const processSteps = [
-  "Pre-registration form bharein ya office aayein.",
-  "Office mein asli Application Form (Form 01) aur zaroori documents jama karwayein.",
-  "Sales Manager/Senior Sales Manager ki introducer declaration aur Area Manager ki recommendation.",
-  "Zonal Certification Committee ka review, phir registration aur code number ki allotment.",
+  {
+    step: "01",
+    title: "Pre-Registration",
+    detail: "Online pre-registration form submit karein ya direct Sukkur Area Office tashreef layein.",
+  },
+  {
+    step: "02",
+    title: "Form 01 & Verification",
+    detail: "Attested CNIC, photographs aur educational certificates ke sath official Form 01 jama karwayein.",
+  },
+  {
+    step: "03",
+    title: "Area Manager Endorsement",
+    detail: "Mr. Fayyaz Ahmed ki janib se initial briefing, career roadmapping aur recommendation.",
+  },
+  {
+    step: "04",
+    title: "Agent Code Allotment",
+    detail: "Zonal Certification Committee se official government agent code number allotment.",
+  },
 ];
 
 const faqs = [
   {
-    question: "Kya poori registration online ho jati hai?",
-    answer: "Nahi, office mein forms aur attestation hoti hai.",
+    question: "Kya poori registration online ho sakti hai?",
+    answer: "Online portal se aapki pre-registration ho jaati hai, jiske baad Sukkur Area Office 5405 mein zaroori dastavez ki attestation aur official Form 01 sign hota hai.",
   },
   {
-    question: "Kaunse documents chahiye?",
-    answer: "Recent attested passport size photographs, attested CNIC copy, aur taleemi qualifications ki attested copies chahiye. Professional qualification ho to uski attested copy bhi jama karwayein.",
+    question: "Kaunse documents darkaar hain?",
+    answer: "Attested CNIC copy, 4 adad passport-size photographs, aur educational certificates (Matric, Inter ya Graduation) ki attested copies darkaar hoti hain.",
   },
   {
-    question: "Kya kisi aur company ke sath kaam kar sakte hain?",
-    answer: "Form ke mutabiq nahi.",
+    question: "Kya part-time ya student ke tor par join kar sakte hain?",
+    answer: "Haan, State Life flexible working hours faraham karta hai. Students, job holders aur energetic youth apni availability ke mutabiq autonomous schedule par kaam kar sakte hain.",
   },
   {
-    question: "Fees ya commission?",
-    answer: "Office se confirm karein.",
+    question: "Commission structure aur training ka kya procedure hai?",
+    answer: "Sukkur Area Office 5405 aur Zonal Academy ki janib se complete professional sales training free faraham ki jaati hai, sath mein attractive commission aur performance bonuses milte hain.",
   },
 ];
 
@@ -51,41 +94,34 @@ const initialForm: FormData = {
   phone: "",
   city: "",
   age: "",
-  education: "",
-  experience: "",
-  contactTime: "",
+  education: "Intermediate (FA / FSc / I.Com)",
+  experience: "No prior experience (Fresh)",
+  contactTime: "Morning (9:00 AM - 1:00 PM)",
   message: "",
-  consent: false,
+  consent: true,
   website: "",
 };
 
 export default function BecomeAnAgentPage() {
-  const [openFaq, setOpenFaq] = useState(0);
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [formData, setFormData] = useState<FormData>(initialForm);
   const [errors, setErrors] = useState<FormErrors>({});
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState(false);
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
 
   const handleChange = (field: keyof FormData, value: string | boolean) => {
     setFormData((current) => ({ ...current, [field]: value }));
     setErrors((current) => ({ ...current, [field]: "" }));
-    setIsSubmitted(false);
-    setSubmitError(false);
+    setStatus("idle");
   };
 
   const validateForm = () => {
     const nextErrors: FormErrors = {};
-
     if (!formData.name.trim()) nextErrors.name = "Poora naam likhein.";
-    if (!cleanPhone(formData.phone)) nextErrors.phone = "Sahi number likhein (kam se kam 7 digits).";
-    if (!formData.city.trim()) nextErrors.city = "Shehar likhein.";
-    if (!formData.age.trim()) nextErrors.age = "Umar likhein.";
+    if (!cleanPhone(formData.phone)) nextErrors.phone = "Sahi phone number likhein (kam se kam 7 digits).";
+    if (!formData.city.trim()) nextErrors.city = "Apna shehar / tehsil darj karein.";
+    if (!formData.age.trim()) nextErrors.age = "Apni umar likhein.";
     if (!formData.education) nextErrors.education = "Taleem select karein.";
-    if (!formData.experience) nextErrors.experience = "Experience select karein.";
-    if (!formData.contactTime) nextErrors.contactTime = "Rabta ka behtar waqt select karein.";
     if (!formData.consent) nextErrors.consent = "Ijazat lena zaroori hai.";
-
     setErrors(nextErrors);
     return Object.keys(nextErrors).length === 0;
   };
@@ -94,303 +130,557 @@ export default function BecomeAnAgentPage() {
     event.preventDefault();
     if (!validateForm()) return;
 
-    setIsSubmitting(true);
-    setSubmitError(false);
-
+    setStatus("submitting");
     try {
       const response = await fetch("/api/leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-        type: "agent_prereg",
-        name: formData.name,
-        phone: cleanPhone(formData.phone),
-        city: formData.city,
-        age: formData.age,
-        education: formData.education,
-        experience: formData.experience,
-        best_time: formData.contactTime,
-        message: formData.message,
-        consent: formData.consent,
-        website: formData.website,
+          type: "agent_prereg",
+          name: formData.name,
+          phone: cleanPhone(formData.phone),
+          city: formData.city,
+          age: formData.age,
+          education: formData.education,
+          experience: formData.experience,
+          best_time: formData.contactTime,
+          message: formData.message,
+          consent: formData.consent,
+          website: formData.website,
         }),
       });
 
       if (!response.ok) throw new Error("Lead submission failed.");
-    } catch (error) {
-      console.error("Agent pre-registration submission failed:", error);
-      setIsSubmitting(false);
-      setSubmitError(true);
-      return;
+      setFormData(initialForm);
+      setStatus("success");
+    } catch {
+      setStatus("error");
     }
-
-    setIsSubmitting(false);
-    setIsSubmitted(true);
   };
 
   return (
-    <main className="relative z-10 min-h-screen overflow-x-clip bg-transparent pb-24 text-slate-800 md:pb-0">
-      <div className="site-glow" aria-hidden="true" />
-      <div className="fixed inset-x-4 bottom-4 z-50 flex gap-3 pr-36 md:pr-0 md:hidden">
-        <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer" className="flex flex-1 items-center justify-center rounded-full bg-[#1f8a67] px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-[#1f8a67]/25">
-          WhatsApp
-        </a>
-        <a href={telLink()} className="flex flex-1 items-center justify-center rounded-full bg-[var(--brand-blue-700)] px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-950/25">
-          Call
-        </a>
-      </div>
+    <main className="min-h-screen bg-[#040914] text-white">
+      {/* ── Ambient Modern Prismatic Halos ── */}
+      <div className="relative isolate overflow-hidden">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -left-40 -top-40 h-[700px] w-[700px] rounded-full bg-emerald-500/[.12] blur-[170px]"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-40 top-20 h-[650px] w-[650px] rounded-full bg-cyan-500/[.12] blur-[170px]"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute left-1/3 bottom-10 h-[500px] w-[500px] rounded-full bg-blue-600/[.08] blur-[160px]"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle, rgba(255,255,255,0.035) 1px, transparent 1px)",
+            backgroundSize: "32px 32px",
+          }}
+        />
 
-      <section id="join" className="scroll-mt-30 mx-auto max-w-7xl px-4 pb-14 pt-14 sm:px-6 lg:px-8 lg:pb-20 lg:pt-20 lg:scroll-mt-34">
-        <div className="max-w-4xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-300">Join our team</p>
-          <h1 className="mt-4 max-w-4xl text-4xl font-black leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
-            State Life Sukkur Area Office ke sath Insurance Advisor banein
-          </h1>
-          <p className="mt-5 max-w-2xl text-lg leading-8 text-gray-300">
-            Insurance advisor registration ke liye apni basic maloomat share karein. Asli registration aur forms ka process office mein mukammal hoga.
-          </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <a href="#pre-registration" className="inline-flex items-center justify-center rounded-full bg-[var(--brand-blue-500)] px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-blue-950/20 transition hover:bg-[var(--brand-blue-700)]">
-              Pre-Registration Form
-            </a>
-            <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center rounded-full border border-white/30 bg-white px-6 py-3.5 text-base font-semibold text-[#0b2240] shadow-sm transition hover:bg-slate-100">
-              WhatsApp Par Poochein
-            </a>
-          </div>
-        </div>
-      </section>
+        {/* ── Header Section ── */}
+        <section className="relative z-10 mx-auto max-w-7xl px-4 pt-28 pb-10 sm:px-6 lg:px-8">
+          <div className="text-center">
+            {/* Tracking Badge */}
+            <div className="inline-flex max-w-full items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-[11px] font-bold tracking-[0.2em] uppercase text-emerald-300 backdrop-blur-md sm:text-xs">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="truncate">
+                STATE LIFE • SUKKUR AREA OFFICE {AREA_CODE} • CAREER DESK
+              </span>
+            </div>
 
-      <section className="border-y border-white/10 bg-transparent py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-10">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-300">Process</p>
-            <h2 className="mt-3 text-3xl font-bold text-white sm:text-4xl">Registration ka process</h2>
-            <p className="mt-4 max-w-2xl text-base leading-7 text-gray-300">Har step office ki guidance ke mutabiq complete hoga. Muddat office se confirm karein.</p>
+            {/* Authoritative Modern Headline */}
+            <h1 className="mt-6 text-3xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
+              Build a Prestigious Career in<br />
+              <span className="bg-gradient-to-r from-emerald-300 via-cyan-200 to-amber-200 bg-clip-text text-transparent">
+                Sovereign Financial Advisory
+              </span>
+            </h1>
+
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-slate-300 sm:text-base md:text-lg">
+              Pakistan ke sab se baray aur qabil-e-etemad idaray ka hissa banein. Unlimited earning
+              potential, professional corporate training, aur Sukkur Zone mein sovereign pehchan.
+            </p>
           </div>
-          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-            {processSteps.map((step, index) => (
-              <div key={step} className="glass rounded-[24px] p-6 text-white">
-                <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-2xl border border-white/20 bg-white/15 text-sm font-bold text-white">0{index + 1}</div>
-                <p className="text-base leading-7 text-blue-100">{step}</p>
+        </section>
+
+        {/* ── Split-Screen Architecture ── */}
+        <section className="relative z-10 mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12">
+
+            {/* LEFT COLUMN: 4 Advantages & Executive Mentorship (Span 5) */}
+            <div className="space-y-6 lg:col-span-5">
+
+              {/* 4 Advantage Pillars Card */}
+              <div className="rounded-3xl border border-white/[.08] bg-white/[.03] p-6 shadow-2xl backdrop-blur-2xl sm:p-7 space-y-4">
+                <div className="flex items-center justify-between border-b border-white/5 pb-4">
+                  <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
+                    Career Advantages
+                  </span>
+                  <span className="text-[10px] font-semibold uppercase text-slate-500">
+                    Sukkur Area {AREA_CODE}
+                  </span>
+                </div>
+
+                {/* Advantage 01 */}
+                <div className="flex items-start gap-4 rounded-2xl border border-white/5 bg-white/[0.02] p-4 transition hover:border-emerald-500/30 hover:bg-white/[0.04]">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-500/15 font-mono text-sm font-bold text-emerald-400">
+                    01
+                  </div>
+                  <div>
+                    <h2 className="text-sm font-bold text-white">Unlimited Earning Potential</h2>
+                    <p className="mt-1 text-xs leading-relaxed text-slate-400">
+                      Attractive commission structures, annual performance bonuses, aur car/travel incentive schemes.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Advantage 02 */}
+                <div className="flex items-start gap-4 rounded-2xl border border-white/5 bg-white/[0.02] p-4 transition hover:border-cyan-500/30 hover:bg-white/[0.04]">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-cyan-500/15 font-mono text-sm font-bold text-cyan-400">
+                    02
+                  </div>
+                  <div>
+                    <h2 className="text-sm font-bold text-white">Professional Training &amp; Mentorship</h2>
+                    <p className="mt-1 text-xs leading-relaxed text-slate-400">
+                      State Life Zonal Academy aur Area Manager Fayyaz Ahmed ki direct supervision mein complete sales training.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Advantage 03 */}
+                <div className="flex items-start gap-4 rounded-2xl border border-white/5 bg-white/[0.02] p-4 transition hover:border-amber-500/30 hover:bg-white/[0.04]">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-500/15 font-mono text-sm font-bold text-amber-400">
+                    03
+                  </div>
+                  <div>
+                    <h2 className="text-sm font-bold text-white">Official Government Agent Code</h2>
+                    <p className="mt-1 text-xs leading-relaxed text-slate-400">
+                      State Life Insurance Act ke tehat legal registration, official code allotment, aur sovereign izzat.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Advantage 04 */}
+                <div className="flex items-start gap-4 rounded-2xl border border-white/5 bg-white/[0.02] p-4 transition hover:border-purple-500/30 hover:bg-white/[0.04]">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-purple-500/15 font-mono text-sm font-bold text-purple-400">
+                    04
+                  </div>
+                  <div>
+                    <h2 className="text-sm font-bold text-white">Autonomous Working Flexibility</h2>
+                    <p className="mt-1 text-xs leading-relaxed text-slate-400">
+                      Apna schedule khud tay karein. Full-time professionals ya ambitious youth ke liye ideal career.
+                    </p>
+                  </div>
+                </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="grid gap-8 lg:grid-cols-2">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-300">Documents</p>
-            <h2 className="mt-3 text-3xl font-bold text-white sm:text-4xl">Documents Checklist</h2>
-            <div className="mt-8 space-y-4">
-              {[
-                "2 recent passport size photographs (attested)",
-                "CNIC ki attested copy",
-                "Taleemi qualifications ki attested copies",
-                "Professional qualification ki attested copies (agar ho)",
-              ].map((document) => (
-                <div key={document} className="flex gap-3 text-base leading-7 text-gray-300">
-                  <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-emerald-300" />
-                  <span>{document}</span>
+              {/* Direct Zonal Mentorship Card with area-manager.jpg */}
+              <div className="flex items-center gap-4 rounded-3xl border border-emerald-500/25 bg-emerald-950/15 p-5 backdrop-blur-2xl">
+                <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-2xl border border-white/10 bg-slate-900">
+                  <Image
+                    src="/area-manager.jpg"
+                    alt={MANAGER_NAME}
+                    fill
+                    sizes="56px"
+                    className="object-cover object-top"
+                  />
+                </div>
+                <div>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400">
+                    Direct Zonal Mentorship
+                  </span>
+                  <p className="text-sm font-bold text-white">{MANAGER_NAME}</p>
+                  <p className="text-xs text-slate-400">
+                    {MANAGER_TITLE} • Sukkur Area Office {AREA_CODE}
+                  </p>
+                </div>
+              </div>
+
+              {/* Instant WhatsApp Career Help Action */}
+              <a
+                href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+                  "Salam Mr. Fayyaz Ahmed! Main State Life Sukkur mein Insurance Agent / Financial Advisor banne ke baray mein rehnumai chahta hoon."
+                )}`}
+                target="_blank"
+                rel="noreferrer"
+                className="group flex items-center justify-between rounded-2xl border border-emerald-500/30 bg-emerald-950/20 p-4 transition-all duration-300 hover:border-emerald-400 hover:bg-emerald-900/30 hover:shadow-xl hover:shadow-emerald-900/20"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500 text-white shadow-md shadow-emerald-500/30 transition group-hover:scale-105">
+                    <MessageSquare size={18} />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-white">Ask Career Questions on WhatsApp</p>
+                    <p className="font-mono text-[11px] text-emerald-400">+92 317 0941821</p>
+                  </div>
+                </div>
+                <ArrowRight size={16} className="text-emerald-400 transition group-hover:translate-x-1" />
+              </a>
+
+            </div>
+
+            {/* RIGHT COLUMN: Advisor Pre-Registration Desk Form (Span 7) */}
+            <div className="rounded-3xl border border-white/[.08] bg-white/[.035] p-7 shadow-2xl backdrop-blur-2xl sm:p-9 lg:col-span-7">
+              <div>
+                <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
+                  Application Portal
+                </span>
+                <h2 className="mt-1 text-2xl font-black text-white sm:text-3xl">
+                  Advisor Pre-Registration Desk
+                </h2>
+                <p className="mt-2 text-xs leading-relaxed text-slate-400 sm:text-sm">
+                  Apni basic information darj karein. Sukkur Area Office 5405 recruitment team
+                  official documentation (Form 01) aur interview ke liye rabta karegi.
+                </p>
+              </div>
+
+              {/* Status Alert Messages */}
+              {status === "success" && (
+                <div className="mt-6 flex items-start gap-3 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-emerald-300">
+                  <CheckCircle2 size={20} className="mt-0.5 shrink-0 text-emerald-400" />
+                  <div>
+                    <p className="text-sm font-bold">Pre-registration kamyabi se submit ho gayi!</p>
+                    <p className="mt-1 text-xs text-emerald-200/90">
+                      Sukkur Area Office 5405 team aapse foran rabta karke Form 01 aur next steps samjhayegi.
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {status === "error" && (
+                <div className="mt-6 flex items-start gap-3 rounded-2xl border border-red-500/30 bg-red-500/10 p-4 text-red-300">
+                  <AlertCircle size={20} className="mt-0.5 shrink-0 text-red-400" />
+                  <div>
+                    <p className="text-sm font-bold">Registration submit nahi ho saki.</p>
+                    <p className="mt-1 text-xs text-red-200/90">
+                      Barah-e-karam dobara koshish karein ya direct WhatsApp desk par rabta karein.
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit} className="mt-7 space-y-4" noValidate>
+                {/* Honeypot field */}
+                <input
+                  type="text"
+                  name="website"
+                  value={formData.website}
+                  onChange={(e) => handleChange("website", e.target.value)}
+                  className="hidden"
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  {/* Full Name */}
+                  <div>
+                    <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-slate-300">
+                      Full Name *
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.name}
+                      onChange={(e) => handleChange("name", e.target.value)}
+                      placeholder="Muhammad Ali"
+                      className="h-12 w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 text-sm text-white placeholder-slate-500 outline-none transition focus:border-emerald-400 focus:bg-white/[0.07]"
+                    />
+                    {errors.name && (
+                      <span className="mt-1 block text-xs text-red-400">{errors.name}</span>
+                    )}
+                  </div>
+
+                  {/* Phone Number */}
+                  <div>
+                    <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-slate-300">
+                      Phone Number *
+                    </label>
+                    <input
+                      type="tel"
+                      value={formData.phone}
+                      onChange={(e) => handleChange("phone", e.target.value)}
+                      placeholder="0300-1234567"
+                      className="h-12 w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 text-sm text-white placeholder-slate-500 outline-none transition focus:border-emerald-400 focus:bg-white/[0.07]"
+                    />
+                    {errors.phone && (
+                      <span className="mt-1 block text-xs text-red-400">{errors.phone}</span>
+                    )}
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  {/* City */}
+                  <div>
+                    <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-slate-300">
+                      City / Tehsil *
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.city}
+                      onChange={(e) => handleChange("city", e.target.value)}
+                      placeholder="Sukkur / Rohri / Khairpur"
+                      className="h-12 w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 text-sm text-white placeholder-slate-500 outline-none transition focus:border-emerald-400 focus:bg-white/[0.07]"
+                    />
+                    {errors.city && (
+                      <span className="mt-1 block text-xs text-red-400">{errors.city}</span>
+                    )}
+                  </div>
+
+                  {/* Age */}
+                  <div>
+                    <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-slate-300">
+                      Your Age (Years) *
+                    </label>
+                    <input
+                      type="number"
+                      value={formData.age}
+                      onChange={(e) => handleChange("age", e.target.value)}
+                      placeholder="25"
+                      className="h-12 w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 text-sm text-white placeholder-slate-500 outline-none transition focus:border-emerald-400 focus:bg-white/[0.07]"
+                    />
+                    {errors.age && (
+                      <span className="mt-1 block text-xs text-red-400">{errors.age}</span>
+                    )}
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  {/* Education */}
+                  <div>
+                    <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-slate-300">
+                      Education Level *
+                    </label>
+                    <select
+                      value={formData.education}
+                      onChange={(e) => handleChange("education", e.target.value)}
+                      className="h-12 w-full rounded-xl border border-white/10 bg-[#071324] px-4 text-sm text-white outline-none transition focus:border-emerald-400"
+                    >
+                      <option className="bg-[#071324]">Intermediate (FA / FSc / I.Com)</option>
+                      <option className="bg-[#071324]">Graduation (BA / BSc / B.Com / BS)</option>
+                      <option className="bg-[#071324]">Master&apos;s (MA / MSc / MBA)</option>
+                      <option className="bg-[#071324]">Matriculation</option>
+                    </select>
+                  </div>
+
+                  {/* Prior Experience */}
+                  <div>
+                    <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-slate-300">
+                      Sales / Insurance Experience
+                    </label>
+                    <select
+                      value={formData.experience}
+                      onChange={(e) => handleChange("experience", e.target.value)}
+                      className="h-12 w-full rounded-xl border border-white/10 bg-[#071324] px-4 text-sm text-white outline-none transition focus:border-emerald-400"
+                    >
+                      <option className="bg-[#071324]">No prior experience (Fresh)</option>
+                      <option className="bg-[#071324]">1 - 2 Years in Sales / Banking</option>
+                      <option className="bg-[#071324]">3+ Years in Insurance / Marketing</option>
+                    </select>
+                  </div>
+                </div>
+
+                {/* Preferred Contact Time */}
+                <div>
+                  <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-slate-300">
+                    Preferred Time to Contact
+                  </label>
+                  <select
+                    value={formData.contactTime}
+                    onChange={(e) => handleChange("contactTime", e.target.value)}
+                    className="h-12 w-full rounded-xl border border-white/10 bg-[#071324] px-4 text-sm text-white outline-none transition focus:border-emerald-400"
+                  >
+                    <option className="bg-[#071324]">Morning (9:00 AM - 1:00 PM)</option>
+                    <option className="bg-[#071324]">Afternoon (1:00 PM - 5:00 PM)</option>
+                    <option className="bg-[#071324]">Evening (After 5:00 PM)</option>
+                  </select>
+                </div>
+
+                {/* Message / Motivation */}
+                <div>
+                  <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-slate-300">
+                    Why do you want to join State Life? (Optional)
+                  </label>
+                  <textarea
+                    rows={3}
+                    value={formData.message}
+                    onChange={(e) => handleChange("message", e.target.value)}
+                    placeholder="Apna background aur career ambitions share karein..."
+                    className="w-full rounded-xl border border-white/10 bg-white/[0.04] p-4 text-sm text-white placeholder-slate-500 outline-none transition focus:border-emerald-400 focus:bg-white/[0.07]"
+                  />
+                </div>
+
+                {/* Consent */}
+                <div className="pt-2">
+                  <label className="flex items-start gap-3 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={formData.consent}
+                      onChange={(e) => handleChange("consent", e.target.checked)}
+                      className="mt-1 h-4 w-4 rounded border-white/20 bg-white/5 text-emerald-500 focus:ring-emerald-400"
+                    />
+                    <span className="text-xs leading-relaxed text-slate-400">
+                      Main tasdeeq karta hoon ke di gayi maloomat sahi hain aur State Life recruitment team ke rabtay ki ijazat deta hoon.
+                    </span>
+                  </label>
+                  {errors.consent && (
+                    <span className="mt-1 block text-xs text-red-400">{errors.consent}</span>
+                  )}
+                </div>
+
+                {/* Submit Button */}
+                <div className="pt-4">
+                  <button
+                    type="submit"
+                    disabled={status === "submitting"}
+                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-500 py-4 text-sm font-bold uppercase tracking-wider text-white shadow-lg shadow-emerald-900/30 transition-all duration-200 hover:scale-[1.01] hover:from-emerald-500 hover:to-teal-400 disabled:opacity-60 cursor-pointer"
+                  >
+                    {status === "submitting" ? (
+                      <>
+                        <Loader2 size={18} className="animate-spin" />
+                        <span>Submitting Application...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Submit Pre-Registration</span>
+                        <ArrowRight size={16} />
+                      </>
+                    )}
+                  </button>
+                </div>
+
+                <p className="text-[11px] text-center text-slate-500 pt-2">
+                  🏛️ Official State Life Corporation Recruitment • Sukkur Area Office {AREA_CODE}
+                </p>
+              </form>
+            </div>
+
+          </div>
+        </section>
+
+        {/* ── 4-Step Onboarding Roadmap ── */}
+        <section className="relative z-10 mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+          <div className="rounded-3xl border border-white/[.08] bg-white/[.03] p-8 sm:p-12 backdrop-blur-2xl">
+            <div className="mx-auto max-w-2xl text-center">
+              <span className="text-xs font-bold uppercase tracking-wider text-cyan-400">
+                The Roadmap
+              </span>
+              <h2 className="mt-1 text-2xl font-black text-white sm:text-4xl">
+                4-Step Onboarding Process
+              </h2>
+              <p className="mt-2 text-xs leading-relaxed text-slate-400 sm:text-sm">
+                Application submission se lekar official government agent code number allotment tak ka clear process:
+              </p>
+            </div>
+
+            <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {processSteps.map((step) => (
+                <div
+                  key={step.step}
+                  className="rounded-2xl border border-white/5 bg-white/[0.02] p-6 transition hover:border-emerald-500/30 hover:bg-white/[0.04]"
+                >
+                  <span className="font-mono text-xs font-bold text-emerald-400">
+                    STEP {step.step}
+                  </span>
+                  <h3 className="mt-2 text-base font-bold text-white">{step.title}</h3>
+                  <p className="mt-2 text-xs leading-relaxed text-slate-400">{step.detail}</p>
                 </div>
               ))}
             </div>
           </div>
-          <div className="glass rounded-[28px] p-6 text-white sm:p-8">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#1f8a67]">Important Note</p>
-            <p className="mt-4 text-lg leading-8 text-blue-100">Tamam documents Sector Head / Area Manager se attest hone chahiye.</p>
-          </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="bg-transparent py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-10">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-300">Requirements</p>
-            <h2 className="mt-3 text-3xl font-bold text-white sm:text-4xl">Zaroori Shartein</h2>
+        {/* ── FAQs Accordion Section ── */}
+        <section className="relative z-10 mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
+              Common Questions
+            </span>
+            <h2 className="mt-1 text-2xl font-black text-white sm:text-3xl">
+              Career &amp; Recruitment FAQs
+            </h2>
           </div>
-          <div className="grid gap-6 md:grid-cols-2">
-            <div className="glass rounded-[28px] p-6 text-white">
-              <h3 className="text-xl font-bold text-white">Form ke mutabiq</h3>
-              <ul className="mt-5 space-y-4 text-base leading-7 text-blue-100">
-                <li>Maloomat durust honi chahiye.</li>
-                <li>Insurance Ordinance 2000 aur Insurance Rules 2017 ki pabandi zaroori hai.</li>
-                <li>Kisi aur insurer ke liye kaam nahi kar sakte.</li>
-              </ul>
+
+          <div className="mt-8 space-y-4">
+            {faqs.map((faq, index) => {
+              const isOpen = openFaq === index;
+              return (
+                <div
+                  key={index}
+                  className="overflow-hidden rounded-2xl border border-white/[.08] bg-white/[.03] transition backdrop-blur-xl"
+                >
+                  <button
+                    type="button"
+                    onClick={() => setOpenFaq(isOpen ? null : index)}
+                    className="flex w-full items-center justify-between p-5 text-left text-sm font-bold text-white transition hover:text-emerald-300"
+                  >
+                    <span>{faq.question}</span>
+                    <ChevronDown
+                      size={18}
+                      className={`shrink-0 text-emerald-400 transition-transform duration-300 ${
+                        isOpen ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+                  {isOpen && (
+                    <div className="border-t border-white/5 px-5 pb-5 pt-2 text-xs leading-relaxed text-slate-400">
+                      {faq.answer}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* ── Bottom High-Fashion Metrics Strip ── */}
+        <section className="relative z-10 mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 gap-6 rounded-2xl border border-white/[.08] bg-white/[.03] p-6 text-center backdrop-blur-xl sm:p-8 md:grid-cols-4">
+            <div>
+              <p className="text-2xl font-black text-white sm:text-4xl">100%</p>
+              <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-slate-400">
+                Sovereign Institution
+              </p>
             </div>
-            <div className="glass rounded-[28px] p-6 text-white">
-              <h3 className="text-xl font-bold text-white">Eligibility</h3>
-              <p className="mt-5 text-base leading-7 text-blue-100">Umar aur taleem ke hawale se details office se confirm karein.</p>
+            <div>
+              <p className="text-2xl font-black text-emerald-400 sm:text-4xl">50+ Years</p>
+              <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-slate-400">
+                National Legacy
+              </p>
+            </div>
+            <div>
+              <p className="text-2xl font-black text-cyan-300 sm:text-4xl">{AREA_CODE}</p>
+              <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-slate-400">
+                Sukkur Area Code
+              </p>
+            </div>
+            <div>
+              <p className="text-2xl font-black text-amber-300 sm:text-4xl">Direct</p>
+              <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-slate-400">
+                Executive Mentorship
+              </p>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900 sm:p-8">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#1f8a67]">Forms</p>
-          <h2 className="mt-3 text-3xl font-bold text-[#0b2240] dark:text-white sm:text-4xl">Registration forms office se hasil karein</h2>
-          <p className="mt-4 max-w-2xl text-base leading-7 text-slate-600 dark:text-slate-300">Asli Application Form (Form 01) aur registration ki rehnumai ke liye office se rabta karein.</p>
-          <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer" className="mt-6 inline-flex items-center justify-center rounded-full bg-[var(--brand-blue-500)] px-6 py-3.5 text-base font-semibold text-white transition hover:bg-[var(--brand-blue-700)]">
-            WhatsApp Par Poochein
-          </a>
-        </div>
-      </section>
-
-      <section id="pre-registration" className="bg-transparent py-16">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-10">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-300">Start here</p>
-            <h2 className="mt-3 text-3xl font-bold text-white sm:text-4xl">Pre-Registration Form</h2>
-            <p className="mt-4 text-base leading-7 text-gray-300">Basic maloomat share karein. Asli registration office mein forms par mukammal hogi.</p>
-          </div>
-
-          {isSubmitted ? (
-            <div className="rounded-[28px] border border-emerald-200 bg-emerald-50 p-6 text-center dark:border-emerald-900 dark:bg-emerald-950 sm:p-10">
-              <p className="text-xl font-bold text-[#0b2240] dark:text-emerald-100">Thank You for Contacting Us!</p>
-              <p className="mt-2 leading-7 text-slate-600 dark:text-emerald-200">We have received your message. Our representative from State Life Sukkur Area Office 5405 will contact you shortly. Asli registration office mein forms par mukammal hogi.</p>
+        {/* ── Footer ── */}
+        <footer className="relative z-10 border-t border-white/10 px-4 py-8 text-xs text-slate-400 sm:px-6 lg:px-8">
+          <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 sm:flex-row">
+            <p>State Life Insurance Corporation of Pakistan • Sukkur Area Office {AREA_CODE}</p>
+            <div className="flex items-center gap-5">
+              <Link href="/products" className="hover:text-white transition">Products</Link>
+              <Link href="/services" className="hover:text-white transition">Services</Link>
+              <Link href="/about" className="hover:text-white transition">About Us</Link>
+              <Link href="/contact" className="hover:text-white transition">Contact</Link>
             </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900 sm:p-8">
-              <div className="grid gap-5 sm:grid-cols-2">
-                <Field label="Poora Naam" error={errors.name}>
-                  <input type="text" value={formData.name} onChange={(event) => handleChange("name", event.target.value)} placeholder="Aapka poora naam" className={inputClass} />
-                </Field>
-                <Field label="Phone" error={errors.phone}>
-                  <input type="tel" inputMode="tel" autoComplete="tel" value={formData.phone} onChange={(event) => handleChange("phone", event.target.value)} placeholder="Apna phone number likhein" className={inputClass} />
-                </Field>
-                <Field label="Shehar" error={errors.city}>
-                  <input type="text" value={formData.city} onChange={(event) => handleChange("city", event.target.value)} placeholder="Aapka shehar" className={inputClass} />
-                </Field>
-                <Field label="Umar" error={errors.age}>
-                  <input type="number" value={formData.age} onChange={(event) => handleChange("age", event.target.value)} placeholder="Umar" className={inputClass} />
-                </Field>
-                <Field label="Taleem" error={errors.education}>
-                  <select value={formData.education} onChange={(event) => handleChange("education", event.target.value)} className={inputClass}>
-                    <option value="">Select karein</option>
-                    <option value="Matric">Matric</option>
-                    <option value="Intermediate">Intermediate</option>
-                    <option value="Graduation">Graduation</option>
-                    <option value="Post-Graduation">Post-Graduation</option>
-                  </select>
-                </Field>
-                <Field label="Sales/Insurance experience" error={errors.experience}>
-                  <select value={formData.experience} onChange={(event) => handleChange("experience", event.target.value)} className={inputClass}>
-                    <option value="">Select karein</option>
-                    <option value="Nahi">Nahi</option>
-                    <option value="1 saal se kam">1 saal se kam</option>
-                    <option value="1 se 3 saal">1 se 3 saal</option>
-                    <option value="3 saal se zyada">3 saal se zyada</option>
-                  </select>
-                </Field>
-                <Field label="Rabta ka behtar waqt" error={errors.contactTime}>
-                  <select value={formData.contactTime} onChange={(event) => handleChange("contactTime", event.target.value)} className={inputClass}>
-                    <option value="">Select karein</option>
-                    <option value="Subah">Subah</option>
-                    <option value="Dopahar">Dopahar</option>
-                    <option value="Shaam">Shaam</option>
-                    <option value="Koi bhi waqt">Koi bhi waqt</option>
-                  </select>
-                </Field>
-              </div>
-
-              <div className="mt-5">
-                <label className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-200">Message (optional)</label>
-                <textarea rows={4} value={formData.message} onChange={(event) => handleChange("message", event.target.value)} placeholder="Aap apni query likhein" className={inputClass} />
-              </div>
-
-              <div className="mt-5 rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-800">
-                <label className="flex items-start gap-3 text-sm leading-6 text-slate-700 dark:text-slate-200">
-                  <input type="checkbox" checked={formData.consent} onChange={(event) => handleChange("consent", event.target.checked)} className="mt-1 h-4 w-4 accent-[#1f8a67]" />
-                  <span>Main apni info office ko dene ki ijazat deta hun.</span>
-                </label>
-                {errors.consent && <p className="mt-2 text-sm text-red-600">{errors.consent}</p>}
-              </div>
-
-              <input
-                type="text"
-                name="website"
-                tabIndex={-1}
-                autoComplete="off"
-                aria-hidden="true"
-                value={formData.website}
-                onChange={(event) => handleChange("website", event.target.value)}
-                className="hidden"
-              />
-
-              <button type="submit" disabled={isSubmitting} className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-[var(--brand-blue-500)] px-6 py-3.5 text-base font-semibold text-white transition hover:bg-[var(--brand-blue-700)] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto">
-                {isSubmitting ? "Bhej rahe hain..." : "Submit Pre-Registration"}
-              </button>
-              {submitError && <p className="mt-3 text-sm font-medium text-red-600">Kuch masla aa gaya, baraye meherbani WhatsApp par rabta karein</p>}
-            </form>
-          )}
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mb-10">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-300">FAQ</p>
-          <h2 className="mt-3 text-3xl font-bold text-white sm:text-4xl">Common questions</h2>
-        </div>
-        <div className="space-y-4">
-          {faqs.map((faq, index) => (
-            <div key={faq.question} className="rounded-[22px] border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
-              <button type="button" onClick={() => setOpenFaq(openFaq === index ? -1 : index)} aria-expanded={openFaq === index} className="flex min-h-14 w-full items-center justify-between gap-4 px-5 py-4 text-left">
-                <span className="text-base font-bold text-[#0b2240] dark:text-white">{faq.question}</span>
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#eafaf4] text-lg font-bold text-[#1f8a67]">{openFaq === index ? "-" : "+"}</span>
-              </button>
-              {openFaq === index && <div className="px-5 pb-5 text-base font-medium leading-7 text-slate-600 dark:text-slate-200">{faq.answer}</div>}
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <footer className="bg-[var(--brand-blue-900)] py-12 text-slate-300">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[1.1fr_0.8fr_0.8fr] lg:px-8">
-          <div>
-            <div className="flex items-center gap-3">
-              <Image src="/area-logo.png" alt="State Life Sukkur Area Office logo" width={210} height={74} className="h-11 w-[140px] rounded-full bg-white p-1 object-contain" />
-              <div>
-                <p className="text-lg font-bold text-white">Sukkur Area Office</p>
-                <p className="text-sm text-slate-400">Life Insurance</p>
-              </div>
-            </div>
-            <p className="mt-5 max-w-sm leading-7 text-slate-300">Shahlimar Road, near Session Court, Sukkur. Family protection, consultation, aur local support ke liye hum aapke paas hain.</p>
           </div>
-          <div>
-            <h3 className="text-lg font-semibold text-white">Quick Links</h3>
-            <ul className="mt-5 space-y-3 text-sm text-slate-300">
-              <li><Link href="/" className="hover:text-white">Home</Link></li>
-              <li><Link href="/#products" className="hover:text-white">Products</Link></li>
-              <li><Link href="/#services" className="hover:text-white">Services</Link></li>
-              <li><Link href="/become-an-agent" className="hover:text-white">Join Us</Link></li>
-              <li><Link href="/#contact" className="hover:text-white">Contact</Link></li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-white">Contact</h3>
-            <ul className="mt-5 space-y-3 text-sm text-slate-300">
-              <li>Call / WhatsApp</li>
-              <li>Mon-Fri: 9:00 AM - 5:00 PM</li>
-              <li>Saturday &amp; Sunday off</li>
-            </ul>
-          </div>
-        </div>
-        <div className="mx-auto mt-10 max-w-7xl border-t border-white/10 px-4 pt-6 text-center text-sm text-slate-400 sm:px-6 lg:px-8">Ye website Sukkur Area Office ki taraf se hai.</div>
-      </footer>
+        </footer>
+      </div>
     </main>
-  );
-}
-
-const inputClass = "w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-[#1f8a67] focus:bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 dark:focus:bg-slate-800";
-
-function Field({ label, error, children }: { label: string; error?: string; children: React.ReactNode }) {
-  return (
-    <div>
-      <label className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-200">{label}</label>
-      {children}
-      {error && <p className="mt-1 text-sm text-red-600">{error}</p>}
-    </div>
   );
 }

@@ -1,18 +1,15 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import SiteFrame from "../components/SiteFrame";
 import ThemeProvider from "../components/ThemeProvider";
 import { LanguageProvider } from "../context/LanguageContext";
 import "./globals.css";
 
-const geistSans = Geist({
+const inter = Inter({
   variable: "--font-geist-sans",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  display: "swap",
+  fallback: ["system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Arial", "sans-serif"],
 });
 
 export const metadata: Metadata = {
@@ -26,10 +23,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       data-scroll-behavior="smooth"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} h-auto min-h-screen w-full max-w-[100vw] overflow-x-hidden antialiased`}
+      className={`${inter.variable} h-auto min-h-screen w-full max-w-[100vw] overflow-x-hidden antialiased`}
     >
       <body className="flex h-auto min-h-screen w-full max-w-[100vw] flex-col overflow-x-clip">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           <LanguageProvider>
             <SiteFrame>{children}</SiteFrame>
           </LanguageProvider>
