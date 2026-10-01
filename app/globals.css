@@ -104,6 +104,83 @@ h1, h2, h3, h4, h5, h6 {
 
 p { line-height: 1.7; }
 
+/* ═══════════════════════════════════════════════════
+   LIGHT MODE: Fix dark-first Tailwind classes
+   Targets sub-page content via "html:not(.dark) main"
+   ═══════════════════════════════════════════════════ */
+
+/* -- Text: white/light → dark in light mode -- */
+html:not(.dark) main .text-white { color: #1e293b !important; }
+html:not(.dark) main .text-slate-50 { color: #1e293b !important; }
+html:not(.dark) main .text-slate-100 { color: #1e293b !important; }
+html:not(.dark) main .text-slate-200 { color: #334155 !important; }
+html:not(.dark) main .text-slate-300 { color: #475569 !important; }
+html:not(.dark) main .text-slate-400 { color: #64748b !important; }
+html:not(.dark) main .text-slate-500 { color: #64748b !important; }
+
+/* -- Accent colors: darker shade for light bg -- */
+html:not(.dark) main .text-emerald-200 { color: #065f46 !important; }
+html:not(.dark) main .text-emerald-300 { color: #065f46 !important; }
+html:not(.dark) main .text-emerald-400 { color: #059669 !important; }
+html:not(.dark) main .text-cyan-200 { color: #0e7490 !important; }
+html:not(.dark) main .text-cyan-300 { color: #0891b2 !important; }
+html:not(.dark) main .text-cyan-400 { color: #0891b2 !important; }
+html:not(.dark) main .text-blue-300 { color: #1d4ed8 !important; }
+html:not(.dark) main .text-blue-400 { color: #2563eb !important; }
+html:not(.dark) main .text-sky-200 { color: #075985 !important; }
+html:not(.dark) main .text-sky-300 { color: #0369a1 !important; }
+html:not(.dark) main .text-sky-400 { color: #0284c7 !important; }
+html:not(.dark) main .text-purple-300 { color: #6d28d9 !important; }
+html:not(.dark) main .text-purple-400 { color: #7c3aed !important; }
+html:not(.dark) main .text-amber-300 { color: #b45309 !important; }
+html:not(.dark) main .text-amber-400 { color: #d97706 !important; }
+
+/* -- Cards: transparent-white → solid light card -- */
+html:not(.dark) main .bg-white\/\[\.02\] { background-color: #f1f5f9 !important; }
+html:not(.dark) main .bg-white\/\[\.03\] { background-color: #f1f5f9 !important; }
+html:not(.dark) main .bg-white\/\[\.04\] { background-color: #e8edf5 !important; }
+html:not(.dark) main .bg-white\/\[\.05\] { background-color: #e8edf5 !important; }
+html:not(.dark) main .bg-white\/\[\.06\] { background-color: #e2e8f0 !important; }
+html:not(.dark) main .bg-white\/\[\.07\] { background-color: #e2e8f0 !important; }
+html:not(.dark) main .bg-white\/\[\.08\] { background-color: #dde4ee !important; }
+html:not(.dark) main .bg-white\/\[\.10\] { background-color: #dde4ee !important; }
+
+/* -- Borders: white-opacity → visible slate border -- */
+html:not(.dark) main .border-white\/\[\.06\] { border-color: #cbd5e1 !important; }
+html:not(.dark) main .border-white\/\[\.08\] { border-color: #cbd5e1 !important; }
+html:not(.dark) main .border-white\/\[\.10\] { border-color: #b8c5d6 !important; }
+html:not(.dark) main .border-white\/\[\.12\] { border-color: #b8c5d6 !important; }
+html:not(.dark) main .border-white\/\[\.15\] { border-color: #94a3b8 !important; }
+html:not(.dark) main .border-white\/\[\.20\] { border-color: #94a3b8 !important; }
+html:not(.dark) main .border-white\/10 { border-color: #b8c5d6 !important; }
+html:not(.dark) main .border-white\/20 { border-color: #94a3b8 !important; }
+
+/* -- Gradient section cards (from-white/*) -- */
+html:not(.dark) main .from-white\/\[\.06\] { --tw-gradient-from: #f1f5f9 !important; }
+html:not(.dark) main .from-white\/\[\.07\] { --tw-gradient-from: #f1f5f9 !important; }
+
+/* -- Form inputs: dark bg → white -- */
+html:not(.dark) main input,
+html:not(.dark) main textarea,
+html:not(.dark) main select {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+html:not(.dark) main input::placeholder,
+html:not(.dark) main textarea::placeholder { color: #94a3b8 !important; }
+html:not(.dark) main select option { background-color: #ffffff !important; color: #0f172a !important; }
+
+/* -- Gradient headings: more vibrant on light bg -- */
+html:not(.dark) main .from-blue-400 { --tw-gradient-from: #2563eb !important; }
+html:not(.dark) main .via-cyan-300 { --tw-gradient-via: #0891b2 !important; }
+html:not(.dark) main .to-emerald-400 { --tw-gradient-to: #059669 !important; }
+
+/* -- Scrollbar: adapt to light mode -- */
+html:not(.dark) ::-webkit-scrollbar-track { background: #e2e8f0; }
+html:not(.dark) ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.20); }
+html:not(.dark) ::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.35); }
+
 /* Glassmorphism */
 .glass {
   background: var(--card-bg);
