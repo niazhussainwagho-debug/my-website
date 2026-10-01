@@ -1,4 +1,4 @@
-﻿@import "tailwindcss";
+@import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -94,45 +94,6 @@ main footer[id] {
     scroll-margin-top: 7rem;
   }
 }
-
-/* Light mode: override dark-first Tailwind classes in sub-pages */
-html:not(.dark) main .text-white { color: #1e293b !important; }
-html:not(.dark) main .text-slate-100 { color: #1e293b !important; }
-html:not(.dark) main .text-slate-200 { color: #334155 !important; }
-html:not(.dark) main .text-slate-300 { color: #475569 !important; }
-html:not(.dark) main .text-slate-400 { color: #64748b !important; }
-html:not(.dark) main .text-slate-500 { color: #64748b !important; }
-
-html:not(.dark) main .text-emerald-300 { color: #059669 !important; }
-html:not(.dark) main .text-emerald-400 { color: #059669 !important; }
-html:not(.dark) main .text-cyan-300 { color: #0891b2 !important; }
-html:not(.dark) main .text-cyan-400 { color: #0891b2 !important; }
-html:not(.dark) main .text-blue-300 { color: #2563eb !important; }
-html:not(.dark) main .text-blue-400 { color: #2563eb !important; }
-html:not(.dark) main .text-purple-300 { color: #7c3aed !important; }
-html:not(.dark) main .text-purple-400 { color: #7c3aed !important; }
-html:not(.dark) main .text-amber-300 { color: #d97706 !important; }
-html:not(.dark) main .text-amber-400 { color: #d97706 !important; }
-html:not(.dark) main .text-sky-200 { color: #0369a1 !important; }
-html:not(.dark) main .text-sky-300 { color: #0369a1 !important; }
-html:not(.dark) main .text-sky-400 { color: #0284c7 !important; }
-
-html:not(.dark) main [class*="bg-white/"] { background-color: rgba(0, 0, 0, 0.04) !important; }
-html:not(.dark) main [class*="border-white/"] { border-color: rgba(0, 0, 0, 0.10) !important; }
-
-html:not(.dark) main input,
-html:not(.dark) main textarea,
-html:not(.dark) main select {
-  background-color: #ffffff !important;
-  color: #0f172a !important;
-  border-color: #e2e8f0 !important;
-}
-html:not(.dark) main input::placeholder,
-html:not(.dark) main textarea::placeholder { color: #94a3b8 !important; }
-
-html:not(.dark) ::-webkit-scrollbar-track { background: #e2e8f0; }
-html:not(.dark) ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.20); }
-html:not(.dark) ::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.35); }
 
 /* Premium Typography */
 h1, h2, h3, h4, h5, h6 {
@@ -232,7 +193,9 @@ p { line-height: 1.7; }
 ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 99px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.25); }
 
-input:focus, textarea:focus, select:focus {
+input:focus,
+textarea:focus,
+select:focus {
   outline: none;
   box-shadow: 0 0 0 2px rgba(43, 182, 196, 0.3);
 }
