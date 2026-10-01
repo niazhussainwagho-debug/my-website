@@ -168,11 +168,41 @@ html:not(.dark) .sub-page .border-white\/20 { border-color: #60A5FA !important; 
 html:not(.dark) .sub-page .from-white\/\[\.06\] { --tw-gradient-from: #EFF6FF !important; }
 html:not(.dark) .sub-page .from-white\/\[\.07\] { --tw-gradient-from: #DBEAFE !important; }
 
+/* ── CRITICAL: Override dark via-slate gradient cards ──
+   Services "Claim Timeline" and "Dedicated Support" cards
+   use via-slate-900/60 and via-slate-900/70 — these stay
+   dark even in light mode without this override */
+html:not(.dark) .sub-page [class*="via-slate-9"] {
+  background-image: linear-gradient(135deg, #EFF6FF, #DBEAFE) !important;
+  background-color: #EFF6FF !important;
+}
+
+/* ── UNIVERSAL: All card-like containers → brand blue ──
+   Catches any rounded card that was missed by specific selectors */
+html:not(.dark) .sub-page [class*="backdrop-blur"] {
+  background-color: #EFF6FF;
+  background-image: none;
+}
+html:not(.dark) .sub-page [class*="backdrop-blur"].border {
+  border-color: #93C5FD;
+}
+
+/* Restore buttons — they also have backdrop-blur sometimes */
+html:not(.dark) .sub-page button[class*="bg-"],
+html:not(.dark) .sub-page a[class*="bg-blue"],
+html:not(.dark) .sub-page a[class*="bg-emerald"],
+html:not(.dark) .sub-page a[class*="bg-gradient"],
+html:not(.dark) .sub-page button[class*="bg-gradient"] {
+  background-image: revert !important;
+  background-color: revert !important;
+}
+
 /* Form inputs */
 html:not(.dark) .sub-page input,
 html:not(.dark) .sub-page textarea,
 html:not(.dark) .sub-page select {
   background-color: #ffffff !important;
+  background-image: none !important;
   color: #1e3a5f !important;
   border-color: #93C5FD !important;
 }
