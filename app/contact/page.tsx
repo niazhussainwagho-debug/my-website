@@ -122,7 +122,7 @@ export default function ContactPage() {
   };
 
   return (
-    <main className="min-h-screen" style={{ background: 'var(--page-bg)', color: 'var(--foreground)' }}>
+    <main className="sub-page min-h-screen" style={{ background: 'var(--page-bg)', color: 'var(--foreground)' }}>
       {/* ── Ambient Luxury Prismatic Glows ── */}
       <div className="relative isolate overflow-hidden">
         <div
