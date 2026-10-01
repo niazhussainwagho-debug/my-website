@@ -32,7 +32,7 @@ export default function AboutPage() {
   const { t } = useLanguage();
 
   return (
-    <main className="min-h-screen bg-[#040914] text-white">
+    <main className="min-h-screen" style={{ background: 'var(--page-bg)', color: 'var(--foreground)' }}>
       {/* ── Ambient Prismatic Light Refractions ── */}
       <div className="relative isolate overflow-hidden">
         {/* Subtle diagonal laser/prism sheen matching mockup */}

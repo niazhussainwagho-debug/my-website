@@ -1,4 +1,4 @@
-@import "tailwindcss";
+﻿@import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -25,29 +25,36 @@ body {
   box-sizing: border-box !important;
 }
 
+/* Light mode defaults */
 :root {
   --brand-blue-900: #061224;
   --brand-blue-700: #0B1E3B;
   --brand-blue-500: #1D4ED8;
   --brand-blue-100: #E6EEFB;
-  --page-bg: #040914;
-  --background: #040914;
-  --foreground: #f8fafc;
-  color-scheme: dark;
+  --page-bg: #f0f4f8;
+  --background: #f0f4f8;
+  --foreground: #0f172a;
+  --card-bg: rgba(0, 0, 0, 0.04);
+  --card-border: rgba(0, 0, 0, 0.09);
+  --muted: #64748b;
+  color-scheme: light;
 }
 
-/* ── Dark mode: same dark premium palette ── */
+/* Dark mode */
 :root.dark {
   --page-bg: #040914;
   --background: #040914;
   --foreground: #f1f5f9;
+  --card-bg: rgba(255, 255, 255, 0.04);
+  --card-border: rgba(255, 255, 255, 0.09);
+  --muted: #94a3b8;
   color-scheme: dark;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans), "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-sans: var(--font-geist-sans), "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: var(--font-geist-mono), "JetBrains Mono", "Fira Code", "Courier New", Courier, monospace;
 }
 
@@ -55,6 +62,25 @@ html {
   background: var(--page-bg);
   scroll-behavior: smooth;
   scrollbar-gutter: stable;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--page-bg);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  transition: background 300ms ease, color 300ms ease;
+}
+
+main {
+  background: var(--page-bg);
+  color: var(--foreground);
+  transition: background 300ms ease, color 300ms ease;
 }
 
 main section[id],
@@ -69,61 +95,70 @@ main footer[id] {
   }
 }
 
-body {
-  margin: 0;
-  min-height: 100vh;
-  background: var(--page-bg);
-  color: var(--foreground);
-  font-family: var(--font-sans), "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-}
+/* Light mode: override dark-first Tailwind classes in sub-pages */
+html:not(.dark) main .text-white { color: #1e293b !important; }
+html:not(.dark) main .text-slate-100 { color: #1e293b !important; }
+html:not(.dark) main .text-slate-200 { color: #334155 !important; }
+html:not(.dark) main .text-slate-300 { color: #475569 !important; }
+html:not(.dark) main .text-slate-400 { color: #64748b !important; }
+html:not(.dark) main .text-slate-500 { color: #64748b !important; }
 
-/* ── Force dark on ALL pages (dark-only website design) ── */
-html,
-html.dark,
-html.dark body,
-body {
-  background: var(--page-bg);
-  color: var(--foreground);
-}
+html:not(.dark) main .text-emerald-300 { color: #059669 !important; }
+html:not(.dark) main .text-emerald-400 { color: #059669 !important; }
+html:not(.dark) main .text-cyan-300 { color: #0891b2 !important; }
+html:not(.dark) main .text-cyan-400 { color: #0891b2 !important; }
+html:not(.dark) main .text-blue-300 { color: #2563eb !important; }
+html:not(.dark) main .text-blue-400 { color: #2563eb !important; }
+html:not(.dark) main .text-purple-300 { color: #7c3aed !important; }
+html:not(.dark) main .text-purple-400 { color: #7c3aed !important; }
+html:not(.dark) main .text-amber-300 { color: #d97706 !important; }
+html:not(.dark) main .text-amber-400 { color: #d97706 !important; }
+html:not(.dark) main .text-sky-200 { color: #0369a1 !important; }
+html:not(.dark) main .text-sky-300 { color: #0369a1 !important; }
+html:not(.dark) main .text-sky-400 { color: #0284c7 !important; }
 
-/* ── Sub-page main elements: always dark ── */
-main {
-  background: var(--page-bg);
-}
+html:not(.dark) main [class*="bg-white/"] { background-color: rgba(0, 0, 0, 0.04) !important; }
+html:not(.dark) main [class*="border-white/"] { border-color: rgba(0, 0, 0, 0.10) !important; }
 
-/* ── Premium Typography Scale ── */
+html:not(.dark) main input,
+html:not(.dark) main textarea,
+html:not(.dark) main select {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #e2e8f0 !important;
+}
+html:not(.dark) main input::placeholder,
+html:not(.dark) main textarea::placeholder { color: #94a3b8 !important; }
+
+html:not(.dark) ::-webkit-scrollbar-track { background: #e2e8f0; }
+html:not(.dark) ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.20); }
+html:not(.dark) ::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.35); }
+
+/* Premium Typography */
 h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.15;
 }
 
-p {
-  line-height: 1.7;
-}
+p { line-height: 1.7; }
 
-/* ── Glassmorphism Utility ── */
+/* Glassmorphism */
 .glass {
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--card-bg);
   backdrop-filter: blur(14px) saturate(140%);
   -webkit-backdrop-filter: blur(14px) saturate(140%);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--card-border);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
   transition: background 200ms ease, border-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
 }
 
 .glass:hover {
-  background: rgba(255, 255, 255, 0.10);
-  border-color: rgba(255, 255, 255, 0.20);
   transform: translateY(-2px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
 }
 
-/* ── Scroll Reveal Animation ── */
+/* Scroll Reveal */
 .scroll-reveal {
   opacity: 0;
   transform: translateY(20px);
@@ -136,9 +171,7 @@ p {
 }
 
 @supports not (backdrop-filter: blur(1px)) {
-  .glass {
-    background: rgba(10, 30, 70, 0.85);
-  }
+  .glass { background: rgba(10, 30, 70, 0.85); }
 }
 
 @media (max-width: 768px) {
@@ -149,22 +182,13 @@ p {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .scroll-reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-
-  .glass {
-    transition: none;
-  }
-
-  .glass:hover {
-    transform: none;
-  }
+  .scroll-reveal { opacity: 1; transform: none; transition: none; }
+  .glass { transition: none; }
+  .glass:hover { transform: none; }
+  body, main { transition: none; }
 }
 
-/* ── Ambient Glow Layer ── */
+/* Ambient Glow */
 .site-glow {
   position: fixed;
   inset: 0;
@@ -198,40 +222,21 @@ p {
   background: radial-gradient(circle, #4C8DFF 0%, transparent 70%);
 }
 
-/* ── Premium Selection Color ── */
 ::selection {
   background: rgba(43, 182, 196, 0.25);
   color: #fff;
 }
 
-/* ── Scrollbar Styling ── */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #040c18; }
+::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.25); }
 
-::-webkit-scrollbar-track {
-  background: #040c18;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 99px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.25);
-}
-
-/* ── Form Input Focus Glow ── */
-input:focus,
-textarea:focus,
-select:focus {
+input:focus, textarea:focus, select:focus {
   outline: none;
   box-shadow: 0 0 0 2px rgba(43, 182, 196, 0.3);
 }
 
-/* ── Gradient Text Utility ── */
 .gradient-text {
   background: linear-gradient(135deg, #10b981, #06b6d4, #f59e0b);
   -webkit-background-clip: text;
@@ -239,12 +244,11 @@ select:focus {
   background-clip: text;
 }
 
-/* ── Premium Card Hover ── */
 .card-hover {
   transition: transform 300ms ease, box-shadow 300ms ease, border-color 300ms ease;
 }
 
 .card-hover:hover {
   transform: translateY(-4px);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
 }
