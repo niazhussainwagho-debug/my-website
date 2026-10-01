@@ -104,29 +104,38 @@ h1, h2, h3, h4, h5, h6 {
 
 p { line-height: 1.7; }
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-   LIGHT MODE: Fix dark-first Tailwind classes
-   Targets sub-page content via "html:not(.dark) main"
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+/* STATE LIFE BRAND — Light Mode Palette
+   Cards: EFF6FF (State Life blue tint)
+   Borders: 93C5FD (brand blue)
+   Text: 1e3a5f (navy) */
 
-/* -- Text: white/light â†’ dark in light mode -- */
-html:not(.dark) .sub-page .text-white { color: #1e293b !important; }
-html:not(.dark) .sub-page .text-slate-50 { color: #1e293b !important; }
-html:not(.dark) .sub-page .text-slate-100 { color: #1e293b !important; }
-html:not(.dark) .sub-page .text-slate-200 { color: #334155 !important; }
-html:not(.dark) .sub-page .text-slate-300 { color: #475569 !important; }
-html:not(.dark) .sub-page .text-slate-400 { color: #64748b !important; }
-html:not(.dark) .sub-page .text-slate-500 { color: #64748b !important; }
+:root {
+  --page-bg: #f0f6ff;
+  --background: #f0f6ff;
+  --foreground: #1e3a5f;
+  --card-bg: #EFF6FF;
+  --card-border: #BFDBFE;
+  --muted: #4B6A9B;
+}
 
-/* -- Accent colors: darker shade for light bg -- */
+/* Headings: State Life navy */
+html:not(.dark) .sub-page .text-white { color: #1e3a5f !important; }
+html:not(.dark) .sub-page .text-slate-50 { color: #1e3a5f !important; }
+html:not(.dark) .sub-page .text-slate-100 { color: #1e3a5f !important; }
+html:not(.dark) .sub-page .text-slate-200 { color: #2d4f7c !important; }
+html:not(.dark) .sub-page .text-slate-300 { color: #3d6494 !important; }
+html:not(.dark) .sub-page .text-slate-400 { color: #4B6A9B !important; }
+html:not(.dark) .sub-page .text-slate-500 { color: #5a7aaa !important; }
+
+/* Accent colors */
 html:not(.dark) .sub-page .text-emerald-200 { color: #065f46 !important; }
-html:not(.dark) .sub-page .text-emerald-300 { color: #065f46 !important; }
-html:not(.dark) .sub-page .text-emerald-400 { color: #059669 !important; }
-html:not(.dark) .sub-page .text-cyan-200 { color: #0e7490 !important; }
-html:not(.dark) .sub-page .text-cyan-300 { color: #0891b2 !important; }
+html:not(.dark) .sub-page .text-emerald-300 { color: #059669 !important; }
+html:not(.dark) .sub-page .text-emerald-400 { color: #047857 !important; }
+html:not(.dark) .sub-page .text-cyan-200 { color: #0369a1 !important; }
+html:not(.dark) .sub-page .text-cyan-300 { color: #0284c7 !important; }
 html:not(.dark) .sub-page .text-cyan-400 { color: #0891b2 !important; }
 html:not(.dark) .sub-page .text-blue-300 { color: #1d4ed8 !important; }
-html:not(.dark) .sub-page .text-blue-400 { color: #2563eb !important; }
+html:not(.dark) .sub-page .text-blue-400 { color: #1d4ed8 !important; }
 html:not(.dark) .sub-page .text-sky-200 { color: #075985 !important; }
 html:not(.dark) .sub-page .text-sky-300 { color: #0369a1 !important; }
 html:not(.dark) .sub-page .text-sky-400 { color: #0284c7 !important; }
@@ -135,52 +144,51 @@ html:not(.dark) .sub-page .text-purple-400 { color: #7c3aed !important; }
 html:not(.dark) .sub-page .text-amber-300 { color: #b45309 !important; }
 html:not(.dark) .sub-page .text-amber-400 { color: #d97706 !important; }
 
-/* -- Cards: transparent-white â†’ solid light card -- */
-html:not(.dark) .sub-page .bg-white\/\[\.02\] { background-color: #f1f5f9 !important; }
-html:not(.dark) .sub-page .bg-white\/\[\.03\] { background-color: #f1f5f9 !important; }
-html:not(.dark) .sub-page .bg-white\/\[\.04\] { background-color: #e8edf5 !important; }
-html:not(.dark) .sub-page .bg-white\/\[\.05\] { background-color: #e8edf5 !important; }
-html:not(.dark) .sub-page .bg-white\/\[\.06\] { background-color: #e2e8f0 !important; }
-html:not(.dark) .sub-page .bg-white\/\[\.07\] { background-color: #e2e8f0 !important; }
-html:not(.dark) .sub-page .bg-white\/\[\.08\] { background-color: #dde4ee !important; }
-html:not(.dark) .sub-page .bg-white\/\[\.10\] { background-color: #dde4ee !important; }
+/* Cards: State Life brand blue */
+html:not(.dark) .sub-page .bg-white\/\[\.02\] { background-color: #EFF6FF !important; }
+html:not(.dark) .sub-page .bg-white\/\[\.03\] { background-color: #EFF6FF !important; }
+html:not(.dark) .sub-page .bg-white\/\[\.04\] { background-color: #DBEAFE !important; }
+html:not(.dark) .sub-page .bg-white\/\[\.05\] { background-color: #DBEAFE !important; }
+html:not(.dark) .sub-page .bg-white\/\[\.06\] { background-color: #E0F2FE !important; }
+html:not(.dark) .sub-page .bg-white\/\[\.07\] { background-color: #E0F2FE !important; }
+html:not(.dark) .sub-page .bg-white\/\[\.08\] { background-color: #DBEAFE !important; }
+html:not(.dark) .sub-page .bg-white\/\[\.10\] { background-color: #BFDBFE !important; }
 
-/* -- Borders: white-opacity â†’ visible slate border -- */
-html:not(.dark) .sub-page .border-white\/\[\.06\] { border-color: #cbd5e1 !important; }
-html:not(.dark) .sub-page .border-white\/\[\.08\] { border-color: #cbd5e1 !important; }
-html:not(.dark) .sub-page .border-white\/\[\.10\] { border-color: #b8c5d6 !important; }
-html:not(.dark) .sub-page .border-white\/\[\.12\] { border-color: #b8c5d6 !important; }
-html:not(.dark) .sub-page .border-white\/\[\.15\] { border-color: #94a3b8 !important; }
-html:not(.dark) .sub-page .border-white\/\[\.20\] { border-color: #94a3b8 !important; }
-html:not(.dark) .sub-page .border-white\/10 { border-color: #b8c5d6 !important; }
-html:not(.dark) .sub-page .border-white\/20 { border-color: #94a3b8 !important; }
+/* Borders: brand blue */
+html:not(.dark) .sub-page .border-white\/\[\.06\] { border-color: #BFDBFE !important; }
+html:not(.dark) .sub-page .border-white\/\[\.08\] { border-color: #93C5FD !important; }
+html:not(.dark) .sub-page .border-white\/\[\.10\] { border-color: #93C5FD !important; }
+html:not(.dark) .sub-page .border-white\/\[\.12\] { border-color: #60A5FA !important; }
+html:not(.dark) .sub-page .border-white\/\[\.15\] { border-color: #60A5FA !important; }
+html:not(.dark) .sub-page .border-white\/\[\.20\] { border-color: #3B82F6 !important; }
+html:not(.dark) .sub-page .border-white\/10 { border-color: #93C5FD !important; }
+html:not(.dark) .sub-page .border-white\/20 { border-color: #60A5FA !important; }
 
-/* -- Gradient section cards (from-white/*) -- */
-html:not(.dark) .sub-page .from-white\/\[\.06\] { --tw-gradient-from: #f1f5f9 !important; }
-html:not(.dark) .sub-page .from-white\/\[\.07\] { --tw-gradient-from: #f1f5f9 !important; }
+/* Gradient cards */
+html:not(.dark) .sub-page .from-white\/\[\.06\] { --tw-gradient-from: #EFF6FF !important; }
+html:not(.dark) .sub-page .from-white\/\[\.07\] { --tw-gradient-from: #DBEAFE !important; }
 
-/* -- Form inputs: dark bg â†’ white -- */
+/* Form inputs */
 html:not(.dark) .sub-page input,
 html:not(.dark) .sub-page textarea,
 html:not(.dark) .sub-page select {
   background-color: #ffffff !important;
-  color: #0f172a !important;
-  border-color: #cbd5e1 !important;
+  color: #1e3a5f !important;
+  border-color: #93C5FD !important;
 }
 html:not(.dark) .sub-page input::placeholder,
-html:not(.dark) .sub-page textarea::placeholder { color: #94a3b8 !important; }
-html:not(.dark) .sub-page select option { background-color: #ffffff !important; color: #0f172a !important; }
+html:not(.dark) .sub-page textarea::placeholder { color: #7B9BC4 !important; }
+html:not(.dark) .sub-page select option { background-color: #ffffff !important; color: #1e3a5f !important; }
 
-/* -- Gradient headings: more vibrant on light bg -- */
-html:not(.dark) .sub-page .from-blue-400 { --tw-gradient-from: #2563eb !important; }
-html:not(.dark) .sub-page .via-cyan-300 { --tw-gradient-via: #0891b2 !important; }
+/* Gradient headings */
+html:not(.dark) .sub-page .from-blue-400 { --tw-gradient-from: #1d4ed8 !important; }
+html:not(.dark) .sub-page .via-cyan-300 { --tw-gradient-via: #0284c7 !important; }
 html:not(.dark) .sub-page .to-emerald-400 { --tw-gradient-to: #059669 !important; }
 
-/* -- Scrollbar: adapt to light mode -- */
-html:not(.dark) ::-webkit-scrollbar-track { background: #e2e8f0; }
-html:not(.dark) ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.20); }
-html:not(.dark) ::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.35); }
-
+/* Scrollbar: brand blue in light mode */
+html:not(.dark) ::-webkit-scrollbar-track { background: #DBEAFE; }
+html:not(.dark) ::-webkit-scrollbar-thumb { background: #60A5FA; }
+html:not(.dark) ::-webkit-scrollbar-thumb:hover { background: #3B82F6; }
 /* Glassmorphism */
 .glass {
   background: var(--card-bg);
