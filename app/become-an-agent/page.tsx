@@ -118,32 +118,40 @@ export default function BecomeAnAgentPage() {
     const nextErrors: FormErrors = {};
     if (!formData.name.trim()) nextErrors.name = "Poora naam likhein.";
     if (!cleanPhone(formData.phone)) nextErrors.phone = "Sahi phone number likhein (kam se kam 7 digits).";
-    if (!formData.city.trim()) nextErrors.city = "Apna shehar / tehsil darj karein.";
+    if (!formData.city.trim()) nextErrors.city = "City ya tehsil ka naam likhein.";
     if (!formData.age.trim()) nextErrors.age = "Apni umar likhein.";
-    if (!formData.education) nextErrors.education = "Taleem select karein.";
-    if (!formData.consent) nextErrors.consent = "Ijazat lena zaroori hai.";
-    setErrors(nextErrors);
-    return Object.keys(nextErrors).length === 0;
+    else if (Number(formData.age) < 18 || Number(formData.age) > 65) {
+      nextErrors.age = "Umar 18 aur 65 saal ke darmian honi chahiye.";
+    }
+    if (!formData.consent) nextErrors.consent = "Aage barhne ke liye consent zaroori hai.";
+    return nextErrors;
   };
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (!validateForm()) return;
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (formData.website) return;
+
+    const validationErrors = validateForm();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
 
     setStatus("submitting");
+
     try {
       const response = await fetch("/api/leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          type: "agent_prereg",
+          type: "career_inquiry",
           name: formData.name,
           phone: cleanPhone(formData.phone),
           city: formData.city,
           age: formData.age,
           education: formData.education,
           experience: formData.experience,
-          best_time: formData.contactTime,
+          preferred_time: formData.contactTime,
           message: formData.message,
           consent: formData.consent,
           website: formData.website,
@@ -159,51 +167,50 @@ export default function BecomeAnAgentPage() {
   };
 
   return (
-    <main className="sub-page min-h-screen" style={{ background: 'var(--page-bg)', color: 'var(--foreground)' }}>
-      {/* ── Ambient Modern Prismatic Halos ── */}
+    <main
+      className="sub-page min-h-screen"
+      style={{
+        backgroundColor: "#0c0d0e",
+        backgroundImage:
+          "linear-gradient(rgba(255, 255, 255, 0.024) 1px, transparent 1px), linear-gradient(90deg, rgba(215, 184, 117, 0.035) 1px, transparent 1px)",
+        backgroundSize: "100% 72px, 72px 100%",
+        color: "#f7f4ed",
+      }}
+    >
+      {/* ── Ambient Background Glows ── */}
       <div className="relative isolate overflow-hidden">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -left-40 -top-40 h-[700px] w-[700px] rounded-full bg-emerald-500/[.12] blur-[170px]"
+          className="pointer-events-none absolute -left-40 -top-40 h-[500px] w-[500px] rounded-full bg-[#d7b875]/[0.08] blur-[140px]"
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -right-40 top-20 h-[650px] w-[650px] rounded-full bg-cyan-500/[.12] blur-[170px]"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute left-1/3 bottom-10 h-[500px] w-[500px] rounded-full bg-blue-600/[.08] blur-[160px]"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle, rgba(255,255,255,0.035) 1px, transparent 1px)",
-            backgroundSize: "32px 32px",
-          }}
+          className="pointer-events-none absolute -right-32 top-10 h-[450px] w-[450px] rounded-full bg-[#d7b875]/[0.05] blur-[140px]"
         />
 
         {/* ── Header Section ── */}
         <section className="relative z-10 mx-auto max-w-7xl px-4 pt-28 pb-10 sm:px-6 lg:px-8">
           <div className="text-center">
-            {/* Tracking Badge */}
-            <div className="inline-flex max-w-full items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-[11px] font-bold tracking-[0.2em] uppercase text-emerald-300 backdrop-blur-md sm:text-xs">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            {/* Tracking Eyebrow Badge */}
+            <div className="inline-flex max-w-full items-center gap-2.5 rounded-full border border-[#d7b875]/35 bg-[#0c0d0e]/80 px-4 py-1.5 text-[11px] font-bold tracking-[0.14em] uppercase text-[#e2cca0] shadow-[0_2px_12px_rgba(0,0,0,0.4)] backdrop-blur-md sm:text-xs">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#d7b875] shadow-[0_0_10px_rgba(215,184,117,0.8)]" />
               <span className="truncate">
                 STATE LIFE • SUKKUR AREA OFFICE {AREA_CODE} • CAREER DESK
               </span>
             </div>
 
-            {/* Authoritative Modern Headline */}
-            <h1 className="mt-6 text-3xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
+            {/* Authoritative Serif Headline matching Home Page */}
+            <h1
+              className="mt-6 text-3xl sm:text-5xl lg:text-6xl text-[#f7f4ed] tracking-normal"
+              style={{ fontFamily: 'Georgia, "Times New Roman", serif', fontWeight: 400 }}
+            >
               Build a Prestigious Career in<br />
-              <span className="bg-gradient-to-r from-emerald-300 via-cyan-200 to-amber-200 bg-clip-text text-transparent">
+              <span className="text-[#d7b875] italic sm:not-italic">
                 Sovereign Financial Advisory
               </span>
             </h1>
 
-            <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-slate-300 sm:text-base md:text-lg">
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-[#a6a6a1] sm:text-base md:text-lg">
               Pakistan ke sab se baray aur qabil-e-etemad idaray ka hissa banein. Unlimited earning
               potential, professional corporate training, aur Sukkur Zone mein sovereign pehchan.
             </p>
@@ -218,72 +225,92 @@ export default function BecomeAnAgentPage() {
             <div className="space-y-6 lg:col-span-5">
 
               {/* 4 Advantage Pillars Card */}
-              <div className="rounded-3xl border border-white/[.08] bg-white/[.03] p-6 shadow-2xl backdrop-blur-2xl sm:p-7 space-y-4">
-                <div className="flex items-center justify-between border-b border-white/5 pb-4">
-                  <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
+              <div className="rounded-3xl border border-white/[0.12] bg-[#121314]/90 p-6 shadow-[0_12px_38px_rgba(0,0,0,0.35)] backdrop-blur-2xl sm:p-7 space-y-4">
+                <div className="flex items-center justify-between border-b border-white/[0.08] pb-4">
+                  <span className="text-xs font-bold uppercase tracking-wider text-[#d7b875]">
                     Career Advantages
                   </span>
-                  <span className="text-[10px] font-semibold uppercase text-slate-500">
+                  <span className="text-[10px] font-semibold uppercase text-[#aaa9a3]">
                     Sukkur Area {AREA_CODE}
                   </span>
                 </div>
 
                 {/* Advantage 01 */}
-                <div className="flex items-start gap-4 rounded-2xl border border-white/5 bg-white/[0.02] p-4 transition hover:border-emerald-500/30 hover:bg-white/[0.04]">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-500/15 font-mono text-sm font-bold text-emerald-400">
+                <div className="flex items-start gap-4 rounded-2xl border border-white/[0.08] bg-white/[0.02] p-4 transition hover:border-[#d7b875]/50 hover:bg-white/[0.04]">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#d7b875]/30 bg-[#d7b875]/10 font-serif text-sm font-bold text-[#e8d5a4]">
                     01
                   </div>
                   <div>
-                    <h2 className="text-sm font-bold text-white">Unlimited Earning Potential</h2>
-                    <p className="mt-1 text-xs leading-relaxed text-slate-400">
+                    <h2
+                      className="text-sm font-semibold text-[#f5f2ea]"
+                      style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
+                    >
+                      Unlimited Earning Potential
+                    </h2>
+                    <p className="mt-1 text-xs leading-relaxed text-[#aaa9a3]">
                       Attractive commission structures, annual performance bonuses, aur car/travel incentive schemes.
                     </p>
                   </div>
                 </div>
 
                 {/* Advantage 02 */}
-                <div className="flex items-start gap-4 rounded-2xl border border-white/5 bg-white/[0.02] p-4 transition hover:border-cyan-500/30 hover:bg-white/[0.04]">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-cyan-500/15 font-mono text-sm font-bold text-cyan-400">
+                <div className="flex items-start gap-4 rounded-2xl border border-white/[0.08] bg-white/[0.02] p-4 transition hover:border-[#d7b875]/50 hover:bg-white/[0.04]">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#d7b875]/30 bg-[#d7b875]/10 font-serif text-sm font-bold text-[#e8d5a4]">
                     02
                   </div>
                   <div>
-                    <h2 className="text-sm font-bold text-white">Professional Training &amp; Mentorship</h2>
-                    <p className="mt-1 text-xs leading-relaxed text-slate-400">
+                    <h2
+                      className="text-sm font-semibold text-[#f5f2ea]"
+                      style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
+                    >
+                      Professional Training &amp; Mentorship
+                    </h2>
+                    <p className="mt-1 text-xs leading-relaxed text-[#aaa9a3]">
                       State Life Zonal Academy aur Area Manager Fayyaz Ahmed ki direct supervision mein complete sales training.
                     </p>
                   </div>
                 </div>
 
                 {/* Advantage 03 */}
-                <div className="flex items-start gap-4 rounded-2xl border border-white/5 bg-white/[0.02] p-4 transition hover:border-amber-500/30 hover:bg-white/[0.04]">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-500/15 font-mono text-sm font-bold text-amber-400">
+                <div className="flex items-start gap-4 rounded-2xl border border-white/[0.08] bg-white/[0.02] p-4 transition hover:border-[#d7b875]/50 hover:bg-white/[0.04]">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#d7b875]/30 bg-[#d7b875]/10 font-serif text-sm font-bold text-[#e8d5a4]">
                     03
                   </div>
                   <div>
-                    <h2 className="text-sm font-bold text-white">Official Government Agent Code</h2>
-                    <p className="mt-1 text-xs leading-relaxed text-slate-400">
+                    <h2
+                      className="text-sm font-semibold text-[#f5f2ea]"
+                      style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
+                    >
+                      Official Government Agent Code
+                    </h2>
+                    <p className="mt-1 text-xs leading-relaxed text-[#aaa9a3]">
                       State Life Insurance Act ke tehat legal registration, official code allotment, aur sovereign izzat.
                     </p>
                   </div>
                 </div>
 
                 {/* Advantage 04 */}
-                <div className="flex items-start gap-4 rounded-2xl border border-white/5 bg-white/[0.02] p-4 transition hover:border-purple-500/30 hover:bg-white/[0.04]">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-purple-500/15 font-mono text-sm font-bold text-purple-400">
+                <div className="flex items-start gap-4 rounded-2xl border border-white/[0.08] bg-white/[0.02] p-4 transition hover:border-[#d7b875]/50 hover:bg-white/[0.04]">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#d7b875]/30 bg-[#d7b875]/10 font-serif text-sm font-bold text-[#e8d5a4]">
                     04
                   </div>
                   <div>
-                    <h2 className="text-sm font-bold text-white">Autonomous Working Flexibility</h2>
-                    <p className="mt-1 text-xs leading-relaxed text-slate-400">
+                    <h2
+                      className="text-sm font-semibold text-[#f5f2ea]"
+                      style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
+                    >
+                      Autonomous Working Flexibility
+                    </h2>
+                    <p className="mt-1 text-xs leading-relaxed text-[#aaa9a3]">
                       Apna schedule khud tay karein. Full-time professionals ya ambitious youth ke liye ideal career.
                     </p>
                   </div>
                 </div>
               </div>
 
-              {/* Direct Zonal Mentorship Card with area-manager.jpg */}
-              <div className="flex items-center gap-4 rounded-3xl border border-emerald-500/25 bg-emerald-950/15 p-5 backdrop-blur-2xl">
-                <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-2xl border border-white/10 bg-slate-900">
+              {/* Direct Zonal Mentorship Card */}
+              <div className="flex items-center gap-4 rounded-3xl border border-[#d7b875]/30 bg-[#121314]/90 p-5 backdrop-blur-2xl">
+                <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-2xl border border-[#d7b875]/30 bg-black">
                   <Image
                     src="/area-manager.jpg"
                     alt={MANAGER_NAME}
@@ -293,11 +320,16 @@ export default function BecomeAnAgentPage() {
                   />
                 </div>
                 <div>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#d7b875]">
                     Direct Zonal Mentorship
                   </span>
-                  <p className="text-sm font-bold text-white">{MANAGER_NAME}</p>
-                  <p className="text-xs text-slate-400">
+                  <p
+                    className="text-sm font-semibold text-[#f5f2ea]"
+                    style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
+                  >
+                    {MANAGER_NAME}
+                  </p>
+                  <p className="text-xs text-[#aaa9a3]">
                     {MANAGER_TITLE} • Sukkur Area Office {AREA_CODE}
                   </p>
                 </div>
@@ -310,32 +342,35 @@ export default function BecomeAnAgentPage() {
                 )}`}
                 target="_blank"
                 rel="noreferrer"
-                className="group flex items-center justify-between rounded-2xl border border-emerald-500/30 bg-emerald-950/20 p-4 transition-all duration-300 hover:border-emerald-400 hover:bg-emerald-900/30 hover:shadow-xl hover:shadow-emerald-900/20"
+                className="group flex items-center justify-between rounded-2xl border border-[#d7b875]/60 bg-[#d7b875]/10 p-4 transition-all duration-300 hover:bg-[#d7b875] hover:text-[#0c0d0e] hover:shadow-[0_4px_20px_rgba(215,184,117,0.3)]"
               >
                 <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500 text-white shadow-md shadow-emerald-500/30 transition group-hover:scale-105">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#d7b875] text-[#0c0d0e] shadow-md transition group-hover:scale-105">
                     <MessageSquare size={18} />
                   </div>
                   <div>
-                    <p className="text-xs font-bold text-white">Ask Career Questions on WhatsApp</p>
-                    <p className="font-mono text-[11px] text-emerald-400">+92 317 0941821</p>
+                    <p className="text-xs font-bold text-[#f5f2ea] group-hover:text-[#0c0d0e]">Ask Career Questions on WhatsApp</p>
+                    <p className="font-mono text-[11px] text-[#e6d3a6] group-hover:text-[#0c0d0e]">+92 317 0941821</p>
                   </div>
                 </div>
-                <ArrowRight size={16} className="text-emerald-400 transition group-hover:translate-x-1" />
+                <ArrowRight size={16} className="text-[#d7b875] transition group-hover:translate-x-1 group-hover:text-[#0c0d0e]" />
               </a>
 
             </div>
 
             {/* RIGHT COLUMN: Advisor Pre-Registration Desk Form (Span 7) */}
-            <div className="rounded-3xl border border-white/[.08] bg-white/[.035] p-7 shadow-2xl backdrop-blur-2xl sm:p-9 lg:col-span-7">
+            <div className="rounded-3xl border border-white/[0.12] bg-[#121314]/90 p-7 shadow-[0_12px_38px_rgba(0,0,0,0.35)] backdrop-blur-2xl sm:p-9 lg:col-span-7">
               <div>
-                <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#d7b875]">
                   Application Portal
                 </span>
-                <h2 className="mt-1 text-2xl font-black text-white sm:text-3xl">
+                <h2
+                  className="mt-1 text-2xl sm:text-3xl font-normal text-[#f5f2ea]"
+                  style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
+                >
                   Advisor Pre-Registration Desk
                 </h2>
-                <p className="mt-2 text-xs leading-relaxed text-slate-400 sm:text-sm">
+                <p className="mt-2 text-xs leading-relaxed text-[#aaa9a3] sm:text-sm">
                   Apni basic information darj karein. Sukkur Area Office 5405 recruitment team
                   official documentation (Form 01) aur interview ke liye rabta karegi.
                 </p>
@@ -343,11 +378,11 @@ export default function BecomeAnAgentPage() {
 
               {/* Status Alert Messages */}
               {status === "success" && (
-                <div className="mt-6 flex items-start gap-3 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-emerald-300">
-                  <CheckCircle2 size={20} className="mt-0.5 shrink-0 text-emerald-400" />
+                <div className="mt-6 flex items-start gap-3 rounded-2xl border border-[#d7b875]/40 bg-[#d7b875]/10 p-4 text-[#ecd9aa]">
+                  <CheckCircle2 size={20} className="mt-0.5 shrink-0 text-[#d7b875]" />
                   <div>
                     <p className="text-sm font-bold">Pre-registration kamyabi se submit ho gayi!</p>
-                    <p className="mt-1 text-xs text-emerald-200/90">
+                    <p className="mt-1 text-xs text-[#d6d2c7]">
                       Sukkur Area Office 5405 team aapse foran rabta karke Form 01 aur next steps samjhayegi.
                     </p>
                   </div>
@@ -381,7 +416,7 @@ export default function BecomeAnAgentPage() {
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   {/* Full Name */}
                   <div>
-                    <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-slate-300">
+                    <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-[#d6d2c7]">
                       Full Name *
                     </label>
                     <input
@@ -389,7 +424,7 @@ export default function BecomeAnAgentPage() {
                       value={formData.name}
                       onChange={(e) => handleChange("name", e.target.value)}
                       placeholder="Muhammad Ali"
-                      className="h-12 w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 text-sm text-white placeholder-slate-500 outline-none transition focus:border-emerald-400 focus:bg-white/[0.07]"
+                      className="h-12 w-full rounded-xl border border-white/15 bg-white/[0.04] px-4 text-sm text-[#f7f4ed] placeholder-[#7a7974] outline-none transition focus:border-[#d7b875] focus:bg-[#181918] focus:ring-1 focus:ring-[#d7b875]/50"
                     />
                     {errors.name && (
                       <span className="mt-1 block text-xs text-red-400">{errors.name}</span>
@@ -398,7 +433,7 @@ export default function BecomeAnAgentPage() {
 
                   {/* Phone Number */}
                   <div>
-                    <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-slate-300">
+                    <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-[#d6d2c7]">
                       Phone Number *
                     </label>
                     <input
@@ -406,7 +441,7 @@ export default function BecomeAnAgentPage() {
                       value={formData.phone}
                       onChange={(e) => handleChange("phone", e.target.value)}
                       placeholder="0300-1234567"
-                      className="h-12 w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 text-sm text-white placeholder-slate-500 outline-none transition focus:border-emerald-400 focus:bg-white/[0.07]"
+                      className="h-12 w-full rounded-xl border border-white/15 bg-white/[0.04] px-4 text-sm text-[#f7f4ed] placeholder-[#7a7974] outline-none transition focus:border-[#d7b875] focus:bg-[#181918] focus:ring-1 focus:ring-[#d7b875]/50"
                     />
                     {errors.phone && (
                       <span className="mt-1 block text-xs text-red-400">{errors.phone}</span>
@@ -417,7 +452,7 @@ export default function BecomeAnAgentPage() {
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   {/* City */}
                   <div>
-                    <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-slate-300">
+                    <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-[#d6d2c7]">
                       City / Tehsil *
                     </label>
                     <input
@@ -425,7 +460,7 @@ export default function BecomeAnAgentPage() {
                       value={formData.city}
                       onChange={(e) => handleChange("city", e.target.value)}
                       placeholder="Sukkur / Rohri / Khairpur"
-                      className="h-12 w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 text-sm text-white placeholder-slate-500 outline-none transition focus:border-emerald-400 focus:bg-white/[0.07]"
+                      className="h-12 w-full rounded-xl border border-white/15 bg-white/[0.04] px-4 text-sm text-[#f7f4ed] placeholder-[#7a7974] outline-none transition focus:border-[#d7b875] focus:bg-[#181918] focus:ring-1 focus:ring-[#d7b875]/50"
                     />
                     {errors.city && (
                       <span className="mt-1 block text-xs text-red-400">{errors.city}</span>
@@ -434,7 +469,7 @@ export default function BecomeAnAgentPage() {
 
                   {/* Age */}
                   <div>
-                    <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-slate-300">
+                    <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-[#d6d2c7]">
                       Your Age (Years) *
                     </label>
                     <input
@@ -442,7 +477,7 @@ export default function BecomeAnAgentPage() {
                       value={formData.age}
                       onChange={(e) => handleChange("age", e.target.value)}
                       placeholder="25"
-                      className="h-12 w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 text-sm text-white placeholder-slate-500 outline-none transition focus:border-emerald-400 focus:bg-white/[0.07]"
+                      className="h-12 w-full rounded-xl border border-white/15 bg-white/[0.04] px-4 text-sm text-[#f7f4ed] placeholder-[#7a7974] outline-none transition focus:border-[#d7b875] focus:bg-[#181918] focus:ring-1 focus:ring-[#d7b875]/50"
                     />
                     {errors.age && (
                       <span className="mt-1 block text-xs text-red-400">{errors.age}</span>
@@ -453,57 +488,57 @@ export default function BecomeAnAgentPage() {
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   {/* Education */}
                   <div>
-                    <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-slate-300">
+                    <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-[#d6d2c7]">
                       Education Level *
                     </label>
                     <select
                       value={formData.education}
                       onChange={(e) => handleChange("education", e.target.value)}
-                      className="h-12 w-full rounded-xl border border-white/10 bg-[#071324] px-4 text-sm text-white outline-none transition focus:border-emerald-400"
+                      className="h-12 w-full rounded-xl border border-white/15 bg-[#141514] px-4 text-sm text-[#f7f4ed] outline-none transition focus:border-[#d7b875]"
                     >
-                      <option className="bg-[#071324]">Intermediate (FA / FSc / I.Com)</option>
-                      <option className="bg-[#071324]">Graduation (BA / BSc / B.Com / BS)</option>
-                      <option className="bg-[#071324]">Master&apos;s (MA / MSc / MBA)</option>
-                      <option className="bg-[#071324]">Matriculation</option>
+                      <option className="bg-[#141514]">Intermediate (FA / FSc / I.Com)</option>
+                      <option className="bg-[#141514]">Graduation (BA / BSc / B.Com / BS)</option>
+                      <option className="bg-[#141514]">Master&apos;s (MA / MSc / MBA)</option>
+                      <option className="bg-[#141514]">Matriculation</option>
                     </select>
                   </div>
 
                   {/* Prior Experience */}
                   <div>
-                    <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-slate-300">
+                    <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-[#d6d2c7]">
                       Sales / Insurance Experience
                     </label>
                     <select
                       value={formData.experience}
                       onChange={(e) => handleChange("experience", e.target.value)}
-                      className="h-12 w-full rounded-xl border border-white/10 bg-[#071324] px-4 text-sm text-white outline-none transition focus:border-emerald-400"
+                      className="h-12 w-full rounded-xl border border-white/15 bg-[#141514] px-4 text-sm text-[#f7f4ed] outline-none transition focus:border-[#d7b875]"
                     >
-                      <option className="bg-[#071324]">No prior experience (Fresh)</option>
-                      <option className="bg-[#071324]">1 - 2 Years in Sales / Banking</option>
-                      <option className="bg-[#071324]">3+ Years in Insurance / Marketing</option>
+                      <option className="bg-[#141514]">No prior experience (Fresh)</option>
+                      <option className="bg-[#141514]">1 - 2 Years in Sales / Banking</option>
+                      <option className="bg-[#141514]">3+ Years in Insurance / Marketing</option>
                     </select>
                   </div>
                 </div>
 
                 {/* Preferred Contact Time */}
                 <div>
-                  <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-slate-300">
+                  <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-[#d6d2c7]">
                     Preferred Time to Contact
                   </label>
                   <select
                     value={formData.contactTime}
                     onChange={(e) => handleChange("contactTime", e.target.value)}
-                    className="h-12 w-full rounded-xl border border-white/10 bg-[#071324] px-4 text-sm text-white outline-none transition focus:border-emerald-400"
+                    className="h-12 w-full rounded-xl border border-white/15 bg-[#141514] px-4 text-sm text-[#f7f4ed] outline-none transition focus:border-[#d7b875]"
                   >
-                    <option className="bg-[#071324]">Morning (9:00 AM - 1:00 PM)</option>
-                    <option className="bg-[#071324]">Afternoon (1:00 PM - 5:00 PM)</option>
-                    <option className="bg-[#071324]">Evening (After 5:00 PM)</option>
+                    <option className="bg-[#141514]">Morning (9:00 AM - 1:00 PM)</option>
+                    <option className="bg-[#141514]">Afternoon (1:00 PM - 5:00 PM)</option>
+                    <option className="bg-[#141514]">Evening (After 5:00 PM)</option>
                   </select>
                 </div>
 
                 {/* Message / Motivation */}
                 <div>
-                  <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-slate-300">
+                  <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-[#d6d2c7]">
                     Why do you want to join State Life? (Optional)
                   </label>
                   <textarea
@@ -511,7 +546,7 @@ export default function BecomeAnAgentPage() {
                     value={formData.message}
                     onChange={(e) => handleChange("message", e.target.value)}
                     placeholder="Apna background aur career ambitions share karein..."
-                    className="w-full rounded-xl border border-white/10 bg-white/[0.04] p-4 text-sm text-white placeholder-slate-500 outline-none transition focus:border-emerald-400 focus:bg-white/[0.07]"
+                    className="w-full rounded-xl border border-white/15 bg-white/[0.04] p-4 text-sm text-[#f7f4ed] placeholder-[#7a7974] outline-none transition focus:border-[#d7b875] focus:bg-[#181918] focus:ring-1 focus:ring-[#d7b875]/50"
                   />
                 </div>
 
@@ -522,9 +557,9 @@ export default function BecomeAnAgentPage() {
                       type="checkbox"
                       checked={formData.consent}
                       onChange={(e) => handleChange("consent", e.target.checked)}
-                      className="mt-1 h-4 w-4 rounded border-white/20 bg-white/5 text-emerald-500 focus:ring-emerald-400"
+                      className="mt-1 h-4 w-4 rounded border-white/20 bg-white/5 accent-[#d7b875]"
                     />
-                    <span className="text-xs leading-relaxed text-slate-400">
+                    <span className="text-xs leading-relaxed text-[#aaa9a3]">
                       Main tasdeeq karta hoon ke di gayi maloomat sahi hain aur State Life recruitment team ke rabtay ki ijazat deta hoon.
                     </span>
                   </label>
@@ -538,7 +573,7 @@ export default function BecomeAnAgentPage() {
                   <button
                     type="submit"
                     disabled={status === "submitting"}
-                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-500 py-4 text-sm font-bold uppercase tracking-wider text-white shadow-lg shadow-emerald-900/30 transition-all duration-200 hover:scale-[1.01] hover:from-emerald-500 hover:to-teal-400 disabled:opacity-60 cursor-pointer"
+                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#d7b875] py-4 text-xs font-bold uppercase tracking-wider text-[#0c0d0e] shadow-lg shadow-[#d7b875]/20 transition-all duration-200 hover:bg-[#e6cca0] hover:scale-[1.01] disabled:opacity-60 cursor-pointer"
                   >
                     {status === "submitting" ? (
                       <>
@@ -554,7 +589,7 @@ export default function BecomeAnAgentPage() {
                   </button>
                 </div>
 
-                <p className="text-[11px] text-center text-slate-500 pt-2">
+                <p className="text-[11px] text-center text-[#898984] pt-2">
                   🏛️ Official State Life Corporation Recruitment • Sukkur Area Office {AREA_CODE}
                 </p>
               </form>
@@ -565,15 +600,18 @@ export default function BecomeAnAgentPage() {
 
         {/* ── 4-Step Onboarding Roadmap ── */}
         <section className="relative z-10 mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-          <div className="rounded-3xl border border-white/[.08] bg-white/[.03] p-8 sm:p-12 backdrop-blur-2xl">
+          <div className="rounded-3xl border border-white/[0.12] bg-[#121314]/90 p-8 sm:p-12 backdrop-blur-2xl shadow-[0_12px_38px_rgba(0,0,0,0.35)]">
             <div className="mx-auto max-w-2xl text-center">
-              <span className="text-xs font-bold uppercase tracking-wider text-cyan-400">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#d7b875]">
                 The Roadmap
               </span>
-              <h2 className="mt-1 text-2xl font-black text-white sm:text-4xl">
+              <h2
+                className="mt-1 text-2xl sm:text-4xl font-normal text-[#f5f2ea]"
+                style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
+              >
                 4-Step Onboarding Process
               </h2>
-              <p className="mt-2 text-xs leading-relaxed text-slate-400 sm:text-sm">
+              <p className="mt-2 text-xs leading-relaxed text-[#aaa9a3] sm:text-sm">
                 Application submission se lekar official government agent code number allotment tak ka clear process:
               </p>
             </div>
@@ -582,13 +620,18 @@ export default function BecomeAnAgentPage() {
               {processSteps.map((step) => (
                 <div
                   key={step.step}
-                  className="rounded-2xl border border-white/5 bg-white/[0.02] p-6 transition hover:border-emerald-500/30 hover:bg-white/[0.04]"
+                  className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6 transition hover:border-[#d7b875]/50 hover:bg-white/[0.04]"
                 >
-                  <span className="font-mono text-xs font-bold text-emerald-400">
+                  <span className="font-serif text-xs font-bold text-[#d7b875]">
                     STEP {step.step}
                   </span>
-                  <h3 className="mt-2 text-base font-bold text-white">{step.title}</h3>
-                  <p className="mt-2 text-xs leading-relaxed text-slate-400">{step.detail}</p>
+                  <h3
+                    className="mt-2 text-base font-semibold text-[#f5f2ea]"
+                    style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
+                  >
+                    {step.title}
+                  </h3>
+                  <p className="mt-2 text-xs leading-relaxed text-[#aaa9a3]">{step.detail}</p>
                 </div>
               ))}
             </div>
@@ -598,10 +641,13 @@ export default function BecomeAnAgentPage() {
         {/* ── FAQs Accordion Section ── */}
         <section className="relative z-10 mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
           <div className="text-center">
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#d7b875]">
               Common Questions
             </span>
-            <h2 className="mt-1 text-2xl font-black text-white sm:text-3xl">
+            <h2
+              className="mt-1 text-2xl sm:text-3xl font-normal text-[#f5f2ea]"
+              style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
+            >
               Career &amp; Recruitment FAQs
             </h2>
           </div>
@@ -612,23 +658,24 @@ export default function BecomeAnAgentPage() {
               return (
                 <div
                   key={index}
-                  className="overflow-hidden rounded-2xl border border-white/[.08] bg-white/[.03] transition backdrop-blur-xl"
+                  className="overflow-hidden rounded-2xl border border-white/[0.1] bg-[#121314]/90 transition backdrop-blur-xl hover:border-[#d7b875]/40"
                 >
                   <button
                     type="button"
                     onClick={() => setOpenFaq(isOpen ? null : index)}
-                    className="flex w-full items-center justify-between p-5 text-left text-sm font-bold text-white transition hover:text-emerald-300"
+                    className="flex w-full items-center justify-between p-5 text-left text-sm font-semibold text-[#f5f2ea] transition hover:text-[#d7b875]"
+                    style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
                   >
                     <span>{faq.question}</span>
                     <ChevronDown
                       size={18}
-                      className={`shrink-0 text-emerald-400 transition-transform duration-300 ${
+                      className={`shrink-0 text-[#d7b875] transition-transform duration-300 ${
                         isOpen ? "rotate-180" : ""
                       }`}
                     />
                   </button>
                   {isOpen && (
-                    <div className="border-t border-white/5 px-5 pb-5 pt-2 text-xs leading-relaxed text-slate-400">
+                    <div className="border-t border-white/[0.08] px-5 pb-5 pt-2 text-xs leading-relaxed text-[#aaa9a3]">
                       {faq.answer}
                     </div>
                   )}
@@ -640,28 +687,48 @@ export default function BecomeAnAgentPage() {
 
         {/* ── Bottom High-Fashion Metrics Strip ── */}
         <section className="relative z-10 mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 gap-6 rounded-2xl border border-white/[.08] bg-white/[.03] p-6 text-center backdrop-blur-xl sm:p-8 md:grid-cols-4">
+          <div className="grid grid-cols-2 gap-6 rounded-2xl border border-white/[0.1] bg-[#121314]/90 p-6 text-center backdrop-blur-xl sm:p-8 md:grid-cols-4 shadow-[0_12px_38px_rgba(0,0,0,0.35)]">
             <div>
-              <p className="text-2xl font-black text-white sm:text-4xl">100%</p>
-              <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-slate-400">
+              <p
+                className="text-2xl sm:text-4xl font-normal text-[#d7b875]"
+                style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
+              >
+                100%
+              </p>
+              <p className="mt-1 text-xs font-bold uppercase tracking-wider text-[#aaa9a3]">
                 Sovereign Institution
               </p>
             </div>
             <div>
-              <p className="text-2xl font-black text-emerald-400 sm:text-4xl">50+ Years</p>
-              <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-slate-400">
+              <p
+                className="text-2xl sm:text-4xl font-normal text-[#d7b875]"
+                style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
+              >
+                50+ Years
+              </p>
+              <p className="mt-1 text-xs font-bold uppercase tracking-wider text-[#aaa9a3]">
                 National Legacy
               </p>
             </div>
             <div>
-              <p className="text-2xl font-black text-cyan-300 sm:text-4xl">{AREA_CODE}</p>
-              <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-slate-400">
+              <p
+                className="text-2xl sm:text-4xl font-normal text-[#d7b875]"
+                style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
+              >
+                {AREA_CODE}
+              </p>
+              <p className="mt-1 text-xs font-bold uppercase tracking-wider text-[#aaa9a3]">
                 Sukkur Area Code
               </p>
             </div>
             <div>
-              <p className="text-2xl font-black text-amber-300 sm:text-4xl">Direct</p>
-              <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-slate-400">
+              <p
+                className="text-2xl sm:text-4xl font-normal text-[#d7b875]"
+                style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
+              >
+                Direct
+              </p>
+              <p className="mt-1 text-xs font-bold uppercase tracking-wider text-[#aaa9a3]">
                 Executive Mentorship
               </p>
             </div>
@@ -669,14 +736,14 @@ export default function BecomeAnAgentPage() {
         </section>
 
         {/* ── Footer ── */}
-        <footer className="relative z-10 border-t border-white/10 px-4 py-8 text-xs text-slate-400 sm:px-6 lg:px-8">
+        <footer className="relative z-10 border-t border-white/10 px-4 py-8 text-xs text-[#aaa9a3] sm:px-6 lg:px-8">
           <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 sm:flex-row">
             <p>State Life Insurance Corporation of Pakistan • Sukkur Area Office {AREA_CODE}</p>
             <div className="flex items-center gap-5">
-              <Link href="/products" className="hover:text-white transition">Products</Link>
-              <Link href="/services" className="hover:text-white transition">Services</Link>
-              <Link href="/about" className="hover:text-white transition">About Us</Link>
-              <Link href="/contact" className="hover:text-white transition">Contact</Link>
+              <Link href="/products" className="hover:text-[#d7b875] transition">Products</Link>
+              <Link href="/services" className="hover:text-[#d7b875] transition">Services</Link>
+              <Link href="/about" className="hover:text-[#d7b875] transition">About Us</Link>
+              <Link href="/contact" className="hover:text-[#d7b875] transition">Contact</Link>
             </div>
           </div>
         </footer>
