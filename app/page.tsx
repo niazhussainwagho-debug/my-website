@@ -482,11 +482,11 @@ export default function Home() {
 
       <Testimonials />
 
-      <section id="faq" className="scroll-mt-30 bg-[#020617] py-16 text-white lg:scroll-mt-34">
+      <section id="faq" className="scroll-mt-30 bg-slate-100/80 dark:bg-[#020617] py-16 text-slate-900 dark:text-white lg:scroll-mt-34 transition-colors">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <ScrollReveal className="mb-10 text-center">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-300">FAQ</p>
-            <h2 className="mt-3 text-3xl font-bold text-white sm:text-4xl">Common questions, clear answers</h2>
+            <p className="text-sm font-black uppercase tracking-[0.2em] text-blue-600 dark:text-cyan-300">FAQ</p>
+            <h2 className="mt-3 text-3xl font-extrabold text-slate-900 dark:text-white sm:text-4xl">Common questions, clear answers</h2>
           </ScrollReveal>
 
           <motion.div
@@ -502,7 +502,7 @@ export default function Home() {
                 variants={staticCardVariants}
                 whileHover={{ y: -4, scale: 1.01, boxShadow: "0px 16px 24px rgba(0,0,0,0.10)" }}
                 transition={softSpringTransition}
-                className="overflow-hidden rounded-xl border border-slate-800/80 bg-[#0b1328] shadow-[0_12px_30px_rgba(0,0,0,0.16)] backdrop-blur-md"
+                className="overflow-hidden rounded-xl border border-slate-300 dark:border-slate-800/80 bg-white dark:bg-[#0b1328] shadow-[0_4px_20px_rgba(0,0,0,0.06)] dark:shadow-[0_12px_30px_rgba(0,0,0,0.16)] backdrop-blur-md"
               >
                 <motion.div variants={cardContentVariants}>
                 <button
@@ -511,14 +511,14 @@ export default function Home() {
                   className="group flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
                   aria-expanded={openFaq === index}
                 >
-                  <span className="text-base font-semibold text-slate-100 transition-colors group-hover:text-cyan-200">{faq.question}</span>
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#eafaf4] text-lg font-bold text-[#1f8a67]">
+                  <span className="text-base font-bold text-slate-900 dark:text-slate-100 transition-colors group-hover:text-blue-600 dark:group-hover:text-cyan-200">{faq.question}</span>
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-50 dark:bg-[#eafaf4] text-lg font-bold text-blue-700 dark:text-[#1f8a67]">
                     {openFaq === index ? "−" : "+"}
                   </span>
                 </button>
 
                 {openFaq === index && (
-                  <div className="px-5 pb-5 text-base leading-7 text-slate-300">{faq.answer}</div>
+                  <div className="px-5 pb-5 text-base font-semibold leading-7 text-[#1e3a8a] dark:text-slate-300">{faq.answer}</div>
                 )}
                 </motion.div>
               </motion.div>
