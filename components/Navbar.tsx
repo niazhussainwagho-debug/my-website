@@ -17,8 +17,8 @@ export default function Navbar() {
   const { t } = useLanguage();
 
   const navLinks = [
+    { id: "about", name: "About", href: "/about" },
     { id: "products", name: "Plans Portfolio", href: "/products" },
-    { id: "calculator", name: "Calculator", href: "/#estimator" },
     { id: "join", name: "Careers", href: "/become-an-agent" },
     { id: "contact", name: "Contact", href: "/contact" },
   ];
