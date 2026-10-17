@@ -3,12 +3,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { useState, useEffect } from "react";
+import { ChevronDown, X } from "lucide-react";
 import { PhoneIcon, WhatsAppIcon } from "./icons";
 import ThemeToggle from "./ThemeToggle";
 import LanguageSwitcher from "./LanguageSwitcher";
-import { telLink, whatsappLink } from "../lib/contact";
+import { telLink, whatsappLink, AREA_CODE } from "../lib/contact";
 import { useLanguage } from "../context/LanguageContext";
 
 export default function Navbar() {
@@ -30,12 +30,39 @@ export default function Navbar() {
     return pathname === link.href || pathname.startsWith(`${link.href}/`);
   };
 
-  const quoteHref = "/contact";
+  const quoteHref = "/about";
+
+  // Lock body scroll when mobile side drawer is open
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
+
+  // Close drawer on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   return (
     <header className="fixed inset-x-0 top-0 z-[60] pointer-events-none px-3 pt-3 sm:px-6 sm:pt-4 lg:px-8">
       {/* Floating Glassmorphic Capsule Bar */}
-      <div style={{ backgroundColor: "rgba(12, 13, 14, 0.8)", borderColor: "rgba(212, 175, 55, 0.2)" }} className="pointer-events-auto mx-auto flex h-[68px] sm:h-20 w-full max-w-7xl items-center justify-between gap-2 sm:gap-4 rounded-2xl sm:rounded-3xl border border-[#d4af37]/20 bg-[#0c0d0e]/80 px-3 sm:px-6 shadow-[0_8px_32px_0_rgba(0,0,0,0.45),0_0_24px_rgba(212,175,55,0.06)] backdrop-blur-2xl transition-all duration-200">
+      <div
+        style={{
+          backgroundColor: "rgba(12, 13, 14, 0.8)",
+          borderColor: "rgba(212, 175, 55, 0.2)",
+        }}
+        className="pointer-events-auto mx-auto flex h-[68px] sm:h-20 w-full max-w-7xl items-center justify-between gap-2 sm:gap-4 rounded-2xl sm:rounded-3xl border border-[#d4af37]/20 bg-[#0c0d0e]/80 px-3 sm:px-6 shadow-[0_8px_32px_0_rgba(0,0,0,0.45),0_0_24px_rgba(212,175,55,0.06)] backdrop-blur-2xl transition-all duration-200"
+      >
         {/* Brand Logo & Info */}
         <Link
           href="/"
@@ -61,14 +88,35 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden items-center gap-0.5 xl:gap-1.5 lg:flex shrink-0" aria-label="Main navigation">
+        <nav
+          className="hidden items-center gap-0.5 xl:gap-1.5 lg:flex shrink-0"
+          aria-label="Main navigation"
+        >
           <details className="relative">
             <summary className="inline-flex cursor-pointer list-none items-center gap-1 whitespace-nowrap rounded-full px-2.5 py-1.5 text-xs font-semibold text-white/80 transition hover:bg-white/10 hover:text-white xl:px-3.5 xl:py-2 xl:text-sm">
               Home <ChevronDown size={14} aria-hidden="true" />
             </summary>
-            <div style={{ backgroundColor: "rgba(12, 13, 14, 0.95)", borderColor: "rgba(212, 175, 55, 0.2)" }} className="absolute left-0 top-full z-50 mt-2 grid min-w-44 gap-1 rounded-xl border border-[#d4af37]/20 bg-[#0c0d0e]/95 p-2 shadow-xl backdrop-blur-2xl">
-              <Link href="/" onClick={() => setMenuOpen(false)} className="rounded-lg px-3 py-2 text-sm font-semibold text-slate-200 transition hover:bg-white/10 hover:text-white">Home page</Link>
-              <a href="/master.html" onClick={() => setMenuOpen(false)} className="rounded-lg px-3 py-2 text-sm font-semibold text-slate-200 transition hover:bg-white/10 hover:text-white">Master page</a>
+            <div
+              style={{
+                backgroundColor: "rgba(12, 13, 14, 0.95)",
+                borderColor: "rgba(212, 175, 55, 0.2)",
+              }}
+              className="absolute left-0 top-full z-50 mt-2 grid min-w-44 gap-1 rounded-xl border border-[#d4af37]/20 bg-[#0c0d0e]/95 p-2 shadow-xl backdrop-blur-2xl"
+            >
+              <Link
+                href="/"
+                onClick={() => setMenuOpen(false)}
+                className="rounded-lg px-3 py-2 text-sm font-semibold text-slate-200 transition hover:bg-white/10 hover:text-white"
+              >
+                Home page
+              </Link>
+              <a
+                href="/master.html"
+                onClick={() => setMenuOpen(false)}
+                className="rounded-lg px-3 py-2 text-sm font-semibold text-slate-200 transition hover:bg-white/10 hover:text-white"
+              >
+                Master page
+              </a>
             </div>
           </details>
           {navLinks.map((link) => {
@@ -119,14 +167,17 @@ export default function Navbar() {
           <Link
             href={quoteHref}
             onClick={() => setMenuOpen(false)}
-            style={{ backgroundColor: "rgba(212, 175, 55, 0.1)", borderColor: "rgba(212, 175, 55, 0.5)" }}
+            style={{
+              backgroundColor: "rgba(212, 175, 55, 0.1)",
+              borderColor: "rgba(212, 175, 55, 0.5)",
+            }}
             className="inline-flex h-8.5 xl:h-10 shrink-0 items-center justify-center rounded-full border border-[#d4af37]/50 bg-[#d4af37]/10 px-3.5 py-1.5 text-xs font-bold text-[#f2dfa5] shadow-[0_0_18px_rgba(212,175,55,0.08)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#d4af37]/20 xl:px-5 xl:py-2 xl:text-sm whitespace-nowrap"
           >
             Client Portal
           </Link>
         </div>
 
-        {/* Mobile & Tablet Controls (< lg) */}
+        {/* Mobile & Tablet Trigger Controls (< lg) */}
         <div className="flex shrink-0 items-center gap-1 sm:gap-1.5 lg:hidden">
           <a
             href={whatsappLink()}
@@ -134,7 +185,7 @@ export default function Navbar() {
             rel="noreferrer"
             title="Chat on WhatsApp"
             aria-label="Chat on WhatsApp"
-            className="hidden sm:inline-flex h-8.5 w-8.5 items-center justify-center rounded-full border border-emerald-400/30 bg-emerald-500/20 text-emerald-300 transition hover:bg-emerald-500/30 shrink-0"
+            className="inline-flex h-8 w-8 sm:h-8.5 sm:w-8.5 items-center justify-center rounded-full border border-emerald-400/30 bg-emerald-500/20 text-emerald-300 transition hover:bg-emerald-500/30 shrink-0"
           >
             <WhatsAppIcon />
           </a>
@@ -143,28 +194,29 @@ export default function Navbar() {
             className="inline-flex h-8 w-8 sm:h-8.5 sm:w-8.5 shrink-0 items-center justify-center rounded-xl border border-white/20 bg-white/10 text-white transition-colors hover:bg-white/20 shadow-xs backdrop-blur-md"
             iconSize={14}
           />
+          {/* Hamburger Menu Button */}
           <button
             type="button"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
             aria-controls="mobile-navigation"
             onClick={() => setMenuOpen((open) => !open)}
-            className="inline-flex h-8 w-8 sm:h-8.5 sm:w-8.5 shrink-0 items-center justify-center rounded-xl border border-white/20 bg-white/10 text-white transition hover:bg-white/20"
+            className="inline-flex h-8.5 w-8.5 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-xl border border-[#d4af37]/40 bg-[#d4af37]/10 text-[#e8d5a4] transition hover:bg-[#d4af37]/20 cursor-pointer"
           >
-            <span className="space-y-1 sm:space-y-1.5" aria-hidden="true">
+            <span className="space-y-1.5" aria-hidden="true">
               <span
-                className={`block h-0.5 w-4 sm:w-5 rounded-full bg-current transition ${
-                  menuOpen ? "translate-y-1.5 sm:translate-y-2 rotate-45" : ""
+                className={`block h-0.5 w-4.5 rounded-full bg-current transition-transform duration-300 ${
+                  menuOpen ? "translate-y-2 rotate-45" : ""
                 }`}
               />
               <span
-                className={`block h-0.5 w-4 sm:w-5 rounded-full bg-current transition ${
+                className={`block h-0.5 w-4.5 rounded-full bg-current transition-opacity duration-200 ${
                   menuOpen ? "opacity-0" : ""
                 }`}
               />
               <span
-                className={`block h-0.5 w-4 sm:w-5 rounded-full bg-current transition ${
-                  menuOpen ? "-translate-y-1.5 sm:-translate-y-2 -rotate-45" : ""
+                className={`block h-0.5 w-4.5 rounded-full bg-current transition-transform duration-300 ${
+                  menuOpen ? "-translate-y-2 -rotate-45" : ""
                 }`}
               />
             </span>
@@ -172,23 +224,77 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Navigation Drawer */}
-      {menuOpen && (
-        <div
-          id="mobile-navigation"
-          style={{ backgroundColor: "rgba(12, 13, 14, 0.95)", borderColor: "rgba(212, 175, 55, 0.2)" }}
-          className="pointer-events-auto mx-auto mt-2 max-w-7xl rounded-2xl border border-[#d4af37]/20 bg-[#0c0d0e]/95 p-4 shadow-2xl backdrop-blur-2xl lg:hidden"
-        >
-          <div className="flex flex-col gap-1.5">
-              <details className="rounded-xl">
-                <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between rounded-xl px-4 py-3 text-sm font-semibold text-slate-200 transition hover:bg-white/10">
-                  Home <ChevronDown size={15} aria-hidden="true" />
-                </summary>
-                <div className="ml-3 grid gap-1 border-l border-amber-200/20 pl-2">
-                  <Link href="/" onClick={() => setMenuOpen(false)} className="rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-white/10 hover:text-white">Home page</Link>
-                  <a href="/master.html" onClick={() => setMenuOpen(false)} className="rounded-lg px-3 py-2 text-sm text-slate-300 transition hover:bg-white/10 hover:text-white">Master page</a>
-                </div>
-              </details>
+      {/* ── Mobile Side Drawer (Soft Slide-In from Right) ── */}
+      {/* 1. Backdrop Overlay */}
+      <div
+        className={`fixed inset-0 z-[70] bg-black/65 backdrop-blur-sm transition-opacity duration-300 lg:hidden pointer-events-auto ${
+          menuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+        onClick={() => setMenuOpen(false)}
+        aria-hidden="true"
+      />
+
+      {/* 2. Side Panel */}
+      <aside
+        id="mobile-navigation"
+        className={`fixed inset-y-0 right-0 z-[80] w-[84vw] max-w-sm flex flex-col justify-between border-l border-[#d4af37]/35 bg-[#0c0d0e]/98 p-6 shadow-[-16px_0_40px_rgba(0,0,0,0.85)] backdrop-blur-2xl transition-transform duration-300 ease-out lg:hidden pointer-events-auto overflow-y-auto ${
+          menuOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+        aria-label="Mobile navigation side drawer"
+      >
+        <div>
+          {/* Drawer Top Bar: Brand & Close Button */}
+          <div className="flex items-center justify-between border-b border-white/[0.08] pb-4">
+            <div className="flex items-center gap-2.5">
+              <Image
+                src="/logo area.png"
+                alt="State Life Logo"
+                width={120}
+                height={40}
+                className="h-8 w-auto object-contain"
+              />
+              <div className="leading-tight">
+                <p className="text-[10px] font-black tracking-wide text-white">SUKKUR 5405</p>
+                <span className="text-[8px] font-bold uppercase tracking-wider text-[#d7b875]">Area Office</span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setMenuOpen(false)}
+              className="flex h-8.5 w-8.5 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] text-[#aaa9a3] hover:border-[#d7b875] hover:text-[#d7b875] transition"
+              aria-label="Close side menu"
+            >
+              <X size={16} />
+            </button>
+          </div>
+
+          {/* Navigation Links List */}
+          <nav className="mt-5 flex flex-col gap-1.5" aria-label="Mobile links">
+            {/* Home details accordion */}
+            <details className="rounded-xl overflow-hidden group">
+              <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between rounded-xl px-4 py-3 text-sm font-semibold text-[#f5f2ea] transition hover:bg-white/[0.04]">
+                <span>Home</span>
+                <ChevronDown size={15} className="text-[#d7b875] transition group-open:rotate-180" aria-hidden="true" />
+              </summary>
+              <div className="ml-3 my-1 grid gap-1 border-l border-[#d7b875]/25 pl-3">
+                <Link
+                  href="/"
+                  onClick={() => setMenuOpen(false)}
+                  className="rounded-lg px-3 py-2 text-xs font-medium text-[#aaa9a3] hover:text-[#f5f2ea] hover:bg-white/[0.04] transition"
+                >
+                  Home page
+                </Link>
+                <a
+                  href="/master.html"
+                  onClick={() => setMenuOpen(false)}
+                  className="rounded-lg px-3 py-2 text-xs font-medium text-[#aaa9a3] hover:text-[#f5f2ea] hover:bg-white/[0.04] transition"
+                >
+                  Master page
+                </a>
+              </div>
+            </details>
+
             {navLinks.map((link) => {
               const active = isLinkActive(link);
               return (
@@ -197,45 +303,53 @@ export default function Navbar() {
                   href={link.href}
                   aria-current={active ? "page" : undefined}
                   onClick={() => setMenuOpen(false)}
-                  className={`rounded-xl px-4 py-3 text-sm font-semibold transition ${
+                  className={`flex min-h-12 items-center rounded-xl px-4 py-3 text-sm font-semibold transition-all ${
                     active
-                      ? "bg-[#d4af37]/10 text-[#f2dfa5] font-bold"
-                      : "text-slate-200 hover:bg-white/5 hover:text-[#f2dfa5]"
+                      ? "border border-[#d7b875]/50 bg-[#d7b875]/15 text-[#ecd9aa] font-bold shadow-sm"
+                      : "text-[#d6d2c7] hover:bg-white/[0.04] hover:text-[#ecd9aa]"
                   }`}
                 >
                   {link.name}
                 </Link>
               );
             })}
-            <div className="mt-3 grid grid-cols-2 gap-2 border-t border-white/10 pt-3">
-              <a
-                href={telLink()}
-                onClick={() => setMenuOpen(false)}
-                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-[#d4af37]/25 bg-[#d4af37]/10 px-3 py-2 text-xs font-bold text-[#f2dfa5]"
-              >
-                <PhoneIcon /> {t.callOffice}
-              </a>
-              <a
-                href={whatsappLink()}
-                target="_blank"
-                rel="noreferrer"
-                onClick={() => setMenuOpen(false)}
-                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-emerald-400/30 bg-emerald-500/20 px-3 py-2 text-xs font-bold text-emerald-200"
-              >
-                <WhatsAppIcon /> {t.chatWhatsapp}
-              </a>
-              <Link
-                href={quoteHref}
-                onClick={() => setMenuOpen(false)}
-                style={{ backgroundColor: "rgba(212, 175, 55, 0.1)", borderColor: "rgba(212, 175, 55, 0.5)" }}
-                className="col-span-2 inline-flex min-h-11 items-center justify-center rounded-xl border border-[#d4af37]/50 bg-[#d4af37]/10 px-4 py-2.5 text-sm font-bold text-[#f2dfa5]"
-              >
-                Client Portal
-              </Link>
-            </div>
-          </div>
+          </nav>
         </div>
-      )}
+
+        {/* Drawer Bottom Action Desk */}
+        <div className="mt-6 border-t border-white/[0.08] pt-5 space-y-3">
+          <div className="grid grid-cols-2 gap-2">
+            <a
+              href={telLink()}
+              onClick={() => setMenuOpen(false)}
+              className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-xl border border-[#d7b875]/35 bg-[#d7b875]/10 px-3 py-2 text-xs font-bold uppercase tracking-wider text-[#f2dfa5] transition hover:bg-[#d7b875]/20"
+            >
+              <PhoneIcon /> <span>Call Office</span>
+            </a>
+            <a
+              href={whatsappLink()}
+              target="_blank"
+              rel="noreferrer"
+              onClick={() => setMenuOpen(false)}
+              className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-xl border border-emerald-400/30 bg-emerald-500/20 px-3 py-2 text-xs font-bold uppercase tracking-wider text-emerald-200 transition hover:bg-emerald-500/30"
+            >
+              <WhatsAppIcon /> <span>WhatsApp</span>
+            </a>
+          </div>
+
+          <Link
+            href={quoteHref}
+            onClick={() => setMenuOpen(false)}
+            className="flex min-h-11 w-full items-center justify-center rounded-xl bg-[#d7b875] px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-[#0c0d0e] shadow-md shadow-[#d7b875]/25 transition hover:bg-[#e6cca0]"
+          >
+            Client Portal &amp; Sign In
+          </Link>
+
+          <p className="text-center text-[10px] text-[#7a7974] pt-1">
+            State Life Sukkur Area Office {AREA_CODE}
+          </p>
+        </div>
+      </aside>
     </header>
   );
 }
