@@ -1,6 +1,21 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
+import {
+  ShieldCheck,
+  Search,
+  LogOut,
+  Phone,
+  MessageSquare,
+  AlertCircle,
+  Clock,
+  CheckCircle2,
+  Lock,
+  ArrowRight,
+  Database,
+} from "lucide-react";
+import { AREA_CODE } from "../../lib/contact";
 
 type Lead = {
   id: number;
@@ -18,22 +33,16 @@ const statusOptions = ["New", "Contacted", "Done"] as const;
 
 function formatDate(value?: string) {
   if (!value) return "-";
-
   const date = new Date(value);
-
-  if (Number.isNaN(date.getTime())) {
-    return value;
-  }
-
+  if (Number.isNaN(date.getTime())) return value;
   return new Intl.DateTimeFormat("en-GB", {
     dateStyle: "medium",
     timeStyle: "short",
   }).format(date);
 }
 
-function truncateText(value?: string | null, maxLength = 100) {
+function truncateText(value?: string | null, maxLength = 80) {
   if (!value) return "-";
-
   return value.length > maxLength ? `${value.slice(0, maxLength).trim()}...` : value;
 }
 
@@ -58,10 +67,7 @@ export default function AdminPage() {
 
   const filteredLeads = useMemo(() => {
     const term = search.trim().toLowerCase();
-
-    if (!term) {
-      return leads;
-    }
+    if (!term) return leads;
 
     return leads.filter((lead) => {
       const haystack = [
@@ -70,6 +76,7 @@ export default function AdminPage() {
         lead.city ?? "",
         lead.plan ?? "",
         lead.message ?? "",
+        lead.type ?? "",
       ]
         .join(" ")
         .toLowerCase();
@@ -100,7 +107,7 @@ export default function AdminPage() {
       try {
         await loadLeads();
       } catch {
-        setError("Unable to load leads right now.");
+        setError("Database se leads load nahi huin (Supabase connection check karein).");
       } finally {
         setIsLoading(false);
       }
@@ -121,7 +128,7 @@ export default function AdminPage() {
     });
 
     if (!response.ok) {
-      setError("Invalid password.");
+      setError("Galat password. Barah-e-karam dobara enter karein.");
       return;
     }
 
@@ -131,7 +138,7 @@ export default function AdminPage() {
     try {
       await loadLeads();
     } catch {
-      setError("Login succeeded, but leads could not be loaded.");
+      setError("Login kamyab raha, lekin database se leads fetch nahi ho sakin (Supabase keys check karein).");
     }
   }
 
@@ -166,104 +173,186 @@ export default function AdminPage() {
     setError("");
   }
 
+  // ── Login Screen (Luxury Obsidian-Gold Theme) ──
   if (!isAuthenticated) {
     return (
-      <main className="flex min-h-[calc(100vh-120px)] items-center justify-center bg-white px-4 py-10 text-slate-900 lg:min-h-[calc(100vh-136px)]">
-        <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-          <div className="mb-6">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-700">Admin</p>
-            <h1 className="mt-2 text-2xl font-bold text-slate-900">Office Access</h1>
+      <main
+        className="flex min-h-screen items-center justify-center px-4 pt-24 pb-12"
+        style={{
+          backgroundColor: "#0c0d0e",
+          backgroundImage:
+            "linear-gradient(rgba(255, 255, 255, 0.024) 1px, transparent 1px), linear-gradient(90deg, rgba(215, 184, 117, 0.035) 1px, transparent 1px)",
+          backgroundSize: "100% 72px, 72px 100%",
+          color: "#f7f4ed",
+        }}
+      >
+        <div className="relative w-full max-w-md rounded-3xl border border-[#d7b875]/35 bg-[#121314]/95 p-8 shadow-[0_12px_45px_rgba(0,0,0,0.6)] backdrop-blur-2xl">
+          <div className="mb-6 text-center">
+            <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-[#d7b875]/40 bg-[#d7b875]/10 px-3.5 py-1 text-[10.5px] font-bold uppercase tracking-wider text-[#e8d5a4]">
+              <Lock size={12} className="text-[#d7b875]" />
+              <span>Area Office {AREA_CODE} • Private Portal</span>
+            </div>
+            <h1
+              className="mt-4 text-2xl sm:text-3xl font-normal text-[#f5f2ea]"
+              style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
+            >
+              Office Access Desk
+            </h1>
+            <p className="mt-2 text-xs text-[#aaa9a3]">
+              State Life Sukkur Area Office confidential management login.
+            </p>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-4">
-            <label className="block text-sm font-medium text-slate-700">
-              Password
+            <div>
+              <label className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-[#d6d2c7]">
+                Master Password
+              </label>
               <input
                 type="password"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
-                className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-base text-slate-900 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
-                placeholder="Enter password"
+                className="h-12 w-full rounded-xl border border-white/15 bg-white/[0.04] px-4 text-sm text-[#f7f4ed] placeholder-[#7a7974] outline-none transition focus:border-[#d7b875] focus:bg-[#181918] focus:ring-1 focus:ring-[#d7b875]/50"
+                placeholder="Enter admin password"
                 autoComplete="current-password"
                 required
               />
-            </label>
+            </div>
 
-            {error ? <p className="text-sm text-red-600">{error}</p> : null}
+            {error && (
+              <div className="flex items-center gap-2 rounded-xl border border-red-500/30 bg-red-500/10 p-3 text-xs text-red-300">
+                <AlertCircle size={15} className="shrink-0 text-red-400" />
+                <span>{error}</span>
+              </div>
+            )}
 
             <button
               type="submit"
-              className="w-full rounded-xl bg-blue-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-800"
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#d7b875] py-3.5 text-xs font-bold uppercase tracking-wider text-[#0c0d0e] shadow-lg shadow-[#d7b875]/20 transition-all hover:bg-[#e6cca0] hover:scale-[1.01] cursor-pointer"
             >
-              Login
+              <span>Login to Dashboard</span>
+              <ArrowRight size={14} />
             </button>
           </form>
+
+          <p className="mt-6 text-center text-[10px] text-[#7a7974]">
+            Protected Area • Government of Pakistan Sovereign Records
+          </p>
         </div>
       </main>
     );
   }
 
+  // ── Authenticated Leads Dashboard (Luxury Obsidian-Gold Theme) ──
   return (
-    <main className="min-h-[calc(100vh-120px)] bg-slate-100 px-4 py-6 text-slate-900 md:px-8 lg:min-h-[calc(100vh-136px)]">
+    <main
+      className="min-h-screen px-4 pt-28 pb-12 sm:px-6 lg:px-8"
+      style={{
+        backgroundColor: "#0c0d0e",
+        backgroundImage:
+          "linear-gradient(rgba(255, 255, 255, 0.024) 1px, transparent 1px), linear-gradient(90deg, rgba(215, 184, 117, 0.035) 1px, transparent 1px)",
+        backgroundSize: "100% 72px, 72px 100%",
+        color: "#f7f4ed",
+      }}
+    >
       <div className="mx-auto max-w-7xl">
-        <div className="mb-6 flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm md:flex-row md:items-center md:justify-between">
+        {/* Top Control Bar */}
+        <div className="mb-6 flex flex-col gap-4 rounded-3xl border border-[#d7b875]/30 bg-[#121314]/90 p-5 shadow-[0_12px_38px_rgba(0,0,0,0.35)] backdrop-blur-2xl md:flex-row md:items-center md:justify-between sm:p-6">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-700">Dashboard</p>
-            <h1 className="mt-1 text-2xl font-bold">Office Enquiries</h1>
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#d7b875]/35 bg-[#d7b875]/10 px-3 py-1 text-[10.5px] font-bold uppercase tracking-wider text-[#e2cca0]">
+              <ShieldCheck size={12} className="text-[#d7b875]" />
+              <span>Sukkur Area Office {AREA_CODE} • CRM Desk</span>
+            </div>
+            <h1
+              className="mt-2 text-2xl sm:text-3xl font-normal text-[#f5f2ea]"
+              style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
+            >
+              Office Enquiries &amp; Leads
+            </h1>
+            <p className="text-xs text-[#aaa9a3] mt-0.5">
+              Real-time enquiries received from website contact and career forms.
+            </p>
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-            <input
-              type="search"
-              value={search}
-              onChange={(event) => setSearch(event.target.value)}
-              placeholder="Search by name or phone"
-              className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100 sm:w-72"
-            />
+            {/* Search Input */}
+            <div className="relative">
+              <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#d7b875]" />
+              <input
+                type="search"
+                value={search}
+                onChange={(event) => setSearch(event.target.value)}
+                placeholder="Search by name, phone, city..."
+                className="h-10 w-full rounded-xl border border-white/15 bg-white/[0.04] pl-10 pr-4 text-xs font-medium text-[#f7f4ed] placeholder-[#7a7974] outline-none transition focus:border-[#d7b875] focus:bg-[#181918] sm:w-72"
+              />
+            </div>
 
+            {/* Logout Button */}
             <button
               type="button"
               onClick={handleLogout}
-              className="rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 transition hover:border-slate-400 hover:bg-slate-50"
+              className="inline-flex h-10 items-center justify-center gap-1.5 rounded-xl border border-white/20 bg-white/[0.04] px-4 text-xs font-bold uppercase tracking-wider text-[#f7f4ed] transition hover:border-[#d7b875] hover:text-[#ecd9aa] cursor-pointer"
             >
-              Logout
+              <LogOut size={14} />
+              <span>Logout</span>
             </button>
           </div>
         </div>
 
-        {error ? (
-          <div className="mb-4 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
-            {error}
+        {/* Database Notice Alert Banner if Leads failed to load */}
+        {error && (
+          <div className="mb-6 rounded-2xl border border-amber-500/40 bg-amber-950/20 p-4 text-xs text-[#e8d5a4]">
+            <div className="flex items-start gap-2.5">
+              <Database size={16} className="shrink-0 mt-0.5 text-[#d7b875]" />
+              <div>
+                <p className="font-bold text-[#f5f2ea]">Database Connectivity Status:</p>
+                <p className="mt-0.5 text-[#d6d2c7]">
+                  {error}
+                </p>
+                <p className="mt-1 text-[11px] text-[#aaa9a3]">
+                  💡 <strong>Tip:</strong> Agar aapka Supabase project free tier par tha aur 7 din se inactive raha ho, toh Supabase dashboard (supabase.com) par jakar <strong>&quot;Restore / Unpause Project&quot;</strong> par click karein.
+                </p>
+              </div>
+            </div>
           </div>
-        ) : null}
+        )}
 
-        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+        {/* Leads Table Container */}
+        <div className="overflow-hidden rounded-3xl border border-white/[0.12] bg-[#121314]/90 shadow-[0_12px_38px_rgba(0,0,0,0.4)] backdrop-blur-2xl">
           <div className="overflow-x-auto">
-            <table className="min-w-full border-collapse text-left text-sm text-slate-700">
-              <thead className="bg-slate-50 text-slate-700">
-                <tr>
-                  <th className="border-b border-slate-200 px-3 py-3 font-semibold">Date</th>
-                  <th className="border-b border-slate-200 px-3 py-3 font-semibold">Type</th>
-                  <th className="border-b border-slate-200 px-3 py-3 font-semibold">Name</th>
-                  <th className="border-b border-slate-200 px-3 py-3 font-semibold">Phone</th>
-                  <th className="border-b border-slate-200 px-3 py-3 font-semibold">City/Category</th>
-                  <th className="border-b border-slate-200 px-3 py-3 font-semibold">Message</th>
-                  <th className="border-b border-slate-200 px-3 py-3 font-semibold">Status</th>
-                  <th className="border-b border-slate-200 px-3 py-3 font-semibold">Action</th>
+            <table className="min-w-full border-collapse text-left text-xs">
+              <thead>
+                <tr className="border-b border-white/[0.08] bg-white/[0.02]">
+                  <th className="px-4 py-3.5 font-bold uppercase tracking-wider text-[#d7b875]">Date</th>
+                  <th className="px-4 py-3.5 font-bold uppercase tracking-wider text-[#d7b875]">Type</th>
+                  <th className="px-4 py-3.5 font-bold uppercase tracking-wider text-[#d7b875]">Name</th>
+                  <th className="px-4 py-3.5 font-bold uppercase tracking-wider text-[#d7b875]">Phone &amp; Direct Chat</th>
+                  <th className="px-4 py-3.5 font-bold uppercase tracking-wider text-[#d7b875]">City / Category</th>
+                  <th className="px-4 py-3.5 font-bold uppercase tracking-wider text-[#d7b875]">Message</th>
+                  <th className="px-4 py-3.5 font-bold uppercase tracking-wider text-[#d7b875]">Status</th>
                 </tr>
               </thead>
 
-              <tbody>
+              <tbody className="divide-y divide-white/[0.06]">
                 {isLoading ? (
                   <tr>
-                    <td colSpan={8} className="px-3 py-10 text-center text-slate-500">
-                      Loading enquiries...
+                    <td colSpan={7} className="px-4 py-16 text-center text-[#aaa9a3]">
+                      <div className="flex flex-col items-center justify-center gap-2">
+                        <Clock size={20} className="animate-spin text-[#d7b875]" />
+                        <span>Loading enquiries from database...</span>
+                      </div>
                     </td>
                   </tr>
                 ) : filteredLeads.length === 0 ? (
                   <tr>
-                    <td colSpan={8} className="px-3 py-10 text-center text-slate-500">
-                      No enquiries found.
+                    <td colSpan={7} className="px-4 py-16 text-center text-[#aaa9a3]">
+                      <div className="flex flex-col items-center justify-center gap-1.5">
+                        <ShieldCheck size={28} className="text-[#d7b875]/40" />
+                        <p className="font-semibold text-[#f5f2ea]">No enquiries found right now.</p>
+                        <p className="text-[11px] text-[#7a7974]">
+                          Naye inquiries aane par table automatically update ho jayegi.
+                        </p>
+                      </div>
                     </td>
                   </tr>
                 ) : (
@@ -272,37 +361,59 @@ export default function AdminPage() {
                     const messageText = lead.message || "-";
 
                     return (
-                      <tr key={lead.id} className="align-top text-slate-700 hover:bg-slate-50">
-                        <td className="border-b border-slate-200 px-3 py-3 align-top">{formatDate(lead.created_at)}</td>
-                        <td className="border-b border-slate-200 px-3 py-3 align-top uppercase tracking-wide text-slate-600">
-                          {lead.type}
+                      <tr key={lead.id} className="transition hover:bg-white/[0.02]">
+                        {/* Date */}
+                        <td className="px-4 py-3.5 align-top whitespace-nowrap text-[#aaa9a3] font-mono text-[11px]">
+                          {formatDate(lead.created_at)}
                         </td>
-                        <td className="border-b border-slate-200 px-3 py-3 align-top font-medium text-slate-900">
+
+                        {/* Type */}
+                        <td className="px-4 py-3.5 align-top whitespace-nowrap">
+                          <span className="inline-flex rounded-full border border-[#d7b875]/35 bg-[#d7b875]/10 px-2.5 py-0.5 text-[9.5px] font-bold uppercase tracking-wider text-[#e8d5a4]">
+                            {lead.type}
+                          </span>
+                        </td>
+
+                        {/* Name */}
+                        <td
+                          className="px-4 py-3.5 align-top font-semibold text-[#f5f2ea]"
+                          style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
+                        >
                           {lead.name}
                         </td>
-                        <td className="border-b border-slate-200 px-3 py-3 align-top">
-                          <div className="flex flex-col gap-2">
-                            <span>{lead.phone}</span>
-                            <div className="flex gap-2">
+
+                        {/* Phone + Action buttons */}
+                        <td className="px-4 py-3.5 align-top whitespace-nowrap">
+                          <div className="flex flex-col gap-1.5">
+                            <span className="font-mono text-xs text-[#d6d2c7]">{lead.phone}</span>
+                            <div className="flex items-center gap-1.5">
                               <a
                                 href={whatsappLink(lead.phone)}
                                 target="_blank"
                                 rel="noreferrer"
-                                className="rounded-md bg-emerald-500 px-2 py-1 text-xs font-medium text-white hover:bg-emerald-600"
+                                className="inline-flex items-center gap-1 rounded-lg bg-[#25D366] px-2 py-0.5 text-[10.5px] font-bold text-black transition hover:brightness-110 shadow-sm"
                               >
-                                WhatsApp
+                                <MessageSquare size={11} />
+                                <span>WhatsApp</span>
                               </a>
                               <a
                                 href={`tel:${lead.phone}`}
-                                className="rounded-md bg-blue-700 px-2 py-1 text-xs font-medium text-white hover:bg-blue-800"
+                                className="inline-flex items-center gap-1 rounded-lg border border-white/20 bg-white/10 px-2 py-0.5 text-[10.5px] font-bold text-white transition hover:bg-white/20"
                               >
-                                Call
+                                <Phone size={10} />
+                                <span>Call</span>
                               </a>
                             </div>
                           </div>
                         </td>
-                        <td className="border-b border-slate-200 px-3 py-3 align-top">{getCategory(lead)}</td>
-                        <td className="border-b border-slate-200 px-3 py-3 align-top">
+
+                        {/* City / Category */}
+                        <td className="px-4 py-3.5 align-top text-[#aaa9a3]">
+                          {getCategory(lead)}
+                        </td>
+
+                        {/* Message */}
+                        <td className="px-4 py-3.5 align-top max-w-xs text-[#d6d2c7]">
                           <button
                             type="button"
                             onClick={() =>
@@ -311,41 +422,25 @@ export default function AdminPage() {
                                 [lead.id]: !current[lead.id],
                               }))
                             }
-                            className="text-left text-slate-700 underline decoration-slate-300 underline-offset-2"
+                            className="text-left hover:text-[#d7b875] transition"
                           >
                             {isExpanded ? messageText : truncateText(messageText)}
                           </button>
                         </td>
-                        <td className="border-b border-slate-200 px-3 py-3 align-top">
+
+                        {/* Status Dropdown */}
+                        <td className="px-4 py-3.5 align-top whitespace-nowrap">
                           <select
                             value={lead.status ?? "New"}
                             onChange={(event) => void updateLeadStatus(lead.id, event.target.value)}
-                            className="w-32 rounded-md border border-slate-300 bg-white px-2 py-1.5 text-sm text-slate-900 outline-none focus:border-blue-600"
+                            className="rounded-lg border border-white/20 bg-[#161716] px-2.5 py-1 text-xs font-semibold text-[#f5f2ea] outline-none transition focus:border-[#d7b875]"
                           >
                             {statusOptions.map((option) => (
-                              <option key={option} value={option}>
+                              <option key={option} value={option} className="bg-[#161716] text-[#f5f2ea]">
                                 {option}
                               </option>
                             ))}
                           </select>
-                        </td>
-                        <td className="border-b border-slate-200 px-3 py-3 align-top">
-                          <div className="flex flex-col gap-2">
-                            <a
-                              href={whatsappLink(lead.phone)}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="rounded-md border border-emerald-200 bg-emerald-50 px-2 py-1 text-center text-xs font-medium text-emerald-700 hover:bg-emerald-100"
-                            >
-                              WhatsApp
-                            </a>
-                            <a
-                              href={`tel:${lead.phone}`}
-                              className="rounded-md border border-blue-200 bg-blue-50 px-2 py-1 text-center text-xs font-medium text-blue-700 hover:bg-blue-100"
-                            >
-                              Call
-                            </a>
-                          </div>
                         </td>
                       </tr>
                     );
@@ -353,6 +448,16 @@ export default function AdminPage() {
                 )}
               </tbody>
             </table>
+          </div>
+        </div>
+
+        {/* Bottom Help Footnote */}
+        <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-[#7a7974] px-2">
+          <p>State Life Sukkur 5405 • Private Area Office Management</p>
+          <div className="flex items-center gap-4">
+            <Link href="/" className="hover:text-[#d7b875] transition">Home</Link>
+            <Link href="/products" className="hover:text-[#d7b875] transition">Products</Link>
+            <Link href="/contact" className="hover:text-[#d7b875] transition">Contact</Link>
           </div>
         </div>
       </div>
