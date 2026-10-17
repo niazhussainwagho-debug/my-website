@@ -57,11 +57,7 @@ export default function Navbar() {
     <header className="fixed inset-x-0 top-0 z-[60] pointer-events-none px-3 pt-3 sm:px-6 sm:pt-4 lg:px-8">
       {/* Floating Glassmorphic Capsule Bar */}
       <div
-        style={{
-          backgroundColor: "rgba(12, 13, 14, 0.8)",
-          borderColor: "rgba(212, 175, 55, 0.2)",
-        }}
-        className="pointer-events-auto mx-auto flex h-[68px] sm:h-20 w-full max-w-7xl items-center justify-between gap-2 sm:gap-4 rounded-2xl sm:rounded-3xl border border-[#d4af37]/20 bg-[#0c0d0e]/80 px-3 sm:px-6 shadow-[0_8px_32px_0_rgba(0,0,0,0.45),0_0_24px_rgba(212,175,55,0.06)] backdrop-blur-2xl transition-all duration-200"
+        className="pointer-events-auto mx-auto flex h-[68px] sm:h-20 w-full max-w-7xl items-center justify-between gap-2 sm:gap-4 rounded-2xl sm:rounded-3xl border border-slate-300/80 dark:border-[#d4af37]/20 bg-white/90 dark:bg-[#0c0d0e]/85 px-3 sm:px-6 shadow-[0_8px_32px_0_rgba(0,0,0,0.08),0_0_24px_rgba(212,175,55,0.06)] dark:shadow-[0_8px_32px_0_rgba(0,0,0,0.45),0_0_24px_rgba(212,175,55,0.06)] backdrop-blur-2xl transition-all duration-200"
       >
         {/* Brand Logo & Info */}
         <Link
@@ -78,11 +74,11 @@ export default function Navbar() {
             className="h-9 w-auto shrink-0 object-contain sm:h-11 md:h-12 transition-transform group-hover:scale-[1.02]"
           />
           <span className="flex min-w-0 flex-col justify-center leading-tight">
-            <span className="truncate text-[9px] font-black leading-tight tracking-wide text-white sm:text-xs">
+            <span className="truncate text-[9px] font-black leading-tight tracking-wide text-slate-900 dark:text-white sm:text-xs">
               STATE LIFE SUKKUR 5405
             </span>
-            <span className="mt-1 inline-flex w-fit items-center gap-1.5 border border-amber-200/30 bg-amber-100/10 px-1.5 py-0.5 text-[7px] font-bold uppercase tracking-[0.12em] text-amber-100 sm:text-[8px]">
-              <span className="h-1 w-1 rounded-full bg-amber-300" /> Area Office
+            <span className="mt-1 inline-flex w-fit items-center gap-1.5 border border-amber-300/60 dark:border-amber-200/30 bg-amber-100/60 dark:bg-amber-100/10 px-1.5 py-0.5 text-[7px] font-bold uppercase tracking-[0.12em] text-amber-900 dark:text-amber-100 sm:text-[8px]">
+              <span className="h-1 w-1 rounded-full bg-amber-500 dark:bg-amber-300" /> Area Office
             </span>
           </span>
         </Link>
@@ -93,27 +89,23 @@ export default function Navbar() {
           aria-label="Main navigation"
         >
           <details className="relative">
-            <summary className="inline-flex cursor-pointer list-none items-center gap-1 whitespace-nowrap rounded-full px-2.5 py-1.5 text-xs font-semibold text-white/80 transition hover:bg-white/10 hover:text-white xl:px-3.5 xl:py-2 xl:text-sm">
+            <summary className="inline-flex cursor-pointer list-none items-center gap-1 whitespace-nowrap rounded-full px-2.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-white/80 transition hover:bg-slate-100 dark:hover:bg-white/10 hover:text-slate-950 dark:hover:text-white xl:px-3.5 xl:py-2 xl:text-sm">
               Home <ChevronDown size={14} aria-hidden="true" />
             </summary>
             <div
-              style={{
-                backgroundColor: "rgba(12, 13, 14, 0.95)",
-                borderColor: "rgba(212, 175, 55, 0.2)",
-              }}
-              className="absolute left-0 top-full z-50 mt-2 grid min-w-44 gap-1 rounded-xl border border-[#d4af37]/20 bg-[#0c0d0e]/95 p-2 shadow-xl backdrop-blur-2xl"
+              className="absolute left-0 top-full z-50 mt-2 grid min-w-44 gap-1 rounded-xl border border-slate-200 dark:border-[#d4af37]/20 bg-white dark:bg-[#0c0d0e]/95 p-2 shadow-xl backdrop-blur-2xl"
             >
               <Link
                 href="/"
                 onClick={() => setMenuOpen(false)}
-                className="rounded-lg px-3 py-2 text-sm font-semibold text-slate-200 transition hover:bg-white/10 hover:text-white"
+                className="rounded-lg px-3 py-2 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-100 dark:hover:bg-white/10 hover:text-slate-950 dark:hover:text-white"
               >
                 Home page
               </Link>
               <a
                 href="/master.html"
                 onClick={() => setMenuOpen(false)}
-                className="rounded-lg px-3 py-2 text-sm font-semibold text-slate-200 transition hover:bg-white/10 hover:text-white"
+                className="rounded-lg px-3 py-2 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-100 dark:hover:bg-white/10 hover:text-slate-950 dark:hover:text-white"
               >
                 Master page
               </a>
@@ -129,8 +121,8 @@ export default function Navbar() {
                 aria-current={active ? "page" : undefined}
                 className={`inline-flex items-center shrink-0 whitespace-nowrap px-2.5 py-1.5 xl:px-3.5 xl:py-2 text-xs xl:text-sm font-semibold rounded-full transition-all duration-200 ${
                   active
-                    ? "bg-[#d4af37]/10 text-[#f2dfa5] font-bold shadow-[inset_0_0_0_1px_rgba(212,175,55,0.2)] backdrop-blur-md"
-                    : "text-white/80 hover:text-[#f2dfa5] hover:bg-white/5"
+                    ? "bg-[#d4af37]/15 text-[#926004] dark:text-[#f2dfa5] font-bold shadow-[inset_0_0_0_1px_rgba(212,175,55,0.3)] backdrop-blur-md"
+                    : "text-slate-700 dark:text-white/80 hover:text-[#926004] dark:hover:text-[#f2dfa5] hover:bg-slate-100 dark:hover:bg-white/5"
                 }`}
               >
                 {link.name}
@@ -147,7 +139,7 @@ export default function Navbar() {
             rel="noreferrer"
             title="Chat on WhatsApp"
             aria-label="Chat on WhatsApp"
-            className="inline-flex h-8.5 w-8.5 xl:h-10 xl:w-10 items-center justify-center rounded-full border border-emerald-400/30 bg-emerald-500/20 text-emerald-300 transition hover:bg-emerald-500/30 shrink-0"
+            className="inline-flex h-8.5 w-8.5 xl:h-10 xl:w-10 items-center justify-center rounded-full border border-emerald-500/30 bg-emerald-500/15 text-emerald-600 dark:text-emerald-300 transition hover:bg-emerald-500/25 shrink-0"
           >
             <WhatsAppIcon />
           </a>
@@ -155,23 +147,19 @@ export default function Navbar() {
             href={telLink()}
             title="Call Office"
             aria-label="Call Office"
-            className="inline-flex h-8.5 w-8.5 xl:h-10 xl:w-10 items-center justify-center rounded-full border border-[#d4af37]/25 bg-[#d4af37]/10 text-[#e7cd88] transition hover:bg-[#d4af37]/20 shrink-0"
+            className="inline-flex h-8.5 w-8.5 xl:h-10 xl:w-10 items-center justify-center rounded-full border border-[#d4af37]/35 bg-[#d4af37]/10 text-[#926004] dark:text-[#e7cd88] transition hover:bg-[#d4af37]/20 shrink-0"
           >
             <PhoneIcon />
           </a>
           <LanguageSwitcher />
           <ThemeToggle
-            className="inline-flex h-8.5 w-8.5 xl:h-10 xl:w-10 shrink-0 items-center justify-center rounded-full border border-[#d4af37]/25 bg-[#d4af37]/5 text-[#e7cd88] transition-colors hover:bg-[#d4af37]/15 shadow-xs backdrop-blur-md"
+            className="inline-flex h-8.5 w-8.5 xl:h-10 xl:w-10 shrink-0 items-center justify-center rounded-full border border-slate-300 dark:border-[#d4af37]/30 bg-white/90 dark:bg-[#14171a]/90 text-slate-800 dark:text-amber-300 transition-colors hover:bg-slate-100 dark:hover:bg-[#1c2024] shadow-xs backdrop-blur-md"
             iconSize={15}
           />
           <Link
             href={quoteHref}
             onClick={() => setMenuOpen(false)}
-            style={{
-              backgroundColor: "rgba(212, 175, 55, 0.1)",
-              borderColor: "rgba(212, 175, 55, 0.5)",
-            }}
-            className="inline-flex h-8.5 xl:h-10 shrink-0 items-center justify-center rounded-full border border-[#d4af37]/50 bg-[#d4af37]/10 px-3.5 py-1.5 text-xs font-bold text-[#f2dfa5] shadow-[0_0_18px_rgba(212,175,55,0.08)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#d4af37]/20 xl:px-5 xl:py-2 xl:text-sm whitespace-nowrap"
+            className="inline-flex h-8.5 xl:h-10 shrink-0 items-center justify-center rounded-full border border-[#d4af37]/50 bg-[#d4af37]/10 px-3.5 py-1.5 text-xs font-bold text-[#926004] dark:text-[#f2dfa5] shadow-[0_0_18px_rgba(212,175,55,0.08)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#d4af37]/20 xl:px-5 xl:py-2 xl:text-sm whitespace-nowrap"
           >
             Client Portal
           </Link>
@@ -237,14 +225,14 @@ export default function Navbar() {
       {/* 2. Side Panel */}
       <aside
         id="mobile-navigation"
-        className={`fixed inset-y-0 right-0 z-[80] w-[84vw] max-w-sm flex flex-col justify-between border-l border-[#d4af37]/35 bg-[#0c0d0e]/98 p-6 shadow-[-16px_0_40px_rgba(0,0,0,0.85)] backdrop-blur-2xl transition-transform duration-300 ease-out lg:hidden pointer-events-auto overflow-y-auto ${
+        className={`fixed inset-y-0 right-0 z-[80] w-[84vw] max-w-sm flex flex-col justify-between border-l border-slate-200 dark:border-[#d4af37]/35 bg-white dark:bg-[#0c0d0e]/98 p-6 shadow-[-16px_0_40px_rgba(0,0,0,0.2)] dark:shadow-[-16px_0_40px_rgba(0,0,0,0.85)] backdrop-blur-2xl transition-transform duration-300 ease-out lg:hidden pointer-events-auto overflow-y-auto ${
           menuOpen ? "translate-x-0" : "translate-x-full"
         }`}
         aria-label="Mobile navigation side drawer"
       >
         <div>
           {/* Drawer Top Bar: Brand & Close Button */}
-          <div className="flex items-center justify-between border-b border-white/[0.08] pb-4">
+          <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/[0.08] pb-4">
             <div className="flex items-center gap-2.5">
               <Image
                 src="/logo area.png"
@@ -254,15 +242,15 @@ export default function Navbar() {
                 className="h-8 w-auto object-contain"
               />
               <div className="leading-tight">
-                <p className="text-[10px] font-black tracking-wide text-white">SUKKUR 5405</p>
-                <span className="text-[8px] font-bold uppercase tracking-wider text-[#d7b875]">Area Office</span>
+                <p className="text-[10px] font-black tracking-wide text-slate-900 dark:text-white">SUKKUR 5405</p>
+                <span className="text-[8px] font-bold uppercase tracking-wider text-[#926004] dark:text-[#d7b875]">Area Office</span>
               </div>
             </div>
 
             <button
               type="button"
               onClick={() => setMenuOpen(false)}
-              className="flex h-8.5 w-8.5 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] text-[#aaa9a3] hover:border-[#d7b875] hover:text-[#d7b875] transition"
+              className="flex h-8.5 w-8.5 items-center justify-center rounded-full border border-slate-300 dark:border-white/15 bg-slate-100 dark:bg-white/[0.04] text-slate-700 dark:text-[#aaa9a3] hover:border-[#d7b875] hover:text-[#d7b875] transition"
               aria-label="Close side menu"
             >
               <X size={16} />
@@ -273,22 +261,22 @@ export default function Navbar() {
           <nav className="mt-5 flex flex-col gap-1.5" aria-label="Mobile links">
             {/* Home details accordion */}
             <details className="rounded-xl overflow-hidden group">
-              <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between rounded-xl px-4 py-3 text-sm font-semibold text-[#f5f2ea] transition hover:bg-white/[0.04]">
+              <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between rounded-xl px-4 py-3 text-sm font-semibold text-slate-800 dark:text-[#f5f2ea] transition hover:bg-slate-100 dark:hover:bg-white/[0.04]">
                 <span>Home</span>
-                <ChevronDown size={15} className="text-[#d7b875] transition group-open:rotate-180" aria-hidden="true" />
+                <ChevronDown size={15} className="text-[#926004] dark:text-[#d7b875] transition group-open:rotate-180" aria-hidden="true" />
               </summary>
               <div className="ml-3 my-1 grid gap-1 border-l border-[#d7b875]/25 pl-3">
                 <Link
                   href="/"
                   onClick={() => setMenuOpen(false)}
-                  className="rounded-lg px-3 py-2 text-xs font-medium text-[#aaa9a3] hover:text-[#f5f2ea] hover:bg-white/[0.04] transition"
+                  className="rounded-lg px-3 py-2 text-xs font-medium text-slate-600 dark:text-[#aaa9a3] hover:text-slate-900 dark:hover:text-[#f5f2ea] hover:bg-slate-100 dark:hover:bg-white/[0.04] transition"
                 >
                   Home page
                 </Link>
                 <a
                   href="/master.html"
                   onClick={() => setMenuOpen(false)}
-                  className="rounded-lg px-3 py-2 text-xs font-medium text-[#aaa9a3] hover:text-[#f5f2ea] hover:bg-white/[0.04] transition"
+                  className="rounded-lg px-3 py-2 text-xs font-medium text-slate-600 dark:text-[#aaa9a3] hover:text-slate-900 dark:hover:text-[#f5f2ea] hover:bg-slate-100 dark:hover:bg-white/[0.04] transition"
                 >
                   Master page
                 </a>
@@ -305,8 +293,8 @@ export default function Navbar() {
                   onClick={() => setMenuOpen(false)}
                   className={`flex min-h-12 items-center rounded-xl px-4 py-3 text-sm font-semibold transition-all ${
                     active
-                      ? "border border-[#d7b875]/50 bg-[#d7b875]/15 text-[#ecd9aa] font-bold shadow-sm"
-                      : "text-[#d6d2c7] hover:bg-white/[0.04] hover:text-[#ecd9aa]"
+                      ? "border border-[#d7b875]/50 bg-[#d7b875]/15 text-[#926004] dark:text-[#ecd9aa] font-bold shadow-sm"
+                      : "text-slate-700 dark:text-[#d6d2c7] hover:bg-slate-100 dark:hover:bg-white/[0.04] hover:text-[#926004] dark:hover:text-[#ecd9aa]"
                   }`}
                 >
                   {link.name}
@@ -317,12 +305,12 @@ export default function Navbar() {
         </div>
 
         {/* Drawer Bottom Action Desk */}
-        <div className="mt-6 border-t border-white/[0.08] pt-5 space-y-3">
+        <div className="mt-6 border-t border-slate-200 dark:border-white/[0.08] pt-5 space-y-3">
           <div className="grid grid-cols-2 gap-2">
             <a
               href={telLink()}
               onClick={() => setMenuOpen(false)}
-              className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-xl border border-[#d7b875]/35 bg-[#d7b875]/10 px-3 py-2 text-xs font-bold uppercase tracking-wider text-[#f2dfa5] transition hover:bg-[#d7b875]/20"
+              className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-xl border border-[#d7b875]/35 bg-[#d7b875]/10 px-3 py-2 text-xs font-bold uppercase tracking-wider text-[#926004] dark:text-[#f2dfa5] transition hover:bg-[#d7b875]/20"
             >
               <PhoneIcon /> <span>Call Office</span>
             </a>

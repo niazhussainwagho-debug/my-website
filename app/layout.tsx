@@ -125,7 +125,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="flex h-auto min-h-screen w-full max-w-[100vw] flex-col overflow-x-clip">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem storageKey="slic-theme" disableTransitionOnChange>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem storageKey="slic-theme" disableTransitionOnChange={false}>
           <LanguageProvider>
             <SiteFrame>{children}</SiteFrame>
           </LanguageProvider>

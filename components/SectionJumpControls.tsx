@@ -123,13 +123,12 @@ export default function SectionJumpControls() {
         title={controlLabel}
         onClick={jumpToTarget}
         whileTap={{ scale: 0.95 }}
-        style={{ backgroundColor: "rgba(12, 13, 14, 0.85)", borderColor: "rgba(212, 175, 55, 0.3)" }}
-        className="group flex min-h-12 min-w-11 touch-manipulation items-center gap-2 rounded-full border border-[#d4af37]/30 bg-[#0c0d0e]/85 px-2.5 py-1.5 text-left shadow-[0_10px_30px_rgba(0,0,0,0.35),0_0_20px_rgba(212,175,55,0.08)] backdrop-blur-xl transition-colors hover:border-[#d4af37]/55 hover:bg-[#17231f] sm:px-3"
+        className="group flex min-h-12 min-w-11 touch-manipulation items-center gap-2 rounded-full border border-slate-300 dark:border-[#d4af37]/30 bg-white/90 dark:bg-[#0c0d0e]/85 px-2.5 py-1.5 text-left shadow-[0_10px_30px_rgba(0,0,0,0.1),0_0_20px_rgba(212,175,55,0.08)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.35),0_0_20px_rgba(212,175,55,0.08)] backdrop-blur-xl transition-colors hover:border-[#d4af37]/55 hover:bg-slate-50 dark:hover:bg-[#17231f] sm:px-3"
       >
-        <span style={{ backgroundColor: "rgba(212, 175, 55, 0.1)", borderColor: "rgba(212, 175, 55, 0.2)" }} className="flex h-9 w-9 min-w-9 items-center justify-center rounded-full border border-[#d4af37]/20 bg-[#d4af37]/10">
-          <DirectionIcon size={20} aria-hidden="true" className="text-[#e7cd88] transition-transform group-hover:scale-110" />
+        <span className="flex h-9 w-9 min-w-9 items-center justify-center rounded-full border border-[#d4af37]/30 bg-[#d4af37]/10">
+          <DirectionIcon size={20} aria-hidden="true" className="text-[#926004] dark:text-[#e7cd88] transition-transform group-hover:scale-110" />
         </span>
-        <span className="max-w-36 truncate pr-1 text-xs font-semibold text-[#f2dfa5] sm:max-w-44">
+        <span className="max-w-36 truncate pr-1 text-xs font-semibold text-slate-800 dark:text-[#f2dfa5] sm:max-w-44">
           {controlLabel}
         </span>
       </motion.button>

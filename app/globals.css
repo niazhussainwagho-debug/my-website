@@ -14,40 +14,55 @@ body {
 html {
   overflow-x: hidden !important;
   overflow-y: auto !important;
+  scroll-behavior: smooth;
+  scrollbar-gutter: stable;
 }
 
 body {
   overflow-x: clip !important;
   overflow-y: visible !important;
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  transition: background-color 300ms ease, color 300ms ease;
 }
 
 * {
   box-sizing: border-box !important;
 }
 
-/* Light mode defaults */
+/* ========================================================
+   GLOBAL LIGHT & DARK THEME DESIGN TOKENS
+   ======================================================== */
 :root {
   --brand-blue-900: #061224;
   --brand-blue-700: #0B1E3B;
   --brand-blue-500: #1D4ED8;
   --brand-blue-100: #E6EEFB;
-  --page-bg: #f0f4f8;
-  --background: #f0f4f8;
+  --page-bg: #f8fafc;
+  --background: #f8fafc;
   --foreground: #0f172a;
-  --card-bg: rgba(0, 0, 0, 0.04);
-  --card-border: rgba(0, 0, 0, 0.09);
-  --muted: #64748b;
+  --card-bg: #ffffff;
+  --card-border: rgba(15, 23, 42, 0.1);
+  --muted: #475569;
+  --gold: #b8860b;
+  --gold-glow: rgba(184, 134, 11, 0.12);
   color-scheme: light;
 }
 
-/* Dark mode */
-:root.dark {
-  --page-bg: #040914;
-  --background: #040914;
-  --foreground: #f1f5f9;
-  --card-bg: rgba(255, 255, 255, 0.04);
-  --card-border: rgba(255, 255, 255, 0.09);
+:root.dark, html.dark {
+  --page-bg: #0c0d0e;
+  --background: #0c0d0e;
+  --foreground: #f7f4ed;
+  --card-bg: #14171a;
+  --card-border: rgba(255, 255, 255, 0.08);
   --muted: #94a3b8;
+  --gold: #d7b875;
+  --gold-glow: rgba(212, 175, 55, 0.12);
   color-scheme: dark;
 }
 
@@ -60,27 +75,12 @@ body {
 
 html {
   background: var(--page-bg);
-  scroll-behavior: smooth;
-  scrollbar-gutter: stable;
 }
 
-body {
-  margin: 0;
-  min-height: 100vh;
+body, main {
   background: var(--page-bg);
   color: var(--foreground);
-  font-family: var(--font-sans);
-  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  transition: background 300ms ease, color 300ms ease;
-}
-
-main {
-  background: var(--page-bg);
-  color: var(--foreground);
-  transition: background 300ms ease, color 300ms ease;
+  transition: background-color 300ms ease, color 300ms ease;
 }
 
 main section[id],
@@ -102,299 +102,135 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.15;
 }
 
-p { line-height: 1.7; }
-
-/* STATE LIFE BRAND — Light Mode Palette
-   Cards: EFF6FF (State Life blue tint)
-   Borders: 93C5FD (brand blue)
-   Text: 1e3a5f (navy) */
-
-:root {
-  --page-bg: #f0f6ff;
-  --background: #f0f6ff;
-  --foreground: #1e3a5f;
-  --card-bg: #EFF6FF;
-  --card-border: #BFDBFE;
-  --muted: #4B6A9B;
+p {
+  line-height: 1.7;
 }
 
-/* Headings: State Life navy */
-html:not(.dark) .sub-page .text-white { color: #1e3a5f !important; }
-html:not(.dark) .sub-page .text-slate-50 { color: #1e3a5f !important; }
-html:not(.dark) .sub-page .text-slate-100 { color: #1e3a5f !important; }
-html:not(.dark) .sub-page .text-slate-200 { color: #2d4f7c !important; }
-html:not(.dark) .sub-page .text-slate-300 { color: #3d6494 !important; }
-html:not(.dark) .sub-page .text-slate-400 { color: #4B6A9B !important; }
-html:not(.dark) .sub-page .text-slate-500 { color: #5a7aaa !important; }
-
-/* Accent colors */
-html:not(.dark) .sub-page .text-emerald-200 { color: #065f46 !important; }
-html:not(.dark) .sub-page .text-emerald-300 { color: #059669 !important; }
-html:not(.dark) .sub-page .text-emerald-400 { color: #047857 !important; }
-html:not(.dark) .sub-page .text-cyan-200 { color: #0369a1 !important; }
-html:not(.dark) .sub-page .text-cyan-300 { color: #0284c7 !important; }
-html:not(.dark) .sub-page .text-cyan-400 { color: #0891b2 !important; }
-html:not(.dark) .sub-page .text-blue-300 { color: #1d4ed8 !important; }
-html:not(.dark) .sub-page .text-blue-400 { color: #1d4ed8 !important; }
-html:not(.dark) .sub-page .text-sky-200 { color: #075985 !important; }
-html:not(.dark) .sub-page .text-sky-300 { color: #0369a1 !important; }
-html:not(.dark) .sub-page .text-sky-400 { color: #0284c7 !important; }
-html:not(.dark) .sub-page .text-purple-300 { color: #6d28d9 !important; }
-html:not(.dark) .sub-page .text-purple-400 { color: #7c3aed !important; }
-html:not(.dark) .sub-page .text-amber-300 { color: #b45309 !important; }
-html:not(.dark) .sub-page .text-amber-400 { color: #d97706 !important; }
-
-/* Cards: State Life brand blue */
-html:not(.dark) .sub-page .bg-white\/\[\.02\] { background-color: #EFF6FF !important; }
-html:not(.dark) .sub-page .bg-white\/\[\.03\] { background-color: #EFF6FF !important; }
-html:not(.dark) .sub-page .bg-white\/\[\.04\] { background-color: #DBEAFE !important; }
-html:not(.dark) .sub-page .bg-white\/\[\.05\] { background-color: #DBEAFE !important; }
-html:not(.dark) .sub-page .bg-white\/\[\.06\] { background-color: #E0F2FE !important; }
-html:not(.dark) .sub-page .bg-white\/\[\.07\] { background-color: #E0F2FE !important; }
-html:not(.dark) .sub-page .bg-white\/\[\.08\] { background-color: #DBEAFE !important; }
-html:not(.dark) .sub-page .bg-white\/\[\.10\] { background-color: #BFDBFE !important; }
-
-/* Borders: brand blue */
-html:not(.dark) .sub-page .border-white\/\[\.06\] { border-color: #BFDBFE !important; }
-html:not(.dark) .sub-page .border-white\/\[\.08\] { border-color: #93C5FD !important; }
-html:not(.dark) .sub-page .border-white\/\[\.10\] { border-color: #93C5FD !important; }
-html:not(.dark) .sub-page .border-white\/\[\.12\] { border-color: #60A5FA !important; }
-html:not(.dark) .sub-page .border-white\/\[\.15\] { border-color: #60A5FA !important; }
-html:not(.dark) .sub-page .border-white\/\[\.20\] { border-color: #3B82F6 !important; }
-html:not(.dark) .sub-page .border-white\/10 { border-color: #93C5FD !important; }
-html:not(.dark) .sub-page .border-white\/20 { border-color: #60A5FA !important; }
-
-/* Gradient cards */
-html:not(.dark) .sub-page .from-white\/\[\.06\] { --tw-gradient-from: #EFF6FF !important; }
-html:not(.dark) .sub-page .from-white\/\[\.07\] { --tw-gradient-from: #DBEAFE !important; }
-
-/* ── CRITICAL: Override dark via-slate gradient cards ──
-   Services "Claim Timeline" and "Dedicated Support" cards
-   use via-slate-900/60 and via-slate-900/70 — these stay
-   dark even in light mode without this override */
-html:not(.dark) .sub-page [class*="via-slate-9"] {
-  background-image: linear-gradient(135deg, #EFF6FF, #DBEAFE) !important;
-  background-color: #EFF6FF !important;
+/* ========================================================
+   LIGHT MODE ADAPTIVE OVERRIDES (When html does NOT have .dark)
+   ======================================================== */
+html:not(.dark) body,
+html:not(.dark) main {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
 }
 
-/* ── UNIVERSAL: All card-like containers → brand blue ──
-   Catches any rounded card that was missed by specific selectors */
-html:not(.dark) .sub-page [class*="backdrop-blur"] {
-  background-color: #EFF6FF;
-  background-image: none;
-}
-html:not(.dark) .sub-page [class*="backdrop-blur"].border {
-  border-color: #93C5FD;
-}
-
-/* Restore buttons — they also have backdrop-blur sometimes */
-html:not(.dark) .sub-page button[class*="bg-"],
-html:not(.dark) .sub-page a[class*="bg-blue"],
-html:not(.dark) .sub-page a[class*="bg-emerald"],
-html:not(.dark) .sub-page a[class*="bg-gradient"],
-html:not(.dark) .sub-page button[class*="bg-gradient"] {
-  background-image: revert !important;
-  background-color: revert !important;
+/* Dynamic Page & Section Backgrounds */
+html:not(.dark) [style*="background-color: rgb(12, 13, 14)"],
+html:not(.dark) [style*="background-color: #0c0d0e"],
+html:not(.dark) [style*="backgroundColor: #0c0d0e"],
+html:not(.dark) [style*="backgroundColor: rgb(12, 13, 14)"],
+html:not(.dark) .bg-\[\#0c0d0e\],
+html:not(.dark) .bg-\[\#040914\],
+html:not(.dark) .bg-\[\#08090a\],
+html:not(.dark) .bg-\[\#0a0b0c\] {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
 }
 
-/* Form inputs */
-html:not(.dark) .sub-page input,
-html:not(.dark) .sub-page textarea,
-html:not(.dark) .sub-page select {
+/* Dynamic Cards & Container Surfaces */
+html:not(.dark) [style*="background-color: rgb(20, 23, 26)"],
+html:not(.dark) [style*="background-color: #14171a"],
+html:not(.dark) [style*="backgroundColor: #14171a"],
+html:not(.dark) .bg-\[\#14171a\],
+html:not(.dark) .bg-\[\#121312\],
+html:not(.dark) .bg-\[\#16191d\],
+html:not(.dark) .bg-\[\#13171b\],
+html:not(.dark) .bg-\[\#0e1115\],
+html:not(.dark) .bg-\[\#15181c\] {
   background-color: #ffffff !important;
-  background-image: none !important;
-  color: #1e3a5f !important;
-  border-color: #93C5FD !important;
-}
-html:not(.dark) .sub-page input::placeholder,
-html:not(.dark) .sub-page textarea::placeholder { color: #7B9BC4 !important; }
-html:not(.dark) .sub-page select option { background-color: #ffffff !important; color: #1e3a5f !important; }
-
-/* Gradient headings */
-html:not(.dark) .sub-page .from-blue-400 { --tw-gradient-from: #1d4ed8 !important; }
-html:not(.dark) .sub-page .via-cyan-300 { --tw-gradient-via: #0284c7 !important; }
-html:not(.dark) .sub-page .to-emerald-400 { --tw-gradient-to: #059669 !important; }
-
-/* ── Universal light-mode card background fix ──
-   Any rounded container used as a card gets the light State Life blue surface,
-   regardless of page or component composition. */
-html:not(.dark) main div.rounded-2xl,
-html:not(.dark) main article.rounded-2xl,
-html:not(.dark) main section.rounded-2xl,
-html:not(.dark) main div.rounded-3xl,
-html:not(.dark) main article.rounded-3xl,
-html:not(.dark) main section.rounded-3xl,
-html:not(.dark) main div.rounded-\[22px\],
-html:not(.dark) main article.rounded-\[22px\],
-html:not(.dark) main section.rounded-\[22px\],
-html:not(.dark) main div.rounded-\[28px\],
-html:not(.dark) main article.rounded-\[28px\],
-html:not(.dark) main section.rounded-\[28px\],
-html:not(.dark) main div.rounded-\[32px\],
-html:not(.dark) main article.rounded-\[32px\],
-html:not(.dark) main section.rounded-\[32px\] {
-  background-color: #edf5ff !important;
-  border-color: #93c5fd !important;
+  border-color: rgba(15, 23, 42, 0.1) !important;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.04) !important;
 }
 
-html:not(.dark) main div[class*="bg-slate-"],
-html:not(.dark) main article[class*="bg-slate-"],
-html:not(.dark) main section[class*="bg-slate-"],
-html:not(.dark) main div[class*="bg-white"],
-html:not(.dark) main article[class*="bg-white"],
-html:not(.dark) main section[class*="bg-white"],
-html:not(.dark) main div[class*="bg-\["],
-html:not(.dark) main article[class*="bg-\["],
-html:not(.dark) main section[class*="bg-\["] {
-  background-color: #edf5ff !important;
+/* Dynamic Headings & White text to Dark Navy */
+html:not(.dark) h1,
+html:not(.dark) h2,
+html:not(.dark) h3,
+html:not(.dark) h4,
+html:not(.dark) h5,
+html:not(.dark) h6,
+html:not(.dark) .text-\[\#f7f4ed\],
+html:not(.dark) .text-\[\#f5f2ea\],
+html:not(.dark) .text-\[\#f4f1e9\],
+html:not(.dark) .text-white {
+  color: #0f172a !important;
 }
 
-html:not(.dark) main div[class*="border-slate-"],
-html:not(.dark) main article[class*="border-slate-"],
-html:not(.dark) main section[class*="border-slate-"] {
-  border-color: #93c5fd !important;
+/* Subtitles & Descriptions in Light Mode */
+html:not(.dark) p:not([class*="text-emerald"]):not([class*="text-green"]):not([class*="text-amber"]):not([class*="text-gold"]):not([class*="text-sky"]):not([class*="text-blue"]),
+html:not(.dark) .text-slate-300,
+html:not(.dark) .text-slate-400,
+html:not(.dark) .text-slate-500,
+html:not(.dark) .text-\[\#a8a7a1\],
+html:not(.dark) .text-\[\#a6a6a1\],
+html:not(.dark) .text-\[\#aaa9a3\],
+html:not(.dark) .text-\[\#d6d2c7\] {
+  color: #334155 !important;
 }
 
-/* Scrollbar: brand blue in light mode */
-html:not(.dark) ::-webkit-scrollbar-track { background: #DBEAFE; }
-html:not(.dark) ::-webkit-scrollbar-thumb { background: #60A5FA; }
-html:not(.dark) ::-webkit-scrollbar-thumb:hover { background: #3B82F6; }
-/* Glassmorphism */
-.glass {
-  background: var(--card-bg);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
-  border: 1px solid var(--card-border);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-  transition: background 200ms ease, border-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+/* Gold Accents in Light Mode (Crisp sovereign bronze gold) */
+html:not(.dark) .text-\[\#d4af37\],
+html:not(.dark) .text-\[\#d7b875\],
+html:not(.dark) .text-\[\#e7cd88\],
+html:not(.dark) .text-\[\#f2dfa5\],
+html:not(.dark) .text-\[\#ecd9aa\],
+html:not(.dark) .text-\[\#d9c28d\] {
+  color: #926004 !important;
 }
 
-.glass:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+/* Form Inputs in Light Mode */
+html:not(.dark) input,
+html:not(.dark) textarea,
+html:not(.dark) select {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+html:not(.dark) input::placeholder,
+html:not(.dark) textarea::placeholder {
+  color: #94a3b8 !important;
 }
 
-/* Scroll Reveal */
-.scroll-reveal {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 800ms ease-out, transform 800ms ease-out;
+/* Border accents in Light Mode */
+html:not(.dark) .border-\[\#d4af37\]\/20,
+html:not(.dark) .border-\[\#d4af37\]\/25,
+html:not(.dark) .border-\[\#d4af37\]\/30,
+html:not(.dark) .border-\[\#d4af37\]\/35,
+html:not(.dark) .border-\[\#d4af37\]\/40,
+html:not(.dark) .border-\[\#d7b875\]\/25,
+html:not(.dark) .border-white\/10,
+html:not(.dark) .border-white\/15,
+html:not(.dark) .border-white\/20,
+html:not(.dark) .border-white\/\[0\.08\] {
+  border-color: rgba(184, 134, 11, 0.28) !important;
 }
 
-.scroll-reveal[data-revealed="true"] {
-  opacity: 1;
-  transform: translateY(0);
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--page-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.4);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.7);
 }
 
-@supports not (backdrop-filter: blur(1px)) {
-  .glass { background: rgba(10, 30, 70, 0.85); }
-}
-
-@media (max-width: 768px) {
-  .glass {
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .scroll-reveal { opacity: 1; transform: none; transition: none; }
-  .glass { transition: none; }
-  .glass:hover { transform: none; }
-  body, main { transition: none; }
-}
-
-/* Ambient Glow */
-.site-glow {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.site-glow::before,
-.site-glow::after {
-  position: absolute;
-  content: "";
-  width: 38vw;
-  height: 38vw;
-  max-width: 520px;
-  max-height: 520px;
-  border-radius: 9999px;
-  filter: blur(90px);
-  opacity: 0.25;
-}
-
-.site-glow::before {
-  top: 8%;
-  left: -10%;
-  background: radial-gradient(circle, #2BB6C4 0%, transparent 70%);
-}
-
-.site-glow::after {
-  right: -10%;
-  bottom: 8%;
-  background: radial-gradient(circle, #4C8DFF 0%, transparent 70%);
-}
-
-::selection {
-  background: rgba(43, 182, 196, 0.25);
-  color: #fff;
-}
-
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: #040c18; }
-::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 99px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.25); }
-
+/* Interactive Focus */
 input:focus,
 textarea:focus,
 select:focus {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(43, 182, 196, 0.3);
+  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.4);
 }
 
-.gradient-text {
-  background: linear-gradient(135deg, #10b981, #06b6d4, #f59e0b);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.card-hover {
-  transition: transform 300ms ease, box-shadow 300ms ease, border-color 300ms ease;
-}
-
-.card-hover:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-}
-
-/* Local Desk styling on the main site */
-main #about a[href*="google.com/maps/dir"] {
-  border-color: rgba(167, 243, 208, 0.48);
-  background-color: rgba(236, 253, 245, 0.04);
-  background-image: none;
-  color: #ecfdf5;
-  box-shadow: none;
-}
-
-main #about a[href*="google.com/maps/dir"]:hover {
-  border-color: rgba(167, 243, 208, 0.8);
-  background-color: rgba(236, 253, 245, 0.1);
-}
-
-main #about .backdrop-blur-3xl {
-  border-color: rgba(167, 243, 208, 0.2);
-  background-color: #0a221c;
-  background-image: linear-gradient(135deg, rgba(236, 253, 245, 0.1), rgba(5, 25, 19, 0.85));
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 20px 55px rgba(0, 0, 0, 0.3);
-}
-
-main #about .backdrop-blur-3xl > div:first-child {
-  overflow: hidden;
-  border: 1px solid rgba(167, 243, 208, 0.2);
-  border-radius: 18px;
-  background-color: #0a221c;
+::selection {
+  background: rgba(212, 175, 55, 0.3);
+  color: inherit;
 }
