@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, X, Send, User, Phone, CheckCircle, ExternalLink } from "lucide-react";
+import { X, Send, User, Phone, CheckCircle, ExternalLink } from "lucide-react";
 import { AREA_CODE, MANAGER_NAME, WHATSAPP_NUMBER } from "../lib/contact";
 
 interface Message {
@@ -112,39 +112,44 @@ Aap mujhse State Life ke maqbool plans (Sadabahar Table 08, Child Education, End
 
   return (
     <>
-      {/* Floating Trigger Button */}
-      <div className="fixed bottom-6 left-4 sm:left-6 z-[75]">
+      {/* Floating Trigger - Clean State Life 3D Robot Image ONLY (No text/pill) */}
+      <div className="fixed bottom-5 left-4 sm:bottom-6 sm:left-6 z-[75]">
         <motion.button
           type="button"
           onClick={() => setIsOpen((prev) => !prev)}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          whileHover={{ scale: 1.1, rotate: [0, -3, 3, 0] }}
+          whileTap={{ scale: 0.92 }}
+          animate={{
+            y: [0, -5, 0],
+          }}
+          transition={{
+            y: {
+              duration: 3,
+              repeat: Infinity,
+              ease: "easeInOut",
+            },
+          }}
           aria-label="Open State Life AI Advisor"
-          className="group relative flex items-center gap-3 rounded-full border border-sky-500/50 bg-[#070d19]/95 px-3 py-2 shadow-[0_10px_30px_rgba(2,132,199,0.35),0_0_20px_rgba(56,189,248,0.25)] backdrop-blur-xl transition-all hover:border-sky-400 hover:shadow-[0_12px_35px_rgba(14,165,233,0.5)] sm:px-4 sm:py-2.5"
+          className="group relative flex items-center justify-center rounded-full p-0 border-0 bg-transparent focus:outline-none"
         >
-          {/* Pulsing Cyan Dot */}
-          <span className="relative flex h-3 w-3">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-75"></span>
-            <span className="relative inline-flex h-3 w-3 rounded-full bg-cyan-400"></span>
-          </span>
+          {/* Subtle Outer Cyan Glow Halo */}
+          <span className="absolute -inset-1 rounded-full bg-gradient-to-r from-sky-400/40 via-blue-500/30 to-cyan-400/40 blur-md opacity-70 group-hover:opacity-100 transition-opacity"></span>
 
-          {/* AI Robot Avatar */}
-          <div className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-sky-400/40 bg-gradient-to-br from-sky-500/20 to-blue-600/30 p-0.5 shadow-[0_0_12px_rgba(56,189,248,0.4)] transition-transform group-hover:scale-110">
+          {/* Clean Circular State Life Robot Image */}
+          <div className="relative h-16 w-16 sm:h-20 sm:w-20 rounded-full overflow-hidden shadow-[0_10px_25px_rgba(2,132,199,0.45)] ring-2 ring-sky-400/60 group-hover:ring-sky-300 transition-all bg-white">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/ai-agent.png"
+              src="/state-life-bot.png"
               alt="State Life AI Advisor"
-              className="h-full w-full object-contain"
+              className="h-full w-full object-cover transition-transform group-hover:scale-105"
             />
           </div>
 
-          <div className="flex flex-col text-left">
-            <span className="text-xs font-bold tracking-wide text-sky-200 flex items-center gap-1">
-              AI Advisor 5405
-              <Sparkles size={11} className="text-cyan-400 animate-pulse" />
-            </span>
-            <span className="text-[10px] text-sky-300/70 hidden sm:block">Ask State Life Guide</span>
-          </div>
+          {/* Active Online Status Badge */}
+          <span className="absolute top-0.5 right-0.5 flex h-4 w-4">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+            <span className="relative inline-flex h-4 w-4 rounded-full bg-emerald-500 ring-2 ring-[#070d19]"></span>
+          </span>
         </motion.button>
       </div>
 
@@ -156,17 +161,17 @@ Aap mujhse State Life ke maqbool plans (Sadabahar Table 08, Child Education, End
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 30, scale: 0.95 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="fixed bottom-20 left-4 sm:left-6 z-[80] w-[calc(100vw-2rem)] sm:w-[410px] max-h-[82vh] h-[580px] flex flex-col rounded-2xl border border-sky-500/40 bg-[#070d19]/98 text-slate-100 shadow-[0_20px_50px_rgba(0,0,0,0.8),0_0_35px_rgba(14,165,233,0.25)] backdrop-blur-2xl overflow-hidden"
+            className="fixed bottom-24 left-4 sm:left-6 z-[80] w-[calc(100vw-2rem)] sm:w-[410px] max-h-[80vh] h-[580px] flex flex-col rounded-2xl border border-sky-500/40 bg-[#070d19]/98 text-slate-100 shadow-[0_20px_50px_rgba(0,0,0,0.85),0_0_35px_rgba(14,165,233,0.3)] backdrop-blur-2xl overflow-hidden"
           >
             {/* Header with Blue / Sky gradient */}
-            <div className="flex items-center justify-between border-b border-sky-500/25 bg-gradient-to-r from-[#0b162c] via-[#081224] to-[#040814] px-4 py-3.5">
+            <div className="flex items-center justify-between border-b border-sky-500/25 bg-gradient-to-r from-[#0b162c] via-[#081224] to-[#040814] px-4 py-3">
               <div className="flex items-center gap-3">
-                <div className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-sky-400/40 bg-gradient-to-br from-sky-500/20 to-blue-600/20 p-1 shadow-[0_0_15px_rgba(56,189,248,0.3)]">
+                <div className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-full overflow-hidden border border-sky-400/50 shadow-[0_0_15px_rgba(56,189,248,0.35)] bg-white">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src="/ai-agent.png"
+                    src="/state-life-bot.png"
                     alt="AI Advisor"
-                    className="h-full w-full object-contain"
+                    className="h-full w-full object-cover"
                   />
                   <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full bg-emerald-400 ring-2 ring-[#070d19]"></span>
                 </div>
@@ -225,12 +230,12 @@ Aap mujhse State Life ke maqbool plans (Sadabahar Table 08, Child Education, End
                   className={`flex gap-2.5 ${msg.role === "user" ? "justify-end" : "justify-start"}`}
                 >
                   {msg.role === "assistant" && (
-                    <div className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-sky-400/40 bg-sky-950/80 p-0.5 mt-0.5 shadow-sm">
+                    <div className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full overflow-hidden border border-sky-400/40 bg-white mt-0.5 shadow-sm">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
-                        src="/ai-agent.png"
+                        src="/state-life-bot.png"
                         alt="Bot"
-                        className="h-full w-full object-contain"
+                        className="h-full w-full object-cover"
                       />
                     </div>
                   )}
@@ -263,12 +268,12 @@ Aap mujhse State Life ke maqbool plans (Sadabahar Table 08, Child Education, End
 
               {loading && (
                 <div className="flex items-center gap-2 text-sky-300 text-xs py-1">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-sky-400/40 bg-sky-950/80 p-0.5 shadow-sm">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full overflow-hidden border border-sky-400/40 bg-white shadow-sm">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src="/ai-agent.png"
+                      src="/state-life-bot.png"
                       alt="Thinking"
-                      className="h-full w-full object-contain"
+                      className="h-full w-full object-cover"
                     />
                   </div>
                   <div className="flex items-center gap-1.5 rounded-full border border-sky-500/30 bg-[#0e192e] px-3.5 py-1.5 shadow-sm">
