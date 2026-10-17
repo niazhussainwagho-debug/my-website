@@ -4,16 +4,18 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, ChevronDown, Clock3, MapPin } from "lucide-react";
+import { ArrowUpRight, ChevronDown, ChevronRight, Clock3, MapPin, Pause, Play } from "lucide-react";
 import CarouselArrow from "../components/CarouselArrow";
-import { FacebookIcon, LinkedInIcon, MailIcon, PhoneIcon } from "../components/icons";
+import ConsultationModal from "../components/ConsultationModal";
+import ContactFooter from "../components/ContactFooter";
 import Hero from "../components/Hero";
-import Products, { homePolicies, type HomePolicy } from "../components/Products";
+import Products, { homePolicies } from "../components/Products";
+import PolicyToolsSection from "../components/PolicyToolsSection";
 import ScrollReveal from "../components/ScrollReveal";
 import Testimonials from "../components/Testimonials";
 import { plans, type Plan } from "../data/plans";
 import { products } from "../data/products";
-import { AREA_CODE, CONTACT_EMAIL, FACEBOOK_URL, LINKEDIN_URL, MANAGER_NAME, MANAGER_TITLE, WHATSAPP_DISPLAY, WHATSAPP_NUMBER, emailLink, landlineLink, telLink } from "../lib/contact";
+import { WHATSAPP_NUMBER, telLink } from "../lib/contact";
 import { cleanPhone } from "../lib/phone";
 import { cardContentVariants, softSpringTransition, staggerContainerVariants, staticCardVariants } from "../components/card-motion";
 import { useLanguage } from "../context/LanguageContext";
@@ -68,16 +70,6 @@ const initialForm = {
   website: "",
 };
 
-const initialContactForm = {
-  name: "",
-  phone: "",
-  email: "",
-  message: "",
-  category: "",
-  consent: false,
-  website: "",
-};
-
 async function submitLead(payload: Record<string, unknown>) {
   try {
     const response = await fetch("/api/leads", {
@@ -100,15 +92,14 @@ export default function Home() {
   const [policySearch, setPolicySearch] = useState("");
   const [policyFilter, setPolicyFilter] = useState("All goals");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [consultationModalOpen, setConsultationModalOpen] = useState(false);
+  const [consultationModalPolicy, setConsultationModalPolicy] = useState("Child Education");
+  const [consultationModalBudget, setConsultationModalBudget] = useState(10000);
   const [showForm, setShowForm] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState(initialForm);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const [contactData, setContactData] = useState(initialContactForm);
-  const [contactPhoneError, setContactPhoneError] = useState("");
-  const [contactStatus, setContactStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [planStatus, setPlanStatus] = useState<"idle" | "sending" | "error">("idle");
-  const [managerImageFailed, setManagerImageFailed] = useState(false);
   const [productIndex, setProductIndex] = useState(0);
   const [productPaused, setProductPaused] = useState(false);
   const [productVisibleCount, setProductVisibleCount] = useState(1);
@@ -234,6 +225,12 @@ export default function Home() {
     setErrors({});
   };
 
+  const requestConsultation = (policy = "Child Education", budget = 10000) => {
+    setConsultationModalPolicy(policy);
+    setConsultationModalBudget(budget);
+    setConsultationModalOpen(true);
+  };
+
   const openConsultation = (planName: string) => {
     setFormData({
       ...initialForm,
@@ -253,14 +250,6 @@ export default function Home() {
     setFormData({ ...initialForm, selectedPlan: category });
   };
 
-  const openHomePolicy = (policy: HomePolicy) => {
-    if (policy.planCategory === "Health") {
-      router.push("/health-insurance");
-      return;
-    }
-    openProductCategory(policy.planCategory);
-  };
-
   const handleProductOpen = (product: (typeof products)[number]) => {
     if (product.action === "health") {
       router.push("/health-insurance");
@@ -268,7 +257,6 @@ export default function Home() {
     }
 
     if (product.action === "corporate") {
-      setContactData((current) => ({ ...current, category: "Corporate" }));
       document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
       return;
     }
@@ -321,39 +309,15 @@ export default function Home() {
     });
   };
 
-  const handleContactChange = (field: keyof typeof initialContactForm, value: string | boolean) => {
-    setContactData((current) => ({ ...current, [field]: value }));
-    if (field === "phone") setContactPhoneError("");
-    setContactStatus("idle");
-  };
-
-  const handleContactSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (!cleanPhone(contactData.phone)) {
-      setContactPhoneError("Sahi number likhein (kam se kam 7 digits).");
-      return;
-    }
-    setContactPhoneError("");
-    setContactStatus("sending");
-
-    const payload = {
-      type: "contact",
-      name: contactData.name,
-      phone: cleanPhone(contactData.phone),
-      email: contactData.email || null,
-      plan: contactData.category || null,
-      message: contactData.message || null,
-      consent: contactData.consent,
-      website: contactData.website || null,
-    };
-
-    const success = await submitLead(payload);
-    setContactStatus(success ? "success" : "error");
-    if (success) setContactData(initialContactForm);
-  };
-
   return (
     <main className="relative z-10 min-w-0 max-w-full overflow-x-clip bg-[#f5f7f3] pb-24 text-slate-900 dark:bg-slate-950 dark:text-slate-100 md:pb-0">
+      {consultationModalOpen && (
+        <ConsultationModal
+          initialPolicy={consultationModalPolicy}
+          initialBudget={consultationModalBudget}
+          onOpenChange={setConsultationModalOpen}
+        />
+      )}
       <div className="fixed inset-x-3 bottom-3 z-50 flex gap-3 pr-36 md:pr-0 md:hidden">
         <a
           href={`https://wa.me/${WHATSAPP_NUMBER}`}
@@ -377,6 +341,7 @@ export default function Home() {
         onPolicySearchChange={setPolicySearch}
         policyFilter={policyFilter}
         onPolicyFilterChange={setPolicyFilter}
+        onRequestConsultation={(budget) => requestConsultation("Child Education", budget)}
       />
 
       <section id="overview" aria-label="Sukkur Area Office at a glance" className="scroll-mt-30 border-y border-[#e1e8e2] bg-white dark:border-slate-700 dark:bg-slate-900 lg:scroll-mt-34">
@@ -396,13 +361,18 @@ export default function Home() {
         </div>
       </section>
 
-      <Products policies={visibleHomePolicies} onLearnMore={openHomePolicy} />
+      <Products
+        policies={visibleHomePolicies}
+        onRequestConsultation={(policy) => requestConsultation(policy.consultationType)}
+      />
 
-      <section id="products" className="scroll-mt-30 mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:scroll-mt-34 lg:px-8">
-        <ScrollReveal className="mb-10 text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#176b55]">{t.productsTag}</p>
-          <h2 className="mt-3 text-3xl font-bold text-[#17332e] sm:text-4xl dark:text-white">{t.productsHeading}</h2>
-        </ScrollReveal>
+      <section id="products" className="relative isolate w-full scroll-mt-30 overflow-hidden bg-[#0c0d0e] py-16 text-[#f4f1e9] lg:scroll-mt-34">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_18%_0%,rgba(212,175,55,0.08),transparent_52%)]" />
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <ScrollReveal className="mb-10 text-center">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#d4af37]">{t.productsTag}</p>
+            <h2 className="mt-3 text-3xl font-bold text-[#f3ead0] sm:text-4xl">MORE WAYS TO PLAN</h2>
+          </ScrollReveal>
 
         <ScrollReveal delayMs={100}>
         <div
@@ -437,33 +407,34 @@ export default function Home() {
               <article
                 key={product.slug}
                 onClick={() => handleProductOpen(product)}
-                className="group relative flex h-full min-w-0 flex-[0_0_85%] snap-start flex-col overflow-hidden rounded-bl-[64px] rounded-br-xl rounded-tl-xl rounded-tr-[64px] border border-slate-200 bg-[#F5F5F5] p-4 text-left text-[#0b2240] shadow-sm transition hover:-translate-y-1 hover:shadow-xl dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 sm:flex-[0_0_45%] lg:flex-[0_0_calc((100%_-_4.5rem)/4)]"
+                className="group relative flex h-full min-w-0 flex-[0_0_85%] snap-start flex-col overflow-hidden rounded-bl-2xl rounded-br-2xl rounded-tl-[5rem] rounded-tr-2xl border border-[#d4af37]/20 bg-[#0f1715]/95 p-3 text-left text-[#f4f1e9] shadow-[0_22px_60px_rgba(0,0,0,0.34),inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-[#d4af37]/55 hover:shadow-[0_24px_60px_rgba(0,0,0,0.42),0_0_26px_rgba(212,175,55,0.12)] sm:flex-[0_0_45%] sm:p-4 lg:flex-[0_0_calc((100%_-_4.5rem)/4)]"
               >
-                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-tr-[64px] rounded-tl-xl bg-gradient-to-br from-blue-100 to-sky-200">
-                  {product.image && !failedProductImages.includes(product.image) && <Image src={product.image} alt={product.alt} fill sizes="(max-width: 640px) 85vw, (max-width: 1024px) 45vw, 25vw" className="object-cover" style={{ objectPosition: product.imagePosition }} onError={() => setFailedProductImages((current) => [...current, product.image as string])} />}
+                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-tl-[5rem] rounded-tr-xl bg-[#17231f]">
+                  {product.image && !failedProductImages.includes(product.image) && <Image src={product.image} alt={product.alt} fill sizes="(max-width: 640px) 85vw, (max-width: 1024px) 45vw, 25vw" className="object-cover transition-transform duration-700 group-hover:scale-105" style={{ objectPosition: product.imagePosition }} onError={() => setFailedProductImages((current) => [...current, product.image as string])} />}
+                  <div aria-hidden="true" className="absolute inset-0 bg-linear-to-t from-[#0c0d0e]/60 via-transparent to-transparent" />
                 </div>
                 <div className="flex flex-1 flex-col p-3 pb-16">
-                  <h3 className="text-xl font-bold">{product.title}</h3>
-                  <p className="mt-3 line-clamp-3 text-base leading-7 text-slate-600 dark:text-slate-300">{product.description}</p>
-                  {product.action === "digital" && <span className="mt-3 text-sm font-semibold text-[var(--brand-blue-700)]">Official website</span>}
+                  <h3 className="font-serif text-xl font-semibold text-[#efddb0]">{product.title}</h3>
+                  <p className="mt-3 line-clamp-3 text-sm leading-6 text-white/70 sm:text-[0.95rem]">{product.description}</p>
                 </div>
                 {product.action === "digital" ? (
-                  <a href="https://www.statelife.com.pk/en" target="_blank" rel="noopener noreferrer" aria-label={`${product.title} kholein`} onClick={(event) => event.stopPropagation()} className="absolute bottom-0 right-0 flex h-12 w-14 items-center justify-center rounded-tl-3xl bg-[#0A4DB3] text-3xl leading-none text-white transition hover:bg-[var(--brand-blue-700)]">›</a>
+                  <a href="https://www.statelife.com.pk/en" target="_blank" rel="noopener noreferrer" aria-label={`${product.title} kholein`} onClick={(event) => event.stopPropagation()} className="absolute bottom-4 right-4 flex h-12 w-12 items-center justify-center rounded-full bg-linear-to-br from-[#f4e2a5] via-[#d4af37] to-[#9c7622] text-[#0c0d0e] shadow-[0_6px_20px_rgba(212,175,55,0.28)] transition duration-200 hover:scale-105 hover:shadow-[0_8px_24px_rgba(212,175,55,0.42)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f4e2a5]"><ChevronRight size={25} strokeWidth={2.5} aria-hidden="true" /></a>
                 ) : (
-                  <button type="button" aria-label={`${product.title} kholein`} onClick={(event) => { event.stopPropagation(); handleProductOpen(product); }} className="absolute bottom-0 right-0 flex h-12 w-14 items-center justify-center rounded-tl-3xl bg-[#0A4DB3] text-3xl leading-none text-white transition hover:bg-[var(--brand-blue-700)]">›</button>
+                  <button type="button" aria-label={`${product.title} kholein`} onClick={(event) => { event.stopPropagation(); handleProductOpen(product); }} className="absolute bottom-4 right-4 flex h-12 w-12 items-center justify-center rounded-full bg-linear-to-br from-[#f4e2a5] via-[#d4af37] to-[#9c7622] text-[#0c0d0e] shadow-[0_6px_20px_rgba(212,175,55,0.28)] transition duration-200 hover:scale-105 hover:shadow-[0_8px_24px_rgba(212,175,55,0.42)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f4e2a5]"><ChevronRight size={25} strokeWidth={2.5} aria-hidden="true" /></button>
                 )}
               </article>
             ))}
           </div>
 
-          <div className="mt-5 flex items-center justify-center gap-3">
-            {products.map((product, index) => <button key={product.slug} type="button" aria-label={`${product.title} par jayein`} aria-current={productIndex === index ? "true" : undefined} onClick={() => { pauseProductCarousel(); scrollToProduct(index); }} className={`h-2.5 rounded-full transition-all ${productIndex === index ? "w-7 bg-[var(--brand-blue-500)]" : "w-2.5 bg-white/60 hover:bg-white"}`} />)}
-            <button type="button" aria-label={productPaused ? "Products carousel play karein" : "Products carousel pause karein"} onClick={() => setProductPaused((paused) => !paused)} className="ml-2 flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-sm font-bold text-[var(--brand-blue-700)] shadow-sm">
-              {productPaused ? "▶" : "Ⅱ"}
+          <div className="mt-6 flex items-center justify-center gap-3">
+            {products.map((product, index) => <button key={product.slug} type="button" aria-label={`${product.title} par jayein`} aria-current={productIndex === index ? "true" : undefined} onClick={() => { pauseProductCarousel(); scrollToProduct(index); }} className={`h-2.5 rounded-full transition-all duration-300 ${productIndex === index ? "w-8 bg-[#d4af37] shadow-[0_0_14px_rgba(212,175,55,0.72)]" : "w-2.5 bg-[#d4af37]/30 hover:bg-[#d4af37]/65"}`} />)}
+            <button type="button" aria-label={productPaused ? "Products carousel play karein" : "Products carousel pause karein"} onClick={() => setProductPaused((paused) => !paused)} className="ml-2 flex h-10 w-10 items-center justify-center rounded-full border border-[#d4af37]/35 bg-[#0f1715]/85 text-[#e7cd88] shadow-[0_4px_16px_rgba(0,0,0,0.3)] backdrop-blur-md transition hover:border-[#d4af37]/70 hover:bg-[#17231f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f4e2a5]">
+              {productPaused ? <Play size={15} fill="currentColor" aria-hidden="true" /> : <Pause size={15} fill="currentColor" aria-hidden="true" />}
             </button>
           </div>
         </div>
         </ScrollReveal>
+        </div>
       </section>
 
       <section id="services" className="scroll-mt-30 bg-[#eaf0ea] py-14 sm:py-16 dark:bg-slate-900 lg:scroll-mt-34">
@@ -489,36 +460,23 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="about" className="scroll-mt-30 overflow-hidden bg-[#143a35] py-14 text-white sm:py-16 lg:scroll-mt-34">
-        <div className="mx-auto grid max-w-7xl items-center gap-8 px-4 sm:px-6 lg:grid-cols-[1fr_0.9fr] lg:gap-16 lg:px-8">
+      <section id="about" className="scroll-mt-30 overflow-hidden bg-[#0a221c] py-14 text-white sm:py-16 lg:scroll-mt-34">
+        <div className="mx-auto grid max-w-4xl items-center gap-8 px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
-            <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#a6d4bb]">{t.aboutTag}</p>
+            <p className="text-xs font-bold uppercase tracking-[0.14em] text-emerald-200">{t.aboutTag}</p>
             <h2 className="mt-3 max-w-xl text-3xl font-black leading-tight sm:text-4xl">{t.aboutHeading}</h2>
-            <p className="mt-4 max-w-xl text-base leading-7 text-[#d0e0d7]">{t.aboutSubtitle}</p>
-            <div className="mt-7 flex items-start gap-3 text-sm leading-6 text-[#e2ede7]">
-              <MapPin size={19} className="mt-0.5 shrink-0 text-[#a6d4bb]" aria-hidden="true" />
+            <p className="mt-4 max-w-xl text-base leading-7 text-emerald-50/85">{t.aboutSubtitle}</p>
+            <div className="mt-7 flex items-start gap-3 text-sm leading-6 text-emerald-50">
+              <MapPin size={19} className="mt-0.5 shrink-0 text-emerald-200" aria-hidden="true" />
               <span>{t.aboutAddress}</span>
             </div>
-            <div className="mt-3 flex items-start gap-3 text-sm leading-6 text-[#e2ede7]">
-              <Clock3 size={19} className="mt-0.5 shrink-0 text-[#a6d4bb]" aria-hidden="true" />
+            <div className="mt-3 flex items-start gap-3 text-sm leading-6 text-emerald-50">
+              <Clock3 size={19} className="mt-0.5 shrink-0 text-emerald-200" aria-hidden="true" />
               <span>{t.aboutHours}</span>
             </div>
             <a href="https://www.google.com/maps/dir/?api=1&destination=Shahlimar+Road,+near+Session+Court,+Sukkur,+Pakistan" target="_blank" rel="noreferrer" className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-full border border-sky-200/55 bg-sky-400/15 px-4 py-2.5 text-sm font-bold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_0_22px_rgba(14,165,233,0.28)] backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-sky-100/75 hover:bg-sky-300/25 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.38),0_0_30px_rgba(14,165,233,0.45)]">{t.getDirections} <ArrowUpRight size={16} aria-hidden="true" /></a>
           </ScrollReveal>
 
-          <ScrollReveal delayMs={150} className="grid min-w-0 items-center gap-5 rounded-[18px] border border-white/40 bg-linear-to-br from-white/22 via-white/10 to-sky-200/15 p-5 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.38),inset_0_-1px_0_rgba(125,211,252,0.12),0_20px_55px_rgba(0,0,0,0.24),0_0_38px_rgba(56,189,248,0.18)] ring-1 ring-white/10 backdrop-blur-3xl sm:grid-cols-[180px_1fr] sm:p-5">
-            <div className="relative aspect-4/5 w-full overflow-hidden rounded-xl bg-[#355b50] sm:aspect-auto sm:h-[228px]">
-              {!managerImageFailed && <Image src="/area-manager.jpg" alt="Mr. Fayyaz Ahmed, Area Manager" fill sizes="(max-width: 639px) 100vw, 24vw" className="object-cover object-top" onError={() => setManagerImageFailed(true)} />}
-            </div>
-            <div className="min-w-0 py-2">
-              <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-emerald-200/25 bg-emerald-300/10 px-3 py-2 text-xs font-bold leading-5 text-emerald-100">
-                <span className="relative flex h-2.5 w-2.5 shrink-0"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-300 opacity-60" /><span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-300" /></span>
-                <span>{t.deskActive}</span>
-              </span>
-              <p className="mt-5 wrap-break-word text-2xl font-black leading-tight sm:text-3xl">{MANAGER_NAME}</p>
-              <p className="mt-2 text-sm font-semibold text-[#c5d9ce]">{MANAGER_TITLE} · Sukkur Area Office {AREA_CODE}</p>
-            </div>
-          </ScrollReveal>
         </div>
       </section>
 
@@ -569,242 +527,8 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="contact" className="scroll-mt-30 mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:scroll-mt-34 lg:px-8">
-        <motion.div
-          variants={staggerContainerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          whileHover={{ y: -4, scale: 1.01, boxShadow: "0px 16px 24px rgba(0,0,0,0.10)" }}
-          transition={softSpringTransition}
-          className="grid gap-8 rounded-[32px] border border-slate-200/60 bg-white/80 p-6 shadow-sm backdrop-blur-md dark:border-slate-800/60 dark:bg-slate-900/80 lg:grid-cols-[0.9fr_1.1fr] lg:p-10"
-        >
-          <motion.div variants={staticCardVariants}>
-          <motion.div variants={cardContentVariants}>
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#1f8a67]">Contact</p>
-            <h2 className="mt-3 text-3xl font-bold text-slate-900 dark:text-white sm:text-4xl">Free consultation ke liye rabta karein</h2>
-            <p className="mt-4 text-base font-semibold leading-7 text-slate-700 dark:text-slate-200">
-              Aap humse message, call, ya WhatsApp ke zariye contact kar sakte hain. Team aapke sawalat ka jawab dene ke liye ready hai.
-            </p>
-
-            <div className="mt-8 space-y-4 font-semibold text-slate-700 dark:text-slate-200">
-              <p><span className="font-semibold text-slate-800 dark:text-slate-200">Address:</span> Shahlimar Road, near Session Court, Sukkur</p>
-              <p><span className="font-semibold text-slate-800 dark:text-slate-200">Phone:</span> Call / WhatsApp</p>
-              <p><span className="font-semibold text-slate-800 dark:text-slate-200">Timings:</span> Mon-Fri, 9:00 AM to 5:00 PM</p>
-            </div>
-
-            <div className="mt-8">
-              <div className="flex flex-wrap gap-3">
-                <a
-                  href="https://www.google.com/maps/dir/?api=1&destination=Shahlimar+Road,+near+Session+Court,+Sukkur,+Pakistan"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center justify-center rounded-full bg-[var(--brand-blue-500)] px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-blue-950/20 transition hover:bg-[var(--brand-blue-700)]"
-                >
-                  Get Directions
-                </a>
-                <a
-                  href={landlineLink()}
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-emerald-300 bg-emerald-50 px-6 py-3.5 text-base font-bold text-emerald-800 transition hover:border-emerald-400 hover:bg-emerald-100 dark:border-emerald-400/50 dark:bg-emerald-950 dark:text-emerald-200 dark:hover:bg-emerald-900"
-                >
-                  <PhoneIcon />
-                  Office Landline
-                </a>
-              </div>
-            </div>
-          </motion.div>
-          </motion.div>
-
-          <motion.div variants={staticCardVariants}>
-          <form onSubmit={handleContactSubmit}>
-            <motion.div variants={staggerContainerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="space-y-5">
-            <motion.div variants={staticCardVariants} className="grid gap-5 sm:grid-cols-2">
-              <motion.div variants={cardContentVariants}>
-                <label className="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">Naam</label>
-                <input
-                  type="text"
-                  value={contactData.name}
-                  onChange={(event) => handleContactChange("name", event.target.value)}
-                  placeholder="Aapka naam"
-                  className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-[#1f8a67] focus:bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 dark:focus:bg-slate-800"
-                />
-              </motion.div>
-              <motion.div variants={cardContentVariants}>
-                <label className="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">Phone</label>
-                <input
-                  type="tel"
-                  inputMode="tel"
-                  autoComplete="tel"
-                  value={contactData.phone}
-                  onChange={(event) => handleContactChange("phone", event.target.value)}
-                  placeholder="Apna phone number likhein"
-                  className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-[#1f8a67] focus:bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 dark:focus:bg-slate-800"
-                />
-                {contactPhoneError && <p className="mt-1 text-sm text-red-600">{contactPhoneError}</p>}
-              </motion.div>
-            </motion.div>
-
-            <motion.div variants={cardContentVariants}>
-              <label className="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">Email (optional)</label>
-              <input
-                type="email"
-                value={contactData.email}
-                onChange={(event) => handleContactChange("email", event.target.value)}
-                placeholder="Aapki email"
-                className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-[#1f8a67] focus:bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 dark:focus:bg-slate-800"
-              />
-            </motion.div>
-
-            <motion.div variants={cardContentVariants}>
-              <label className="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">Category (optional)</label>
-              <select
-                value={contactData.category}
-                onChange={(event) => handleContactChange("category", event.target.value)}
-                className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-[#1f8a67] focus:bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 dark:focus:bg-slate-800"
-              >
-                <option value="">Select karein</option>
-                <option value="Corporate">Corporate</option>
-                <option value="Individual">Individual</option>
-                <option value="Family">Family</option>
-              </select>
-            </motion.div>
-
-            <motion.div variants={cardContentVariants}>
-              <label className="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">Message</label>
-              <textarea
-                rows={5}
-                value={contactData.message}
-                onChange={(event) => handleContactChange("message", event.target.value)}
-                placeholder="Aap apni query likhein..."
-                className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-[#1f8a67] focus:bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 dark:focus:bg-slate-800"
-              />
-            </motion.div>
-
-            <motion.div variants={cardContentVariants} className="rounded-2xl border border-slate-200/60 bg-white/80 p-4 backdrop-blur-md dark:border-slate-800/60 dark:bg-slate-900/80">
-              <label className="flex items-start gap-3 text-sm text-slate-700 dark:text-slate-200">
-                <input
-                  type="checkbox"
-                  checked={contactData.consent}
-                  onChange={(event) => handleContactChange("consent", event.target.checked)}
-                  className="mt-1 h-4 w-4 accent-[#1f8a67]"
-                />
-                <span>Main apni info office ko dene ki ijazat deta hun.</span>
-              </label>
-            </motion.div>
-
-            <input
-              type="text"
-              tabIndex={-1}
-              autoComplete="off"
-              aria-hidden="true"
-              value={contactData.website}
-              onChange={(event) => handleContactChange("website", event.target.value)}
-              className="hidden"
-            />
-
-            <motion.button
-              variants={cardContentVariants}
-              type="submit"
-              disabled={contactStatus === "sending"}
-              className="inline-flex items-center justify-center rounded-full bg-[var(--brand-blue-700)] px-6 py-3.5 text-base font-semibold text-white transition hover:bg-[var(--brand-blue-900)]"
-            >
-              {contactStatus === "sending" ? "Bhej rahe hain..." : "Send"}
-            </motion.button>
-            {contactStatus === "success" && (
-              <motion.div variants={cardContentVariants} className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-emerald-900">
-                <p className="font-bold">Thank You for Contacting Us!</p>
-                <p className="mt-1 text-sm leading-6">We have received your message. Our representative from State Life Sukkur Area Office 5405 will contact you shortly.</p>
-              </motion.div>
-            )}
-            {contactStatus === "error" && <motion.p variants={cardContentVariants} className="text-sm font-medium text-red-600">Kuch masla aa gaya, baraye meherbani WhatsApp par rabta karein</motion.p>}
-            </motion.div>
-          </form>
-          </motion.div>
-        </motion.div>
-      </section>
-
-      <section id="local-advisor" className="scroll-mt-30 px-4 pb-6 sm:px-6 lg:px-8 lg:scroll-mt-34">
-        <ScrollReveal className="mx-auto flex max-w-7xl min-w-0 flex-col justify-between gap-6 rounded-2xl bg-[#dcebe1] p-5 sm:p-8 lg:flex-row lg:items-center lg:px-10">
-          <div className="min-w-0">
-            <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#176b55]">Talk to a local advisor</p>
-            <h2 className="mt-2 max-w-2xl text-2xl font-black leading-tight text-[#17332e] sm:text-3xl">A clear first conversation can make planning easier.</h2>
-          </div>
-          <div className="flex min-w-0 flex-wrap gap-3">
-            <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#087653] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#056346]">WhatsApp <ArrowUpRight size={16} aria-hidden="true" /></a>
-            <a href="#contact" className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#a7c4b1] bg-white/80 px-5 py-3 text-sm font-bold text-[#17332e] transition hover:bg-white">Book a consultation</a>
-          </div>
-        </ScrollReveal>
-      </section>
-
-      <footer id="footer" className="scroll-mt-30 px-4 pb-5 pt-2 sm:px-6 lg:px-8 lg:scroll-mt-34">
-        <motion.div
-          variants={staggerContainerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          whileHover={{ y: -4, scale: 1.01, boxShadow: "0px 16px 24px rgba(0,0,0,0.10)" }}
-          transition={softSpringTransition}
-          className="mx-auto grid max-w-7xl min-w-0 gap-9 rounded-2xl bg-[#132d2a] p-5 text-[#d7e2dc] sm:p-8 lg:grid-cols-[1.25fr_0.7fr_1.15fr_0.9fr] lg:gap-8 lg:p-10"
-        >
-          <motion.div variants={staticCardVariants} className="min-w-0">
-          <motion.div variants={cardContentVariants}>
-            <div className="flex min-w-0 items-center gap-3">
-              <Image src="/logo area.png" alt="State Life Insurance Corporation of Pakistan logo" width={420} height={144} className="h-14 w-auto shrink-0 object-contain" />
-              <div className="flex min-w-0 flex-col">
-                <p className="text-xs font-semibold uppercase tracking-wide text-sky-300 sm:text-sm">{t.brandArea}</p>
-                <p className="text-lg font-bold leading-tight tracking-tight text-white sm:text-xl">{t.brandCompany}</p>
-                <p className="text-xs font-bold uppercase tracking-widest text-white sm:text-sm">{t.brandSub}</p>
-              </div>
-            </div>
-            <p className="mt-5 max-w-sm text-sm leading-6 text-[#b9c9c1]">{t.footerAbout}</p>
-          </motion.div>
-          </motion.div>
-
-          <motion.div variants={staticCardVariants}>
-          <motion.div variants={cardContentVariants}>
-            <h3 className="text-sm font-bold text-white">{t.footerExplore}</h3>
-            <ul className="mt-4 space-y-3 text-sm text-[#b9c9c1]">
-              <li><a href="/products" className="hover:text-white">{t.navProducts}</a></li>
-              <li><a href="/services" className="hover:text-white">{t.navServices}</a></li>
-              <li><a href="/about" className="hover:text-white">{t.navAbout}</a></li>
-              <li><a href="/contact" className="hover:text-white">{t.navContact}</a></li>
-            </ul>
-          </motion.div>
-          </motion.div>
-
-          <motion.div variants={staticCardVariants} className="min-w-0">
-          <motion.div variants={cardContentVariants}>
-            <h3 className="text-sm font-bold text-white">{t.footerContact}</h3>
-            <ul className="mt-4 space-y-3 wrap-break-word text-sm leading-6 text-[#b9c9c1]">
-              <li>{t.aboutAddress}</li>
-              <li><a href={landlineLink()} className="inline-flex min-h-10 items-center rounded-full border border-emerald-300/40 px-3 font-semibold text-emerald-300 transition-colors hover:bg-emerald-300/10 hover:text-emerald-200">Office Landline</a></li>
-              <li><a href={`https://wa.me/${WHATSAPP_NUMBER}`} className="font-semibold text-emerald-300 transition-colors hover:text-emerald-200">WhatsApp: {WHATSAPP_DISPLAY}</a></li>
-              <li><a href={emailLink()} className="font-semibold text-cyan-200 transition-colors hover:text-emerald-200">{CONTACT_EMAIL}</a></li>
-              <li>{t.aboutHours}</li>
-            </ul>
-          </motion.div>
-          </motion.div>
-
-          <motion.div variants={staticCardVariants}>
-          <motion.div variants={cardContentVariants}>
-            <h3 className="text-sm font-bold text-white">Connect</h3>
-            <ul className="mt-4 space-y-3 text-sm text-[#b9c9c1]">
-              <li><a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-white"><FacebookIcon /> Facebook</a></li>
-              <li><a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-white"><LinkedInIcon /> LinkedIn</a></li>
-              <li><a href={emailLink()} className="inline-flex items-center gap-2 hover:text-white"><MailIcon /> Email us</a></li>
-            </ul>
-          </motion.div>
-          </motion.div>
-        </motion.div>
-
-        <motion.p
-          variants={cardContentVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          className="mx-auto mt-5 max-w-7xl px-1 text-center text-xs leading-5 text-[#687b71]"
-        >{t.footerDisclaimer}</motion.p>
-      </footer>
+      <PolicyToolsSection onApplyNow={(policy) => requestConsultation(policy, 10000)} />
+      <ContactFooter />
 
       {selectedCategory && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">

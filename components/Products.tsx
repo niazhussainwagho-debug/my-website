@@ -2,15 +2,19 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { ArrowRight, Minus, Plus } from "lucide-react";
-import CarouselArrow from "./CarouselArrow";
-import ScrollReveal from "./ScrollReveal";
-import { useLanguage } from "../context/LanguageContext";
+import { ArrowUpRight } from "lucide-react";
+import styles from "./Products.module.css";
+
+export type PortfolioCategory = "EDUCATION" | "RETIREMENT" | "MARRIAGE" | "INVESTMENT";
 
 export type HomePolicy = {
   title: string;
   planCategory: string;
   category: string;
+  portfolioCategory: PortfolioCategory;
+  consultationType: string;
+  badge: string;
+  coverageType: string;
   description: string;
   image: string;
   alt: string;
@@ -21,7 +25,11 @@ export const homePolicies: HomePolicy[] = [
     title: "Child Education",
     planCategory: "Child Education",
     category: "Education",
-    description: "Bachon ki taleem ke liye pehle se sochi samjhi planning.",
+    portfolioCategory: "EDUCATION",
+    consultationType: "Child Education",
+    badge: "EDUCATION GOAL",
+    coverageType: "Education planning",
+    description: "Plan ahead for a child's education with guidance on available policy options.",
     image: "/products/education.png",
     alt: "Child learning with books",
   },
@@ -29,7 +37,11 @@ export const homePolicies: HomePolicy[] = [
     title: "Marriage Planning",
     planCategory: "Life Insurance",
     category: "Family",
-    description: "Aane wale family milestones ke liye protection options samjhein.",
+    portfolioCategory: "MARRIAGE",
+    consultationType: "Marriage Endowment",
+    badge: "FAMILY MILESTONE",
+    coverageType: "Family protection",
+    description: "Explore protection options for the milestones that matter to your family.",
     image: "/products/family.png",
     alt: "Family planning for future milestones",
   },
@@ -37,107 +49,104 @@ export const homePolicies: HomePolicy[] = [
     title: "Retirement",
     planCategory: "Retirement",
     category: "Future",
-    description: "Apne long-term goals ke mutabiq retirement options explore karein.",
+    portfolioCategory: "RETIREMENT",
+    consultationType: "Retirement Plan",
+    badge: "FUTURE PLANNING",
+    coverageType: "Retirement planning",
+    description: "Review retirement options in the context of your long-term goals.",
     image: "/products/retirement.png",
     alt: "Couple planning for retirement",
   },
   {
-    title: "Health Protection",
-    planCategory: "Health",
-    category: "Health",
-    description: "Health cover aur available support ke baare mein guidance lein.",
-    image: "/products/health.png",
-    alt: "Family health planning",
+    title: "Wealth Growth",
+    planCategory: "Life Insurance",
+    category: "Investment",
+    portfolioCategory: "INVESTMENT",
+    consultationType: "Wealth Growth",
+    badge: "LONG-TERM OPTIONS",
+    coverageType: "Life protection",
+    description: "Discuss policy options for longer-term financial goals with a local adviser.",
+    image: "/products/life.png",
+    alt: "Family considering long-term financial protection",
   },
 ];
 
 type ProductsProps = {
   policies: HomePolicy[];
-  onLearnMore: (policy: HomePolicy) => void;
+  onRequestConsultation: (policy: HomePolicy) => void;
 };
 
-export default function Products({ policies, onLearnMore }: ProductsProps) {
-  const { t } = useLanguage();
-  const [activeTitle, setActiveTitle] = useState(homePolicies[0].title);
-  const activePolicy = policies.find((policy) => policy.title === activeTitle) ?? policies[0];
-  const activeIndex = Math.max(0, policies.findIndex((policy) => policy.title === activePolicy?.title));
+const categories = ["ALL", "EDUCATION", "RETIREMENT", "MARRIAGE", "INVESTMENT"] as const;
+
+export default function Products({ policies, onRequestConsultation }: ProductsProps) {
+  const [activeCategory, setActiveCategory] = useState<(typeof categories)[number]>("ALL");
+  const visiblePolicies = policies.filter((policy) => activeCategory === "ALL" || policy.portfolioCategory === activeCategory);
 
   return (
-    <section id="policies" className="scroll-mt-30 mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-16 lg:scroll-mt-34 lg:px-8">
-      <ScrollReveal className="mb-8 flex min-w-0 flex-wrap items-end justify-between gap-4">
-        <div className="min-w-0">
-          <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#176b55] dark:text-cyan-300">{t.milestonesTag}</p>
-          <h2 className="mt-2 text-3xl font-black leading-tight text-[#17332e] dark:text-white sm:text-4xl">{t.milestonesHeading}</h2>
-        </div>
-        <a href="/products" className="inline-flex min-h-10 items-center gap-2 text-sm font-bold text-[#176b55] transition-colors hover:text-[#0b493b] dark:text-cyan-300 dark:hover:text-cyan-200">{t.allProductsBtn} <ArrowRight size={16} aria-hidden="true" /></a>
-      </ScrollReveal>
-
-      {activePolicy ? (
-        <div className="grid min-w-0 gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-12">
-          <ScrollReveal>
-          <article className="group relative flex min-h-[380px] min-w-0 overflow-hidden rounded-2xl bg-slate-950 text-white sm:min-h-[440px] lg:min-h-[500px]">
-            <Image key={activePolicy.title} src={activePolicy.image} alt={activePolicy.alt} fill sizes="(max-width: 1023px) 100vw, 44vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
-            <div aria-hidden="true" className="absolute inset-0 bg-linear-to-t from-slate-950/90 via-slate-950/35 to-transparent" />
-            <CarouselArrow
-              direction="previous"
-              label="Previous coverage option"
-              disabled={activeIndex === 0}
-              onClick={() => setActiveTitle(policies[activeIndex - 1].title)}
-              className="absolute left-3 top-1/2 z-20 -translate-y-1/2"
-            />
-            <CarouselArrow
-              direction="next"
-              label="Next coverage option"
-              disabled={activeIndex >= policies.length - 1}
-              onClick={() => setActiveTitle(policies[activeIndex + 1].title)}
-              className="absolute right-3 top-1/2 z-20 -translate-y-1/2"
-            />
-            <div className="relative z-10 mt-auto w-full p-5 sm:p-7">
-              <span className="inline-flex items-center rounded-full border border-white/25 bg-white/10 px-3 py-1.5 text-xs font-bold text-white backdrop-blur-sm">{activePolicy.category}</span>
-              <h3 className="mt-4 text-2xl font-black leading-tight sm:text-3xl">{activePolicy.title}</h3>
-              <p className="mt-2 max-w-md text-sm leading-6 text-slate-100 sm:text-base">{activePolicy.description}</p>
-              <button type="button" onClick={() => onLearnMore(activePolicy)} className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-full bg-white px-4 py-2.5 text-sm font-bold text-slate-900 transition-colors hover:bg-emerald-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
-                {t.learnMoreBtn} <ArrowRight size={16} aria-hidden="true" />
-              </button>
-            </div>
-          </article>
-          </ScrollReveal>
-
-          <div className="min-w-0 self-center">
-            <div className="border-t border-slate-200 dark:border-slate-800">
-              {policies.map((policy, index) => {
-                const isActive = policy.title === activePolicy.title;
-                const Icon = isActive ? Minus : Plus;
-                return (
-                  <ScrollReveal key={policy.title} delayMs={index * 150} className="border-b border-slate-200 dark:border-slate-800">
-                    <button
-                      type="button"
-                      aria-expanded={isActive}
-                      onClick={() => setActiveTitle(policy.title)}
-                      onMouseEnter={() => setActiveTitle(policy.title)}
-                      onFocus={() => setActiveTitle(policy.title)}
-                      className="flex min-h-16 w-full min-w-0 items-center gap-3 py-4 text-left sm:gap-4"
-                    >
-                      <span className={`min-w-0 flex-1 text-base font-bold leading-snug transition-colors sm:text-lg ${isActive ? "text-[#17332e]" : "text-slate-600 hover:text-[#17332e]"}`}>{policy.title}</span>
-                      <span className="shrink-0 rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-bold text-slate-600 dark:bg-slate-900 dark:text-slate-300">{policy.category}</span>
-                      <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-colors ${isActive ? "bg-[#17332e] text-white" : "bg-slate-100 text-slate-600 dark:bg-slate-900 dark:text-slate-300"}`}>
-                        <Icon size={17} aria-hidden="true" />
-                      </span>
-                    </button>
-                    <div className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${isActive ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}>
-                      <div className="overflow-hidden">
-                        <p className="max-w-xl pb-5 pr-12 text-sm leading-6 text-slate-600 dark:text-slate-400">{policy.description}</p>
-                      </div>
-                    </div>
-                  </ScrollReveal>
-                );
-              })}
-            </div>
+    <section id="policies" className={styles.section}>
+      <div className={styles.inner}>
+        <div className={styles.headingRow}>
+          <div>
+            <p className={styles.eyebrow}>Curated insurance plans</p>
+            <h2>Featured Policy Portfolio</h2>
           </div>
+          <p className={styles.headingNote}>Thoughtful cover, shaped around the milestones ahead.</p>
         </div>
-      ) : (
-        <ScrollReveal><p className="rounded-xl border border-slate-200 bg-white p-5 text-sm text-slate-600">No policy goals match that search. Try another keyword.</p></ScrollReveal>
-      )}
+
+        <div className={styles.filters} role="tablist" aria-label="Filter policy portfolio">
+          {categories.map((category) => (
+            <button
+              className={activeCategory === category ? styles.filterActive : styles.filter}
+              key={category}
+              type="button"
+              role="tab"
+              aria-selected={activeCategory === category}
+              onClick={() => setActiveCategory(category)}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+
+        {visiblePolicies.length > 0 ? (
+          <div className={styles.grid} role="tabpanel" aria-live="polite">
+            {visiblePolicies.map((policy) => (
+              <article
+                className={styles.card}
+                key={policy.title}
+                style={{ backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}
+              >
+                <div className={styles.imageFrame}>
+                  <Image src={policy.image} alt={policy.alt} fill sizes="(max-width: 680px) 100vw, (max-width: 1024px) 50vw, 33vw" className={styles.image} />
+                  <span className={styles.badge}>{policy.badge}</span>
+                  <span className={styles.cardNumber}>{String(homePolicies.indexOf(policy) + 1).padStart(2, "0")}</span>
+                </div>
+                <div className={styles.cardBody}>
+                  <span className={styles.category}>{policy.category}</span>
+                  <h3>{policy.title}</h3>
+                  <p className={styles.description}>{policy.description}</p>
+
+                  <dl className={styles.specs}>
+                    <div><dt>Minimum tenure</dt><dd>Confirm with office</dd></div>
+                    <div><dt>Bonus / returns</dt><dd>Policy-specific</dd></div>
+                    <div><dt>Coverage type</dt><dd>{policy.coverageType}</dd></div>
+                  </dl>
+
+                  <button className={styles.cardAction} type="button" onClick={() => onRequestConsultation(policy)}>
+                    View plan details <ArrowUpRight size={16} aria-hidden="true" />
+                  </button>
+                </div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div className={styles.emptyState} role="tabpanel" aria-live="polite">
+            <p>No plans match this category and search. Choose another category or update your plan search.</p>
+          </div>
+        )}
+
+        <p className={styles.disclaimer}>Tenure, eligibility, bonuses, and policy values vary by product. Confirm current details with Sukkur Area Office 5405.</p>
+      </div>
     </section>
   );
 }

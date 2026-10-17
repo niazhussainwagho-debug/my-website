@@ -26,7 +26,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${inter.variable} h-auto min-h-screen w-full max-w-[100vw] overflow-x-hidden antialiased`}
     >
       <body className="flex h-auto min-h-screen w-full max-w-[100vw] flex-col overflow-x-clip">
-        <ThemeProvider attribute="class" defaultTheme="dark" storageKey="slic-theme" disableTransitionOnChange>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem storageKey="slic-theme" disableTransitionOnChange>
           <LanguageProvider>
             <SiteFrame>{children}</SiteFrame>
           </LanguageProvider>

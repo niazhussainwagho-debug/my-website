@@ -215,6 +215,46 @@ html:not(.dark) .sub-page .from-blue-400 { --tw-gradient-from: #1d4ed8 !importan
 html:not(.dark) .sub-page .via-cyan-300 { --tw-gradient-via: #0284c7 !important; }
 html:not(.dark) .sub-page .to-emerald-400 { --tw-gradient-to: #059669 !important; }
 
+/* ── Universal light-mode card background fix ──
+   Any rounded container used as a card gets the light State Life blue surface,
+   regardless of page or component composition. */
+html:not(.dark) main div.rounded-2xl,
+html:not(.dark) main article.rounded-2xl,
+html:not(.dark) main section.rounded-2xl,
+html:not(.dark) main div.rounded-3xl,
+html:not(.dark) main article.rounded-3xl,
+html:not(.dark) main section.rounded-3xl,
+html:not(.dark) main div.rounded-\[22px\],
+html:not(.dark) main article.rounded-\[22px\],
+html:not(.dark) main section.rounded-\[22px\],
+html:not(.dark) main div.rounded-\[28px\],
+html:not(.dark) main article.rounded-\[28px\],
+html:not(.dark) main section.rounded-\[28px\],
+html:not(.dark) main div.rounded-\[32px\],
+html:not(.dark) main article.rounded-\[32px\],
+html:not(.dark) main section.rounded-\[32px\] {
+  background-color: #edf5ff !important;
+  border-color: #93c5fd !important;
+}
+
+html:not(.dark) main div[class*="bg-slate-"],
+html:not(.dark) main article[class*="bg-slate-"],
+html:not(.dark) main section[class*="bg-slate-"],
+html:not(.dark) main div[class*="bg-white"],
+html:not(.dark) main article[class*="bg-white"],
+html:not(.dark) main section[class*="bg-white"],
+html:not(.dark) main div[class*="bg-\["],
+html:not(.dark) main article[class*="bg-\["],
+html:not(.dark) main section[class*="bg-\["] {
+  background-color: #edf5ff !important;
+}
+
+html:not(.dark) main div[class*="border-slate-"],
+html:not(.dark) main article[class*="border-slate-"],
+html:not(.dark) main section[class*="border-slate-"] {
+  border-color: #93c5fd !important;
+}
+
 /* Scrollbar: brand blue in light mode */
 html:not(.dark) ::-webkit-scrollbar-track { background: #DBEAFE; }
 html:not(.dark) ::-webkit-scrollbar-thumb { background: #60A5FA; }
@@ -329,4 +369,32 @@ select:focus {
 .card-hover:hover {
   transform: translateY(-4px);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+/* Local Desk styling on the main site */
+main #about a[href*="google.com/maps/dir"] {
+  border-color: rgba(167, 243, 208, 0.48);
+  background-color: rgba(236, 253, 245, 0.04);
+  background-image: none;
+  color: #ecfdf5;
+  box-shadow: none;
+}
+
+main #about a[href*="google.com/maps/dir"]:hover {
+  border-color: rgba(167, 243, 208, 0.8);
+  background-color: rgba(236, 253, 245, 0.1);
+}
+
+main #about .backdrop-blur-3xl {
+  border-color: rgba(167, 243, 208, 0.2);
+  background-color: #0a221c;
+  background-image: linear-gradient(135deg, rgba(236, 253, 245, 0.1), rgba(5, 25, 19, 0.85));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 20px 55px rgba(0, 0, 0, 0.3);
+}
+
+main #about .backdrop-blur-3xl > div:first-child {
+  overflow: hidden;
+  border: 1px solid rgba(167, 243, 208, 0.2);
+  border-radius: 18px;
+  background-color: #0a221c;
 }

@@ -47,14 +47,15 @@ export default function LanguageSwitcher() {
         aria-haspopup="true"
         aria-expanded={isOpen}
         aria-label="Select website language"
-        className="inline-flex h-8 sm:h-8.5 xl:h-10 shrink-0 items-center gap-1 sm:gap-1.5 rounded-full border border-white/20 bg-white/10 px-2 sm:px-2.5 xl:px-3 text-xs font-bold text-white shadow-xs backdrop-blur-md transition-all hover:bg-white/20 hover:border-white/30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 whitespace-nowrap"
+        style={{ backgroundColor: "rgba(212, 175, 55, 0.05)", borderColor: "rgba(212, 175, 55, 0.25)" }}
+        className="inline-flex h-8 sm:h-8.5 xl:h-10 shrink-0 items-center gap-1 sm:gap-1.5 rounded-full border border-[#d4af37]/25 bg-[#d4af37]/5 px-2 sm:px-2.5 xl:px-3 text-xs font-bold text-white shadow-xs backdrop-blur-md transition-all hover:bg-[#d4af37]/12 hover:border-[#d4af37]/45 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f4e2a5] whitespace-nowrap"
       >
-        <Globe size={13} className="text-sky-300 shrink-0" aria-hidden="true" />
+        <Globe size={13} className="text-[#e7cd88] shrink-0" aria-hidden="true" />
         <span className="hidden sm:inline font-semibold tracking-wide text-xs">{currentLang.native}</span>
         <span className="inline sm:hidden font-bold tracking-wide uppercase text-[10px]">{currentLang.code}</span>
         <ChevronDown
           size={11}
-          className={`text-slate-300 transition-transform duration-200 shrink-0 ${isOpen ? "rotate-180" : ""}`}
+          className={`text-[#e7cd88]/80 transition-transform duration-200 shrink-0 ${isOpen ? "rotate-180" : ""}`}
           aria-hidden="true"
         />
       </button>
@@ -64,7 +65,8 @@ export default function LanguageSwitcher() {
         <div
           role="menu"
           aria-orientation="vertical"
-          className="absolute right-0 mt-2 w-40 sm:w-44 origin-top-right rounded-2xl border border-white/20 bg-slate-950/95 p-1.5 shadow-2xl backdrop-blur-2xl z-[100] animate-in fade-in zoom-in-95 duration-150"
+            style={{ backgroundColor: "rgba(12, 13, 14, 0.95)", borderColor: "rgba(212, 175, 55, 0.2)" }}
+          className="absolute right-0 mt-2 w-40 sm:w-44 origin-top-right rounded-2xl border border-[#d4af37]/20 bg-[#0c0d0e]/95 p-1.5 shadow-2xl backdrop-blur-2xl z-[100] animate-in fade-in zoom-in-95 duration-150"
         >
           {languages.map((item) => {
             const isSelected = item.code === language;
@@ -79,15 +81,15 @@ export default function LanguageSwitcher() {
                 }}
                 className={`flex w-full items-center justify-between rounded-xl px-3 py-2 text-xs font-medium transition ${
                   isSelected
-                    ? "bg-blue-600/30 text-sky-200 font-bold border border-blue-500/30"
-                    : "text-slate-200 hover:bg-white/10 hover:text-white"
+                    ? "bg-[#d4af37]/12 text-[#f2dfa5] font-bold border border-[#d4af37]/30"
+                    : "text-slate-200 hover:bg-white/5 hover:text-[#f2dfa5]"
                 }`}
               >
                 <div className="flex items-center gap-2">
                   <span className="text-sm font-semibold">{item.native}</span>
                   <span className="text-[10px] uppercase text-slate-400">({item.code})</span>
                 </div>
-                {isSelected && <Check size={14} className="text-sky-300 shrink-0" />}
+                {isSelected && <Check size={14} className="text-[#e7cd88] shrink-0" />}
               </button>
             );
           })}

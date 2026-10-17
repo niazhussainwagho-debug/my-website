@@ -88,12 +88,15 @@ export default function SectionJumpControls() {
   }, [allowedAnchors, pathname, router]);
 
   const activeIndex = anchors.indexOf(activeAnchor);
+  const isHomePage = pathname === "/";
+  const isHomeContact = isHomePage && activeAnchor === "contact";
   const isJoinRouteTarget = pathname === "/" && activeAnchor === "contact";
-  const returnHome = activeAnchor === "join" || (activeAnchor === "contact" && pathname !== "/");
-  const targetAnchor = returnHome ? "home" : isJoinRouteTarget ? "join" : anchors[activeIndex + 1];
+  const returnHome = activeAnchor === "join" || (activeAnchor === "contact" && pathname !== "/") || isHomeContact;
+  const targetAnchor = isHomePage ? (isHomeContact ? "home" : "contact") : returnHome ? "home" : isJoinRouteTarget ? "join" : anchors[activeIndex + 1];
   const targetPath = allowedAnchors.includes(targetAnchor) ? pathname : anchorPath[targetAnchor];
   const targetLabel = targetAnchor === "join" ? "Join Us" : targetAnchor[0].toUpperCase() + targetAnchor.slice(1);
   const DirectionIcon = returnHome ? ArrowUp : isJoinRouteTarget ? ArrowRight : ArrowDown;
+  const controlLabel = isHomePage ? (isHomeContact ? "Scroll to Top" : "Next: Contact") : returnHome ? "Back to Home" : isJoinRouteTarget ? "Join Us" : `Next: ${targetLabel}`;
 
   const jumpToTarget = () => {
     if (!targetAnchor) return;
@@ -112,21 +115,22 @@ export default function SectionJumpControls() {
   return (
     <nav
       aria-label="Page section navigation"
-      className="fixed bottom-6 right-6 z-50 hidden gap-2 lg:flex"
+      className={`fixed bottom-20 right-4 z-[70] flex gap-2 sm:bottom-6 sm:right-6 ${isHomePage ? "" : "hidden lg:flex"}`}
     >
       <motion.button
         type="button"
-        aria-label={returnHome ? "Return to Home" : `${isJoinRouteTarget ? "Go to" : "Next section"}: ${targetLabel}`}
-        title={returnHome ? "Return to Home" : `${isJoinRouteTarget ? "Go to" : "Next section"}: ${targetLabel}`}
+        aria-label={controlLabel}
+        title={controlLabel}
         onClick={jumpToTarget}
         whileTap={{ scale: 0.95 }}
-        className="group flex min-h-12 min-w-11 touch-manipulation items-center gap-2 rounded-full border border-slate-700/60 bg-slate-900/80 px-2.5 py-1.5 text-left shadow-lg backdrop-blur-md transition-colors hover:bg-slate-800 sm:px-3"
+        style={{ backgroundColor: "rgba(12, 13, 14, 0.85)", borderColor: "rgba(212, 175, 55, 0.3)" }}
+        className="group flex min-h-12 min-w-11 touch-manipulation items-center gap-2 rounded-full border border-[#d4af37]/30 bg-[#0c0d0e]/85 px-2.5 py-1.5 text-left shadow-[0_10px_30px_rgba(0,0,0,0.35),0_0_20px_rgba(212,175,55,0.08)] backdrop-blur-xl transition-colors hover:border-[#d4af37]/55 hover:bg-[#17231f] sm:px-3"
       >
-        <span className="flex h-9 w-9 min-w-9 items-center justify-center rounded-full bg-slate-800/90">
-          <DirectionIcon size={20} aria-hidden="true" className="text-blue-500 transition-transform group-hover:scale-110 dark:text-blue-400" />
+        <span style={{ backgroundColor: "rgba(212, 175, 55, 0.1)", borderColor: "rgba(212, 175, 55, 0.2)" }} className="flex h-9 w-9 min-w-9 items-center justify-center rounded-full border border-[#d4af37]/20 bg-[#d4af37]/10">
+          <DirectionIcon size={20} aria-hidden="true" className="text-[#e7cd88] transition-transform group-hover:scale-110" />
         </span>
-        <span className="max-w-36 truncate pr-1 text-xs font-semibold text-slate-100 sm:max-w-44">
-          {returnHome ? "Back to Home" : isJoinRouteTarget ? "Join Us" : `Next: ${targetLabel}`}
+        <span className="max-w-36 truncate pr-1 text-xs font-semibold text-[#f2dfa5] sm:max-w-44">
+          {controlLabel}
         </span>
       </motion.button>
     </nav>
