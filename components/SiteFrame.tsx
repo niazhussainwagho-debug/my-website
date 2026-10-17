@@ -4,10 +4,12 @@ import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import Navbar from "./Navbar";
 import SectionJumpControls from "./SectionJumpControls";
+import AiAdvisorWidget from "./AiAdvisorWidget";
 
 export default function SiteFrame({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const isStaffRoute = pathname === "/staff" || pathname.startsWith("/staff/");
+  const isAdminRoute = pathname === "/admin" || pathname.startsWith("/admin");
 
   if (isStaffRoute) {
     return <div className="min-h-screen bg-[#f4f5f1] text-[#18231d]">{children}</div>;
@@ -17,6 +19,7 @@ export default function SiteFrame({ children }: { children: ReactNode }) {
     <>
       <Navbar />
       <SectionJumpControls />
+      {!isAdminRoute && <AiAdvisorWidget />}
       <div className="relative m-0 w-full max-w-[100vw] overflow-x-clip p-0 pt-20 sm:pt-24">{children}</div>
     </>
   );
