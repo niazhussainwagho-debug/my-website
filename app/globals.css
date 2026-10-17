@@ -107,7 +107,7 @@ p {
 }
 
 /* ========================================================
-   LIGHT MODE ADAPTIVE OVERRIDES (When html does NOT have .dark)
+   LIGHT MODE: CLEAN WHITE CARDS WITH CRISP BLUE TYPOGRAPHY
    ======================================================== */
 html:not(.dark) body,
 html:not(.dark) main {
@@ -128,7 +128,33 @@ html:not(.dark) .bg-\[\#0a0b0c\] {
   color: #0f172a !important;
 }
 
-/* Dynamic Cards & Container Surfaces */
+/* Page Level Main Headings */
+html:not(.dark) h1,
+html:not(.dark) [class*="story"] h1,
+html:not(.dark) [class*="sectionHeading"] h2,
+html:not(.dark) [class*="headingRow"] h2 {
+  color: #0f2942 !important;
+}
+
+/* Page Level Subtitles & Notes */
+html:not(.dark) [class*="headingNote"],
+html:not(.dark) [class*="narrative"] {
+  color: #334155 !important;
+}
+
+/* ────────────────────────────────────────────────────────
+   ALL CARDS IN LIGHT MODE: PURE WHITE SURFACE + BLUE TEXT
+   ──────────────────────────────────────────────────────── */
+html:not(.dark) [class*="card"],
+html:not(.dark) [class*="Card"],
+html:not(.dark) [class*="estimator"],
+html:not(.dark) [class*="officeCard"],
+html:not(.dark) [class*="inquiryCard"],
+html:not(.dark) main article,
+html:not(.dark) main .rounded-xl,
+html:not(.dark) main .rounded-2xl,
+html:not(.dark) main .rounded-3xl,
+html:not(.dark) main .rounded-lg[class*="border"],
 html:not(.dark) [style*="background-color: rgb(20, 23, 26)"],
 html:not(.dark) [style*="background-color: #14171a"],
 html:not(.dark) [style*="backgroundColor: #14171a"],
@@ -139,71 +165,128 @@ html:not(.dark) .bg-\[\#13171b\],
 html:not(.dark) .bg-\[\#0e1115\],
 html:not(.dark) .bg-\[\#15181c\] {
   background-color: #ffffff !important;
-  border-color: rgba(15, 23, 42, 0.1) !important;
-  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.04) !important;
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.08), 0 4px 6px -2px rgba(15, 23, 42, 0.04) !important;
+  color: #1e3a8a !important;
 }
 
-/* Dynamic Headings & White text to Dark Navy */
-html:not(.dark) h1,
-html:not(.dark) h2,
-html:not(.dark) h3,
-html:not(.dark) h4,
-html:not(.dark) h5,
-html:not(.dark) h6,
-html:not(.dark) .text-\[\#f7f4ed\],
-html:not(.dark) .text-\[\#f5f2ea\],
-html:not(.dark) .text-\[\#f4f1e9\],
-html:not(.dark) .text-white {
-  color: #0f172a !important;
+/* All Headings Inside Cards in Light Mode -> Deep Navy Blue (#1e3a8a) */
+html:not(.dark) [class*="card"] h1,
+html:not(.dark) [class*="card"] h2,
+html:not(.dark) [class*="card"] h3,
+html:not(.dark) [class*="card"] h4,
+html:not(.dark) [class*="Card"] h1,
+html:not(.dark) [class*="Card"] h2,
+html:not(.dark) [class*="Card"] h3,
+html:not(.dark) [class*="Card"] h4,
+html:not(.dark) [class*="cardBody"] h3,
+html:not(.dark) [class*="estimator"] h2,
+html:not(.dark) [class*="officeCard"] h3,
+html:not(.dark) [class*="inquiryCard"] h3,
+html:not(.dark) main article h1,
+html:not(.dark) main article h2,
+html:not(.dark) main article h3,
+html:not(.dark) main article h4,
+html:not(.dark) main div[class*="rounded-"] h1,
+html:not(.dark) main div[class*="rounded-"] h2,
+html:not(.dark) main div[class*="rounded-"] h3,
+html:not(.dark) main div[class*="rounded-"] h4 {
+  color: #1e3a8a !important;
 }
 
-/* Subtitles & Descriptions in Light Mode */
-html:not(.dark) p:not([class*="text-emerald"]):not([class*="text-green"]):not([class*="text-amber"]):not([class*="text-gold"]):not([class*="text-sky"]):not([class*="text-blue"]),
-html:not(.dark) .text-slate-300,
-html:not(.dark) .text-slate-400,
-html:not(.dark) .text-slate-500,
-html:not(.dark) .text-\[\#a8a7a1\],
-html:not(.dark) .text-\[\#a6a6a1\],
-html:not(.dark) .text-\[\#aaa9a3\],
-html:not(.dark) .text-\[\#d6d2c7\] {
-  color: #334155 !important;
+/* Descriptions & Paragraphs Inside Cards in Light Mode -> Vibrant Royal Blue (#1e40af) */
+html:not(.dark) [class*="card"] p,
+html:not(.dark) [class*="Card"] p,
+html:not(.dark) [class*="cardBody"] p,
+html:not(.dark) [class*="description"],
+html:not(.dark) [class*="officeCard"] p,
+html:not(.dark) [class*="inquiryCard"] p,
+html:not(.dark) main article p,
+html:not(.dark) main div[class*="rounded-"] p {
+  color: #1e40af !important;
 }
 
-/* Gold Accents in Light Mode (Crisp sovereign bronze gold) */
-html:not(.dark) .text-\[\#d4af37\],
-html:not(.dark) .text-\[\#d7b875\],
-html:not(.dark) .text-\[\#e7cd88\],
-html:not(.dark) .text-\[\#f2dfa5\],
-html:not(.dark) .text-\[\#ecd9aa\],
-html:not(.dark) .text-\[\#d9c28d\] {
-  color: #926004 !important;
+/* Features, Lists, Terms & Spans Inside Cards -> Clear Medium Blue (#1d4ed8) */
+html:not(.dark) [class*="card"] li,
+html:not(.dark) [class*="Card"] li,
+html:not(.dark) main article li,
+html:not(.dark) main div[class*="rounded-"] li,
+html:not(.dark) [class*="card"] span:not([class*="badge"]):not([class*="bg-"]):not([class*="indicator"]),
+html:not(.dark) [class*="Card"] span:not([class*="badge"]):not([class*="bg-"]):not([class*="indicator"]),
+html:not(.dark) main div[class*="rounded-"] span:not([class*="bg-"]):not([class*="rounded-full"]) {
+  color: #1d4ed8 !important;
 }
 
-/* Form Inputs in Light Mode */
+/* Card Specs Table (Table 08, 12, etc.) dl, dt, dd */
+html:not(.dark) [class*="specs"] {
+  border-top-color: #e2e8f0 !important;
+}
+
+html:not(.dark) [class*="specs"] > div {
+  border-bottom-color: #f1f5f9 !important;
+}
+
+html:not(.dark) [class*="specs"] dt {
+  color: #2563eb !important;
+  font-weight: 600 !important;
+}
+
+html:not(.dark) [class*="specs"] dd {
+  color: #1e3a8a !important;
+  font-weight: 700 !important;
+}
+
+/* Card Eyebrows, Categories, and Numbers */
+html:not(.dark) [class*="category"],
+html:not(.dark) [class*="cardEyebrow"],
+html:not(.dark) [class*="estimatorLabel"],
+html:not(.dark) [class*="cardNumber"] {
+  color: #2563eb !important;
+}
+
+/* Card Action / Inquiry Buttons in Light Mode */
+html:not(.dark) [class*="cardAction"],
+html:not(.dark) [class*="card"] a[class*="border-[#d7b875]"],
+html:not(.dark) [class*="Card"] a[class*="border-[#d7b875]"],
+html:not(.dark) main div[class*="rounded-"] a[class*="border-[#d7b875]"],
+html:not(.dark) main div[class*="rounded-"] a[class*="border-[#d4af37]"] {
+  background-color: #eff6ff !important;
+  border-color: #3b82f6 !important;
+  color: #1d4ed8 !important;
+  font-weight: 700 !important;
+}
+
+html:not(.dark) [class*="cardAction"]:hover,
+html:not(.dark) [class*="card"] a[class*="border-[#d7b875]"]:hover,
+html:not(.dark) [class*="Card"] a[class*="border-[#d7b875]"]:hover,
+html:not(.dark) main div[class*="rounded-"] a[class*="border-[#d7b875]"]:hover,
+html:not(.dark) main div[class*="rounded-"] a[class*="border-[#d4af37]"]:hover {
+  background-color: #1d4ed8 !important;
+  color: #ffffff !important;
+  border-color: #1d4ed8 !important;
+}
+
+/* Form Inputs & Sliders in Light Mode */
 html:not(.dark) input,
 html:not(.dark) textarea,
-html:not(.dark) select {
-  background-color: #ffffff !important;
-  color: #0f172a !important;
+html:not(.dark) select,
+html:not(.dark) [class*="estimator"] input,
+html:not(.dark) [class*="estimator"] select,
+html:not(.dark) [class*="inquiryCard"] input,
+html:not(.dark) [class*="inquiryCard"] select,
+html:not(.dark) [class*="inquiryCard"] textarea {
+  background-color: #f8fafc !important;
+  color: #1e3a8a !important;
   border-color: #cbd5e1 !important;
 }
+
 html:not(.dark) input::placeholder,
 html:not(.dark) textarea::placeholder {
   color: #94a3b8 !important;
 }
 
-/* Border accents in Light Mode */
-html:not(.dark) .border-\[\#d4af37\]\/20,
-html:not(.dark) .border-\[\#d4af37\]\/25,
-html:not(.dark) .border-\[\#d4af37\]\/30,
-html:not(.dark) .border-\[\#d4af37\]\/35,
-html:not(.dark) .border-\[\#d4af37\]\/40,
-html:not(.dark) .border-\[\#d7b875\]\/25,
-html:not(.dark) .border-white\/10,
-html:not(.dark) .border-white\/15,
-html:not(.dark) .border-white\/20,
-html:not(.dark) .border-white\/\[0\.08\] {
-  border-color: rgba(184, 134, 11, 0.28) !important;
+html:not(.dark) label {
+  color: #1e3a8a !important;
 }
 
 /* Scrollbars */
@@ -227,10 +310,10 @@ input:focus,
 textarea:focus,
 select:focus {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.4);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.4);
 }
 
 ::selection {
-  background: rgba(212, 175, 55, 0.3);
+  background: rgba(37, 99, 235, 0.25);
   color: inherit;
 }
