@@ -4,8 +4,9 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: "*",
-      disallow: ["/admin"],
+      allow: "/",
+      disallow: ["/admin", "/api/"],
     },
-    sitemap: ["https://example.com/sitemap.xml"],
+    sitemap: "https://sukkur-area-office-5405.vercel.app/sitemap.xml",
   };
 }
