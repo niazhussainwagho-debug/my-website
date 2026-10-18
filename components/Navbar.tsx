@@ -102,13 +102,7 @@ export default function Navbar() {
               >
                 Home page
               </Link>
-              <a
-                href="/master.html"
-                onClick={() => setMenuOpen(false)}
-                className="rounded-lg px-3 py-2 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-100 dark:hover:bg-white/10 hover:text-slate-950 dark:hover:text-white"
-              >
-                Master page
-              </a>
+
             </div>
           </details>
           {navLinks.map((link) => {
@@ -273,13 +267,7 @@ export default function Navbar() {
                 >
                   Home page
                 </Link>
-                <a
-                  href="/master.html"
-                  onClick={() => setMenuOpen(false)}
-                  className="rounded-lg px-3 py-2 text-xs font-medium text-slate-600 dark:text-[#aaa9a3] hover:text-slate-900 dark:hover:text-[#f5f2ea] hover:bg-slate-100 dark:hover:bg-white/[0.04] transition"
-                >
-                  Master page
-                </a>
+
               </div>
             </details>
 

@@ -460,21 +460,21 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="about" className="scroll-mt-30 overflow-hidden bg-[#0a221c] py-14 text-white sm:py-16 lg:scroll-mt-34">
+      <section id="about" className="scroll-mt-30 overflow-hidden bg-[#f0faf6] py-14 text-[#0f2942] dark:bg-[#0a221c] dark:text-white sm:py-16 lg:scroll-mt-34">
         <div className="mx-auto grid max-w-4xl items-center gap-8 px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
-            <p className="text-xs font-bold uppercase tracking-[0.14em] text-emerald-200">{t.aboutTag}</p>
-            <h2 className="mt-3 max-w-xl text-3xl font-black leading-tight sm:text-4xl">{t.aboutHeading}</h2>
-            <p className="mt-4 max-w-xl text-base leading-7 text-emerald-50/85">{t.aboutSubtitle}</p>
-            <div className="mt-7 flex items-start gap-3 text-sm leading-6 text-emerald-50">
-              <MapPin size={19} className="mt-0.5 shrink-0 text-emerald-200" aria-hidden="true" />
+            <p className="text-xs font-bold uppercase tracking-[0.14em] text-emerald-700 dark:text-emerald-200">{t.aboutTag}</p>
+            <h2 className="mt-3 max-w-xl text-3xl font-black leading-tight text-[#0f2942] dark:text-white sm:text-4xl">{t.aboutHeading}</h2>
+            <p className="mt-4 max-w-xl text-base font-semibold leading-7 text-[#1e3a8a] dark:text-emerald-50/85">{t.aboutSubtitle}</p>
+            <div className="mt-7 flex items-start gap-3 text-sm font-semibold leading-6 text-[#1e3a8a] dark:text-emerald-50">
+              <MapPin size={19} className="mt-0.5 shrink-0 text-emerald-700 dark:text-emerald-200" aria-hidden="true" />
               <span>{t.aboutAddress}</span>
             </div>
-            <div className="mt-3 flex items-start gap-3 text-sm leading-6 text-emerald-50">
-              <Clock3 size={19} className="mt-0.5 shrink-0 text-emerald-200" aria-hidden="true" />
+            <div className="mt-3 flex items-start gap-3 text-sm font-semibold leading-6 text-[#1e3a8a] dark:text-emerald-50">
+              <Clock3 size={19} className="mt-0.5 shrink-0 text-emerald-700 dark:text-emerald-200" aria-hidden="true" />
               <span>{t.aboutHours}</span>
             </div>
-            <a href="https://www.google.com/maps/dir/?api=1&destination=Shahlimar+Road,+near+Session+Court,+Sukkur,+Pakistan" target="_blank" rel="noreferrer" className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-full border border-sky-200/55 bg-sky-400/15 px-4 py-2.5 text-sm font-bold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_0_22px_rgba(14,165,233,0.28)] backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-sky-100/75 hover:bg-sky-300/25 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.38),0_0_30px_rgba(14,165,233,0.45)]">{t.getDirections} <ArrowUpRight size={16} aria-hidden="true" /></a>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=Shahlimar+Road,+near+Session+Court,+Sukkur,+Pakistan" target="_blank" rel="noreferrer" className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-full border border-emerald-600/55 bg-emerald-600/15 px-4 py-2.5 text-sm font-bold text-emerald-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] backdrop-blur-xl transition hover:-translate-y-0.5 hover:bg-emerald-600/25 dark:border-sky-200/55 dark:bg-sky-400/15 dark:text-white dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_0_22px_rgba(14,165,233,0.28)] dark:hover:border-sky-100/75 dark:hover:bg-sky-300/25">{t.getDirections} <ArrowUpRight size={16} aria-hidden="true" /></a>
           </ScrollReveal>
 
         </div>
@@ -482,11 +482,11 @@ export default function Home() {
 
       <Testimonials />
 
-      <section id="faq" className="scroll-mt-30 bg-slate-100/80 dark:bg-[#020617] py-16 text-slate-900 dark:text-white lg:scroll-mt-34 transition-colors">
+      <section id="faq" className="scroll-mt-30 bg-[#f8fafc] py-16 text-[#0f172a] dark:bg-[#020617] dark:text-white lg:scroll-mt-34">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <ScrollReveal className="mb-10 text-center">
-            <p className="text-sm font-black uppercase tracking-[0.2em] text-blue-600 dark:text-cyan-300">FAQ</p>
-            <h2 className="mt-3 text-3xl font-extrabold text-slate-900 dark:text-white sm:text-4xl">Common questions, clear answers</h2>
+            <p className="text-sm font-bold uppercase tracking-[0.2em] text-cyan-700 dark:text-cyan-300">FAQ</p>
+            <h2 className="mt-3 text-3xl font-black text-[#0f2942] dark:text-white sm:text-4xl">Common questions, clear answers</h2>
           </ScrollReveal>
 
           <motion.div
@@ -502,7 +502,7 @@ export default function Home() {
                 variants={staticCardVariants}
                 whileHover={{ y: -4, scale: 1.01, boxShadow: "0px 16px 24px rgba(0,0,0,0.10)" }}
                 transition={softSpringTransition}
-                className="overflow-hidden rounded-xl border border-slate-300 dark:border-slate-800/80 bg-white dark:bg-[#0b1328] shadow-[0_4px_20px_rgba(0,0,0,0.06)] dark:shadow-[0_12px_30px_rgba(0,0,0,0.16)] backdrop-blur-md"
+                className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_4px_16px_rgba(0,0,0,0.06)] backdrop-blur-md dark:border-slate-800/80 dark:bg-[#0b1328] dark:shadow-[0_12px_30px_rgba(0,0,0,0.16)]"
               >
                 <motion.div variants={cardContentVariants}>
                 <button
@@ -511,8 +511,8 @@ export default function Home() {
                   className="group flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
                   aria-expanded={openFaq === index}
                 >
-                  <span className="text-base font-bold text-slate-900 dark:text-slate-100 transition-colors group-hover:text-blue-600 dark:group-hover:text-cyan-200">{faq.question}</span>
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-50 dark:bg-[#eafaf4] text-lg font-bold text-blue-700 dark:text-[#1f8a67]">
+                  <span className="text-base font-bold text-[#0f2942] transition-colors group-hover:text-cyan-700 dark:text-slate-100 dark:group-hover:text-cyan-200">{faq.question}</span>
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#eafaf4] text-lg font-bold text-[#1f8a67]">
                     {openFaq === index ? "−" : "+"}
                   </span>
                 </button>

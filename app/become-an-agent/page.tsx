@@ -641,11 +641,11 @@ export default function BecomeAnAgentPage() {
         {/* ── FAQs Accordion Section ── */}
         <section className="relative z-10 mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
           <div className="text-center">
-            <span className="text-sm font-black uppercase tracking-wider text-[#926004] dark:text-[#d7b875]">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#d7b875]">
               Common Questions
             </span>
             <h2
-              className="mt-2 text-2xl sm:text-4xl font-bold text-slate-900 dark:text-[#f5f2ea]"
+              className="mt-1 text-2xl sm:text-3xl font-normal text-[#f5f2ea]"
               style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
             >
               Career &amp; Recruitment FAQs
@@ -658,24 +658,24 @@ export default function BecomeAnAgentPage() {
               return (
                 <div
                   key={index}
-                  className="overflow-hidden rounded-2xl border border-slate-300 dark:border-white/[0.1] bg-white dark:bg-[#121314]/90 transition backdrop-blur-xl hover:border-[#1d4ed8] dark:hover:border-[#d7b875]/40 shadow-sm"
+                  className="overflow-hidden rounded-2xl border border-white/[0.1] bg-[#121314]/90 transition backdrop-blur-xl hover:border-[#d7b875]/40"
                 >
                   <button
                     type="button"
                     onClick={() => setOpenFaq(isOpen ? null : index)}
-                    className="flex w-full items-center justify-between p-5 text-left text-base font-bold text-slate-900 dark:text-[#f5f2ea] transition hover:text-[#1d4ed8] dark:hover:text-[#d7b875]"
+                    className="flex w-full items-center justify-between p-5 text-left text-sm font-semibold text-[#f5f2ea] transition hover:text-[#d7b875]"
                     style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
                   >
                     <span>{faq.question}</span>
                     <ChevronDown
                       size={18}
-                      className={`shrink-0 text-[#1d4ed8] dark:text-[#d7b875] transition-transform duration-300 ${
+                      className={`shrink-0 text-[#d7b875] transition-transform duration-300 ${
                         isOpen ? "rotate-180" : ""
                       }`}
                     />
                   </button>
                   {isOpen && (
-                    <div className="border-t border-slate-200 dark:border-white/[0.08] px-5 pb-5 pt-3 text-sm font-semibold leading-relaxed text-[#1e3a8a] dark:text-[#aaa9a3]">
+                    <div className="border-t border-white/[0.08] px-5 pb-5 pt-2 text-xs leading-relaxed text-[#aaa9a3]">
                       {faq.answer}
                     </div>
                   )}

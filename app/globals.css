@@ -45,10 +45,10 @@ body {
   --brand-blue-100: #E6EEFB;
   --page-bg: #f8fafc;
   --background: #f8fafc;
-  --foreground: #0b1f3a;
+  --foreground: #0f172a;
   --card-bg: #ffffff;
-  --card-border: rgba(15, 23, 42, 0.12);
-  --muted: #1e3a8a;
+  --card-border: rgba(15, 23, 42, 0.1);
+  --muted: #475569;
   --gold: #b8860b;
   --gold-glow: rgba(184, 134, 11, 0.12);
   color-scheme: light;
@@ -107,12 +107,44 @@ p {
 }
 
 /* ========================================================
-   LIGHT MODE: HIGH-CONTRAST BOLD READABLE BLUE & NAVY TYPOGRAPHY
+   LIGHT MODE: UNIVERSAL BOLD TEXT — NOTHING LOOKS DIM
+   ======================================================== */
+html:not(.dark) h1,
+html:not(.dark) h2,
+html:not(.dark) h3,
+html:not(.dark) h4,
+html:not(.dark) h5,
+html:not(.dark) h6 {
+  font-weight: 800 !important;
+  color: #0f2942 !important;
+}
+
+html:not(.dark) p {
+  font-weight: 500 !important;
+  color: #1e293b !important;
+}
+
+html:not(.dark) li {
+  font-weight: 500 !important;
+  color: #1e293b !important;
+}
+
+html:not(.dark) span {
+  font-weight: 500 !important;
+}
+
+html:not(.dark) body {
+  font-weight: 500 !important;
+  color: #0f172a !important;
+}
+
+/* ========================================================
+   LIGHT MODE: CLEAN WHITE CARDS WITH CRISP BLUE TYPOGRAPHY
    ======================================================== */
 html:not(.dark) body,
 html:not(.dark) main {
   background-color: #f8fafc !important;
-  color: #0b1f3a !important;
+  color: #0f172a !important;
 }
 
 /* Dynamic Page & Section Backgrounds */
@@ -125,74 +157,47 @@ html:not(.dark) .bg-\[\#040914\],
 html:not(.dark) .bg-\[\#08090a\],
 html:not(.dark) .bg-\[\#0a0b0c\] {
   background-color: #f8fafc !important;
-  color: #0b1f3a !important;
+  color: #0f172a !important;
 }
 
-/* Page Level Main Headings: Ultra-Bold Deep Navy */
+/* Page Level Main Headings */
 html:not(.dark) h1,
-html:not(.dark) h2,
-html:not(.dark) h3,
-html:not(.dark) h4,
-html:not(.dark) h5,
-html:not(.dark) h6,
 html:not(.dark) [class*="story"] h1,
 html:not(.dark) [class*="sectionHeading"] h2,
-html:not(.dark) [class*="headingRow"] h2,
-html:not(.dark) .font-serif {
-  font-weight: 800 !important;
-  color: #0b1f3a !important;
-  opacity: 1 !important;
-}
-
-/* Hero Section Headline Gradient in Light Mode -> Bold Rich Bronze Gold */
-html:not(.dark) [class*="story"] h1 span {
-  color: #926004 !important;
-  background: none !important;
-  -webkit-text-fill-color: #926004 !important;
+html:not(.dark) [class*="headingRow"] h2 {
+  color: #0f2942 !important;
   font-weight: 800 !important;
 }
 
-/* All Paragraphs, Descriptions, Subtitles on Page & Cards in Light Mode: Bold & Sharp */
-html:not(.dark) p,
-html:not(.dark) [class*="intro"],
-html:not(.dark) [class*="narrative"],
+/* Page Level Subtitles & Notes */
 html:not(.dark) [class*="headingNote"],
-html:not(.dark) [class*="description"],
-html:not(.dark) .text-slate-300,
-html:not(.dark) .text-slate-400,
-html:not(.dark) .text-slate-500,
-html:not(.dark) .text-\[\#aaa9a3\],
-html:not(.dark) .text-\[\#a6a6a1\],
-html:not(.dark) .text-\[\#c0bfba\],
-html:not(.dark) .text-\[\#b6b5af\],
-html:not(.dark) .text-\[\#b0afa8\],
-html:not(.dark) .text-white\/70,
-html:not(.dark) .text-white\/80 {
+html:not(.dark) [class*="narrative"] {
+  color: #1e293b !important;
   font-weight: 600 !important;
-  color: #1e3a8a !important;
-  opacity: 1 !important;
 }
 
-/* Trust Indicators on Home Page (10B+, 50K+, A++) */
-html:not(.dark) [class*="trustItem"] strong {
-  font-weight: 800 !important;
-  color: #0b1f3a !important;
-}
-
-html:not(.dark) [class*="trustItem"] span {
+/* FAQ / Section Subheadings like "Common Questions", "Career & Recruitment FAQs" */
+html:not(.dark) [class*="faq"] h2,
+html:not(.dark) [class*="faq"] h3,
+html:not(.dark) [class*="FAQ"] h2,
+html:not(.dark) [class*="FAQ"] h3,
+html:not(.dark) [class*="question"] h3,
+html:not(.dark) [class*="question"] p,
+html:not(.dark) [class*="accordion"] h3,
+html:not(.dark) [class*="accordion"] button,
+html:not(.dark) [class*="faqItem"] h3,
+html:not(.dark) [class*="faqItem"] p,
+html:not(.dark) summary {
+  color: #0f2942 !important;
   font-weight: 700 !important;
-  color: #1e40af !important;
 }
 
-/* Eyebrows, Badges, and Categories in Light Mode */
-html:not(.dark) [class*="eyebrow"],
-html:not(.dark) [class*="cardEyebrow"],
-html:not(.dark) [class*="category"],
-html:not(.dark) [class*="estimatorLabel"],
-html:not(.dark) [class*="cardNumber"] {
-  font-weight: 800 !important;
-  color: #1d4ed8 !important;
-  opacity: 1 !important;
+html:not(.dark) [class*="faq"] p,
+html:not(.dark) [class*="FAQ"] p,
+html:not(.dark) [class*="answer"] p,
+html:not(.dark) [class*="faqItem"] p {
+  color: #1e3a8a !important;
+  font-weight: 500 !important;
 }
 
 /* ────────────────────────────────────────────────────────
@@ -223,7 +228,7 @@ html:not(.dark) .bg-\[\#15181c\] {
   color: #1e3a8a !important;
 }
 
-/* All Headings Inside Cards in Light Mode -> Bold Deep Navy Blue (#0b1f3a) */
+/* All Headings Inside Cards in Light Mode -> Deep Navy Blue (#1e3a8a) */
 html:not(.dark) [class*="card"] h1,
 html:not(.dark) [class*="card"] h2,
 html:not(.dark) [class*="card"] h3,
@@ -244,11 +249,11 @@ html:not(.dark) main div[class*="rounded-"] h1,
 html:not(.dark) main div[class*="rounded-"] h2,
 html:not(.dark) main div[class*="rounded-"] h3,
 html:not(.dark) main div[class*="rounded-"] h4 {
+  color: #1e3a8a !important;
   font-weight: 800 !important;
-  color: #0b1f3a !important;
 }
 
-/* Descriptions & Paragraphs Inside Cards in Light Mode -> Bold Royal Blue (#1e3a8a) */
+/* Descriptions & Paragraphs Inside Cards in Light Mode -> Vibrant Royal Blue (#1e40af) */
 html:not(.dark) [class*="card"] p,
 html:not(.dark) [class*="Card"] p,
 html:not(.dark) [class*="cardBody"] p,
@@ -257,11 +262,11 @@ html:not(.dark) [class*="officeCard"] p,
 html:not(.dark) [class*="inquiryCard"] p,
 html:not(.dark) main article p,
 html:not(.dark) main div[class*="rounded-"] p {
+  color: #1e40af !important;
   font-weight: 600 !important;
-  color: #1e3a8a !important;
 }
 
-/* Features, Lists, Terms & Spans Inside Cards -> Bold Royal Blue (#1d4ed8) */
+/* Features, Lists, Terms & Spans Inside Cards -> Clear Medium Blue (#1d4ed8) */
 html:not(.dark) [class*="card"] li,
 html:not(.dark) [class*="Card"] li,
 html:not(.dark) main article li,
@@ -269,8 +274,8 @@ html:not(.dark) main div[class*="rounded-"] li,
 html:not(.dark) [class*="card"] span:not([class*="badge"]):not([class*="bg-"]):not([class*="indicator"]),
 html:not(.dark) [class*="Card"] span:not([class*="badge"]):not([class*="bg-"]):not([class*="indicator"]),
 html:not(.dark) main div[class*="rounded-"] span:not([class*="bg-"]):not([class*="rounded-full"]) {
-  font-weight: 600 !important;
   color: #1d4ed8 !important;
+  font-weight: 600 !important;
 }
 
 /* Card Specs Table (Table 08, 12, etc.) dl, dt, dd */
@@ -284,12 +289,20 @@ html:not(.dark) [class*="specs"] > div {
 
 html:not(.dark) [class*="specs"] dt {
   color: #2563eb !important;
-  font-weight: 700 !important;
+  font-weight: 600 !important;
 }
 
 html:not(.dark) [class*="specs"] dd {
-  color: #0b1f3a !important;
-  font-weight: 800 !important;
+  color: #1e3a8a !important;
+  font-weight: 700 !important;
+}
+
+/* Card Eyebrows, Categories, and Numbers */
+html:not(.dark) [class*="category"],
+html:not(.dark) [class*="cardEyebrow"],
+html:not(.dark) [class*="estimatorLabel"],
+html:not(.dark) [class*="cardNumber"] {
+  color: #2563eb !important;
 }
 
 /* Card Action / Inquiry Buttons in Light Mode */
@@ -301,7 +314,7 @@ html:not(.dark) main div[class*="rounded-"] a[class*="border-[#d4af37]"] {
   background-color: #eff6ff !important;
   border-color: #3b82f6 !important;
   color: #1d4ed8 !important;
-  font-weight: 800 !important;
+  font-weight: 700 !important;
 }
 
 html:not(.dark) [class*="cardAction"]:hover,
@@ -314,33 +327,6 @@ html:not(.dark) main div[class*="rounded-"] a[class*="border-[#d4af37]"]:hover {
   border-color: #1d4ed8 !important;
 }
 
-/* Estimator / Planning Studio on Home Page */
-html:not(.dark) [class*="rangeHeading"] label,
-html:not(.dark) [class*="rangeHeading"] output,
-html:not(.dark) [class*="tenureFieldset"] legend {
-  font-weight: 800 !important;
-  color: #0b1f3a !important;
-}
-
-html:not(.dark) [class*="rangeLimits"] span {
-  font-weight: 700 !important;
-  color: #1e40af !important;
-}
-
-html:not(.dark) [class*="tenureButton"] {
-  font-weight: 700 !important;
-  color: #1e40af !important;
-  border-color: #cbd5e1 !important;
-  background-color: #f1f5f9 !important;
-}
-
-html:not(.dark) [class*="tenureActive"] {
-  font-weight: 800 !important;
-  color: #ffffff !important;
-  border-color: #1d4ed8 !important;
-  background-color: #1d4ed8 !important;
-}
-
 /* Form Inputs & Sliders in Light Mode */
 html:not(.dark) input,
 html:not(.dark) textarea,
@@ -351,20 +337,17 @@ html:not(.dark) [class*="inquiryCard"] input,
 html:not(.dark) [class*="inquiryCard"] select,
 html:not(.dark) [class*="inquiryCard"] textarea {
   background-color: #f8fafc !important;
-  color: #0b1f3a !important;
+  color: #1e3a8a !important;
   border-color: #cbd5e1 !important;
-  font-weight: 600 !important;
 }
 
 html:not(.dark) input::placeholder,
 html:not(.dark) textarea::placeholder {
-  color: #64748b !important;
-  font-weight: 500 !important;
+  color: #94a3b8 !important;
 }
 
 html:not(.dark) label {
-  color: #0b1f3a !important;
-  font-weight: 700 !important;
+  color: #1e3a8a !important;
 }
 
 /* Scrollbars */
