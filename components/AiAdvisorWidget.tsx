@@ -13,13 +13,15 @@ interface Message {
 }
 
 const quickQuestions = [
+  "State Life kya hai? (History)",
+  "State Life ka CEO kaun hai?",
   "Sadabahar Plan (Table 08) kya hai?",
-  "Bachon ki taleem aur shadi plans (Table 12)",
-  "Endowment Assurance (Table 01)",
-  "Sukkur Office ki location aur timings?",
+  "State Life ka paisa halal hai ya haram?",
+  "State Life ki branches kahan hain?",
   "Agent / Advisor banne ka tareeqa?",
-  "Area Manager Fayyaz Ahmed se rabta",
 ];
+
+
 
 export default function AiAdvisorWidget() {
   const [isOpen, setIsOpen] = useState(false);
@@ -94,7 +96,7 @@ Aap mujhse State Life ke maqbool plans (Sadabahar Table 08, Child Education, End
         {
           id: `b-${Date.now()}`,
           role: "assistant",
-          content: `Maazrat, rabta kayam karne mein masla pesh aaya. Aap direct Area Manager **${MANAGER_NAME}** se WhatsApp par rabta kar sakte hain: [WhatsApp Chat](https://wa.me/${WHATSAPP_NUMBER}).`,
+          content: `Maazrat, thodi si takneeki masla pesh aa gayi. Aap seedha **${MANAGER_NAME}** se rabta kar sakte hain ya Sukkur Area Office 5405 tashreef la sakte hain.`,
           timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
         },
       ]);
