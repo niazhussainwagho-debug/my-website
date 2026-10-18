@@ -41,7 +41,7 @@ const knowledgeBank = [
       "ceo kaun", "chairman kaun", "ceo name", "chairman name",
     ],
     answer:
-      "State Life Insurance Corporation of Pakistan ke mojooda CEO:\n\n**Mr. Shoaib Javed Hussain**",
+      "CEO ki mojooda maloomat ke liye official website statelife.com.pk dekhein.",
   },
 
   // ── Office Location (Sukkur) ──────────────────────────────────────────────
@@ -51,7 +51,7 @@ const knowledgeBank = [
       "kahan hai office", "sukkur kahan", "office kahan", "sukkur address",
     ],
     answer:
-      "**State Life Sukkur Area Office 5405**\nStation Road / Minara Road Area, Main Branch, Sukkur, Sindh.\n\nTimings: Monday se Friday — 9:00 AM to 5:00 PM\nHaftah aur Itwaar: Band rehta hai.",
+      "**State Life Sukkur Area Office 5405**\nShahlimar Road, near Session Court, Sukkur, Sindh.\n\nTimings: Monday se Friday — 9:00 AM to 5:00 PM\nHaftah aur Itwaar: Band rehta hai.",
   },
 
   // ── Office Timings ────────────────────────────────────────────────────────
@@ -70,10 +70,10 @@ const knowledgeBank = [
       "all branches",
     ],
     answer:
-      "State Life ki Pakistan bhar mein **500 se ziyada** branches aur offices hain.\n\n**Pramukh Zonal Offices:**\n- Karachi Zone\n- Lahore Zone\n- Islamabad / Rawalpindi Zone\n- Peshawar Zone\n- Quetta Zone\n- Hyderabad Zone\n- Multan Zone\n- Faisalabad Zone\n- Sukkur Zone (hamara Area Office 5405)\n\nBairoon-e-mulk: UAE (Dubai) mein bhi State Life ki international branch mojud hai.",
+      "Branches ki list ke liye statelife.com.pk dekhein ya Area Office se poochhein.",
   },
 
-  // ── Islamic Finance / Quran o Hadith ──────────────────────────────────────
+  // ── Islamic Finance / Halal Haram ─────────────────────────────────────────
   {
     keywords: [
       "halal", "haram", "quran", "hadis", "hadees", "hadith",
@@ -82,7 +82,14 @@ const knowledgeBank = [
       "musalman", "muslim", "shariah", "sharia", "fiqh", "islamic",
     ],
     answer:
-      "**State Life ke Paison ka Shar'i Hukum – Quran o Hadith ki Roshni Mein**\n\nYeh ek ahem muamla hai jis mein ulama-e-kiram ke do moqif hain:\n\n**1. Jo Ulama Na-Jaiz farmatay hain:**\n- **Riba (Sood):** Allah Ta'ala ka farman hai: *\"Allah ne tijarat ko halal kiya aur sood ko haram qarar diya\"* (Surah Al-Baqarah: 275).\n- **Gharar:** Nabi Kareem ﷺ ne ghair-yaqeeni muamlat se mana farmaya (Sahih Muslim: 1513).\n- **Maysir (Qimar):** Juway jaisa shuba.\n\n**2. Jo Ulama Jaiz samajhte hain:**\n- **Darurat ka Usool:** Musibat ke waqt ahl-o-ayal ki hifazat (Surah Al-An'am: 119).\n- State Life ek sarkari idara hai aur munafa policyholders ke mutual pool se milta hai.\n\n**Yaqeeni Halal Hal — Family Takaful:**\nState Life ka **Family Takaful** nizam shariat ke mutabiq Mudarabah / Wakalah model par chalta hai jo Sood aur Gharar se pak hai.\n\n*Khas fatwe ke liye kisi mustanad Darul Ifta ya Mufti Sahib se ruju farmaiye.*",
+      "Shar'i hukm ka jawab ulama ya Shariah Advisor behtar dete hain. State Life ka Takaful plan Shariah Advisor se certified hai. Mazeed tafseel ke liye Area Manager se rabta karein.",
+  },
+
+  // ── Takaful Child Education & Marriage (Checked before generic child/takaful) ──
+  {
+    keywords: ["takaful child", "takaful education", "takaful marriage"],
+    answer:
+      "Takaful Child Education & Marriage Plan (Shariah-compliant, unit-linked): payer ki umar 18 se 57 saal, bache ki umar 1 se 15 saal, muddat 10 se 30 saal. Kam az kam contribution: saalana Rs 15,000, ya chhe mahine ki Rs 10,000. Participant ki wafat par aainda contributions maaf ho jati hain. Investment risk participant ka hota hai, maturity value kam ya zyada ho sakti hai. Munafa pakka nahi hai. Tafseel ke liye Area Office ya Takaful toll free 051-111-777-542 par rabta karein.",
   },
 
   // ── Takaful (Islamic Alternative) ─────────────────────────────────────────
@@ -99,32 +106,32 @@ const knowledgeBank = [
       "**Sadabahar Plan (Table 08)** State Life ka sab se maqbool plan hai.\n\nHar 4 saal baad guaranteed survival installments milti hain — taake zaroori akhrajaat poore hote rahein. Saath hi mukammal life cover bhi barqarar rehti hai.\n\nIs plan ki tafseel ke liye Sukkur Area Office 5405 se rabta farmaiye.",
   },
 
-  // ── Child Education (Table 12 & 36) ───────────────────────────────────────
+  // ── Child Education (Table 75 & 76) ───────────────────────────────────────
   {
-    keywords: ["bachon", "child", "education", "taleem", "shadi", "marriage", "table 12", "table 36"],
+    keywords: ["bachon", "child", "education", "taleem", "shadi", "marriage", "table 75", "table 76"],
     answer:
-      "Aulad ke mustaqbil ke liye State Life Sukkur ke paas do khaas plans hain:\n\n1. **Child Education & Marriage (Table 12):** Bachon ki taleem ya shadi ke waqt scheduled funds.\n2. **Education Support (Table 36):** Higher education ke liye tailored plan.\n\nCustomized schedule ke liye Sukkur Area Office se rabta karein.",
+      "State Life ke Child Education & Marriage plans: Table 75 (FIB ke saath) aur Table 76 (bina FIB ke). Bache ke 18, 21 ya 25 saal ke hone par lump sum milta hai. Tafseel aur quotation ke liye Area Office se rabta karein.",
   },
 
-  // ── Endowment (Table 01) ──────────────────────────────────────────────────
+  // ── Endowment (Table 03) ──────────────────────────────────────────────────
   {
-    keywords: ["table 01", "table 1", "endowment"],
+    keywords: ["table 03", "table 3", "endowment"],
     answer:
-      "**Endowment Assurance (Table 01):** State Life ka bunyadi savings plan.\n\nMuqarara muddat (10, 15, 20 ya 25 saal) ke baad mukammal maturity milti hai. Doran-e-policy family ko complete financial tahaffuz faraham hota hai.",
+      "**Endowment Assurance (Table 03):** State Life ka bunyadi savings plan.\n\nMuqarara muddat (10, 15, 20 ya 25 saal) ke baad mukammal maturity milti hai. Doran-e-policy family ko complete financial tahaffuz faraham hota hai.",
   },
 
-  // ── Whole Life (Table 03) ─────────────────────────────────────────────────
+  // ── Whole Life ────────────────────────────────────────────────────────────
   {
-    keywords: ["whole life", "table 03", "table 3", "zindagi bhar"],
+    keywords: ["whole life", "zindagi bhar"],
     answer:
-      "**Whole Life Assurance (Table 03):** Yeh ta-hayat tahaffuz ka plan hai.\n\nFamily ke dependents ko permanent financial security milti hai — zindagi bhar.",
+      "**Whole Life Assurance:** Yeh ta-hayat tahaffuz ka plan hai.\n\nFamily ke dependents ko permanent financial security milti hai — zindagi bhar.",
   },
 
-  // ── Retirement (Table 22) ─────────────────────────────────────────────────
+  // ── Retirement ────────────────────────────────────────────────────────────
   {
-    keywords: ["retirement", "pension", "table 22", "budhapa"],
+    keywords: ["retirement", "pension", "budhapa"],
     answer:
-      "**Retirement & Savings Plan (Table 22):** Nokri ya business se farigh hone ke baad pur-sukoon zindagi ke liye regular income aur financial stability.",
+      "**Retirement & Savings Plan:** Nokri ya business se farigh hone ke baad pur-sukoon zindagi ke liye regular income aur financial stability.",
   },
 
   // ── Contact Manager ───────────────────────────────────────────────────────
@@ -211,9 +218,9 @@ PERSONALITY:
 LANGUAGE: Roman Urdu by default. Switch only if visitor uses English or Urdu script.
 
 FOCUS RULE (Very Important):
-- If asked ONLY about CEO, give ONLY the CEO name. Nothing else.
+- If asked about CEO, direct them to official website statelife.com.pk for current information.
 - If asked ONLY about history, give ONLY history. Nothing else.
-- If asked ONLY about branches, give ONLY branch list. Nothing else.
+- If asked about branches, direct them to statelife.com.pk or Area Office.
 - Answer exactly what is asked. Do NOT add unsolicited details.
 - Keep answers short and to the point.
 
@@ -229,20 +236,16 @@ STATE LIFE KNOWLEDGE (Verified & Accurate):
   * 2005: Bancassurance services & AAA rating.
   * 2015: Expanded into Takaful (Islamic insurance) and micro-insurance.
   * Present Day: Pakistan's largest life & health insurer with assets exceeding Rs. 1.93 trillion.
-- CEO: Mr. Shoaib Javed Hussain (Fellow of Institute of Actuaries UK, MSc Bayes Business School London, appointed March 2021)
+- CEO: For current CEO information, refer visitor to official website statelife.com.pk.
 - HQ: Principal Office, Karachi, Sindh, Pakistan
 - Rating: AAA (Pakistan's highest rated life insurer)
 - Ownership: Fully government-owned, under Ministry of Commerce, Government of Pakistan
-- Network: 500+ branches, multiple zones across Pakistan and UAE Dubai branch
 - Products: Individual Life, Group Life, Health Insurance, Pensions, Annuities, Family Takaful (Islamic), Bancassurance
-- Sukkur Area Office ${AREA_CODE}: Station Road / Minara Road, Mon-Fri 9am-5pm
+- Sukkur Area Office ${AREA_CODE}: Shahlimar Road, near Session Court, Sukkur, Mon-Fri 9am-5pm
 
 ISLAMIC FINANCE:
-- Conventional insurance may have Riba (Al-Baqarah:275), Gharar (Muslim:1513), Maysir — many ulama consider impermissible.
-- Some allow under darurat (Al-An'am:119).
-- Family Takaful (Mudarabah/Wakalah model) is the shariah-compliant alternative — State Life offers it.
-- Always advise consulting a qualified Mufti for personal fatwa.
-- Never say conventional insurance is 100% halal.
+- Shar'i hukm guidance should be referred to Ulama or Shariah Advisor.
+- State Life Takaful plan is certified by Shariah Advisor. For more details, consult Area Manager.
 
 CRITICAL RULES:
 - NEVER share any WhatsApp or phone number.
