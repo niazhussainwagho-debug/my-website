@@ -85,7 +85,7 @@ Aap mujhse State Life ke maqbool plans (Sadabahar Table 08, Child Education, End
       const botMsg: Message = {
         id: `b-${Date.now()}`,
         role: "assistant",
-        content: data.reply || `Sukkur Area Office ${AREA_CODE} se rabta karne ke liye aap WhatsApp (+92 317 0941821) par direct call kar sakte hain.`,
+        content: data.reply || `Sukkur Area Office ${AREA_CODE} se mazeed rahnumai ke liye aap office waqt mein tashreef la sakte hain.`,
         timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       };
 
