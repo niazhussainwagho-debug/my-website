@@ -16,6 +16,38 @@ type UserPayload = {
   password?: string;
 };
 
+const normalizeWaPhone = (phoneInput: string) => {
+  const cleaned = cleanPhone(phoneInput);
+  if (!cleaned) return "";
+  const digits = cleaned.replace(/\D/g, "");
+  return digits.startsWith("03") ? `92${digits.slice(1)}` : digits;
+};
+
+type RateEntry = {
+  count: number;
+  resetAt: number;
+};
+
+const rateLimit = new Map<string, RateEntry>();
+const RATE_WINDOW_MS = 10 * 60 * 1000;
+const RATE_LIMIT = 5;
+
+function getClientIp(request: Request) {
+  return request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+}
+
+function isRateLimited(ip: string) {
+  const now = Date.now();
+  const current = rateLimit.get(ip);
+  if (!current || current.resetAt <= now) {
+    rateLimit.set(ip, { count: 1, resetAt: now + RATE_WINDOW_MS });
+    return false;
+  }
+  if (current.count >= RATE_LIMIT) return true;
+  current.count += 1;
+  return false;
+}
+
 const escapeHtml = (value: string) =>
   value
     .replaceAll("&", "&amp;")
@@ -40,6 +72,7 @@ async function sendOwnerEmail(payload: UserPayload) {
   });
 
   const subject = `Naya User Registration: ${payload.name || payload.email} (State Life Sukkur 5405)`;
+  const waDigits = normalizeWaPhone(payload.phone || "");
   const rows = [
     ["Action", "Client Portal Registration"],
     ["Name", payload.name || "N/A"],
@@ -48,7 +81,7 @@ async function sendOwnerEmail(payload: UserPayload) {
     ["City", payload.city || "N/A"],
     ["Policy Number", payload.policyNumber || "New Customer / No Policy Yet"],
     ["Area Office", `Sukkur ${AREA_CODE}`],
-    ["WhatsApp", `https://wa.me/${cleanPhone(payload.phone || "")}`],
+    ["WhatsApp", waDigits ? `https://wa.me/${waDigits}` : "N/A"],
   ]
     .map(
       ([label, value]) =>
@@ -115,6 +148,14 @@ async function sendCustomerConfirmationEmail(payload: UserPayload) {
 }
 
 export async function POST(request: Request) {
+  const ip = getClientIp(request);
+  if (isRateLimited(ip)) {
+    return NextResponse.json(
+      { error: "Too many attempts. Please try again after 10 minutes." },
+      { status: 429 }
+    );
+  }
+
   try {
     const payload = (await request.json()) as UserPayload;
 
