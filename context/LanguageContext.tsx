@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState, useTransition } from "react";
+import React, { createContext, useContext, useEffect, useSyncExternalStore, useTransition } from "react";
 import { Language, TranslationDictionary, translations } from "../lib/translations";
 
 interface LanguageContextType {
@@ -18,40 +18,57 @@ const LanguageContext = createContext<LanguageContextType>({
 });
 
 const STORAGE_KEY = "sl_sukkur_preferred_lang";
+const listeners = new Set<() => void>();
+
+function updateDocAttributes(lang: Language) {
+  if (typeof document === "undefined") return;
+  document.documentElement.lang = lang;
+  // Keep consistent LTR alignment as requested so elements and buttons do not flip sides
+  document.documentElement.dir = "ltr";
+}
+
+function subscribe(callback: () => void) {
+  listeners.add(callback);
+  window.addEventListener("storage", callback);
+  return () => {
+    listeners.delete(callback);
+    window.removeEventListener("storage", callback);
+  };
+}
+
+function getSnapshot(): Language {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY) as Language | null;
+    if (saved === "en" || saved === "ur" || saved === "sd") {
+      return saved;
+    }
+  } catch {
+    // localStorage may fail in restricted browser modes
+  }
+  return "en";
+}
+
+function getServerSnapshot(): Language {
+  return "en";
+}
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguageState] = useState<Language>("en");
+  const language = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   const [, startTransition] = useTransition();
 
-  // Load persisted language preference on mount
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY) as Language | null;
-      if (saved && (saved === "en" || saved === "ur" || saved === "sd")) {
-        setLanguageState(saved);
-        updateDocAttributes(saved);
-      }
-    } catch {
-      // localStorage may fail in restricted browser modes
-    }
-  }, []);
-
-  const updateDocAttributes = (lang: Language) => {
-    if (typeof document === "undefined") return;
-    document.documentElement.lang = lang;
-    // Keep consistent LTR alignment as requested so elements and buttons do not flip sides
-    document.documentElement.dir = "ltr";
-  };
+    updateDocAttributes(language);
+  }, [language]);
 
   const setLanguage = (lang: Language) => {
     startTransition(() => {
-      setLanguageState(lang);
-      updateDocAttributes(lang);
       try {
         localStorage.setItem(STORAGE_KEY, lang);
       } catch {
         // ignore
       }
+      updateDocAttributes(lang);
+      listeners.forEach((l) => l());
     });
   };
 

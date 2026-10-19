@@ -9,12 +9,10 @@ import { PhoneIcon, WhatsAppIcon } from "./icons";
 import ThemeToggle from "./ThemeToggle";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { telLink, whatsappLink, AREA_CODE } from "../lib/contact";
-import { useLanguage } from "../context/LanguageContext";
 
 export default function Navbar() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
-  const { t } = useLanguage();
 
   const navLinks = [
     { id: "about", name: "About", href: "/about" },

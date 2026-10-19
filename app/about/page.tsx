@@ -8,13 +8,10 @@ import {
   Award,
   Phone,
   Mail,
-  MapPin,
-  Clock,
   ArrowUpRight,
   MessageSquare,
   Building2,
   ChevronDown,
-  ChevronUp,
   User,
   KeyRound,
   CheckCircle2,
@@ -36,7 +33,6 @@ import {
   landlineLink,
   telLink,
 } from "../../lib/contact";
-import { useLanguage } from "../../context/LanguageContext";
 
 type UserProfile = {
   name: string;
@@ -48,8 +44,6 @@ type UserProfile = {
 };
 
 export default function AboutPage() {
-  const { t } = useLanguage();
-
   // ── Portal State ──
   const [portalOpen, setPortalOpen] = useState(false);
   const [portalTab, setPortalTab] = useState<"login" | "register">("login");
@@ -75,7 +69,10 @@ export default function AboutPage() {
     try {
       const saved = localStorage.getItem("statelife_client_user");
       if (saved) {
-        setCurrentUser(JSON.parse(saved));
+        const parsed = JSON.parse(saved);
+        queueMicrotask(() => {
+          setCurrentUser(parsed);
+        });
       }
     } catch {
       // ignore storage error

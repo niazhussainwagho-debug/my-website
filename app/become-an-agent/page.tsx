@@ -4,32 +4,19 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import {
-  ShieldCheck,
-  Award,
-  Sparkles,
-  TrendingUp,
-  GraduationCap,
-  Briefcase,
-  Clock,
   ArrowRight,
-  ArrowUpRight,
   MessageSquare,
   CheckCircle2,
   AlertCircle,
   Loader2,
   ChevronDown,
-  Building2,
-  Phone,
-  Users,
 } from "lucide-react";
 import { cleanPhone } from "../../lib/phone";
 import {
   AREA_CODE,
   MANAGER_NAME,
   MANAGER_TITLE,
-  PHONE_DISPLAY,
   WHATSAPP_NUMBER,
-  telLink,
 } from "../../lib/contact";
 
 const processSteps = [

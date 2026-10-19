@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { motion } from "framer-motion";
@@ -10,13 +10,11 @@ interface ThemeToggleProps {
   iconSize?: number;
 }
 
-export default function ThemeToggle({ className, iconSize = 17 }: ThemeToggleProps) {
-  const [mounted, setMounted] = useState(false);
-  const { resolvedTheme, setTheme } = useTheme();
+const emptySubscribe = () => () => {};
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+export default function ThemeToggle({ className, iconSize = 17 }: ThemeToggleProps) {
+  const mounted = useSyncExternalStore(emptySubscribe, () => true, () => false);
+  const { resolvedTheme, setTheme } = useTheme();
 
   if (!mounted) {
     return (

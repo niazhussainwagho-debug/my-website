@@ -10,7 +10,6 @@ import {
   MapPin,
   Clock,
   ArrowRight,
-  ArrowUpRight,
   MessageSquare,
   Building2,
   CheckCircle2,
@@ -31,7 +30,6 @@ import {
   telLink,
 } from "../../lib/contact";
 import { cleanPhone } from "../../lib/phone";
-import { useLanguage } from "../../context/LanguageContext";
 
 type ContactForm = {
   name: string;
@@ -79,7 +77,6 @@ function validateForm(form: ContactForm): FormErrors {
 }
 
 export default function ContactPage() {
-  const { t } = useLanguage();
   const [form, setForm] = useState<ContactForm>(initialForm);
   const [errors, setErrors] = useState<FormErrors>({});
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");

@@ -15,7 +15,6 @@ import {
   Building2,
   FileCheck,
   Sparkles,
-  ExternalLink,
 } from "lucide-react";
 import {
   WHATSAPP_NUMBER,
@@ -25,10 +24,8 @@ import {
   MANAGER_TITLE,
   AREA_CODE,
 } from "../../lib/contact";
-import { useLanguage } from "../../context/LanguageContext";
 
 export default function ServicesPage() {
-  const { t } = useLanguage();
 
   return (
     <main className="sub-page min-h-screen" style={{ background: 'var(--page-bg)', color: 'var(--foreground)' }}>

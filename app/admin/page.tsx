@@ -10,7 +10,6 @@ import {
   MessageSquare,
   AlertCircle,
   Clock,
-  CheckCircle2,
   Lock,
   ArrowRight,
   Database,
