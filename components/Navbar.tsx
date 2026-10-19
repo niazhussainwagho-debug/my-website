@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import { ChevronDown, X } from "lucide-react";
+import { X } from "lucide-react";
 import { PhoneIcon, WhatsAppIcon } from "./icons";
 import ThemeToggle from "./ThemeToggle";
 import LanguageSwitcher from "./LanguageSwitcher";
@@ -15,6 +15,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const navLinks = [
+    { id: "home", name: "Home", href: "/" },
     { id: "about", name: "About", href: "/about" },
     { id: "products", name: "Plans Portfolio", href: "/products" },
     { id: "join", name: "Careers", href: "/become-an-agent" },
@@ -86,23 +87,6 @@ export default function Navbar() {
           className="hidden items-center gap-0.5 xl:gap-1.5 lg:flex shrink-0"
           aria-label="Main navigation"
         >
-          <details className="relative">
-            <summary className="inline-flex cursor-pointer list-none items-center gap-1 whitespace-nowrap rounded-full px-2.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-white/80 transition hover:bg-slate-100 dark:hover:bg-white/10 hover:text-slate-950 dark:hover:text-white xl:px-3.5 xl:py-2 xl:text-sm">
-              Home <ChevronDown size={14} aria-hidden="true" />
-            </summary>
-            <div
-              className="absolute left-0 top-full z-50 mt-2 grid min-w-44 gap-1 rounded-xl border border-slate-200 dark:border-[#d4af37]/20 bg-white dark:bg-[#0c0d0e]/95 p-2 shadow-xl backdrop-blur-2xl"
-            >
-              <Link
-                href="/"
-                onClick={() => setMenuOpen(false)}
-                className="rounded-lg px-3 py-2 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-100 dark:hover:bg-white/10 hover:text-slate-950 dark:hover:text-white"
-              >
-                Home page
-              </Link>
-
-            </div>
-          </details>
           {navLinks.map((link) => {
             const active = isLinkActive(link);
             return (
@@ -251,23 +235,6 @@ export default function Navbar() {
 
           {/* Navigation Links List */}
           <nav className="mt-5 flex flex-col gap-1.5" aria-label="Mobile links">
-            {/* Home details accordion */}
-            <details className="rounded-xl overflow-hidden group">
-              <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between rounded-xl px-4 py-3 text-sm font-semibold text-slate-800 dark:text-[#f5f2ea] transition hover:bg-slate-100 dark:hover:bg-white/[0.04]">
-                <span>Home</span>
-                <ChevronDown size={15} className="text-[#926004] dark:text-[#d7b875] transition group-open:rotate-180" aria-hidden="true" />
-              </summary>
-              <div className="ml-3 my-1 grid gap-1 border-l border-[#d7b875]/25 pl-3">
-                <Link
-                  href="/"
-                  onClick={() => setMenuOpen(false)}
-                  className="rounded-lg px-3 py-2 text-xs font-medium text-slate-600 dark:text-[#aaa9a3] hover:text-slate-900 dark:hover:text-[#f5f2ea] hover:bg-slate-100 dark:hover:bg-white/[0.04] transition"
-                >
-                  Home page
-                </Link>
-
-              </div>
-            </details>
 
             {navLinks.map((link) => {
               const active = isLinkActive(link);
