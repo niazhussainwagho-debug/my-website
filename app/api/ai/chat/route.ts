@@ -375,16 +375,19 @@ VERIFIED MALOOMAT:
         const timeoutId = setTimeout(() => controller.abort(), 12000);
 
         // Build generationConfig conditionally (lite models do not support thinkingConfig and return 400)
-        const generationConfig: Record<string, any> = {};
+        const generationConfig: Record<string, unknown> = {};
         if (!modelName.toLowerCase().includes("lite")) {
           generationConfig.thinkingConfig = {
             thinkingBudget: 0,
           };
         }
 
-        const requestBody: Record<string, any> = {
-          contents: [
-            { role: "user", parts: [{ text: `${systemPrompt}\n\nVisitor: ${lastUserMessage}` }] },
+        const requestBody: Record<string, unknown> = {
+          systemInstruction: {
+            parts: [{ text: systemPrompt }],
+          },
+          contents: geminiContents.length > 0 ? geminiContents : [
+            { role: "user", parts: [{ text: lastUserMessage }] },
           ],
         };
 
@@ -414,11 +417,12 @@ VERIFIED MALOOMAT:
           const errData = await response.json().catch(() => ({}));
           console.warn(`Gemini (${modelName}) returned status ${response.status}:`, errData?.error?.message || response.statusText);
         }
-      } catch (geminiError: any) {
-        if (geminiError?.name === "AbortError") {
+      } catch (geminiError: unknown) {
+        const err = geminiError as { name?: string; message?: string } | undefined;
+        if (err?.name === "AbortError") {
           console.warn("Gemini request timed out after 12 seconds, using fallback engine.");
         } else {
-          console.warn("Gemini API call failed, using fallback engine:", geminiError?.message || geminiError);
+          console.warn("Gemini API call failed, using fallback engine:", err?.message || geminiError);
         }
       }
     }
