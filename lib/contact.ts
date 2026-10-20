@@ -13,3 +13,5 @@ export const FACEBOOK_URL = "https://www.facebook.com/share/1HnQeA4XGy/";
 export const LINKEDIN_URL = "https://pk.linkedin.com/in/fayyaz-ahmed-a6a298134";
 export const CONTACT_EMAIL = "waghofayyaz@gmail.com";
 export const emailLink = () => `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("Enquiry - Sukkur Area Office")}`;
+export const SUKKUR_ZONE_PHONE = "071-9310501";
+export const SUKKUR_OFFICE_ADDRESS = "State Life Building, Minara Road, Sukkur";

@@ -13,15 +13,12 @@ interface Message {
 }
 
 const quickQuestions = [
-  "State Life kya hai? (History)",
-  "State Life ka CEO kaun hai?",
-  "Sadabahar Plan (Table 08) kya hai?",
-  "State Life ka paisa halal hai ya haram?",
-  "State Life ki branches kahan hain?",
-  "Agent / Advisor banne ka tareeqa?",
+  "Takaful Endowment Plan kya hai?",
+  "Meeadi Policy (Table 03) kya hai?",
+  "Titanium Family kya hai?",
+  "Golden Endowment Plan kya hai?",
+  "Child Education Plan ki tafseel?",
 ];
-
-
 
 export default function AiAdvisorWidget() {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,9 +28,7 @@ export default function AiAdvisorWidget() {
     {
       id: "welcome-1",
       role: "assistant",
-      content: `Assalam-o-Alaikum! Main **State Life Sukkur Area Office ${AREA_CODE}** ka AI Advisor hoon.
-
-Aap mujhse State Life ke maqbool plans (Sadabahar Table 08, Child Education, Endowment Savings), office location/timings, ya agent career ke mutaliq pooch sakte hain. Main aapki kya madad kar sakta hoon?`,
+      content: `Main AI Advisor hoon. Final faisle aur tafseelat ke liye Area Office se tasdeeq karein.\n\nAssalam-o-Alaikum! Main **State Life Sukkur Area Office ${AREA_CODE}** ka AI Advisor hoon.\n\nAap mujhse Takaful Endowment, Meeadi Policy (Table 03), Titanium Family, Golden Endowment, Jeevan Saathi, Child Education plans aur office ke bare mein pooch sakte hain. Main aapki kya madad kar sakta hoon?`,
       timestamp: "Now",
     },
   ]);
